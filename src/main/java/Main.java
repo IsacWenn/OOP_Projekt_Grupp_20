@@ -1,26 +1,17 @@
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import java.io.IOException;
-import java.util.Objects;
+import model.AppModel;
+import view.AppView;
 
-public class Main extends Application {
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainView.fxml")));
-
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
+public class Main {
 
 
-    public static void main(String[] args) throws IOException {
-        launch(args);
-
+    public static void main(String[] args) {
+        AppModel model = AppModel.getInstance();
+        AppView view = new AppView();
+        model.addObserver(view);
+        view.startup();
+        
+        model.notifyObservers();
+        System.out.println("Färdig");
     }
 
 }
