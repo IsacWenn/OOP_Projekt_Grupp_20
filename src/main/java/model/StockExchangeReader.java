@@ -52,6 +52,13 @@ public class StockExchangeReader {
 
         System.out.println(data.get("09/12/2022"));
 
+        String field = (String) data.get("09/12/2022").get("open");
+        String dataField[] = field.split("\\$");
+        String field2 = "";
+        for (String substring: dataField)
+            field2 += substring;
+        System.out.println(field2);
+
 
     }
 
@@ -66,6 +73,7 @@ public class StockExchangeReader {
             for (String field : line.split(",")){
                 if (i == 0) date = field;
                 else {
+
                     dateValues.put(
                             StockExchangeDataTypes.values()[i].name().toLowerCase(),
                             field);
