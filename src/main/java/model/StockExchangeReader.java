@@ -10,7 +10,7 @@ import java.util.*;
 
 public class StockExchangeReader {
 
-    private String deafultPath = "src/main/resources/StockExchangeData/";
+    private final String defaultPath = "src/main/resources/StockExchangeData/";
 
     public StockExchangeReader() {
 
@@ -35,9 +35,9 @@ public class StockExchangeReader {
         System.out.println("Testing");
 
         StockExchangeReader reader = new StockExchangeReader();
-        HashMap<String, HashMap> data = null;
+        HashMap<String, HashMap<String, Object>> data = null;
         try {
-            data = reader.convertCSVFileToHandledData(reader.deafultPath + "HistoricalData_AAPL.csv");
+            data = reader.convertCSVFileToHandledData(reader.defaultPath + "HistoricalData_AAPL.csv");
         } catch (IOException err) {
             System.out.println(err.getMessage());
         }
@@ -51,36 +51,26 @@ public class StockExchangeReader {
         */
 
         System.out.println(data.get("09/12/2022"));
-
-        String field = (String) data.get("09/12/2022").get("open");
-        String dataField[] = field.split("\\$");
-        String field2 = "";
-        for (String substring: dataField)
-            field2 += substring;
-        System.out.println(field2);
-
-
     }
 
-    HashMap<String, HashMap> convertCSVFileToHandledData(String path) throws IOException {
-        HashMap<String, HashMap> data = new HashMap<>();
-        String line = "";
-        String date = "";
+    HashMap<String, HashMap<String, Object>> convertCSVFileToHandledData(String path) throws IOException {
+        HashMap<String, HashMap<String, Object>> data = new HashMap<>();
+        String line;
         BufferedReader br = new BufferedReader(new FileReader(path));
+        br.readLine();
         while ((line = br.readLine()) != null) {
-            HashMap<String, String> dateValues = new HashMap<>();
-            int i = 0;
-            for (String field : line.split(",")){
-                if (i == 0) date = field;
-                else {
+            String[] values = line.split(",");
 
-                    dateValues.put(
-                            StockExchangeDataTypes.values()[i].name().toLowerCase(),
-                            field);
-                }
-                i += 1;
-            }
-            data.put(date, dateValues);
+            String date = values[0];
+            HashMap<String, Object> mappedValues = new HashMap<>() {{
+                put("close",  Float.parseFloat(values[1].substring(1)));
+                put("volume", Integer.parseInt(values[2]));
+                put("open",   Float.parseFloat(values[3].substring(1)));
+                put("high",   Float.parseFloat(values[4].substring(1)));
+                put("low",    Float.parseFloat(values[5].substring(1)));
+            }};
+
+            data.put(date, mappedValues);
         }
 
         return data;
