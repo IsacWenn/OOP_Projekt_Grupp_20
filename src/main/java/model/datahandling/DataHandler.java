@@ -25,7 +25,7 @@ public class DataHandler {
         HashMap<String, Object> errHash = new HashMap<>(){{
             put("IOException", exception);
         }};
-        return new HashMap<>() {{ put(new Date(), errHash)}};
+        return new HashMap<>() {{ put(new Date(), errHash); }};
     }
 
 

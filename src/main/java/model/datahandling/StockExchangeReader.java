@@ -52,19 +52,19 @@ public class StockExchangeReader {
         */
         try {
             System.out.println(data);
+            System.out.println(data.get(new Date(2022, 6, 13)));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    static HashMap<model.Date, HashMap<String, Object>> convertCSVFileToHandledData(String path) throws IOException {
-        HashMap<model.Date, HashMap<String, Object>> data = new HashMap<>();
+    static DateHashMap<model.Date, HashMap<String, Object>> convertCSVFileToHandledData(String path) throws IOException {
+        DateHashMap<model.Date, HashMap<String, Object>> data = new DateHashMap<>();
         String line;
         BufferedReader br = new BufferedReader(new FileReader(path));
         br.readLine();
         while ((line = br.readLine()) != null) {
             String[] values = line.split(",");
-
             // String date = values[0];
             model.Date date = new Date(values[0]);
             HashMap<String, Object> mappedValues = new HashMap<>() {{
