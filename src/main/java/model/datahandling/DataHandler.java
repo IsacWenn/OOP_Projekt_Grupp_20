@@ -10,11 +10,19 @@ import model.Date;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 public class DataHandler {
 
-    public static HashMap<Date, HashMap<String, Object>> getCompanyData(String company) {
-        String path = "";
+    public static void main(String[] args) {
+        List<String> mics = getMICs();
+        System.out.println(mics);
+        System.out.println(getCompanyData(mics.get(0)));
+    }
+
+    public static HashMap<Date, HashMap<String, Object>> getCompanyData(String mic) {
+        String path = CompanyData.getFileName(mic);
         IOException exception;
         try {
             return StockExchangeReader.convertCSVFileToHandledData(path);
@@ -28,6 +36,11 @@ public class DataHandler {
         return new HashMap<>() {{ put(new Date(), errHash); }};
     }
 
+    public static List<String> getMICs() {
+        return CompanyData.getMICs();
+    }
 
-
+    public static List<String> getCompanyNames() {
+        return CompanyData.getCompanyNames();
+    }
 }

@@ -61,6 +61,7 @@ public class StockExchangeReader {
     static DateHashMap<model.Date, HashMap<String, Object>> convertCSVFileToHandledData(String path) throws IOException {
         DateHashMap<model.Date, HashMap<String, Object>> data = new DateHashMap<>();
         String line;
+        path = defaultPath + path;
         BufferedReader br = new BufferedReader(new FileReader(path));
         br.readLine();
         while ((line = br.readLine()) != null) {
