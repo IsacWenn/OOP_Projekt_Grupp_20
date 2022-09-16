@@ -75,6 +75,13 @@ public class Date {
         this.day = day;
     }
 
+    public Date() {
+        LocalDate localDate = LocalDate.now();
+        this.year = localDate.getYear();
+        this.month = localDate.getMonth().getValue();
+        this.day = localDate.getDayOfMonth();
+    }
+
     /* Getters */
 
     public int getDay() { return day; }

@@ -12,7 +12,7 @@ import java.util.*;
 
 public class StockExchangeReader {
 
-    private final String defaultPath = "src/main/resources/StockExchangeData/";
+    private static final String defaultPath = "src/main/resources/StockExchangeData/";
 
     public StockExchangeReader() {
 
@@ -36,10 +36,9 @@ public class StockExchangeReader {
     private static void testing() {
         System.out.println("Testing");
 
-        StockExchangeReader reader = new StockExchangeReader();
         HashMap<model.Date, HashMap<String, Object>> data = null;
         try {
-            data = reader.convertCSVFileToHandledData(reader.defaultPath + "HistoricalData_AAPL.csv");
+            data = convertCSVFileToHandledData(defaultPath + "HistoricalData_AAPL.csv");
         } catch (IOException err) {
             System.out.println(err.getMessage());
         }
@@ -58,7 +57,7 @@ public class StockExchangeReader {
         }
     }
 
-    HashMap<model.Date, HashMap<String, Object>> convertCSVFileToHandledData(String path) throws IOException {
+    static HashMap<model.Date, HashMap<String, Object>> convertCSVFileToHandledData(String path) throws IOException {
         HashMap<model.Date, HashMap<String, Object>> data = new HashMap<>();
         String line;
         BufferedReader br = new BufferedReader(new FileReader(path));
