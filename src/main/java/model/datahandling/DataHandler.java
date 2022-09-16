@@ -21,7 +21,7 @@ public class DataHandler {
         System.out.println(getCompanyData(mics.get(0)));
     }
 
-    public static HashMap<Date, HashMap<String, Object>> getCompanyData(String mic) {
+    public static DateHashMap<Date, HashMap<String, Object>> getCompanyData(String mic) {
         String path = CompanyData.getFileName(mic);
         IOException exception;
         try {
@@ -33,7 +33,7 @@ public class DataHandler {
         HashMap<String, Object> errHash = new HashMap<>(){{
             put("IOException", exception);
         }};
-        return new HashMap<>() {{ put(new Date(), errHash); }};
+        return new DateHashMap<>() {{ put(new Date(), errHash); }};
     }
 
     public static List<String> getMICs() {
