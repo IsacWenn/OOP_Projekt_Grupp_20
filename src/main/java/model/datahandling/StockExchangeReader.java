@@ -1,4 +1,6 @@
-package model;
+package model.datahandling;
+
+import model.Date;
 
 import java.io.*;
 import java.util.*;
@@ -10,7 +12,7 @@ import java.util.*;
 
 public class StockExchangeReader {
 
-    private final String defaultPath = "src/main/resources/StockExchangeData/";
+    private static final String defaultPath = "src/main/resources/StockExchangeData/";
 
     public StockExchangeReader() {
 
@@ -34,10 +36,9 @@ public class StockExchangeReader {
     private static void testing() {
         System.out.println("Testing");
 
-        StockExchangeReader reader = new StockExchangeReader();
-        HashMap<Date, HashMap<String, Object>> data = null;
+        HashMap<model.Date, HashMap<String, Object>> data = null;
         try {
-            data = reader.convertCSVFileToHandledData(reader.defaultPath + "HistoricalData_AAPL.csv");
+            data = convertCSVFileToHandledData(defaultPath + "HistoricalData_AAPL.csv");
         } catch (IOException err) {
             System.out.println(err.getMessage());
         }
@@ -56,8 +57,8 @@ public class StockExchangeReader {
         }
     }
 
-    HashMap<Date, HashMap<String, Object>> convertCSVFileToHandledData(String path) throws IOException {
-        HashMap<Date, HashMap<String, Object>> data = new HashMap<>();
+    static HashMap<model.Date, HashMap<String, Object>> convertCSVFileToHandledData(String path) throws IOException {
+        HashMap<model.Date, HashMap<String, Object>> data = new HashMap<>();
         String line;
         BufferedReader br = new BufferedReader(new FileReader(path));
         br.readLine();
@@ -65,7 +66,7 @@ public class StockExchangeReader {
             String[] values = line.split(",");
 
             // String date = values[0];
-            Date date = new Date(values[0]);
+            model.Date date = new Date(values[0]);
             HashMap<String, Object> mappedValues = new HashMap<>() {{
                 put("close",  Float.parseFloat(values[1].substring(1)));
                 put("volume", Integer.parseInt(values[2]));
