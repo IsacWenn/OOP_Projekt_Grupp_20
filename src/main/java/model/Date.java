@@ -1,6 +1,7 @@
 package model;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
@@ -43,6 +44,13 @@ public class Date {
             System.out.println(date2.isEqualTo(date5));
 
             System.out.println(new Date("09/13/2022"));
+
+            System.out.println(date4.isEqualTo(date5.nextDate()));
+            System.out.println(date5.isEqualTo(date4.previousDate()));
+
+            System.out.println(date1.plusDays(365));
+            System.out.println(date1.minusDays(2));
+
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -154,6 +162,32 @@ public class Date {
         return (this.year == otherDate.getYear() &&
                 this.month == otherDate.getMonth() &&
                 this.day == otherDate.getDay());
+    }
+
+    /*  Functional methods  */
+
+    public Date nextDate() throws IOException {
+        LocalDate date = LocalDate.of(this.year, this.month, this.day);
+        date = date.plusDays(1);
+        return new Date(date.getYear(), date.getMonth().getValue(), date.getDayOfMonth());
+    }
+
+    public Date plusDays(int days) throws IOException {
+        LocalDate date = LocalDate.of(this.year, this.month, this.day);
+        date = date.plusDays(days);
+        return new Date(date.getYear(), date.getMonth().getValue(), date.getDayOfMonth());
+    }
+
+    public Date previousDate() throws IOException {
+        LocalDate date = LocalDate.of(this.year, this.month, this.day);
+        date = date.minusDays(1);
+        return new Date(date.getYear(), date.getMonth().getValue(), date.getDayOfMonth());
+    }
+
+    public Date minusDays(int days) throws IOException {
+        LocalDate date = LocalDate.of(this.year, this.month, this.day);
+        date = date.minusDays(days);
+        return new Date(date.getYear(), date.getMonth().getValue(), date.getDayOfMonth());
     }
 
 }
