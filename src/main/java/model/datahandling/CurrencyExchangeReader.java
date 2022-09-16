@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class CurrencyExchangeReader {
 
     private final String defaultPath = "src/main/resources/CurrencyExchangeData/";
-    // SEK_USD.csv
+
 
     public CurrencyExchangeReader() {
 
@@ -44,7 +44,7 @@ public class CurrencyExchangeReader {
             String[] values = line.split("[,/]");
 
             Date date = new Date(Integer.parseInt(values[0]),Integer.parseInt(values[1]),Integer.parseInt(values[2]));
-            float rate = Float.parseFloat(values[3]); //Integer.parseInt(values[1]);
+            float rate = Float.parseFloat(values[3]);
             data.put(date, rate);
         }
 
