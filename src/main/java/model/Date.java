@@ -64,7 +64,7 @@ public class Date {
         this.day = day;
     }
 
-    Date(String date) throws IOException { /* For use when converting the american date strings in the NasDaq CSV-files */
+    public Date(String date) throws IOException { /* For use when converting the american date strings in the NasDaq CSV-files */
         String[] dateValues = date.split("/");
         int year = Integer.parseInt(dateValues[2]);
         int month = Integer.parseInt(dateValues[0]);
