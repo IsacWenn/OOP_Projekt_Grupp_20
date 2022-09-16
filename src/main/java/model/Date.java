@@ -94,7 +94,7 @@ public class Date {
 
     @Override
     public String toString() {
-        return String.format("Date: %2d/%2d/%4d", day, month, year);
+        return String.format("%2d/%2d/%4d", day, month, year);
     }
 
     /* IO-Validation methods */
