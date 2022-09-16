@@ -1,4 +1,6 @@
-package model;
+package model.datahandling;
+
+import model.Date;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
