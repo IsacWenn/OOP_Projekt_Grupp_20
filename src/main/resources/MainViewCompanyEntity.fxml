@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane fx:id="stockListItem" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="400.0" styleClass="pane_normal" stylesheets="@../java/controller/ListItem.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="stockAcronym" layoutX="14.0" layoutY="17.0" text="STCK" AnchorPane.leftAnchor="14.0" />
+      <Label fx:id="stockName" layoutX="64.0" layoutY="17.0" prefHeight="18.0" prefWidth="252.0" text="Stock Name" AnchorPane.leftAnchor="50.0" />
+      <Label fx:id="stockValue" layoutX="358.0" layoutY="17.0" text="Value" AnchorPane.leftAnchor="350.0" />
+   </children>
+</AnchorPane>

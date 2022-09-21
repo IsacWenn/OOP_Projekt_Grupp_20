@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
-
+<?import javafx.scene.layout.FlowPane?>
 
 <AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppController">
    <children>
-      <LineChart fx:id="chart1" layoutX="14.0" layoutY="82.0" prefHeight="554.0" prefWidth="772.0">
+      <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="280.0">
+         <content>
+            <FlowPane fx:id="stockPane" maxWidth="-Infinity" minWidth="-Infinity" rowValignment="TOP">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </FlowPane>
+         </content>
+      </ScrollPane>
+      <LineChart fx:id="chart1" layoutX="287.0" layoutY="123.0" prefHeight="554.0" prefWidth="772.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>

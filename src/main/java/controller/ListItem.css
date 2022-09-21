@@ -1,0 +1,12 @@
+.pane_normal {
+    -fx-border-width: 1px;
+    -fx-border-color: #999999;
+    -fx-border-radius: 1px;
+    -fx-background-radius: 1px;
+}
+.pane_normal:hover {
+    -fx-background-color: #C1C1C1;
+}
+.pane_normal:pressed {
+    -fx-background-color: #B1B1B1;
+}
