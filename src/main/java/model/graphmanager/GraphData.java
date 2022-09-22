@@ -8,7 +8,6 @@ import model.datahandling.DayData;
 import java.util.List;
 
 public class GraphData {
-
     public GraphData() {
 
     }

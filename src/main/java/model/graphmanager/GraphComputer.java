@@ -13,18 +13,17 @@ public class GraphComputer {
         this.algorithm = alg;
     }
 
-    public void setAlgorithm(Algorithm algorithm) {
+    void setAlgorithm(Algorithm algorithm) {
         this.algorithm = algorithm;
     }
 
-    public DateHashMap<Date, Number> getCalculatedData(DateHashMap<Date, DayData> data) {
+    public DateHashMap<Date, Number> getCalculatedData() {
         return algorithm.calculate();
     }
 
-    public DateHashMap<Date, Number> getCalculatedData(DateHashMap<Date, DayData> data,
-                                                       DateHashMap<Date, Double> currency) {
+    public DateHashMap<Date, Number> getCalculatedData(DateHashMap<Date, Double> currency) {
         DateHashMap<Date, Number> processedData = algorithm.calculate();
-        for (Date date : data.keySet()) {
+        for (Date date : processedData.keySet()) {
             double processedDouble = (double) processedData.get(date);
             processedDouble *= currency.get(date);
             processedData.put(date, processedDouble);
@@ -35,5 +34,6 @@ public class GraphComputer {
     DateHashMap<Date, Number> updateValues() {
         return algorithm.calculate();
     }
+
 
 }

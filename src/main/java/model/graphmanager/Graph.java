@@ -5,6 +5,8 @@ import model.Date;
 import model.datahandling.DataHandler;
 import model.datahandling.DateHashMap;
 import model.graphmanager.algorithms.Algorithm;
+import model.graphmanager.algorithms.AlgorithmFactory;
+import model.graphmanager.algorithms.DailyChange;
 import model.graphmanager.algorithms.DailyHighMinusLow;
 
 import java.io.IOException;
@@ -25,6 +27,10 @@ public class Graph {
         this.values = this.graphComputer.updateValues();
     }
 
+    public void updateAlgorithm(Algorithm alg) {
+        this.graphComputer.setAlgorithm(alg);
+    }
+
     public static void main(String[] args) {
         try {
 
@@ -34,9 +40,17 @@ public class Graph {
             // Graph graph = new Graph(new Volatility(data));
             // graph.values = graph.graphData.getCompanyData(mic, date1, new Date());
 
-            Algorithm alg = new DailyHighMinusLow(data);
+            Graph graph = new Graph(new DailyChange(data));
 
-            System.out.println(alg.calculate());
+
+            graph.updateAlgorithm(
+                    AlgorithmFactory.createDailyChange(
+                            graph.graphData.getCompanyData(mic, date1, new Date())
+                    )
+            );
+
+            graph.update();
+            System.out.println(graph.values);
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
