@@ -43,23 +43,25 @@ public class AppController implements Initializable {
     }
     public void openStockView(String acronym) {
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
-        series1.setName("Stonks");
+        series1.setName(acronym);
+        if (chart1.getData().toString().contains(acronym)) {
+            return;
+        }
         DateHashMap<Date, HashMap<String, Object>> data = DataHandler.getCompanyData(acronym);
         try {
-
             Date date = new Date(2012,1,1);
             Object close = null;
             for(int i = 0; i<data.size();i++) {
-                boolean succeded = true;
+                boolean succeeded = true;
                 do {
-                    succeded = true;
+                    succeeded = true;
                     date = date.nextDate();
                     try {
                         close = data.get(date).get("close");
                     } catch (NullPointerException e) {
-                        succeded = false;
+                        succeeded = false;
                     }
-                } while (!succeded);
+                } while (!succeeded);
 
 
                 float closeValue = (float) close;
