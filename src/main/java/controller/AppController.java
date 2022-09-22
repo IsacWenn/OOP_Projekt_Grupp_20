@@ -21,14 +21,13 @@ public class AppController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
         series1.setName("Stonks");
-        DateHashMap<Date, HashMap<String, Object>> data = populateSeries(series1);
+        populateSeries(series1, "AAPL");
         chart1.setCreateSymbols(false);
         chart1.getData().add(series1);
-        System.out.println(data);
     }
 
-    private DateHashMap<Date, HashMap<String, Object>> populateSeries(XYChart.Series<String, Number> series1) {
-        DateHashMap<Date, HashMap<String, Object>> data = DataHandler.getCompanyData("TSLA");
+    private void populateSeries(XYChart.Series<String, Number> series, String mic) {
+        DateHashMap<Date, HashMap<String, Object>> data = DataHandler.getCompanyData(mic);
         try {
             model.Date date = new Date(2012,1,1);
             Object close = null;
@@ -44,12 +43,11 @@ public class AppController implements Initializable {
                     }
                 } while (!succeded);
                 float closeValue = (float) close;
-                series1.getData().add(i, new XYChart.Data<>(date.toString(), closeValue));
+                series.getData().add(i, new XYChart.Data<>(date.toString(), closeValue));
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        return data;
     }
 }
 

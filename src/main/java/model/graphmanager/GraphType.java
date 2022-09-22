@@ -1,7 +1,7 @@
 package model.graphmanager;
 
-enum GraphTypes {
+enum GraphType {
     LINECHART,
     AREACHART,
-    BARGRAPH
+    BARCHART
 }

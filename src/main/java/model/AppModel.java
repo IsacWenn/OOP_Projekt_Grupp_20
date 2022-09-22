@@ -1,5 +1,6 @@
 package model;
 
+import model.datahandling.DataHandler;
 import view.Observable;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ public class AppModel {
 
     private ArrayList<Observable> observerList;
     private static AppModel instance = null;
+    private DataHandler dataHandler;
 
     public static void main(String[] args) {
 
