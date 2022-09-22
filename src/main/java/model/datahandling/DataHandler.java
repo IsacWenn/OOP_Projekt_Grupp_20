@@ -45,6 +45,9 @@ public class DataHandler {
         try {
             Date date1 = new Date(2022, 9, 9);
             System.out.println(getCompanyData(date1.listIntervalTo(new Date()), mics.get(0)));
+
+            System.out.println("Latest Date : ");
+            System.out.println(getLatestDayData(mics.get(0)));
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -97,6 +100,21 @@ public class DataHandler {
         }
         return new DateHashMap<>() {{ put(new Date(), 0f); }};
     }
+
+    public static DateHashMap<Date, DayData> getLatestDayData(String mic) {
+        Date iteratorDate = new Date();
+        DateHashMap<Date, DayData> data = getCompanyData(mic);
+        while (!data.containsKey(iteratorDate)) {
+            try {
+                iteratorDate = iteratorDate.previousDate();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        Date finalIteratorDate = iteratorDate;
+        return new DateHashMap<>(){{ put(new Date(finalIteratorDate), data.get(finalIteratorDate)); }};
+    }
+
 
     public static List<String> getMICs() {
         return CompanyData.getMICs();
