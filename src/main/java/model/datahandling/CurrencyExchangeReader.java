@@ -9,19 +9,13 @@ import java.util.HashMap;
 
 public class CurrencyExchangeReader {
 
-    private final String defaultPath = "src/main/resources/CurrencyExchangeData/";
-
-
-    public CurrencyExchangeReader() {
-
-    }
+    private static final String defaultPath = "src/main/resources/CurrencyExchangeData/";
 
     public static void main(String[] args) throws IOException {
 
         DateHashMap<Date, Float> data = null;
-        CurrencyExchangeReader reader = new CurrencyExchangeReader();
         try {
-            data = reader.convertCSVFileToHandledData(reader.defaultPath + "SEK_USD.csv");
+            data = convertCSVFileToHandledData(defaultPath + "SEK_USD.csv");
         } catch (IOException err) {
             System.out.println(err.getMessage());
         }
@@ -31,7 +25,7 @@ public class CurrencyExchangeReader {
         System.out.println(data.get(date1));
     }
 
-    DateHashMap<Date, Float> convertCSVFileToHandledData(String path) throws IOException {
+    static DateHashMap<Date, Float> convertCSVFileToHandledData(String path) throws IOException {
         DateHashMap<Date, Float> data = new DateHashMap<>();
         String line;
         BufferedReader br = new BufferedReader(new FileReader(path));

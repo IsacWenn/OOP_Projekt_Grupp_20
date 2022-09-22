@@ -36,7 +36,7 @@ public class StockExchangeReader {
     private static void testing() {
         System.out.println("Testing");
 
-        HashMap<model.Date, HashMap<String, Object>> data = null;
+        HashMap<model.Date, DayData> data = null;
         try {
             data = convertCSVFileToHandledData(defaultPath + "HistoricalData_AAPL.csv");
         } catch (IOException err) {
@@ -58,8 +58,8 @@ public class StockExchangeReader {
         }
     }
 
-    static DateHashMap<model.Date, HashMap<String, Object>> convertCSVFileToHandledData(String path) throws IOException {
-        DateHashMap<model.Date, HashMap<String, Object>> data = new DateHashMap<>();
+    static DateHashMap<model.Date, DayData> convertCSVFileToHandledData(String path) throws IOException {
+        DateHashMap<model.Date, DayData> data = new DateHashMap<>();
         String line;
         path = defaultPath + path;
         BufferedReader br = new BufferedReader(new FileReader(path));
@@ -68,6 +68,15 @@ public class StockExchangeReader {
             String[] values = line.split(",");
             // String date = values[0];
             model.Date date = new Date(values[0]);
+
+            int volume = Integer.parseInt(values[2]);
+            double close = Double.parseDouble(values[1].substring(1));
+            double open = Double.parseDouble(values[3].substring(1));
+            double high = Double.parseDouble(values[4].substring(1));
+            double low = Double.parseDouble(values[5].substring(1));
+
+            /*
+
             HashMap<String, Object> mappedValues = new HashMap<>() {{
                 put("close",  Float.parseFloat(values[1].substring(1)));
                 put("volume", Integer.parseInt(values[2]));
@@ -76,7 +85,10 @@ public class StockExchangeReader {
                 put("low",    Float.parseFloat(values[5].substring(1)));
             }};
 
-            data.put(date, mappedValues);
+            */
+
+            DayData dayData = new DayData(volume, open, close, high, low);
+            data.put(date, dayData);
         }
 
         return data;
