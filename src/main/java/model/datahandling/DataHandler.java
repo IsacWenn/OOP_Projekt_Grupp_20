@@ -40,6 +40,15 @@ public class DataHandler {
         } catch (IOException e) {
             System.out.println("Error");
         }
+
+
+        try {
+            Date date1 = new Date(2022, 9, 9);
+            System.out.println(getCompanyData(date1.listIntervalTo(new Date()), mics.get(0)));
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public static DateHashMap<Date, HashMap<String, Object>> getCompanyData(String mic) {
@@ -73,14 +82,17 @@ public class DataHandler {
         return new DateHashMap<>() {{ put(new Date(), errHash); }};
     }
 
+    public static DateHashMap<Date, HashMap<String, Object>> getCompanyData(Date from, Date to, String mic) {
+        List<Date> interval = from.listIntervalTo(to);
+        return getCompanyData(interval, mic);
+    }
+
     private static DateHashMap<Date, HashMap<String, Object>> filterDataByDates(
             DateHashMap<Date, HashMap<String, Object>> data, List<Date> dates) {
         DateHashMap<Date, HashMap<String, Object>> filteredData = new DateHashMap<>();
         for (Date date :  dates) {
             if (data.containsKey(date))
                 filteredData.put(date, data.get(date));
-            else
-                System.out.println("No data exists for Date: " + date);
         }
         return filteredData;
     }

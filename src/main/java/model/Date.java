@@ -3,7 +3,9 @@ package model;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 public class Date {
@@ -51,10 +53,13 @@ public class Date {
             System.out.println(date1.plusDays(365));
             System.out.println(date1.minusDays(2));
 
+            Date date6 = new Date(2022, 9, 19);
+            System.out.println("List Interval");
+            System.out.println(date6.listIntervalTo(new Date()));
+
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     public Date(int year, int month, int day) throws IOException {
@@ -80,6 +85,12 @@ public class Date {
         this.year = localDate.getYear();
         this.month = localDate.getMonth().getValue();
         this.day = localDate.getDayOfMonth();
+    }
+
+    public Date(Date date) {
+        this.year = date.getYear();
+        this.month = date.getMonth();
+        this.day = date.getDay();
     }
 
     /* Getters */
@@ -197,4 +208,21 @@ public class Date {
         return new Date(date.getYear(), date.getMonth().getValue(), date.getDayOfMonth());
     }
 
+    public List<Date> listIntervalTo(Date to) {
+        ArrayList<Date> listInterval = new ArrayList<>();
+        Date iterator = new Date(this);
+        boolean err = false;
+
+        while (iterator.isBeforeOrEqual(to)) {
+            listInterval.add(new Date(iterator));
+            try {
+                iterator = iterator.nextDate();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+                System.out.println("listInterval iterator out of bounds");
+                break;
+            }
+        }
+        return listInterval;
+    }
 }
