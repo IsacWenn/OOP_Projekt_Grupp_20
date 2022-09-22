@@ -4,9 +4,8 @@ package model.graphmanager;
 import model.Date;
 import model.datahandling.DataHandler;
 import model.datahandling.DateHashMap;
-import model.datahandling.DayData;
 import model.graphmanager.algorithms.Algorithm;
-import model.graphmanager.algorithms.Volatility;
+import model.graphmanager.algorithms.DailyHighMinusLow;
 
 import java.io.IOException;
 
@@ -40,7 +39,7 @@ public class Graph {
             // Graph graph = new Graph(new Volatility(data));
             // graph.values = graph.graphData.getCompanyData(mic, date1, new Date());
 
-            Algorithm alg = new Volatility(data);
+            Algorithm alg = new DailyHighMinusLow(data);
 
             System.out.println(alg.calculate(data));
 
