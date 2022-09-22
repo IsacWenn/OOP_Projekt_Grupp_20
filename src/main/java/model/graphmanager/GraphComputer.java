@@ -18,18 +18,22 @@ public class GraphComputer {
     }
 
     public DateHashMap<Date, Number> getCalculatedData(DateHashMap<Date, DayData> data) {
-        return algorithm.calculate(data);
+        return algorithm.calculate();
     }
 
     public DateHashMap<Date, Number> getCalculatedData(DateHashMap<Date, DayData> data,
                                                        DateHashMap<Date, Double> currency) {
-        DateHashMap<Date, Number> processedData = algorithm.calculate(data);
+        DateHashMap<Date, Number> processedData = algorithm.calculate();
         for (Date date : data.keySet()) {
             double processedDouble = (double) processedData.get(date);
             processedDouble *= currency.get(date);
             processedData.put(date, processedDouble);
         }
         return processedData;
+    }
+
+    DateHashMap<Date, Number> updateValues() {
+        return algorithm.calculate();
     }
 
 }

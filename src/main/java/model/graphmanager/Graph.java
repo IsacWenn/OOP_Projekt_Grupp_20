@@ -22,12 +22,7 @@ public class Graph {
     }
 
     public void update() {
-        this.values = this.graphComputer.getCalculatedData(graphData.getCompanyData("AAPL"));
-    }
-
-    public void update(DateHashMap<Date, Number> currencyConversionMap) {
-        this.values = this.graphComputer.getCalculatedData(graphData.getCompanyData("AAPL"),
-                DataHandler.getCurrencyData("SEK_USD.csv"));
+        this.values = this.graphComputer.updateValues();
     }
 
     public static void main(String[] args) {
@@ -41,7 +36,7 @@ public class Graph {
 
             Algorithm alg = new DailyHighMinusLow(data);
 
-            System.out.println(alg.calculate(data));
+            System.out.println(alg.calculate());
 
         } catch (IOException e) {
             System.out.println(e.getMessage());

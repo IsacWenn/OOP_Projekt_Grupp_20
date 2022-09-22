@@ -4,7 +4,7 @@ import model.Date;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 
-public class DailyChange {
+public class DailyChange implements Algorithm{
 
     DateHashMap<Date, DayData> data;
 

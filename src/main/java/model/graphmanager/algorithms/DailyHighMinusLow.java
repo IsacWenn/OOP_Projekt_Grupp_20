@@ -12,7 +12,7 @@ public class DailyHighMinusLow implements Algorithm{
         this.data = inData;
     }
     @Override
-    public DateHashMap<Date, Number> calculate(DateHashMap<Date, DayData> data) {
+    public DateHashMap<Date, Number> calculate() {
         DateHashMap<Date, Number> calcData = new DateHashMap<>();
         for (Date date : data.keySet()) {
             DayData dayData = data.get(date);
