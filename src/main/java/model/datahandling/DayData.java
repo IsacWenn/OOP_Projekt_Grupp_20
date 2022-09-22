@@ -1,45 +1,57 @@
 package model.datahandling;
 
+import java.util.HashMap;
+
 public class DayData {
+    private final int volume;
+    private final double open;
+    private final double closed;
+    private final double high;
+    private final double low;
 
-    private String date;
-    private int volume;
-    private double open;
-    private double closed;
-    private double high;
-    private double low;
-
-    DayData(String date, int volume, double open, double closed, double high, double low){
-        this.date = date;
+    DayData(int volume, double open, double closed, double high, double low){
         this.volume = volume;
         this.open = open;
         this.closed = closed;
         this.high = high;
         this.low = low;
     }
-    
-    String getDate(){
-        return date;
-    }
 
-    int getVolume(){
+    DayData(HashMap<String, Object> data) {
+        this.volume = (int) data.get("volume");
+        this.open = (double) data.get("open");
+        this.closed = (double) data.get("closed");
+        this.low = (double) data.get("low");
+        this.high = (double) data.get("high");
+    }
+    public int getVolume(){
         return volume;
     }
 
-    double getOpen(){
+    public double getOpen(){
         return open;
     }
 
-    double getClosed(){
+    public double getClosed(){
         return closed;
     }
 
-    double getHigh(){
+    public double getHigh(){
         return high;
     }
 
-    double getLow(){
+    public double getLow(){
         return low;
     }
 
+    @Override
+    public String toString() {
+        return "DayData{" +
+                "volume=" + volume +
+                ", open=" + open +
+                ", closed=" + closed +
+                ", high=" + high +
+                ", low=" + low +
+                '}';
+    }
 }

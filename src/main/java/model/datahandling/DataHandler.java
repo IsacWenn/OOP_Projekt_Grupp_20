@@ -21,7 +21,7 @@ public class DataHandler {
         // System.out.println(getCompanyData(mics.get(0)));
 
         List<Date> dates = new ArrayList<>();
-        DateHashMap<Date, HashMap<String, Object>> data = getCompanyData(mics.get(0));
+        DateHashMap<Date, DayData> data = getCompanyData(mics.get(0));
         Date afterDate;
         try {
             afterDate = new Date(2022, 9, 8);
@@ -51,45 +51,34 @@ public class DataHandler {
 
     }
 
-    public static DateHashMap<Date, HashMap<String, Object>> getCompanyData(String mic) {
+    public static DateHashMap<Date, DayData> getCompanyData(String mic) {
         String path = CompanyData.getFileName(mic);
-        IOException exception;
         try {
             return StockExchangeReader.convertCSVFileToHandledData(path);
         } catch (IOException e) {
-            exception = e;
             System.out.println(e.getMessage());
         }
-        HashMap<String, Object> errHash = new HashMap<>(){{
-            put("IOException", exception);
-        }};
-        return new DateHashMap<>() {{ put(new Date(), errHash); }};
+        return new DateHashMap<>() {{ put(new Date(), new DayData(0, 0, 0, 0, 0)); }};
     }
 
-    public static DateHashMap<Date, HashMap<String, Object>> getCompanyData(List<Date> dates, String mic) {
+    public static DateHashMap<Date, DayData> getCompanyData(List<Date> dates, String mic) {
         String path = CompanyData.getFileName(mic);
-        IOException exception;
-        DateHashMap<Date, HashMap<String, Object>> companyData;
         try {
             return filterDataByDates(StockExchangeReader.convertCSVFileToHandledData(path), dates);
         } catch (IOException e) {
-            exception = e;
             System.out.println(e.getMessage());
         }
-        HashMap<String, Object> errHash = new HashMap<>(){{
-            put("IOException", exception);
-        }};
-        return new DateHashMap<>() {{ put(new Date(), errHash); }};
+        return new DateHashMap<>() {{ put(new Date(), new DayData(0, 0, 0, 0, 0)); }};
     }
 
-    public static DateHashMap<Date, HashMap<String, Object>> getCompanyData(Date from, Date to, String mic) {
+    public static DateHashMap<Date, DayData> getCompanyData(Date from, Date to, String mic) {
         List<Date> interval = from.listIntervalTo(to);
         return getCompanyData(interval, mic);
     }
 
-    private static DateHashMap<Date, HashMap<String, Object>> filterDataByDates(
-            DateHashMap<Date, HashMap<String, Object>> data, List<Date> dates) {
-        DateHashMap<Date, HashMap<String, Object>> filteredData = new DateHashMap<>();
+    private static DateHashMap<Date, DayData> filterDataByDates(
+            DateHashMap<Date, DayData> data, List<Date> dates) {
+        DateHashMap<Date, DayData> filteredData = new DateHashMap<>();
         for (Date date :  dates) {
             if (data.containsKey(date))
                 filteredData.put(date, data.get(date));
