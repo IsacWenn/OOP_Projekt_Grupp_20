@@ -5,13 +5,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import model.datahandling.DataHandler;
 
 import java.io.IOException;
-import java.net.URL;
 
 public class ControllerStockListItem extends AnchorPane {
     private final AppController parentController;
     private final String acronym;
+    private boolean active;
     @FXML
     private Label stockAcronym;
     @FXML
@@ -21,33 +22,47 @@ public class ControllerStockListItem extends AnchorPane {
     @FXML
     private AnchorPane stockListItem;
     ControllerStockListItem (String acronym, AppController parentController){
+        loadFXML();
+        initializeLabels(acronym);
+        active = false;
+        stockListItem.setOnMouseClicked(this::onClick);
+
+
+        this.acronym = acronym;
+        this.parentController = parentController;
+    }
+
+    private void initializeLabels(String acronym) {
+        stockAcronym.setText(acronym);
+        //stockValue.setText(DataHandler.getCompanyData(acronym));
+
+    }
+
+    private void loadFXML() {
         FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../MainViewCompanyEntity.fxml")));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
-
-        /*
-        URL fxmlLocation = getClass().getResource("../MainViewCompanyEntity.fxml");
-        FXMLLoader fxmlLoader = new FXMLLoader((fxmlLocation));
-        fxmlLoader.setController(this);
-
-
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("-FXML-/checkOutTextPanel.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-         */
         try {
             fxmlLoader.load();
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        stockAcronym.setText(acronym);
-        stockListItem.setOnMouseClicked(this::onClick);
-
-        this.acronym = acronym;
-        this.parentController = parentController;
     }
+
+    public void togglePressed(){
+        if (!active) {
+            stockListItem.getStyleClass().clear();
+            stockListItem.getStyleClass().add("pane_active");
+        } else {
+            stockListItem.getStyleClass().clear();
+            stockListItem.getStyleClass().add("pane_normal");
+        }
+        active = !active;
+    }
+
     @FXML
     private void onClick(Event event){
         parentController.openStockView(this.acronym);
+        togglePressed();
     }
 }
