@@ -21,9 +21,20 @@ public class ControllerStockListItem extends AnchorPane {
     @FXML
     private AnchorPane stockListItem;
     ControllerStockListItem (String acronym, AppController parentController){
+        FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../MainViewCompanyEntity.fxml")));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+
+        /*
         URL fxmlLocation = getClass().getResource("../MainViewCompanyEntity.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader((fxmlLocation));
         fxmlLoader.setController(this);
+
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("-FXML-/checkOutTextPanel.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+         */
         try {
             fxmlLoader.load();
         } catch (IOException exception) {
