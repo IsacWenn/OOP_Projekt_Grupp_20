@@ -18,7 +18,8 @@ public class DailyChange implements Algorithm{
             DayData dayData = data.get(date);
             double open = dayData.getOpen();
             double closed = dayData.getClosed();
-            calcData.put(date, closed / open);
+            double result = 100 * (closed - open) / open;
+            calcData.put(date, result);
         }
         return calcData;
     }
