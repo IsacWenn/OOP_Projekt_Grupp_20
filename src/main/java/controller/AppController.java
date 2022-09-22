@@ -8,6 +8,7 @@ import model.AppModel;
 import model.Date;
 import model.datahandling.DataHandler;
 import model.datahandling.DateHashMap;
+import model.datahandling.DayData;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,7 +28,7 @@ public class AppController implements Initializable {
     }
 
     private void populateSeries(XYChart.Series<String, Number> series, String mic) {
-        DateHashMap<Date, HashMap<String, Object>> data = DataHandler.getCompanyData(mic);
+        DateHashMap<Date, DayData> data = DataHandler.getCompanyData(mic);
         try {
             model.Date date = new Date(2012,1,1);
             Object close = null;
@@ -37,7 +38,7 @@ public class AppController implements Initializable {
                     succeded = true;
                     date = date.nextDate();
                     try {
-                        close = data.get(date).get("close");
+                        close = data.get(date).getClosed();
                     } catch (NullPointerException e) {
                         succeded = false;
                     }

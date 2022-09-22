@@ -13,7 +13,7 @@ public class CurrencyExchangeReader {
 
     public static void main(String[] args) throws IOException {
 
-        DateHashMap<Date, Float> data = null;
+        DateHashMap<Date, Double> data = null;
         try {
             data = convertCSVFileToHandledData(defaultPath + "SEK_USD.csv");
         } catch (IOException err) {
@@ -25,8 +25,8 @@ public class CurrencyExchangeReader {
         System.out.println(data.get(date1));
     }
 
-    static DateHashMap<Date, Float> convertCSVFileToHandledData(String path) throws IOException {
-        DateHashMap<Date, Float> data = new DateHashMap<>();
+    static DateHashMap<Date, Double> convertCSVFileToHandledData(String path) throws IOException {
+        DateHashMap<Date, Double> data = new DateHashMap<>();
         String line;
         BufferedReader br = new BufferedReader(new FileReader(path));
         br.readLine();
@@ -34,7 +34,7 @@ public class CurrencyExchangeReader {
         while ((line = br.readLine()) != null) {
             String[] values = line.split("[,/]");
             Date date = new Date(Integer.parseInt(values[0]),Integer.parseInt(values[1]),Integer.parseInt(values[2]));
-            float rate = Float.parseFloat(values[3]);
+            double rate = Double.parseDouble(values[3]);
             data.put(date, rate);
         }
 
