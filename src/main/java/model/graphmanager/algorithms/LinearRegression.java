@@ -15,26 +15,46 @@ import java.util.Set;
 
 public class LinearRegression implements Algorithm {
 
-    DateHashMap<Date, DayData> data;
-    Set<Date> keySet;
+    /**
+     * The private {@link DateHashMap} that holds the data of a {@link DayData} connected by the key of a {@link Date}.
+     */
+    private DateHashMap<Date, DayData> data;
 
+    /**
+     * The private {@link List} that holds the ordered dates provided as arguments for the constructor.
+     */
+    private List<Date> listOfKeys;
+
+    /**
+     * A constructor for class LinearRegression.
+     *
+     * @param inData a {@link DateHashMap} for the stock market data containing prices and their respective dates.
+     */
     public LinearRegression(DateHashMap<Date, DayData> inData) {
         this.data = inData;
-        this.keySet = Date.sortDatesQ(inData.keySet());
+        this.listOfKeys = Date.sortDatesQ(data.keySet());
     }
+
+    /**
+     * A method that calculates the values of a linear equation constructed by linear regression of a {@link DateHashMap}.
+     *
+     * @return the {@link Boolean} values of the linear equation corresponding to the provided data.
+     */
 
     @Override
     public DateHashMap<Date, Number> calculate() {
-        DateHashMap<Date, Number> calcData = new DateHashMap<>();
+        DateHashMap<Date, Number> calcData;
         double[] coefficients = getCoefficients();
         calcData = getLinearValues(coefficients[0], coefficients[1]);
         return calcData;
     }
-
+    
     private DateHashMap<Date, Number> getLinearValues(double k, double m) {
         DateHashMap<Date, Number> returnData = new DateHashMap<>();
-        for (Date date: data.keySet()) {
-            double val = k * x + m;
+        double xAxisValue = 1;
+        for (Date date: listOfKeys) {
+            double val = k * xAxisValue + m;
+            xAxisValue++;
             returnData.put(date, val);
         }
         return returnData;
@@ -46,7 +66,7 @@ public class LinearRegression implements Algorithm {
         double sumY = 0;
         double sumXsq = 0;
         double sumXY = 0;
-        for (Date date : data.keySet()) {
+        for (Date date : listOfKeys) {
             xAxisValue++;
             DayData dayData = data.get(date);
             double yAxisValue = dayData.getClosed();
