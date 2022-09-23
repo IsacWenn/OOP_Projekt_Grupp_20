@@ -4,6 +4,12 @@ import model.Date;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 
+/**
+ * LinearRegression is class implementing the Algorithm interface that is used by {@link model.graphmanager.GraphComputer} to
+ * calculate the linear regression of a stocks price.
+ * @author Carl
+ */
+
 public class LinearRegression implements Algorithm {
 
     DateHashMap<Date, DayData> data;
