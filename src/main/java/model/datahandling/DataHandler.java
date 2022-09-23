@@ -90,7 +90,7 @@ public class DataHandler {
     }
 
 
-    public static DateHashMap<Date, Float> getCurrencyData(String path) {
+    public static DateHashMap<Date, Double> getCurrencyData(String path) {
         IOException exception;
         try {
             return CurrencyExchangeReader.convertCSVFileToHandledData(path);
@@ -98,7 +98,7 @@ public class DataHandler {
             exception = e;
             System.out.println(e.getMessage());
         }
-        return new DateHashMap<>() {{ put(new Date(), 0f); }};
+        return new DateHashMap<>() {{ put(new Date(), 0d); }};
     }
 
     public static DateHashMap<Date, DayData> getLatestDayData(String mic) {
