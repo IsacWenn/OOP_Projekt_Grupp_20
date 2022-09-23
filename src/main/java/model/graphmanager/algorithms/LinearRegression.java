@@ -48,7 +48,13 @@ public class LinearRegression implements Algorithm {
         calcData = getLinearValues(coefficients[0], coefficients[1]);
         return calcData;
     }
-    
+
+    /**
+     * A method that calculates the values of a linear equation given coefficients.
+     * @param k the {@link Double} is the slope of the function.
+     * @param m the {@link Double} is the y-intercept of the function.
+     * @return the {@link Boolean} values of the linear equation over timeframe {@link LinearRegression#listOfKeys}.
+     */
     private DateHashMap<Date, Number> getLinearValues(double k, double m) {
         DateHashMap<Date, Number> returnData = new DateHashMap<>();
         double xAxisValue = 1;
@@ -60,6 +66,10 @@ public class LinearRegression implements Algorithm {
         return returnData;
     }
 
+    /**
+     * A method that calculates the coefficients of {@link LinearRegression#listOfKeys}.
+     * @return an array of {@link Double}s.
+     */
     private double[] getCoefficients() {
         double xAxisValue = 0;
         double sumX = 0;
