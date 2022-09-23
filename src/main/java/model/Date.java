@@ -482,4 +482,15 @@ public class Date {
             addAll(sortDatesQ(subListHigher));
         }};
     }
+
+    /**
+     * A static method implementation of QuickSort for sorting Lists of Dates in chronological order.
+     *
+     * @param dateSet a {@link Set} of {@link Date}s to be sorted.
+     * @return a sorted {@link List} of {@link Date}s.
+     */
+    public static List<Date> sortDatesQ(Set<Date> dateSet) {
+        List<Date> dateList = (List<Date>) dateSet;
+        return sortDatesQ(dateList);
+    }
 }
