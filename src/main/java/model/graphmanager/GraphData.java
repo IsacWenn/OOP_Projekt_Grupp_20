@@ -24,4 +24,11 @@ public class GraphData {
         return DataHandler.getCompanyData(from, to, mic);
     }
 
+    DateHashMap<Date, DayData> getLatestDayData(String mic){
+        return DataHandler.getLatestDayData(mic);
+    }
+
+    DateHashMap<Date, Double> getCurrencyData(String currency){
+        return DataHandler.getCurrencyData(currency);
+    }
 }
