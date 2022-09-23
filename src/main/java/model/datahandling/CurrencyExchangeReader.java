@@ -45,7 +45,7 @@ public class CurrencyExchangeReader {
     static DateHashMap<Date, Double> convertCSVFileToHandledData(String path) throws IOException {
         DateHashMap<Date, Double> data = new DateHashMap<>();
         String line;
-        path = defaultPath + path
+        path = defaultPath + path;
         BufferedReader br = new BufferedReader(new FileReader(path));
         br.readLine();
 
