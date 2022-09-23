@@ -16,7 +16,8 @@ import java.util.HashMap;
  */
 public class CurrencyExchangeReader {
     /**
-     * A {@link String} containing the default path to the folder containing the CSV-files of currency exchange rates.
+     * A static final{@link String} containing the default path to the folder containing the CSV-files of currency
+     * exchange rates.
      */
     private static final String defaultPath = "src/main/resources/CurrencyExchangeData/";
 
