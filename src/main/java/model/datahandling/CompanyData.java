@@ -3,10 +3,15 @@ package model.datahandling;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
+/**
+ *  A class that holds a {@link HashMap} containing the essential data for each of the companies in our Database.
+ */
 public class CompanyData {
 
+    /**
+     * A {@link HashMap} that contains the essential data for the different companies in our Database.
+     */
     private static final HashMap<String, HashMap<String, Object>> companyData = new HashMap<>(){{
         put("AAPL", new HashMap<>(){{
             put("name", "Apple, Inc.");
@@ -50,10 +55,21 @@ public class CompanyData {
         }});
     }};
 
+    /**
+     * A method that returns a {@link String} containing the respective filename of the company mic given as a parameter.
+     *
+     * @param mic A {@link String} containing the MIC (Market Identifier Code) of a company.
+     * @return A {@link String} containing the filename of the given company.
+     */
     static String getFileName(String mic) {  /* mic = Market Identifier Code */
         return ((String) companyData.get(mic).get("filename"));
     }
 
+    /**
+     * A method that returns a {@link List} of {@link String}s of the different companies.
+     *
+     * @return A {@link List} of {@link String}s of the company names.
+     */
     static List<String> getCompanyNames() {
         ArrayList<String> names =  new ArrayList<>();
         for (String mic : companyData.keySet())
@@ -61,6 +77,11 @@ public class CompanyData {
         return names;
     }
 
+    /**
+     * A method that returns a {@link List} of {@link String}s of the different company MIC:s
+     *
+     * @return A {@link List} of {@link String}s of tha different company MIC:s
+     */
     static List<String> getMICs() {
         return new ArrayList<>(companyData.keySet());
     }
