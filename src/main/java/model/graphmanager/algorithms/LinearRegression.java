@@ -4,18 +4,23 @@ import model.Date;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 
+import java.util.List;
+import java.util.Set;
+
 /**
  * LinearRegression is class implementing the Algorithm interface that is used by {@link model.graphmanager.GraphComputer} to
- * calculate the linear regression of a stocks price.
+ * calculate the linear regression of an assets price.
  * @author Carl
  */
 
 public class LinearRegression implements Algorithm {
 
     DateHashMap<Date, DayData> data;
+    Set<Date> keySet;
 
     public LinearRegression(DateHashMap<Date, DayData> inData) {
         this.data = inData;
+        this.keySet = Date.sortDatesQ(inData.keySet());
     }
 
     @Override

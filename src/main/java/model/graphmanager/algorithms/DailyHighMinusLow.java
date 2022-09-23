@@ -4,8 +4,18 @@ import model.Date;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 
+/**
+ * DailyHighMinusLow is class implementing the Algorithm interface that is used by {@link model.graphmanager.GraphComputer} to
+ * perform calculations of the daily difference between the highest and lowest price of an asset.
+ *
+ * @author Isac
+ */
+
 public class DailyHighMinusLow implements Algorithm{
 
+    /**
+     * The private {@link DateHashMap} that holds the stock market data of a {@link DayData} connected by the key of a {@link Date}.
+     */
     DateHashMap<Date, DayData> data;
 
     public DailyHighMinusLow(DateHashMap<Date, DayData> inData) {

@@ -8,14 +8,14 @@ import java.io.IOException;
 
 /**
  * DailyChange is class implementing the Algorithm interface that is used by {@link model.graphmanager.GraphComputer} to
- * perform calculations of the daily change of a given stock expressed in percentages.
+ * perform calculations of the daily change of a given asset expressed in percentages.
  *
  * @author Carl
  */
 
 public class DailyChange implements Algorithm{
     /**
-     * The private {@link DateHashMap} that holds the stock market data of a {@link DayData} connected by the key of a {@link Date}.
+     * The private {@link DateHashMap} that holds the data of a {@link DayData} connected by the key of a {@link Date}.
      */
     DateHashMap<Date, DayData> data;
 
