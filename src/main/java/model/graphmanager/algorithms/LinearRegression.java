@@ -15,6 +15,21 @@ public class LinearRegression implements Algorithm {
     @Override
     public DateHashMap<Date, Number> calculate() {
         DateHashMap<Date, Number> calcData = new DateHashMap<>();
+        double[] coefficients = getCoefficients();
+        calcData = getLinearValues(coefficients[0], coefficients[1]);
+        return calcData;
+    }
+
+    private DateHashMap<Date, Number> getLinearValues(double k, double m) {
+        DateHashMap<Date, Number> returnData = new DateHashMap<>();
+        for (Date date: data.keySet()) {
+            double val = k * x + m;
+            returnData.put(date, val);
+        }
+        return returnData;
+    }
+
+    private double[] getCoefficients() {
         double xAxisValue = 0;
         double sumX = 0;
         double sumY = 0;
@@ -31,11 +46,9 @@ public class LinearRegression implements Algorithm {
 
         }
         double denominator = xAxisValue * sumXsq - Math.pow(sumX, 2);
-        double a = (sumY * sumXsq - sumX * sumXY) / denominator;
-        double b = (xAxisValue * sumXY - sumX * sumY) / denominator;
-
-        //calcData.put(date, result);
-        return calcData;
+        double k = (sumY * sumXsq - sumX * sumXY) / denominator;
+        double m = (xAxisValue * sumXY - sumX * sumY) / denominator;
+        return new double[]{k, m};
     }
 
 }
