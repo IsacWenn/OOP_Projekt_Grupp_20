@@ -6,6 +6,8 @@ import java.util.List;
 
 /**
  *  A class that holds a {@link HashMap} containing the essential data for each of the companies in our Database.
+ *
+ * @author Isac
  */
 public class CompanyData {
 
