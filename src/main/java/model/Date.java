@@ -1,6 +1,7 @@
 package model;
 
 import java.io.IOException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,9 +11,21 @@ import java.util.List;
 
 public class Date {
 
+    /**
+     * The private {@link Integer} that holds the year of a {@link Date}.
+     */
     private final int year;
+    /**
+     * The private {@link Integer} that holds the month of a {@link Date}.
+     */
     private final int month;
+    /**
+     * The private {@link Integer} that holds the day of a {@link Date}.
+     */
     private final int day;
+    /**
+     * A private static {@link HashMap} using {@link Integer} as a parameterized key and mapped value. 
+     */
     private static HashMap<Integer, Integer> daysInMonth = new HashMap<>() {{
         put(1, 31);
         put(2, 29);
@@ -224,5 +237,25 @@ public class Date {
             }
         }
         return listInterval;
+    }
+
+    public Date nextWeekDay() throws IOException {
+        LocalDate date = LocalDate.of(this.year, this.month, this.day);
+        DayOfWeek dayOfWeek;
+        do {
+            date = date.plusDays(1);
+            dayOfWeek = date.getDayOfWeek();
+        } while (dayOfWeek != DayOfWeek.SATURDAY && dayOfWeek != DayOfWeek.SUNDAY);
+        return new Date(date.getYear(), date.getMonth().getValue(), date.getDayOfMonth());
+    }
+
+    public Date previousWeekDay() throws IOException {
+        LocalDate date = LocalDate.of(this.year, this.month, this.day);
+        DayOfWeek dayOfWeek;
+        do {
+            date = date.plusDays(-1);
+            dayOfWeek = date.getDayOfWeek();
+        } while (dayOfWeek != DayOfWeek.SATURDAY && dayOfWeek != DayOfWeek.SUNDAY);
+        return new Date(date.getYear(), date.getMonth().getValue(), date.getDayOfMonth());
     }
 }
