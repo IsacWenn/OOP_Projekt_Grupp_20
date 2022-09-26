@@ -24,7 +24,7 @@
             <Spinner fx:id="daySpinner" layoutX="14.0" layoutY="45.0" prefHeight="26.0" prefWidth="70.0" />
             <Spinner fx:id="monthSpinner" layoutX="104.0" layoutY="45.0" prefHeight="26.0" prefWidth="70.0" />
             <Spinner fx:id="yearSpinner" layoutX="193.0" layoutY="45.0" prefHeight="26.0" prefWidth="70.0" />
-            <Spinner fx:id="precisionSpinner" editable="true" initialValue="1" layoutX="14.0" layoutY="77.0" max="10" min="1" prefHeight="26.0" prefWidth="70.0" />
+            <Spinner fx:id="precisionSpinner" editable="true" initialValue="7" layoutX="14.0" layoutY="77.0" max="10" min="1" prefHeight="26.0" prefWidth="70.0" />
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="180.0" prefHeight="100.0" prefWidth="160.0">
             <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="280.0">
