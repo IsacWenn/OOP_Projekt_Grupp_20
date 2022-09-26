@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.FlowPane?>
 
 <AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppController">
-    <LineChart fx:id="chart1" alternativeColumnFillVisible="true" animated="false" layoutX="287.0" layoutY="123.0" prefHeight="554.0" prefWidth="872.0">
+    <LineChart fx:id="displayedGraph" alternativeColumnFillVisible="true" animated="false" layoutX="287.0" layoutY="123.0" prefHeight="554.0" prefWidth="872.0">
       <xAxis>
           <CategoryAxis animated="false" side="BOTTOM" />
       </xAxis>
