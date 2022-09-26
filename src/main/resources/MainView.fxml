@@ -4,6 +4,8 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.SplitPane?>
@@ -21,10 +23,11 @@
     </LineChart>
     <SplitPane dividerPositions="0.15" orientation="VERTICAL" prefHeight="800.0" prefWidth="280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
         <AnchorPane minHeight="100.0" minWidth="180.0" prefHeight="100.0" prefWidth="160.0">
-            <Spinner fx:id="daySpinner" layoutX="14.0" layoutY="45.0" prefHeight="26.0" prefWidth="70.0" />
-            <Spinner fx:id="monthSpinner" layoutX="104.0" layoutY="45.0" prefHeight="26.0" prefWidth="70.0" />
-            <Spinner fx:id="yearSpinner" layoutX="193.0" layoutY="45.0" prefHeight="26.0" prefWidth="70.0" />
             <Spinner fx:id="precisionSpinner" editable="true" initialValue="7" layoutX="14.0" layoutY="77.0" max="10" min="1" prefHeight="26.0" prefWidth="70.0" />
+         <Label layoutX="14.0" layoutY="21.0" text="From date" />
+         <DatePicker fx:id="startDatePicker" layoutX="14.0" layoutY="45.0" prefHeight="26.0" prefWidth="110.0" />
+         <Label layoutX="154.0" layoutY="21.0" text="To date" />
+         <DatePicker fx:id="endDatePicker" layoutX="154.0" layoutY="45.0" prefHeight="26.0" prefWidth="110.0" />
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="180.0" prefHeight="100.0" prefWidth="160.0">
             <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="280.0">

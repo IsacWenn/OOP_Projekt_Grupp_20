@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.FlowPane;
@@ -14,6 +15,7 @@ import model.datahandling.DataHandler;
 import model.datahandling.DayData;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.*;
 
 public class AppController implements Initializable {
@@ -22,10 +24,8 @@ public class AppController implements Initializable {
     private Map<String, ControllerStockListItem> stockListItemMap = new HashMap<String, ControllerStockListItem>();
     private ArrayList<String> activeCompanies;
     private int precisionAmount;
-    private int startDay;
-    private int startMonth;
-    private int startYear;
     private Date startDate;
+    private Date endDate;
 
     @FXML
     private FlowPane stockPane;
@@ -37,21 +37,19 @@ public class AppController implements Initializable {
     private Spinner<Integer> precisionSpinner;
 
     @FXML
-    public Spinner<Integer> yearSpinner;
+    public DatePicker startDatePicker;
 
     @FXML
-    public Spinner<Integer> monthSpinner;
-
-    @FXML
-    public Spinner<Integer> daySpinner;
+    public DatePicker endDatePicker;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeVariables();
         initializeStockPane();
-        initializeSpinners();
+        initializeSettings();
         try {
-            updateDate();
+            updateStartDate(startDatePicker.getValue());
+            updateEndDate(endDatePicker.getValue());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -61,38 +59,36 @@ public class AppController implements Initializable {
     private void initializeVariables() {
         activeCompanies = new ArrayList<String>();
         precisionAmount = 7;
-        startDay = 1;
-        startMonth = 1;
-        startYear = 2012;
+        try {
+            startDate = new Date(2021, 9, 26);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    private void initializeSpinners() {
-        initializeDaySpinner();
-        initializeMonthSpinner();
-        initializeYearSpinner();
+    private void initializeSettings() {
         initializePrecisionSpinner();
+        initializeStartDatePicker();
+        initializeEndDatePicker();
     }
 
-    private void initializeYearSpinner() {
-        SpinnerValueFactory<Integer> yearValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(2012, 2022, 2012);
-        yearSpinner.setValueFactory(yearValueFactory);
-        yearSpinner.setInitialDelay(new Duration(10000));
+    private void initializeStartDatePicker() {
+        startDatePicker.setValue(LocalDate.of(2021, 9, 26));
 
-        yearValueFactory.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-            startYear = newValue;
+        startDatePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             try {
-                updateDate();
+                updateStartDate(newValue);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             refreshStocks();
         });
 
-        yearSpinner.focusedProperty().addListener((observable, oldValue, newValue) -> {
+        startDatePicker.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
-                startYear = Integer.parseInt(yearSpinner.getEditor().getText());
                 try {
-                    updateDate();
+                    updateStartDate(startDatePicker.getValue());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -101,54 +97,22 @@ public class AppController implements Initializable {
         });
     }
 
-    private void initializeMonthSpinner() {
-        SpinnerValueFactory<Integer> monthValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 12, 1);
-        monthSpinner.setValueFactory(monthValueFactory);
-        monthSpinner.setInitialDelay(new Duration(10000));
+    private void initializeEndDatePicker() {
+        endDatePicker.setValue(LocalDate.of(2022, 9, 26));
 
-        monthValueFactory.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+        endDatePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             try {
-                updateDate();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            startMonth = newValue;
-            refreshStocks();
-        });
-
-        monthSpinner.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) {
-                startMonth = Integer.parseInt(monthSpinner.getEditor().getText());
-                try {
-                    updateDate();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                refreshStocks();
-            }
-        });
-    }
-
-    private void initializeDaySpinner() {
-        SpinnerValueFactory<Integer> dayValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 30, 1);
-        daySpinner.setValueFactory(dayValueFactory);
-        daySpinner.setInitialDelay(new Duration(10000));
-
-        daySpinner.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-            startDay = newValue;
-            try {
-                updateDate();
+                updateEndDate(newValue);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             refreshStocks();
         });
 
-        daySpinner.focusedProperty().addListener((observable, oldValue, newValue) -> {
+        endDatePicker.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
-                startDay = Integer.parseInt(daySpinner.getEditor().getText());
                 try {
-                    updateDate();
+                    updateEndDate(endDatePicker.getValue());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -190,8 +154,12 @@ public class AppController implements Initializable {
         }
     }
 
-    public void updateDate() throws IOException {
-        startDate = new Date(startYear, startMonth, startDay);
+    public void updateStartDate(LocalDate newDate) throws IOException {
+        startDate = new Date(newDate.getYear(), newDate.getMonthValue(), newDate.getDayOfMonth());
+    }
+
+    public void updateEndDate(LocalDate newDate) throws IOException {
+        endDate = new Date(newDate.getYear(), newDate.getMonthValue(), newDate.getDayOfMonth());
     }
 
     public void openStockView(String acronym) {
@@ -218,7 +186,7 @@ public class AppController implements Initializable {
             double valueToAdd = 0;
             for(int i = 0, currentCount = 1, slot = 0; i<data.size();) {
                 if (data.get(date) != null) {
-                    if (date.isAfter(startDate)) {
+                    if (date.isAfterOrEqual(startDate) && date.isBeforeOrEqual(endDate)) {
                         valueToAdd += data.get(date).getClosed();
                         if (currentCount == precisionAmount) {
                             valueToAdd = valueToAdd / precisionAmount;
