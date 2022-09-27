@@ -106,6 +106,7 @@ public class Date implements Comparable {
             System.out.println(String.format("Elapsed time : %.4f ms", ((double) elapsedTime)/1000000));
 
 
+
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -274,6 +275,13 @@ public class Date implements Comparable {
 
     /* Comparison methods */
 
+    /**
+     * An implementation of the method compareTo used in the java interface {@link Comparable}. Used in the Collections
+     * library.
+     *
+     * @param o the object to be compared.
+     * @return an Integer value representing the Object relations.
+     */
     @Override
     public int compareTo(Object o) {
         if (o instanceof Date) {
@@ -285,6 +293,19 @@ public class Date implements Comparable {
                 return 0;
         } else
             return 0;
+    }
+
+    /**
+     * Implementation of {@link Object#equals(Object)} for Date class.
+     *
+     * @param obj the object to be compared.
+     * @return A {@link Boolean} value representing the comparison.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Date)
+            return this.isEqualTo((Date) obj);
+        return super.equals(obj);
     }
 
     /**
