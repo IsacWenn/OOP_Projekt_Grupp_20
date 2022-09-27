@@ -12,7 +12,7 @@ import java.util.*;
  *
  * @author Isac
  */
-public class Date {
+public class Date implements Comparable {
 
     /**
      * The private {@link Integer} that holds the year of a {@link Date}.
@@ -88,6 +88,20 @@ public class Date {
             stop = System.nanoTime();
             long elapsedTime = stop - start;
             System.out.println("Sorted List using QuickSort:");
+            System.out.println(sortingList);
+            System.out.println(String.format("Elapsed time : %.4f ms", ((double) elapsedTime)/1000000));
+
+            Collections.shuffle(sortingList);
+
+            System.out.println("Scrambled List: ");
+            System.out.println(sortingList);
+
+
+            start = System.nanoTime();
+            sortingList = sortDates(sortingList);
+            stop = System.nanoTime();
+            elapsedTime = stop - start;
+            System.out.println("Sorted List using Collections:");
             System.out.println(sortingList);
             System.out.println(String.format("Elapsed time : %.4f ms", ((double) elapsedTime)/1000000));
 
@@ -259,6 +273,19 @@ public class Date {
     }
 
     /* Comparison methods */
+
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof Date) {
+            if (this.isBefore((Date) o))
+                return -1;
+            else if (this.isAfter((Date) o))
+                return 1;
+            else
+                return 0;
+        } else
+            return 0;
+    }
 
     /**
      * A method that checks if this Date is before the Date given in the parameter otherDate.
@@ -445,6 +472,7 @@ public class Date {
      * @param inList A {@link List} of {@link Date}s to be sorted.
      * @return a sorted {@link List} of {@link Date}s.
      */
+    @Deprecated
     public static List<Date> sortDatesQ(List<Date> inList) {
         if (inList.size() <= 1)
             return inList;
@@ -489,8 +517,32 @@ public class Date {
      * @param dateSet a {@link Set} of {@link Date}s to be sorted.
      * @return a sorted {@link List} of {@link Date}s.
      */
+    @Deprecated
     public static List<Date> sortDatesQ(Set<Date> dateSet) {
         List<Date> dateList = (List<Date>) dateSet;
         return sortDatesQ(dateList);
+    }
+
+    /**
+     * A static method for sorting Lists of Dates in chronological order.
+     *
+     * @param inList a {@link List} of {@link Date}s to be sorted.
+     * @return a sorted {@link List} of {@link Date}s.
+     */
+    public static List<Date> sortDates(List<Date> inList) {
+        List<Date> newList = new ArrayList<>(){{ addAll(inList); }};
+        Collections.sort(newList);
+        return newList;
+    }
+
+    /**
+     * A static method for sorting Lists of Dates in chronological order.
+     *
+     * @param dateSet a {@link Set} of {@link Date}s to be sorted.
+     * @return a sorted {@link List} of {@link Date}s.
+     */
+    public static List<Date> sortDates(Set<Date> dateSet) {
+        List<Date> dateList = (List<Date>) dateSet;
+        return sortDates(dateList);
     }
 }
