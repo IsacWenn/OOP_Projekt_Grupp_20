@@ -14,20 +14,6 @@ import model.datahandling.DayData;
 public class DailyHighMinusLow implements Algorithm{
 
     /**
-     * The private {@link DateHashMap} that holds the stock market data of a {@link DayData} connected by the key of a {@link Date}.
-     */
-    private DateHashMap<Date, DayData> data;
-
-    /**
-     * A constructor for class DailyHighMinusLow.
-     *
-     * @param inData a {@link DateHashMap} for the stock market data containing prices and their respective dates.
-     */
-    public DailyHighMinusLow(DateHashMap<Date, DayData> inData) {
-        this.data = inData;
-    }
-
-    /**
      * A method that calculates the difference between the highest and lowest price of a given asset expressed in percentages.
      * @return {@link DateHashMap}
      */

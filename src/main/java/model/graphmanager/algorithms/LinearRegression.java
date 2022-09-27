@@ -16,33 +16,13 @@ import java.util.Set;
 public class LinearRegression implements Algorithm {
 
     /**
-     * The private {@link DateHashMap} that holds the data of a {@link DayData} connected by the key of a {@link Date}.
-     */
-    private DateHashMap<Date, DayData> data;
-
-    /**
-     * The private {@link List} that holds the ordered dates provided as arguments for the constructor.
-     */
-    private List<Date> listOfKeys;
-
-    /**
-     * A constructor for class LinearRegression.
-     *
-     * @param inData a {@link DateHashMap} for the stock market data containing prices and their respective dates.
-     */
-    public LinearRegression(DateHashMap<Date, DayData> inData) {
-        this.data = inData;
-        this.listOfKeys = Date.sortDatesQ(data.keySet());
-    }
-
-    /**
      * A method that calculates the values of a linear equation constructed by linear regression of a {@link DateHashMap}.
      *
      * @return the {@link Boolean} values of the linear equation corresponding to the provided data.
      */
 
     @Override
-    public DateHashMap<Date, Number> calculate() {
+    public DateHashMap<Date, Number> calculate(DateHashMap<Date, DayData> data) {
         DateHashMap<Date, Number> calcData;
         double[] coefficients = getCoefficients();
         calcData = getLinearValues(coefficients[0], coefficients[1]);
