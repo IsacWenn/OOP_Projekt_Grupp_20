@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Date is a class used for representing a certain day of a year. It is used in our program primarily as a key in
@@ -75,6 +73,24 @@ public class Date {
             Date date6 = new Date(2022, 9, 19);
             System.out.println("List Interval");
             System.out.println(date6.listIntervalTo(new Date()));
+
+            System.out.println("\n \n Time for some sorting :)");
+            Date date7 = new Date(2012, 9, 12);
+            List<Date> sortingList = date7.listIntervalTo(date6);
+            Collections.shuffle(sortingList);
+
+            System.out.println("Scrambled List: ");
+            System.out.println(sortingList);
+
+            long stop;
+            long start = System.nanoTime();
+            sortingList = sortDatesQ(sortingList);
+            stop = System.nanoTime();
+            long elapsedTime = stop - start;
+            System.out.println("Sorted List using QuickSort:");
+            System.out.println(sortingList);
+            System.out.println(String.format("Elapsed time : %.4f ms", ((double) elapsedTime)/1000000));
+
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -421,5 +437,60 @@ public class Date {
             dayOfWeek = date.getDayOfWeek();
         } while (dayOfWeek != DayOfWeek.SATURDAY && dayOfWeek != DayOfWeek.SUNDAY);
         return new Date(date.getYear(), date.getMonth().getValue(), date.getDayOfMonth());
+    }
+
+    /**
+     * A static method implementation of QuickSort for sorting Lists of Dates in chronological order.
+     *
+     * @param inList A {@link List} of {@link Date}s to be sorted.
+     * @return a sorted {@link List} of {@link Date}s.
+     */
+    public static List<Date> sortDatesQ(List<Date> inList) {
+        if (inList.size() <= 1)
+            return inList;
+        else if (inList.size() == 2) {
+            Date date1 = inList.get(0);
+            Date date2 = inList.get(1);
+
+            // Conditional assignment of the return value using the Java Ternary operator '?'.
+            return (date1.isBeforeOrEqual(date2)) ? inList : (new ArrayList<>(){{
+                add(date2);
+                add(date1);
+            }});
+        }
+
+        List<Date> subListLower = new ArrayList<>();
+        List<Date> subListHigher = new ArrayList<>();
+        Date pivot = inList.get(inList.size() - 1); // Selects the rightmost element as the pivot
+
+        /*
+        * Adds the different dates in Inlist (excluding the pivot) to either subListLower or subListHigher
+        * depending on if the selected date is before/equal or after the pivot.
+        */
+        for (int i = 0; i < inList.size() - 1; i++) {
+            Date date = inList.get(i);
+            if (date.isBeforeOrEqual(pivot))
+                subListLower.add(date);
+            else
+                subListHigher.add(date);
+        }
+
+        // Use recursion to sort the sublists of lower and higher Date:s and add them around the pivot. This  
+        return new ArrayList<>(){{
+            addAll(sortDatesQ(subListLower));
+            add(pivot);
+            addAll(sortDatesQ(subListHigher));
+        }};
+    }
+
+    /**
+     * A static method implementation of QuickSort for sorting Lists of Dates in chronological order.
+     *
+     * @param dateSet a {@link Set} of {@link Date}s to be sorted.
+     * @return a sorted {@link List} of {@link Date}s.
+     */
+    public static List<Date> sortDatesQ(Set<Date> dateSet) {
+        List<Date> dateList = (List<Date>) dateSet;
+        return sortDatesQ(dateList);
     }
 }
