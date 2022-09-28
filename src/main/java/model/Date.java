@@ -371,8 +371,6 @@ public class Date implements Comparable {
      * @return the {@link Boolean} value of the comparison.
      */
     public Boolean isEqualTo(Date otherDate) {
-        if (this.equals(otherDate))
-            return true;
         return (this.year == otherDate.getYear() &&
                 this.month == otherDate.getMonth() &&
                 this.day == otherDate.getDay());
