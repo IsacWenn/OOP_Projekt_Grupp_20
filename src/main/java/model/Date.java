@@ -561,7 +561,7 @@ public class Date implements Comparable {
      * @return a sorted {@link List} of {@link Date}s.
      */
     public static List<Date> sortDates(Set<Date> dateSet) {
-        List<Date> dateList = (List<Date>) dateSet;
+        List<Date> dateList = new ArrayList<>(dateSet);
         return sortDates(dateList);
     }
 }
