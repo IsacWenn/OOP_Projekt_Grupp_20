@@ -14,10 +14,6 @@ public class GraphComputer {
         this.algorithm = new DailyChange();
     }
 
-    public GraphComputer(Algorithm alg) {
-        this.algorithm = alg;
-    }
-
     void setAlgorithm(Algorithm algorithm) {
         this.algorithm = algorithm;
     }

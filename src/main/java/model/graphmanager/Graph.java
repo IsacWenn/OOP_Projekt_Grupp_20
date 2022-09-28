@@ -11,15 +11,31 @@ import model.graphmanager.algorithms.DailyChange;
 import model.graphmanager.algorithms.DailyHighMinusLow;
 
 import java.io.IOException;
+import java.util.List;
 
 public class Graph {
 
     DateHashMap<Date, Number> values;
     DateHashMap<Date, DayData> data;
-
     private GraphData graphData;
     private GraphComputer graphComputer;
-    public Graph() {
+
+    public Graph(String mic){
+        init();
+        this.data = graphData.getCompanyData(mic);
+    }
+
+    public Graph(String mic, Date from, Date to) {
+        init();
+        this.data = graphData.getCompanyData(mic, from, to);
+    }
+
+    public Graph(String mic, List<Date> dates){
+        init();
+        this.data = graphData.getCompanyData(mic ,dates);
+    }
+
+    private void init() {
         this.graphComputer = new GraphComputer();
         this.graphData = new GraphData();
         this.values = new DateHashMap<>();
@@ -41,9 +57,8 @@ public class Graph {
         try {
 
             Date date1 = new Date(2022, 9, 9);
-            String currency = "SEK_USD";
-            DateHashMap<Date, Double> data = DataHandler.getCurrencyData(currency);
-            Graph graph = new Graph();
+            String mic = "MSFT";
+            Graph graph = new Graph(mic, date1, new Date());
             graph.update();
             System.out.println(graph.values);
 

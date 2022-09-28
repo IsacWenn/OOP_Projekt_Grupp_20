@@ -21,7 +21,7 @@ public class GraphTest {
             Date date1 = new Date(2022, 9, 9);
             String mic = "MSFT";
             DateHashMap<Date, DayData> data = DataHandler.getCompanyData(date1, new Date(), mic);
-            Graph graph = new Graph();
+            Graph graph = new Graph(mic, date1, new Date());
             graph.update();
             System.out.println(graph.values);
 
