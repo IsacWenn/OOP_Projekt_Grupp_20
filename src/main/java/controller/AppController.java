@@ -9,11 +9,17 @@ import model.Date;
 import model.datahandling.DataHandler;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
+import model.graphmodel.GraphModel;
+import model.graphmodel.graphablefunctions.DailyChange;
+import model.graphmodel.graphablefunctions.DailyHighMinusLow;
+import model.graphmodel.graphablefunctions.LinearRegression;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class AppController implements Initializable {
     private final AppModel model = AppModel.getInstance();
@@ -21,31 +27,39 @@ public class AppController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
-        series1.setName("Stonks");
-        populateSeries(series1, "AAPL");
+        XYChart.Series<String, Number> series2 = new XYChart.Series<>();
+        series1.setName("Stock");
+        series2.setName("LinReg");
+        populateSeries(series1, "AAPL", false);
+        populateSeries(series2, "AAPL", true);
+
         chart1.setCreateSymbols(false);
-        chart1.getData().add(series1);
+        //chart1.getData().add(series1);
+        chart1.getData().add(series2);
     }
 
-    private void populateSeries(XYChart.Series<String, Number> series, String mic) {
+    private void populateSeries(XYChart.Series<String, Number> series, String mic, Boolean lin) {
         DateHashMap<Date, DayData> data = DataHandler.getCompanyData(mic);
         try {
-            model.Date date = new Date(2012,1,1);
-            Object close = null;
-            for(int i = 0; i<data.size();i++) {
-                boolean succeded;
-                do {
-                    succeded = true;
-                    date = date.nextDate();
-                    try {
-                        close = data.get(date).getClosed();
-                    } catch (NullPointerException e) {
-                        succeded = false;
-                    }
-                } while (!succeded);
-                float closeValue = (float) close;
-                series.getData().add(i, new XYChart.Data<>(date.toString(), closeValue));
+            Date date1 = new Date(2020,1,1);
+            Date date2 = new Date(2021,2,1);
+
+            GraphModel graphModel = new GraphModel("TSLA", date1, date2);
+            if (lin)
+                graphModel.updateAlgorithm(new DailyHighMinusLow());
+            graphModel.update();
+
+            DateHashMap<Date, Number> values = graphModel.getValues();
+
+            List<Date> sortedDates = Date.sortDates((Set<Date>) values.keySet());
+
+            int index = 0;
+            for (Date date : sortedDates) {
+                Number yVal = values.get(date);
+                series.getData().add(index, new XYChart.Data<>(date.toString(), yVal));
+                index++;
             }
+
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
