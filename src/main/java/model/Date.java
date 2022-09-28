@@ -12,7 +12,7 @@ import java.util.*;
  *
  * @author Isac
  */
-public class Date {
+public class Date implements Comparable {
 
     /**
      * The private {@link Integer} that holds the year of a {@link Date}.
@@ -90,6 +90,21 @@ public class Date {
             System.out.println("Sorted List using QuickSort:");
             System.out.println(sortingList);
             System.out.println(String.format("Elapsed time : %.4f ms", ((double) elapsedTime)/1000000));
+
+            Collections.shuffle(sortingList);
+
+            System.out.println("Scrambled List: ");
+            System.out.println(sortingList);
+
+
+            start = System.nanoTime();
+            sortingList = sortDates(sortingList);
+            stop = System.nanoTime();
+            elapsedTime = stop - start;
+            System.out.println("Sorted List using Collections:");
+            System.out.println(sortingList);
+            System.out.println(String.format("Elapsed time : %.4f ms", ((double) elapsedTime)/1000000));
+
 
 
         } catch (IOException e) {
@@ -259,6 +274,39 @@ public class Date {
     }
 
     /* Comparison methods */
+
+    /**
+     * An implementation of the method compareTo used in the java interface {@link Comparable}. Used in the Collections
+     * library.
+     *
+     * @param o the object to be compared.
+     * @return an Integer value representing the Object relations.
+     */
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof Date) {
+            if (this.isBefore((Date) o))
+                return -1;
+            else if (this.isAfter((Date) o))
+                return 1;
+            else
+                return 0;
+        } else
+            return 0;
+    }
+
+    /**
+     * Implementation of {@link Object#equals(Object)} for Date class.
+     *
+     * @param obj the object to be compared.
+     * @return A {@link Boolean} value representing the comparison.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Date)
+            return this.isEqualTo((Date) obj);
+        return super.equals(obj);
+    }
 
     /**
      * A method that checks if this Date is before the Date given in the parameter otherDate.
@@ -445,6 +493,7 @@ public class Date {
      * @param inList A {@link List} of {@link Date}s to be sorted.
      * @return a sorted {@link List} of {@link Date}s.
      */
+    @Deprecated
     public static List<Date> sortDatesQ(List<Date> inList) {
         if (inList.size() <= 1)
             return inList;
@@ -489,8 +538,32 @@ public class Date {
      * @param dateSet a {@link Set} of {@link Date}s to be sorted.
      * @return a sorted {@link List} of {@link Date}s.
      */
+    @Deprecated
     public static List<Date> sortDatesQ(Set<Date> dateSet) {
         List<Date> dateList = (List<Date>) dateSet;
         return sortDatesQ(dateList);
+    }
+
+    /**
+     * A static method for sorting Lists of Dates in chronological order.
+     *
+     * @param inList a {@link List} of {@link Date}s to be sorted.
+     * @return a sorted {@link List} of {@link Date}s.
+     */
+    public static List<Date> sortDates(List<Date> inList) {
+        List<Date> newList = new ArrayList<>(){{ addAll(inList); }};
+        Collections.sort(newList);
+        return newList;
+    }
+
+    /**
+     * A static method for sorting Lists of Dates in chronological order.
+     *
+     * @param dateSet a {@link Set} of {@link Date}s to be sorted.
+     * @return a sorted {@link List} of {@link Date}s.
+     */
+    public static List<Date> sortDates(Set<Date> dateSet) {
+        List<Date> dateList = (List<Date>) dateSet;
+        return sortDates(dateList);
     }
 }
