@@ -14,10 +14,6 @@ public class GraphComputer {
         this.algorithm = new DailyChange(); // TODO change to closing price
     }
 
-    public GraphComputer(Algorithm alg) {
-        this.algorithm = alg;
-    }
-
     void setAlgorithm(Algorithm algorithm) {
         this.algorithm = algorithm;
     }

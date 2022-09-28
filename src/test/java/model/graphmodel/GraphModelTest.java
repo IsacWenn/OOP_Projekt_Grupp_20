@@ -18,9 +18,9 @@ public class GraphModelTest {
             Date date1 = new Date(2022, 9, 9);
             String mic = "MSFT";
             DateHashMap<Date, DayData> data = DataHandler.getCompanyData(date1, new Date(), mic);
-            GraphModel graphModel = new GraphModel();
-            graphModel.update();
-            System.out.println(graphModel.values);
+            Graph graph = new Graph(mic, date1, new Date());
+            graph.update();
+            System.out.println(graph.values);
 
         } catch (IOException e) {
             System.out.println(e.getMessage());

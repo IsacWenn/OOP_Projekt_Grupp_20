@@ -8,15 +8,31 @@ import model.datahandling.DayData;
 import model.graphmodel.algorithms.Algorithm;
 
 import java.io.IOException;
+import java.util.List;
 
 public class GraphModel {
 
     DateHashMap<Date, Number> values;
     DateHashMap<Date, DayData> data;
-
     private GraphData graphData;
     private GraphComputer graphComputer;
-    public GraphModel() {
+
+    public Graph(String mic){
+        init();
+        this.data = graphData.getCompanyData(mic);
+    }
+
+    public Graph(String mic, Date from, Date to) {
+        init();
+        this.data = graphData.getCompanyData(mic, from, to);
+    }
+
+    public Graph(String mic, List<Date> dates){
+        init();
+        this.data = graphData.getCompanyData(mic ,dates);
+    }
+
+    private void init() {
         this.graphComputer = new GraphComputer();
         this.graphData = new GraphData();
         this.values = new DateHashMap<>();
@@ -43,6 +59,10 @@ public class GraphModel {
             GraphModel graphModel = new GraphModel();
             graphModel.update();
             System.out.println(graphModel.values);
+            String mic = "MSFT";
+            Graph graph = new Graph(mic, date1, new Date());
+            graph.update();
+            System.out.println(graph.values);
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
