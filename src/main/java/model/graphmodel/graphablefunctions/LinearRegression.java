@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * LinearRegression is class implementing the Algorithm interface that is used by {@link model.graphmodel.GraphComputer} to
- * calculate the linear regression of an assets price.
+ * calculate the linear regression of a dataset.
  * @author Carl
  */
 
@@ -17,7 +17,7 @@ public class LinearRegression implements Graphable {
 
     /**
      * A method that calculates the values of a linear equation constructed by linear regression of a {@link DateHashMap}.
-     *
+     * @param data {@link DateHashMap} containing {@link Date} and {@link DayData}
      * @return the {@link Boolean} values of the linear equation corresponding to the provided data.
      */
 
@@ -30,15 +30,18 @@ public class LinearRegression implements Graphable {
 
     /**
      * A method that calculates the values of a linear equation given coefficients.
-     * @param k the {@link Double} is the slope of the function.
-     * @param m the {@link Double} is the y-intercept of the function.
-     * @return the {@link Boolean} values of the linear equation over timeframe {@link ??????????}.
+     * @param k A {@link Double} is the slope of the function.
+     * @param m A {@link Double} is the y-intercept of the function.
+     * @param sortedDates A {@link List} containing {@link Date} in chronological order.
+     * @return A {@link DateHashMap} containing values of the linear equation over timeframe {@link ??????????}.
      */
     private DateHashMap<Date, Number> getLinearValues(double k, double m, List<Date> sortedDates) {
         DateHashMap<Date, Number> returnData = new DateHashMap<>();
         double xAxisValue = 1;
         for (Date date: sortedDates) {
-            double val = Math.abs(k * xAxisValue + m);  // TODO you cannot have negative prices
+            double val = k * xAxisValue + m;
+            if (val <= 0)
+                val = 0.01;
             xAxisValue++;
             returnData.put(date, val);
         }
@@ -46,7 +49,7 @@ public class LinearRegression implements Graphable {
     }
 
     /**
-     * A method that calculates the coefficients of {@link LinearRegression#?????????????}.
+     * A method that calculates the coefficients of {@link }.
      * @return an array of {@link Double}s.
      */
     private double[] getCoefficients(DateHashMap<Date, DayData> data, List<Date> sortedDates) {
