@@ -1,4 +1,4 @@
-package model.graphmodel.algorithms;
+package model.graphmodel.graphablefunctions;
 
 import model.Date;
 import model.datahandling.DateHashMap;
@@ -11,7 +11,7 @@ import model.datahandling.DayData;
  * @author Isac
  */
 
-public class DailyHighMinusLow implements Algorithm{
+public class DailyHighMinusLow implements Graphable {
 
     /**
      * A method that calculates the difference between the highest and lowest price of a given asset expressed in percentages.

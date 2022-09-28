@@ -1,4 +1,4 @@
-package model.graphmodel.algorithms;
+package model.graphmodel.graphablefunctions;
 
 import model.Date;
 import model.datahandling.DateHashMap;
@@ -11,7 +11,7 @@ import model.datahandling.DayData;
  * @author Carl
  */
 
-public class DailyChange implements Algorithm{
+public class DailyChange implements Graphable {
 
     /**
      * A method that calculates the daily change of a given asset expressed in percentages.

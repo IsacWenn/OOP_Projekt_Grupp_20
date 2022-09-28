@@ -3,23 +3,23 @@ package model.graphmodel;
 import model.Date;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
-import model.graphmodel.algorithms.Algorithm;
-import model.graphmodel.algorithms.DailyChange;
+import model.graphmodel.graphablefunctions.Graphable;
+import model.graphmodel.graphablefunctions.DailyChange;
 
 public class GraphComputer {
 
-    private Algorithm algorithm;
+    private Graphable graphable;
 
     public GraphComputer(){
-        this.algorithm = new DailyChange(); // TODO change to closing price
+        this.graphable = new DailyChange(); // TODO change to closing price
     }
 
-    void setAlgorithm(Algorithm algorithm) {
-        this.algorithm = algorithm;
+    void setAlgorithm(Graphable graphable) {
+        this.graphable = graphable;
     }
 
     public DateHashMap<Date, Number> getCalculatedData(DateHashMap<Date, DayData> data) {
-        return algorithm.calculate(data);
+        return graphable.calculate(data);
     }
 
     public void calculateCurrency(DateHashMap<Date, Double> currency,
@@ -32,7 +32,7 @@ public class GraphComputer {
     }
 
     public DateHashMap<Date, Number> updateValues(DateHashMap<Date, DayData> data) {
-        return algorithm.calculate(data);
+        return graphable.calculate(data);
     }
 
 }
