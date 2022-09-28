@@ -12,7 +12,7 @@ import java.util.*;
  *
  * @author Isac
  */
-public class Date implements Comparable {
+public class Date implements Comparable<Date> {
 
     /**
      * The private {@link Integer} that holds the year of a {@link Date}.
@@ -283,15 +283,12 @@ public class Date implements Comparable {
      * @return an Integer value representing the Object relations.
      */
     @Override
-    public int compareTo(Object o) {
-        if (o instanceof Date) {
-            if (this.isBefore((Date) o))
-                return -1;
-            else if (this.isAfter((Date) o))
-                return 1;
-            else
-                return 0;
-        } else
+    public int compareTo(Date o) {
+        if (this.isBefore((Date) o))
+            return -1;
+        else if (this.isAfter((Date) o))
+            return 1;
+        else
             return 0;
     }
 
@@ -564,4 +561,5 @@ public class Date implements Comparable {
         List<Date> dateList = new ArrayList<>(dateSet);
         return sortDates(dateList);
     }
+
 }
