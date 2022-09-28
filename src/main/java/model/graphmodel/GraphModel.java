@@ -46,10 +46,10 @@ public class GraphModel {
     }
 
     public void changeCurrencyValue(String currency){
-        this.graphComputer.calculateCurrency(graphData.getCurrencyData(currency), values);
+        this.graphComputer.calculateCurrency(graphData.getCurrencyData(currency), data);
     }
 
-    public DateHashMap<Date, Number> getValues() {  // TODO Should we have this getter?
+    public DateHashMap<Date, Number> getValues() {
         return this.values;
     }
 

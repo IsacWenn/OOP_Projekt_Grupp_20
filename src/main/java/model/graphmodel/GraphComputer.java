@@ -24,11 +24,14 @@ public class GraphComputer {
     }
 
     public void calculateCurrency(DateHashMap<Date, Double> currency,
-                                  DateHashMap<Date, Number> data) {
+                                  DateHashMap<Date, DayData> data) {
         for (Date date : data.keySet()) {
-            double processedDouble = (double) data.get(date);
-            processedDouble *= currency.get(date);
-            data.put(date, processedDouble);
+            int volume = data.get(date).getVolume();
+            double open = data.get(date).getOpen() * currency.get(date);
+            double close = data.get(date).getClosed() * currency.get(date);
+            double high = data.get(date).getHigh() * currency.get(date);
+            double low = data.get(date).getLow() * currency.get(date);
+            data.put(date, new DayData(volume, open, close, high, low));
         }
     }
 
