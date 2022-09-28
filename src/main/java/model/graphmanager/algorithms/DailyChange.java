@@ -1,10 +1,8 @@
 package model.graphmanager.algorithms;
 
-import model.Date;
+import model.util.Date;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
-
-import java.io.IOException;
 
 /**
  * DailyChange is class implementing the Algorithm interface that is used by {@link model.graphmanager.GraphComputer} to

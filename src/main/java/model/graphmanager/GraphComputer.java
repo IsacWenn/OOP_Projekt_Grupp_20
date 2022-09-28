@@ -1,8 +1,7 @@
 package model.graphmanager;
 
-import model.Date;
+import model.util.Date;
 import model.datahandling.DateHashMap;
-import model.datahandling.DayData;
 import model.graphmanager.algorithms.Algorithm;
 
 public class GraphComputer {

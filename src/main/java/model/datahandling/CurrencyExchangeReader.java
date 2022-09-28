@@ -1,11 +1,10 @@
 package model.datahandling;
 
-import model.Date;
+import model.util.Date;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
 
 /**
  * A class that reads the different currency exchange files and converts them into {@link DateHashMap}s for use in

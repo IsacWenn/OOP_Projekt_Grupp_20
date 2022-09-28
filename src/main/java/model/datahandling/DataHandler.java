@@ -6,11 +6,10 @@ package model.datahandling;
 *
 */
 
-import model.Date;
+import model.util.Date;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**

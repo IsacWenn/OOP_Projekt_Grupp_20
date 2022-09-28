@@ -5,14 +5,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import model.AppModel;
-import model.Date;
+import model.util.Date;
 import model.datahandling.DataHandler;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class AppController implements Initializable {
@@ -30,7 +29,7 @@ public class AppController implements Initializable {
     private void populateSeries(XYChart.Series<String, Number> series, String mic) {
         DateHashMap<Date, DayData> data = DataHandler.getCompanyData(mic);
         try {
-            model.Date date = new Date(2012,1,1);
+            Date date = new Date(2012,1,1);
             Object close = null;
             for(int i = 0; i<data.size();i++) {
                 boolean succeded;

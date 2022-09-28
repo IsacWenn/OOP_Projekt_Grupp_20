@@ -1,4 +1,4 @@
-package model;
+package model.util;
 
 import java.io.IOException;
 import java.time.DayOfWeek;
