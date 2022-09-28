@@ -25,7 +25,7 @@ public class LinearRegression implements Graphable {
     public DateHashMap<Date, Number> calculate(DateHashMap<Date, DayData> data) {;
         List<Date> sortedDates = Date.sortDates(data.keySet());
         double[] coefficients = getCoefficients(data, sortedDates);
-        return getLinearValues(coefficients[0], coefficients[1], sortedDates);
+        return getLinearValues(coefficients[1], coefficients[0], sortedDates);
     }
 
     /**

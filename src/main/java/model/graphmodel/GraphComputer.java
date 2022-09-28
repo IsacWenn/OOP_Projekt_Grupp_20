@@ -3,6 +3,7 @@ package model.graphmodel;
 import model.Date;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
+import model.graphmodel.graphablefunctions.DailyClosingPrice;
 import model.graphmodel.graphablefunctions.Graphable;
 import model.graphmodel.graphablefunctions.DailyChange;
 
@@ -11,7 +12,7 @@ public class GraphComputer {
     private Graphable graphable;
 
     public GraphComputer(){
-        this.graphable = new DailyChange(); // TODO change to closing price
+        this.graphable = new DailyClosingPrice();
     }
 
     void setAlgorithm(Graphable graphable) {
