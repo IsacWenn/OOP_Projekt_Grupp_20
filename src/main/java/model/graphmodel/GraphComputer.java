@@ -1,17 +1,17 @@
-package model.graphmanager;
+package model.graphmodel;
 
 import model.Date;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
-import model.graphmanager.algorithms.Algorithm;
-import model.graphmanager.algorithms.DailyChange;
+import model.graphmodel.algorithms.Algorithm;
+import model.graphmodel.algorithms.DailyChange;
 
 public class GraphComputer {
 
     private Algorithm algorithm;
 
     public GraphComputer(){
-        this.algorithm = new DailyChange();
+        this.algorithm = new DailyChange(); // TODO change to closing price
     }
 
     public GraphComputer(Algorithm alg) {

@@ -1,17 +1,14 @@
-package model.graphmanager;
+package model.graphmodel;
 
 import model.Date;
 import model.datahandling.DataHandler;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
-import model.graphmanager.algorithms.DailyChange;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-public class GraphTest {
+public class GraphModelTest {
 
 
     @Test
@@ -21,9 +18,9 @@ public class GraphTest {
             Date date1 = new Date(2022, 9, 9);
             String mic = "MSFT";
             DateHashMap<Date, DayData> data = DataHandler.getCompanyData(date1, new Date(), mic);
-            Graph graph = new Graph();
-            graph.update();
-            System.out.println(graph.values);
+            GraphModel graphModel = new GraphModel();
+            graphModel.update();
+            System.out.println(graphModel.values);
 
         } catch (IOException e) {
             System.out.println(e.getMessage());

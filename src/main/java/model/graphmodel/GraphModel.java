@@ -1,25 +1,22 @@
-package model.graphmanager;
+package model.graphmodel;
 
 
 import model.Date;
 import model.datahandling.DataHandler;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
-import model.graphmanager.algorithms.Algorithm;
-import model.graphmanager.algorithms.AlgorithmFactory;
-import model.graphmanager.algorithms.DailyChange;
-import model.graphmanager.algorithms.DailyHighMinusLow;
+import model.graphmodel.algorithms.Algorithm;
 
 import java.io.IOException;
 
-public class Graph {
+public class GraphModel {
 
     DateHashMap<Date, Number> values;
     DateHashMap<Date, DayData> data;
 
     private GraphData graphData;
     private GraphComputer graphComputer;
-    public Graph() {
+    public GraphModel() {
         this.graphComputer = new GraphComputer();
         this.graphData = new GraphData();
         this.values = new DateHashMap<>();
@@ -43,9 +40,9 @@ public class Graph {
             Date date1 = new Date(2022, 9, 9);
             String currency = "SEK_USD";
             DateHashMap<Date, Double> data = DataHandler.getCurrencyData(currency);
-            Graph graph = new Graph();
-            graph.update();
-            System.out.println(graph.values);
+            GraphModel graphModel = new GraphModel();
+            graphModel.update();
+            System.out.println(graphModel.values);
 
         } catch (IOException e) {
             System.out.println(e.getMessage());

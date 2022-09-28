@@ -1,4 +1,4 @@
-package model.graphmanager.algorithms;
+package model.graphmodel.algorithms;
 
 import model.Date;
 import model.datahandling.DateHashMap;

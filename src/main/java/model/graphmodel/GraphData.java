@@ -1,4 +1,4 @@
-package model.graphmanager;
+package model.graphmodel;
 
 import model.Date;
 import model.datahandling.DataHandler;

@@ -1,4 +1,4 @@
-package model.graphmanager;
+package model.graphmodel;
 
 
 import model.Date;
@@ -12,7 +12,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class GraphDataTest {
+public class GraphModelDataTest {
     private GraphData graphData;
 
     @BeforeEach

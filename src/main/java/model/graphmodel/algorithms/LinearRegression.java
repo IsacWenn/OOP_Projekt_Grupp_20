@@ -1,14 +1,11 @@
-package model.graphmanager.algorithms;
+package model.graphmodel.algorithms;
 
 import model.Date;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 
-import java.util.List;
-import java.util.Set;
-
 /**
- * LinearRegression is class implementing the Algorithm interface that is used by {@link model.graphmanager.GraphComputer} to
+ * LinearRegression is class implementing the Algorithm interface that is used by {@link model.graphmodel.GraphComputer} to
  * calculate the linear regression of an assets price.
  * @author Carl
  */

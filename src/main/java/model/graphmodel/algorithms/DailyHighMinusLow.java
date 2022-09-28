@@ -1,11 +1,11 @@
-package model.graphmanager.algorithms;
+package model.graphmodel.algorithms;
 
 import model.Date;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 
 /**
- * DailyHighMinusLow is class implementing the Algorithm interface that is used by {@link model.graphmanager.GraphComputer} to
+ * DailyHighMinusLow is class implementing the Algorithm interface that is used by {@link model.graphmodel.GraphComputer} to
  * perform calculations of the daily difference between the highest and lowest price of an asset.
  *
  * @author Isac

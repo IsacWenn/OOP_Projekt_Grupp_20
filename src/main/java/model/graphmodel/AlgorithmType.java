@@ -1,4 +1,4 @@
-package model.graphmanager;
+package model.graphmodel;
 
 enum AlgorithmType {
     ONE_COMPANY_VECTOR,

@@ -1,13 +1,11 @@
-package model.graphmanager.algorithms;
+package model.graphmodel.algorithms;
 
 import model.Date;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 
-import java.io.IOException;
-
 /**
- * DailyChange is class implementing the Algorithm interface that is used by {@link model.graphmanager.GraphComputer} to
+ * DailyChange is class implementing the Algorithm interface that is used by {@link model.graphmodel.GraphComputer} to
  * perform calculations of the daily change of a given asset expressed in percentages.
  *
  * @author Carl
