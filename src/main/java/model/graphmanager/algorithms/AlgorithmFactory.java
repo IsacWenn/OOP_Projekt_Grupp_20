@@ -7,9 +7,9 @@ import model.datahandling.DayData;
 import java.util.List;
 
 public class AlgorithmFactory {
-
+    
     public static DailyChange createDailyChange(DateHashMap<Date, DayData> data) {
-        return new DailyChange(data);
+        return new DailyChange();
     }
 
 }

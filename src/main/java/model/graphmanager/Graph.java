@@ -4,6 +4,7 @@ package model.graphmanager;
 import model.Date;
 import model.datahandling.DataHandler;
 import model.datahandling.DateHashMap;
+import model.datahandling.DayData;
 import model.graphmanager.algorithms.Algorithm;
 import model.graphmanager.algorithms.AlgorithmFactory;
 import model.graphmanager.algorithms.DailyChange;
@@ -14,41 +15,35 @@ import java.io.IOException;
 public class Graph {
 
     DateHashMap<Date, Number> values;
+    DateHashMap<Date, DayData> data;
 
     private GraphData graphData;
     private GraphComputer graphComputer;
-    protected Graph(Algorithm alg) {
-        this.graphComputer = new GraphComputer(alg);
+    public Graph() {
+        this.graphComputer = new GraphComputer();
         this.graphData = new GraphData();
         this.values = new DateHashMap<>();
     }
 
     public void update() {
-        this.values = this.graphComputer.updateValues();
+        this.values = this.graphComputer.updateValues(data);
     }
 
     public void updateAlgorithm(Algorithm alg) {
         this.graphComputer.setAlgorithm(alg);
     }
 
+    public void changeCurrencyValue(String currency){
+        this.graphComputer.calculateCurrency(graphData.getCurrencyData(currency), values);
+    }
+
     public static void main(String[] args) {
         try {
 
             Date date1 = new Date(2022, 9, 9);
-            String mic = "MSFT";
-            DateHashMap data = DataHandler.getCompanyData(date1, new Date(), mic);
-            // Graph graph = new Graph(new Volatility(data));
-            // graph.values = graph.graphData.getCompanyData(mic, date1, new Date());
-
-            Graph graph = new Graph(new DailyChange(data));
-
-
-            graph.updateAlgorithm(
-                    AlgorithmFactory.createDailyChange(
-                            graph.graphData.getCompanyData(mic, date1, new Date())
-                    )
-            );
-
+            String currency = "SEK_USD";
+            DateHashMap<Date, Double> data = DataHandler.getCurrencyData(currency);
+            Graph graph = new Graph();
             graph.update();
             System.out.println(graph.values);
 

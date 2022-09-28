@@ -20,7 +20,7 @@ public class DailyChange implements Algorithm{
      * @return {@link DateHashMap}
     */
     @Override
-    public DateHashMap<Date, Number> calculate() {
+    public DateHashMap<Date, Number> calculate(DateHashMap<Date, DayData> data) {
         DateHashMap<Date, Number> calcData = new DateHashMap<>();
         for (Date date : data.keySet()) {
             DayData dayData = data.get(date);
