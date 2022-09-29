@@ -44,74 +44,7 @@ public class Date implements Comparable<Date> {
         put(11, 30);
         put(12, 31);
     }};
-
-
-    public static void main(String[] args) {
-        try {
-            Date date1 = new Date(2000,  3, 5);
-            Date date2 = new Date(2001, 3, 5);
-            Date date3 = new Date(2001, 6, 5);
-            Date date4 = new Date(2001, 3, 6);
-            Date date5 = new Date(2001, 3, 5);
-
-            System.out.println(date1.isBefore(date2));
-            System.out.println(date2.isBefore(date3));
-            System.out.println(date2.isBefore(date4));
-            System.out.println(date2.isBeforeOrEqual(date5));
-            System.out.println(date5.isAfter(date1));
-            System.out.println(!(date1.isAfterOrEqual(date3)));
-            System.out.println(date2.isEqualTo(date5));
-
-            System.out.println(new Date("09/13/2022"));
-
-            System.out.println(date4.isEqualTo(date5.nextDate()));
-            System.out.println(date5.isEqualTo(date4.previousDate()));
-
-            System.out.println(date1.plusDays(365));
-            System.out.println(date1.minusDays(2));
-
-            Date date6 = new Date(2022, 9, 19);
-            System.out.println("List Interval");
-            System.out.println(date6.listIntervalTo(new Date()));
-
-            System.out.println("\n \n Time for some sorting :)");
-            Date date7 = new Date(2012, 9, 12);
-            List<Date> sortingList = date7.listIntervalTo(date6);
-            Collections.shuffle(sortingList);
-
-            System.out.println("Scrambled List: ");
-            System.out.println(sortingList);
-
-            long stop;
-            long start = System.nanoTime();
-            sortingList = sortDatesQ(sortingList);
-            stop = System.nanoTime();
-            long elapsedTime = stop - start;
-            System.out.println("Sorted List using QuickSort:");
-            System.out.println(sortingList);
-            System.out.println(String.format("Elapsed time : %.4f ms", ((double) elapsedTime)/1000000));
-
-            Collections.shuffle(sortingList);
-
-            System.out.println("Scrambled List: ");
-            System.out.println(sortingList);
-
-
-            start = System.nanoTime();
-            sortingList = sortDates(sortingList);
-            stop = System.nanoTime();
-            elapsedTime = stop - start;
-            System.out.println("Sorted List using Collections:");
-            System.out.println(sortingList);
-            System.out.println(String.format("Elapsed time : %.4f ms", ((double) elapsedTime)/1000000));
-
-
-
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
+    
     /**
      * A constructor for class Date with separate parameters for each attribute.
      *
@@ -547,7 +480,7 @@ public class Date implements Comparable<Date> {
      */
     @Deprecated
     public static List<Date> sortDatesQ(Set<Date> dateSet) {
-        List<Date> dateList = (List<Date>) dateSet;
+        List<Date> dateList = new ArrayList<>(dateSet);
         return sortDatesQ(dateList);
     }
 

@@ -79,7 +79,13 @@ public class TestDate {
     @Test
     public void constructingInvalidDateUsingIntegersShouldThrowException() {
         assertThrows(IOException.class, () -> {
-            Date testDate = new Date(0, 0, 0);
+            Date testDate = new Date(0, 10, 10);
+        });
+        assertThrows(IOException.class, () -> {
+            Date testDate = new Date(2000, 0, 10);
+        });
+        assertThrows(IOException.class, () -> {
+            Date testDate = new Date(2000, 10, 0);
         });
     }
 
@@ -99,6 +105,11 @@ public class TestDate {
     @Test
     public void datesNotRepresentingSameDateShouldNotBeEqual() {
         assertNotEquals(date1, date2);
+    }
+
+    @Test
+    public void dateAndADifferentTypeShouldNotBeEqual() {
+        assertNotEquals(date1, "Hej");
     }
 
     @Test
@@ -171,6 +182,8 @@ public class TestDate {
         assertTrue(date2.isBefore(date3));
         assertFalse(date2.isBefore(date1));
         assertFalse(date2.isBefore(new Date(date2)));
+        assertFalse(date1.isBefore(firstCorrectDate));
+        assertTrue(firstCorrectDate.isBefore(date1));
     }
 
     @Test
@@ -178,6 +191,7 @@ public class TestDate {
         assertTrue(date2.isBeforeOrEqual(date3));
         assertFalse(date2.isBeforeOrEqual(date1));
         assertTrue(date2.isBeforeOrEqual(new Date(date2)));
+        assertFalse(date1.isBeforeOrEqual(firstCorrectDate));
     }
 
     @Test
@@ -290,5 +304,23 @@ public class TestDate {
         List<Date> newList = Date.sortDates(dateSet);
         assertEquals(dateList, newList);
     }
-    
+
+    @Test
+    public void sortDatesQShouldReturnAListOfDatesInChronologicalOrder() throws IOException {
+        List<Date> listOfThisYearsDates = new Date(2022, 1, 1).listIntervalTo(new Date());
+        List<Date> testList = new ArrayList<>(){{ addAll(listOfThisYearsDates); }};
+
+        assertEquals(listOfThisYearsDates, testList);
+        while (listOfThisYearsDates.equals(testList))
+            Collections.shuffle(testList);
+        assertNotEquals(listOfThisYearsDates, testList);
+        testList = Date.sortDatesQ(testList);
+        assertEquals(listOfThisYearsDates, testList);
+    }
+
+    @Test
+    public void sortDatesQShouldBeAbleToHandleSets() {
+        List<Date> newList = Date.sortDatesQ(dateSet);
+        assertEquals(dateList, newList);
+    }
 }
