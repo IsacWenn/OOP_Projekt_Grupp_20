@@ -1,10 +1,9 @@
 package model.graphmodel;
 
 import model.Date;
-import model.datahandling.DataHandler;
-import model.datahandling.DateHashMap;
-import model.datahandling.DayData;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 
@@ -12,19 +11,31 @@ public class GraphModelTest {
 
 
     @Test
-    public void graphTest(){
-        try {
+    public void graphModelCreatedWithOnlyMicShouldContainAllAvailableCompanyData() {
+        GraphModel graphModel = new GraphModel("AAPL");
+        assertEquals(2515, graphModel.data.size());
+    }
 
-            Date date1 = new Date(2022, 9, 9);
-            String mic = "MSFT";
-            DateHashMap<Date, DayData> data = DataHandler.getCompanyData(date1, new Date(), mic);
-            GraphModel graph = new GraphModel(mic, date1, new Date());
-            graph.update();
-            System.out.println(graph.values);
+    @Test
+    public void graphModelCreatedWithMicAndDateIntervalShouldContainDataForThatInterval() {
+        try {
+            Date date1 = new Date(2022, 1, 1);
+            GraphModel graphModel = new GraphModel("AAPL", date1, new Date());
 
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
+    }
+
+    @Test
+    public void graphModelCreatedWithAListOfDatesShouldContainDataForThoseDates(){
+        try{
+            Date date1 = new Date(2022,1 ,1);
+            Date date2 = new Date(2022,1, 2);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
