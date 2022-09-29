@@ -5,10 +5,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.FlowPane;
-import javafx.util.Duration;
 import model.AppModel;
 import model.Date;
 import model.datahandling.DataHandler;
@@ -34,13 +33,11 @@ public class AppController implements Initializable {
     private LineChart<String, Number> displayedGraph;
 
     @FXML
-    private Spinner<Integer> precisionSpinner;
+    private DatePicker startDatePicker;
 
     @FXML
-    public DatePicker startDatePicker;
+    private DatePicker endDatePicker;
 
-    @FXML
-    public DatePicker endDatePicker;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -64,11 +61,12 @@ public class AppController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        endDate = new Date();
 
     }
 
     private void initializeSettings() {
-        initializePrecisionSpinner();
+        displayedGraph.setCreateSymbols(false);
         initializeStartDatePicker();
         initializeEndDatePicker();
     }
@@ -79,20 +77,21 @@ public class AppController implements Initializable {
         startDatePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             try {
                 updateStartDate(newValue);
+                refreshStocks();
             } catch (IOException e) {
+                startDatePicker.setValue(oldValue);
                 e.printStackTrace();
             }
-            refreshStocks();
         });
 
         startDatePicker.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
                 try {
                     updateStartDate(startDatePicker.getValue());
+                    refreshStocks();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                refreshStocks();
             }
         });
     }
@@ -103,38 +102,21 @@ public class AppController implements Initializable {
         endDatePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             try {
                 updateEndDate(newValue);
+                refreshStocks();
             } catch (IOException e) {
+                endDatePicker.setValue(oldValue);
                 e.printStackTrace();
             }
-            refreshStocks();
         });
 
         endDatePicker.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
                 try {
                     updateEndDate(endDatePicker.getValue());
+                    refreshStocks();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                refreshStocks();
-            }
-        });
-    }
-
-    private void initializePrecisionSpinner() {
-        SpinnerValueFactory<Integer> precisionValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10, 1);
-        precisionSpinner.setValueFactory(precisionValueFactory);
-        precisionSpinner.setInitialDelay(new Duration(10000));
-
-        precisionSpinner.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-            precisionAmount = newValue;
-            refreshStocks();
-        });
-
-        precisionSpinner.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) {
-                precisionAmount = Integer.parseInt(precisionSpinner.getEditor().getText());
-                refreshStocks();
             }
         });
     }
@@ -155,11 +137,17 @@ public class AppController implements Initializable {
     }
 
     public void updateStartDate(LocalDate newDate) throws IOException {
-        startDate = new Date(newDate.getYear(), newDate.getMonthValue(), newDate.getDayOfMonth());
+        Date temp = new Date(newDate.getYear(), newDate.getMonthValue(), newDate.getDayOfMonth());
+        if (temp.isBefore(endDate)) {
+            startDate = temp;
+        } else throw new IOException("Invalid date");
     }
 
     public void updateEndDate(LocalDate newDate) throws IOException {
-        endDate = new Date(newDate.getYear(), newDate.getMonthValue(), newDate.getDayOfMonth());
+        Date temp = new Date(newDate.getYear(), newDate.getMonthValue(), newDate.getDayOfMonth());
+        if (temp.isAfter(startDate)) {
+            endDate = temp;
+        } else throw new IOException("Invalid date");
     }
 
     public void openStockView(String acronym) {
@@ -181,12 +169,13 @@ public class AppController implements Initializable {
         XYChart.Series<String, Number> seriesToAdd = new XYChart.Series<>();
         Map<Date, DayData> data = DataHandler.getCompanyData(acronym);
         seriesToAdd.setName(acronym);
+        autoSetPrecision();
         try {
             Date date = new Date(2012,1,1);
             double valueToAdd = 0;
             for(int i = 0, currentCount = 1, slot = 0; i<data.size();) {
                 if (data.get(date) != null) {
-                    if (date.isAfterOrEqual(startDate) && date.isBeforeOrEqual(endDate)) {
+                    if (dateIsWithinLimits(date)) {
                         valueToAdd += data.get(date).getClosed();
                         if (currentCount == precisionAmount) {
                             valueToAdd = valueToAdd / precisionAmount;
@@ -202,8 +191,15 @@ public class AppController implements Initializable {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        displayedGraph.setCreateSymbols(false);
         displayedGraph.getData().add(seriesToAdd);
+    }
+
+    private void autoSetPrecision() {
+        precisionAmount = (startDate.listIntervalTo(endDate).size()) / 400 + 1;
+    }
+
+    private boolean dateIsWithinLimits(Date date) {
+        return (date.isAfterOrEqual(startDate) && date.isBeforeOrEqual(endDate));
     }
 
     private void refreshStocks() {
