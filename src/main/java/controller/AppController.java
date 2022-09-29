@@ -5,12 +5,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
 import javafx.scene.layout.FlowPane;
 import model.AppModel;
-import model.Date;
 import model.datahandling.DataHandler;
+import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 import java.io.IOException;
 import java.net.URL;
@@ -19,12 +17,12 @@ import java.util.*;
 
 public class AppController implements Initializable {
 
-    private final AppModel model = AppModel.getInstance();
+    private final AppModel appModel = AppModel.getInstance();
     private Map<String, ControllerStockListItem> stockListItemMap = new HashMap<String, ControllerStockListItem>();
     private ArrayList<String> activeCompanies;
-    private int precisionAmount;
-    private Date startDate;
-    private Date endDate;
+    private int numDataPoints;
+    private model.util.Date startDate;
+    private model.util.Date endDate;
 
     @FXML
     private FlowPane stockPane;
@@ -54,19 +52,19 @@ public class AppController implements Initializable {
     }
 
     private void initializeVariables() {
-        activeCompanies = new ArrayList<String>();
-        precisionAmount = 7;
         try {
-            startDate = new Date(2021, 9, 26);
+            activeCompanies = new ArrayList<String>();
+            numDataPoints = 7;
+            startDate = new model.util.Date(2021, 9, 26);
+            endDate = new model.util.Date();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
-        endDate = new Date();
 
     }
 
     private void initializeSettings() {
-        displayedGraph.setCreateSymbols(false);
+        //displayedGraph.setCreateSymbols(false);
         initializeStartDatePicker();
         initializeEndDatePicker();
     }
@@ -137,14 +135,14 @@ public class AppController implements Initializable {
     }
 
     public void updateStartDate(LocalDate newDate) throws IOException {
-        Date temp = new Date(newDate.getYear(), newDate.getMonthValue(), newDate.getDayOfMonth());
+        model.util.Date temp = new model.util.Date(newDate.getYear(), newDate.getMonthValue(), newDate.getDayOfMonth());
         if (temp.isBefore(endDate)) {
             startDate = temp;
         } else throw new IOException("Invalid date");
     }
 
     public void updateEndDate(LocalDate newDate) throws IOException {
-        Date temp = new Date(newDate.getYear(), newDate.getMonthValue(), newDate.getDayOfMonth());
+        model.util.Date temp = new model.util.Date(newDate.getYear(), newDate.getMonthValue(), newDate.getDayOfMonth());
         if (temp.isAfter(startDate)) {
             endDate = temp;
         } else throw new IOException("Invalid date");
@@ -167,38 +165,38 @@ public class AppController implements Initializable {
 
     private void addStockToGraph(String acronym) {
         XYChart.Series<String, Number> seriesToAdd = new XYChart.Series<>();
-        Map<Date, DayData> data = DataHandler.getCompanyData(acronym);
+        DateHashMap<model.util.Date, DayData> data = DataHandler.getCompanyData(acronym);
+
         seriesToAdd.setName(acronym);
-        autoSetPrecision();
-        Date date = new Date(startDate);
-        double valueToAdd = 0;
-        int currentCount = 1, slot = 0;
-        try {
-            while (date.isBeforeOrEqual(endDate)) {
-                if (data.get(date) == null) {
-                    date = date.nextDate();
-                    continue;
-                }
-                valueToAdd += data.get(date).getClosed();
-                if (currentCount == precisionAmount) {
-                    valueToAdd = valueToAdd / precisionAmount;
-                    seriesToAdd.getData().add(slot, new XYChart.Data<>(date.toString(), valueToAdd));
-                    valueToAdd = 0; currentCount = 1;
-                    slot++;
-                } else currentCount++;
-                date = date.nextDate();
+        List<model.util.Date> orderedDates;
+        orderedDates = model.util.Date.sortDates(data.keySet());
+
+        double valueToAdd = 0, currentCount = 1, stepAmount;
+        int slot = 0;
+        double daysInterval = (startDate.listIntervalTo(endDate).size());
+
+        if (daysInterval <= numDataPoints) {
+            stepAmount = 1;
+        } else {
+            stepAmount = daysInterval/numDataPoints;
+        }
+
+        for (model.util.Date currentDate : orderedDates) {
+            if (!dateIsWithinLimits(currentDate)) { //TODO importera mindre lista
+                continue;
             }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+            valueToAdd += data.get(currentDate).getClosed();
+            if (currentCount <= stepAmount) {
+                valueToAdd = valueToAdd / stepAmount;
+                seriesToAdd.getData().add(slot, new XYChart.Data<>(currentDate.toString(), valueToAdd));
+                valueToAdd = 0; currentCount = stepAmount - currentCount;
+                slot++;
+            } else currentCount++;
         }
         displayedGraph.getData().add(seriesToAdd);
     }
 
-    private void autoSetPrecision() {
-        precisionAmount = (startDate.listIntervalTo(endDate).size()) / 400 + 1;
-    }
-
-    private boolean dateIsWithinLimits(Date date) {
+    private boolean dateIsWithinLimits(model.util.Date date) {
         return (date.isAfterOrEqual(startDate) && date.isBeforeOrEqual(endDate));
     }
 
