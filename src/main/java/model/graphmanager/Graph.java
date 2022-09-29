@@ -1,13 +1,12 @@
 package model.graphmanager;
 
 
-import model.Date;
+import model.util.Date;
 import model.datahandling.DataHandler;
 import model.datahandling.DateHashMap;
 import model.graphmanager.algorithms.Algorithm;
 import model.graphmanager.algorithms.AlgorithmFactory;
 import model.graphmanager.algorithms.DailyChange;
-import model.graphmanager.algorithms.DailyHighMinusLow;
 
 import java.io.IOException;
 

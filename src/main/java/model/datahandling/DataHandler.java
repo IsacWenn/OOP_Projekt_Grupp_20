@@ -6,12 +6,13 @@ package model.datahandling;
 *
 */
 
-import model.Date;
+import model.util.CurrencyEnum;
+import model.util.Date;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The class that communicates with the outside of the package datahandling. Contains methods for retrieving different
@@ -20,45 +21,6 @@ import java.util.List;
  * @author Isac
  */
 public class DataHandler {
-
-    public static void main(String[] args) {
-        List<String> mics = getMICs();
-        System.out.println(mics);
-        // System.out.println(getCompanyData(mics.get(0)));
-
-        List<Date> dates = new ArrayList<>();
-        DateHashMap<Date, DayData> data = getCompanyData(mics.get(0));
-        Date afterDate;
-        try {
-            afterDate = new Date(2022, 9, 8);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-            afterDate = new Date();
-        }
-        for (Date date : data.keySet())
-            if (date.isAfter(afterDate))
-                dates.add(date);
-        System.out.println(dates);
-
-        System.out.println(getCompanyData(dates, mics.get(0)));
-        try {
-            System.out.println(getCompanyData(mics.get(0)).get(new Date(2022, 9, 9)));
-        } catch (IOException e) {
-            System.out.println("Error");
-        }
-
-
-        try {
-            Date date1 = new Date(2022, 9, 9);
-            System.out.println(getCompanyData(date1.listIntervalTo(new Date()), mics.get(0)));
-
-            System.out.println("Latest Date : ");
-            System.out.println(getLatestDayData(mics.get(0)));
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-
-    }
 
     /**
      * A method for retrieving a {@link DateHashMap} of {@link Date}s and {@link DayData} for a company.
@@ -179,5 +141,31 @@ public class DataHandler {
      */
     public static List<String> getCompanyNames() {
         return CompanyData.getCompanyNames();
+    }
+
+    /**
+     * A method that retrieves the {@link CurrencyEnum} representing a company's trading currency.
+     *
+     * @param mic A {@link String} of the company's MIC.
+     * @return A {@link CurrencyEnum} representing that company's trading currency.
+     */
+    public static CurrencyEnum getCompanyTradingCurrency(String mic) { return CompanyData.getCurrency(mic); }
+
+    /**
+     * A method that returns the closest exhange rate for a given date. If there is not an exchange rate for the given
+     * date it starts to search through the past.
+     *
+     * @param date The specified {@link Date}.
+     * @param map The {@link Map} to retrieve the exchange rate for the given date.
+     * @return A {@link Double} exchange rate for the given date.
+     * @throws IOException If there is not any given exchange rates before the given date.
+     */
+    public static Double retreiveClosestExchangeRate(Date date, Map<Date, Double> map) throws IOException {
+        try {
+            return map.get(date);
+        }
+        catch (NullPointerException e) {
+            return retreiveClosestExchangeRate(date.previousDate(), map);
+        }
     }
 }

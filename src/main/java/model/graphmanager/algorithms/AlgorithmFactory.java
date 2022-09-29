@@ -1,10 +1,8 @@
 package model.graphmanager.algorithms;
 
-import model.Date;
+import model.util.Date;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
-
-import java.util.List;
 
 public class AlgorithmFactory {
 

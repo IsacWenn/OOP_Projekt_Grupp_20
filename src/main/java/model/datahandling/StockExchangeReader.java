@@ -1,6 +1,6 @@
 package model.datahandling;
 
-import model.Date;
+import model.util.Date;
 
 import java.io.*;
 import java.util.*;
@@ -27,7 +27,7 @@ public class StockExchangeReader {
     private static void testing() {
         System.out.println("Testing");
 
-        HashMap<model.Date, DayData> data = null;
+        HashMap<Date, DayData> data = null;
         try {
             data = convertCSVFileToHandledData(defaultPath + "HistoricalData_AAPL.csv");
         } catch (IOException err) {
@@ -57,8 +57,8 @@ public class StockExchangeReader {
      * @return A {@link DateHashMap} containing all the information of that file.
      * @throws IOException if the file that the parameter path refers to does not exist.
      */
-    static DateHashMap<model.Date, DayData> convertCSVFileToHandledData(String path) throws IOException {
-        DateHashMap<model.Date, DayData> data = new DateHashMap<>();
+    static DateHashMap<Date, DayData> convertCSVFileToHandledData(String path) throws IOException {
+        DateHashMap<Date, DayData> data = new DateHashMap<>();
         String line;
         path = defaultPath + path;
         BufferedReader br = new BufferedReader(new FileReader(path));
@@ -66,7 +66,7 @@ public class StockExchangeReader {
         while ((line = br.readLine()) != null) {
             String[] values = line.split(",");
             // String date = values[0];
-            model.Date date = new Date(values[0]);
+            Date date = new Date(values[0]);
 
             int volume = Integer.parseInt(values[2]);
             double close = Double.parseDouble(values[1].substring(1));

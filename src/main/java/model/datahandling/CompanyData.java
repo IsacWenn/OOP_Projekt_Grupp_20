@@ -1,5 +1,7 @@
 package model.datahandling;
 
+import model.util.CurrencyEnum;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,42 +20,52 @@ public class CompanyData {
         put("AAPL", new HashMap<>(){{
             put("name", "Apple, Inc.");
             put("filename", "HistoricalData_AAPL.csv");
+            put("currency", CurrencyEnum.USD);
         }});
         put("AMD", new HashMap<>(){{
             put("name", "Advanced Micro Devices, Inc.");
             put("filename", "HistoricalData_AMD.csv");
+            put("currency", CurrencyEnum.USD);
         }});
         put("AMZN", new HashMap<>(){{
             put("name", "Amazon.com, Inc.");
             put("filename", "HistoricalData_AMZN.csv");
+            put("currency", CurrencyEnum.USD);
         }});
         put("CSCO", new HashMap<>(){{
             put("name", "Cisco Systems, Inc.");
             put("filename", "HistoricalData_CSCO.csv");
+            put("currency", CurrencyEnum.USD);
         }});
         put("META", new HashMap<>(){{
             put("name", "Meta Platforms, Inc.");
             put("filename", "HistoricalData_META.csv");
+            put("currency", CurrencyEnum.USD);
         }});
         put("MSFT", new HashMap<>(){{
             put("name", "Microsoft Corporation");
             put("filename", "HistoricalData_MSFT.csv");
+            put("currency", CurrencyEnum.USD);
         }});
         put("NFLX", new HashMap<>(){{
             put("name", "Netflix, Inc.");
             put("filename", "HistoricalData_NFLX.csv");
+            put("currency", CurrencyEnum.USD);
         }});
         put("QCOM", new HashMap<>(){{
             put("name", "Qualcomm Incorporated");
             put("filename", "HistoricalData_QCOM.csv");
+            put("currency", CurrencyEnum.USD);
         }});
         put("SBUX", new HashMap<>(){{
             put("name", "Starbucks Corporation");
             put("filename", "HistoricalData_SBUX.csv");
+            put("currency", CurrencyEnum.USD);
         }});
         put("TSLA", new HashMap<>(){{
             put("name", "Tesla, Inc.");
             put("filename", "HistoricalData_TSLA.csv");
+            put("currency", CurrencyEnum.USD);
         }});
     }};
 
@@ -87,5 +99,7 @@ public class CompanyData {
     static List<String> getMICs() {
         return new ArrayList<>(companyData.keySet());
     }
+
+    static CurrencyEnum getCurrency(String mic) { return (CurrencyEnum) companyData.get(mic).get("currency"); }
 
 }
