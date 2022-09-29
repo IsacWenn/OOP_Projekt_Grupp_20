@@ -33,7 +33,7 @@ public class GraphComputer {
      * @param graphableENUM A {@link Graphables} that represent a {@link Graphable} in {@link GraphableFactory}.
      */
     void setAlgorithm(Graphables graphableENUM) {
-        this.graphable = GraphableFactory.createGraphable(graphableENUM);
+        this.graphable = GraphableFactory.create(graphableENUM);
     }
 
     /**

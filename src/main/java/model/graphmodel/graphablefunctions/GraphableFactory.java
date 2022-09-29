@@ -18,7 +18,7 @@ public class GraphableFactory {
      * @param graphables an enum that holds all the different {@link Graphable}
      * @return an instance of a class that matches the enum
      */
-    static Graphable create(Graphables graphables) {
+    static public Graphable create(Graphables graphables) {
         if (graphables.equals(Graphables.DAILYCHANGE))
             return new DailyChange();
         if (graphables.equals(Graphables.DAILYCLOSINGPRICE))
