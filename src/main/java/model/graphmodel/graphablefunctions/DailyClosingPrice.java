@@ -10,7 +10,7 @@ import model.datahandling.DayData;
  * @author Carl
  */
 
-public class DailyClosingPrice implements Graphable {
+class DailyClosingPrice implements Graphable {
     /**
      * A method that returns the daily closing price of an asset.
      *

@@ -113,11 +113,6 @@ public class GraphModel {
      *
      * @return the {@link DateHashMap} containing the values
      */
-
-    public void changeCurrencyValue(String currency){
-        this.graphComputer.calculateCurrency(graphData.getCurrencyData(currency), data);
-    }
-    
     public DateHashMap<Date, Number> getValues() {
         return this.values;
     }
