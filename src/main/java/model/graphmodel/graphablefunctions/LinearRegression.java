@@ -13,7 +13,7 @@ import java.util.List;
  * @author Carl
  */
 
-public class LinearRegression implements Graphable {
+class LinearRegression implements Graphable {
 
     /**
      * A method that calculates the values of a linear equation constructed by linear regression of a {@link DateHashMap}.
