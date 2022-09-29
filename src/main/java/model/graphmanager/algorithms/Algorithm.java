@@ -1,8 +1,7 @@
 package model.graphmanager.algorithms;
 
-import model.Date;
+import model.util.Date;
 import model.datahandling.DateHashMap;
-import model.datahandling.DayData;
 
 /**
  * An interface for the strategy pattern where all instances of {@link Algorithm} have a calculate method that

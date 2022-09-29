@@ -1,6 +1,6 @@
 package model.graphmanager;
 
-import model.Date;
+import model.util.Date;
 import model.datahandling.DataHandler;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;

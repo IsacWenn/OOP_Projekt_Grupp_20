@@ -1,4 +1,4 @@
-package model;
+package model.util;
 
 import java.io.IOException;
 import java.time.DayOfWeek;
@@ -12,7 +12,7 @@ import java.util.*;
  *
  * @author Isac
  */
-public class Date implements Comparable {
+public class Date implements Comparable<Date> {
 
     /**
      * The private {@link Integer} that holds the year of a {@link Date}.
@@ -44,74 +44,7 @@ public class Date implements Comparable {
         put(11, 30);
         put(12, 31);
     }};
-
-
-    public static void main(String[] args) {
-        try {
-            Date date1 = new Date(2000,  3, 5);
-            Date date2 = new Date(2001, 3, 5);
-            Date date3 = new Date(2001, 6, 5);
-            Date date4 = new Date(2001, 3, 6);
-            Date date5 = new Date(2001, 3, 5);
-
-            System.out.println(date1.isBefore(date2));
-            System.out.println(date2.isBefore(date3));
-            System.out.println(date2.isBefore(date4));
-            System.out.println(date2.isBeforeOrEqual(date5));
-            System.out.println(date5.isAfter(date1));
-            System.out.println(!(date1.isAfterOrEqual(date3)));
-            System.out.println(date2.isEqualTo(date5));
-
-            System.out.println(new Date("09/13/2022"));
-
-            System.out.println(date4.isEqualTo(date5.nextDate()));
-            System.out.println(date5.isEqualTo(date4.previousDate()));
-
-            System.out.println(date1.plusDays(365));
-            System.out.println(date1.minusDays(2));
-
-            Date date6 = new Date(2022, 9, 19);
-            System.out.println("List Interval");
-            System.out.println(date6.listIntervalTo(new Date()));
-
-            System.out.println("\n \n Time for some sorting :)");
-            Date date7 = new Date(2012, 9, 12);
-            List<Date> sortingList = date7.listIntervalTo(date6);
-            Collections.shuffle(sortingList);
-
-            System.out.println("Scrambled List: ");
-            System.out.println(sortingList);
-
-            long stop;
-            long start = System.nanoTime();
-            sortingList = sortDatesQ(sortingList);
-            stop = System.nanoTime();
-            long elapsedTime = stop - start;
-            System.out.println("Sorted List using QuickSort:");
-            System.out.println(sortingList);
-            System.out.println(String.format("Elapsed time : %.4f ms", ((double) elapsedTime)/1000000));
-
-            Collections.shuffle(sortingList);
-
-            System.out.println("Scrambled List: ");
-            System.out.println(sortingList);
-
-
-            start = System.nanoTime();
-            sortingList = sortDates(sortingList);
-            stop = System.nanoTime();
-            elapsedTime = stop - start;
-            System.out.println("Sorted List using Collections:");
-            System.out.println(sortingList);
-            System.out.println(String.format("Elapsed time : %.4f ms", ((double) elapsedTime)/1000000));
-
-
-
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
+    
     /**
      * A constructor for class Date with separate parameters for each attribute.
      *
@@ -121,10 +54,10 @@ public class Date implements Comparable {
      * @throws IOException if the parameters provided are not considered a valid date.
      */
     public Date(int year, int month, int day) throws IOException {
-        validateDate(year, month, day);
         this.year = year;
         this.month = month;
         this.day = day;
+        validateDate();
     }
 
     /**
@@ -139,10 +72,10 @@ public class Date implements Comparable {
         int year = Integer.parseInt(dateValues[2]);
         int month = Integer.parseInt(dateValues[0]);
         int day = Integer.parseInt(dateValues[1]);
-        validateDate(year, month, day);  /* this() call must be first line in constructor... :/ */
         this.year = year;
         this.month = month;
         this.day = day;
+        validateDate();  /* this() call must be first line in constructor... :/ */
     }
 
     /**
@@ -207,13 +140,15 @@ public class Date implements Comparable {
      * @param day an {@link Integer} that represents the day of a Date.
      * @throws IOException is thrown if one or more of the parameters are not valid.
      */
-    private void validateDate(int year, int month, int day) throws IOException {
-        if (!validYear(year))
+    private void validateDate() throws IOException {
+        if (!validYear())
             throw new IOException("Invalid Year in Date Initialization");
-        else if (!validMonth(month))
+        else if (!validMonth())
             throw new IOException("Invalid Month in Date Initialization");
-        else if (!validDay(month , day))
+        else if (!validDay())
             throw new IOException("Invalid Day in Date Initialization");
+        else if (!isBeforeOrEqualToday())
+            throw new IOException("Invalid Date in Date Initialization because it's in the future");
     }
 
     /**
@@ -225,12 +160,12 @@ public class Date implements Comparable {
     }
 
     /**
-     * A method that checks if the year parameter is after 1900 and before or equal to the current year.
+     * A static method that checks if the year parameter is after 1900 and before or equal to the current year.
      *
      * @param year a {@link Integer} representing a year.
      * @return the {@link Boolean} value of the conditions.
      */
-    private Boolean validYear(int year) {
+    public static Boolean validYear(int year) {
         return (1900 < year && year <= LocalDateTime.now().getYear());
     }
 
@@ -243,18 +178,19 @@ public class Date implements Comparable {
     }
 
     /**
-     * A method that checks if the month parameter is more than 0 and less or equal to 12.
+     * A static method that checks if the month parameter is more than 0 and less or equal to 12.
      *
      * @param month a {@link Integer} representing a month.
      * @return the {@link Boolean} value of the conditions.
      */
-    private Boolean validMonth(int month) {
+    public static Boolean validMonth(int month) {
         return (0 < month && month <= 12);
     }
 
     /**
      * A method that checks if the day attribute is more than 0 and less than or equal to the amount of days in the
      * {@link Date#daysInMonth} that {@link Date#month} keys to.
+     *
      * @return the {@link Boolean} value of the conditions.
      */
     private Boolean validDay() {
@@ -262,14 +198,15 @@ public class Date implements Comparable {
     }
 
     /**
-     * A method that checks if the day parameter is  more than 0 and less than or equal to the amount of days in the
+     * A static method that checks if the day parameter is  more than 0 and less than or equal to the amount of days in the
      * {@link Date#daysInMonth} that parameter month keys to.
      *
      * @param month a {@link Integer} representing a month.
      * @param day a {@link Integer} representing a day.
      * @return the {@link Boolean} value of the conditions.
+     * @throws NullPointerException if the {@link Integer} month isn't a key in the daysInMonth {@link HashMap}.
      */
-    private Boolean validDay(int month, int day) {
+    public static Boolean validDay(int month, int day) throws NullPointerException {
         return (0 < day && day <= daysInMonth.get(month));
     }
 
@@ -283,15 +220,12 @@ public class Date implements Comparable {
      * @return an Integer value representing the Object relations.
      */
     @Override
-    public int compareTo(Object o) {
-        if (o instanceof Date) {
-            if (this.isBefore((Date) o))
-                return -1;
-            else if (this.isAfter((Date) o))
-                return 1;
-            else
-                return 0;
-        } else
+    public int compareTo(Date o) {
+        if (this.isBefore((Date) o))
+            return -1;
+        else if (this.isAfter((Date) o))
+            return 1;
+        else
             return 0;
     }
 
@@ -376,6 +310,15 @@ public class Date implements Comparable {
                 this.day == otherDate.getDay());
     }
 
+    /**
+     * A method that checks if the Date is before or equal to today's Date.
+     *
+     * @return the {@link Boolean} value of the comparison.
+     */
+    private Boolean isBeforeOrEqualToday() {
+        return isBeforeOrEqual(new Date());
+    }
+
     /*  Functional methods  */
 
     /**
@@ -438,7 +381,6 @@ public class Date implements Comparable {
     public List<Date> listIntervalTo(Date to) {
         ArrayList<Date> listInterval = new ArrayList<>();
         Date iterator = new Date(this);
-        boolean err = false;
 
         while (iterator.isBeforeOrEqual(to)) {
             listInterval.add(new Date(iterator));
@@ -465,7 +407,7 @@ public class Date implements Comparable {
         do {
             date = date.plusDays(1);
             dayOfWeek = date.getDayOfWeek();
-        } while (dayOfWeek != DayOfWeek.SATURDAY && dayOfWeek != DayOfWeek.SUNDAY);
+        } while (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY);
         return new Date(date.getYear(), date.getMonth().getValue(), date.getDayOfMonth());
     }
 
@@ -481,7 +423,7 @@ public class Date implements Comparable {
         do {
             date = date.plusDays(-1);
             dayOfWeek = date.getDayOfWeek();
-        } while (dayOfWeek != DayOfWeek.SATURDAY && dayOfWeek != DayOfWeek.SUNDAY);
+        } while (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY);
         return new Date(date.getYear(), date.getMonth().getValue(), date.getDayOfMonth());
     }
 
@@ -538,7 +480,7 @@ public class Date implements Comparable {
      */
     @Deprecated
     public static List<Date> sortDatesQ(Set<Date> dateSet) {
-        List<Date> dateList = (List<Date>) dateSet;
+        List<Date> dateList = new ArrayList<>(dateSet);
         return sortDatesQ(dateList);
     }
 
@@ -564,4 +506,5 @@ public class Date implements Comparable {
         List<Date> dateList = new ArrayList<>(dateSet);
         return sortDates(dateList);
     }
+
 }
