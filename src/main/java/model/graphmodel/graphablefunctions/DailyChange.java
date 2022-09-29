@@ -11,7 +11,7 @@ import model.datahandling.DayData;
  * @author Carl
  */
 
-public class DailyChange implements Graphable {
+class DailyChange implements Graphable {
 
     /**
      * A method that calculates the daily change of a given asset expressed in percentages.

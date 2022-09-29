@@ -44,7 +44,7 @@ public class DayData {
      * @param high A {@link Double} representing the highest price of a stock.
      * @param low A {@link Double} representing the lowest price of a stock.
      */
-    DayData(int volume, double open, double closed, double high, double low){
+    public DayData(int volume, double open, double closed, double high, double low){
         this.volume = volume;
         this.open = open;
         this.closed = closed;

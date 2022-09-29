@@ -532,7 +532,7 @@ public class Date implements Comparable {
 
     /**
      * A static method implementation of QuickSort for sorting Lists of Dates in chronological order.
-     *
+
      * @param dateSet a {@link Set} of {@link Date}s to be sorted.
      * @return a sorted {@link List} of {@link Date}s.
      */
@@ -561,7 +561,7 @@ public class Date implements Comparable {
      * @return a sorted {@link List} of {@link Date}s.
      */
     public static List<Date> sortDates(Set<Date> dateSet) {
-        List<Date> dateList = dateSet.stream().toList();
+        List<Date> dateList = new ArrayList<>(dateSet);
         return sortDates(dateList);
     }
 }
