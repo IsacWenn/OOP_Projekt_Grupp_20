@@ -1,4 +1,4 @@
-package model.graphmodel;
+package model.graphmanager;
 
 
 import org.junit.jupiter.api.BeforeEach;

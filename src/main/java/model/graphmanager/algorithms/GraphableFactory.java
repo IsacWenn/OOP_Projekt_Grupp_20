@@ -1,11 +1,7 @@
-package model.graphmodel.graphablefunctions;
-
-import model.Date;
-import model.datahandling.DateHashMap;
-import model.datahandling.DayData;
+package model.graphmanager.algorithms;
 
 /**
- * GraphableFactory is a class that acts as a creation front for the different classes that implement {@link Graphable}
+ * GraphableFactory is a class that acts as a creation front for the different classes that implement {@link Algorithm}
  *
  * @author Carl
  * @author Pontus
@@ -13,12 +9,12 @@ import model.datahandling.DayData;
 public class GraphableFactory {
 
     /**
-     * A method that creates a {@link Graphable}
+     * A method that creates a {@link Algorithm}
      *
-     * @param graphables an enum that holds all the different {@link Graphable}
+     * @param graphables an enum that holds all the different {@link Algorithm}
      * @return an instance of a class that matches the enum
      */
-    static public Graphable create(Graphables graphables) {
+    static public Algorithm create(Graphables graphables) {
         if (graphables.equals(Graphables.DAILYCHANGE))
             return new DailyChange();
         if (graphables.equals(Graphables.DAILYCLOSINGPRICE))

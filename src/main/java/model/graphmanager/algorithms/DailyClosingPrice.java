@@ -1,16 +1,16 @@
-package model.graphmodel.graphablefunctions;
+package model.graphmanager.algorithms;
 
 import model.Date;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 
 /**
- * DailyClosingPrice is class implementing the Algorithm interface that is used by {@link model.graphmodel.GraphComputer}
+ * DailyClosingPrice is class implementing the Algorithm interface that is used by {@link model.graphmanager.GraphComputer}
  * to retrieve the closing price for each date from an {@link DateHashMap} holding the information in a {@link DayData}.
  * @author Carl
  */
 
-class DailyClosingPrice implements Graphable {
+class DailyClosingPrice implements Algorithm {
     /**
      * A method that returns the daily closing price of an asset.
      *

@@ -9,12 +9,11 @@ import model.Date;
 import model.datahandling.DataHandler;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
-import model.graphmodel.GraphModel;
+import model.graphmanager.Graph;
 
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -41,11 +40,11 @@ public class AppController implements Initializable {
             Date date1 = new Date(2020,1,1);
             Date date2 = new Date(2020,3,1);
 
-            GraphModel graphModel = new GraphModel("TSLA", date1, date2);
-            graphModel.changeCurrency("SEK_USD.csv");
-            graphModel.update();
+            Graph graph = new Graph("TSLA", date1, date2);
+            graph.changeCurrency("SEK_USD.csv");
+            graph.update();
 
-            DateHashMap<Date, Number> values = graphModel.getValues();
+            DateHashMap<Date, Number> values = graph.getValues();
 
             List<Date> sortedDates = Date.sortDates((Set<Date>) values.keySet());
 

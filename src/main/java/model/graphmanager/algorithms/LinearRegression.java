@@ -1,19 +1,18 @@
-package model.graphmodel.graphablefunctions;
+package model.graphmanager.algorithms;
 
 import model.Date;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * LinearRegression is class implementing the Algorithm interface that is used by {@link model.graphmodel.GraphComputer} to
+ * LinearRegression is class implementing the Algorithm interface that is used by {@link model.graphmanager.GraphComputer} to
  * calculate the linear regression of a dataset.
  * @author Carl
  */
 
-class LinearRegression implements Graphable {
+class LinearRegression implements Algorithm {
 
     /**
      * A method that calculates the values of a linear equation constructed by linear regression of a {@link DateHashMap}.

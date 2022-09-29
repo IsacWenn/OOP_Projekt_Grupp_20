@@ -1,7 +1,7 @@
-package model.graphmodel.graphablefunctions;
+package model.graphmanager.algorithms;
 
 /**
- * An {@link Enum} for representing the different {@link Graphable} for the controller.
+ * An {@link Enum} for representing the different {@link Algorithm} for the controller.
  * @author Carl
  */
 

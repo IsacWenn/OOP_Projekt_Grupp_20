@@ -1,12 +1,12 @@
-package model.graphmodel;
+package model.graphmanager;
 
 import model.Date;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
-import model.graphmodel.graphablefunctions.*;
+import model.graphmanager.algorithms.*;
 
 /**
- * GraphComputer is the class that uses the strategy pattern to change what class that implements {@link Graphable}
+ * GraphComputer is the class that uses the strategy pattern to change what class that implements {@link Algorithm}
  * it should use
  *
  * @author Pontus
@@ -16,24 +16,24 @@ import model.graphmodel.graphablefunctions.*;
 public class GraphComputer {
 
     /**
-     * A private {@link Graphable} variable
+     * A private {@link Algorithm} variable
      */
-    private Graphable graphable;
+    private Algorithm algorithm;
 
     /**
-     * A constructor for the GraphComputer class that sets {@link GraphComputer#graphable} to the default graphable.
+     * A constructor for the GraphComputer class that sets {@link GraphComputer#algorithm} to the default algorithm.
      */
     public GraphComputer(){
-        this.graphable = GraphableFactory.create(Graphables.DAILYCLOSINGPRICE);
+        this.algorithm = GraphableFactory.create(Graphables.DAILYCLOSINGPRICE);
     }
 
     /**
-     * A method that sets the current graphable to the one called with the method
+     * A method that sets the current algorithm to the one called with the method
      *
-     * @param graphableENUM A {@link Graphables} that represent a {@link Graphable} in {@link GraphableFactory}.
+     * @param graphableENUM A {@link Graphables} that represent a {@link Algorithm} in {@link GraphableFactory}.
      */
     void setAlgorithm(Graphables graphableENUM) {
-        this.graphable = GraphableFactory.create(graphableENUM);
+        this.algorithm = GraphableFactory.create(graphableENUM);
     }
 
     /**
@@ -54,12 +54,12 @@ public class GraphComputer {
     }
 
     /**
-     * A method that calculates the incoming data with the graphable in {@link GraphComputer#graphable}.
+     * A method that calculates the incoming data with the algorithm in {@link GraphComputer#algorithm}.
      * @param data A {@link DateHashMap} containing data in a {@link DayData} for each {@link Date}.
      * @return A {@link DateHashMap} containing a {@link Number} for each {@link Date}.
      */
     public DateHashMap<Date, Number> updateValues(DateHashMap<Date, DayData> data) {
-        return graphable.calculate(data);
+        return algorithm.calculate(data);
     }
 
 }

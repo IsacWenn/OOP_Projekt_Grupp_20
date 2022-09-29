@@ -1,17 +1,17 @@
-package model.graphmodel.graphablefunctions;
+package model.graphmanager.algorithms;
 
 import model.Date;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 
 /**
- * DailyChange is class implementing the Algorithm interface that is used by {@link model.graphmodel.GraphComputer} to
+ * DailyChange is class implementing the Algorithm interface that is used by {@link model.graphmanager.GraphComputer} to
  * perform calculations of the daily change of a given asset expressed in percentages.
  *
  * @author Carl
  */
 
-class DailyChange implements Graphable {
+class DailyChange implements Algorithm {
 
     /**
      * A method that calculates the daily change of a given asset expressed in percentages.
