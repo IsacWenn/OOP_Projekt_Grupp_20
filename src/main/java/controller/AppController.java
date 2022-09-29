@@ -10,6 +10,8 @@ import model.AppModel;
 import model.datahandling.DataHandler;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
+import model.util.Date;
+
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -54,7 +56,7 @@ public class AppController implements Initializable {
     private void initializeVariables() {
         try {
             activeCompanies = new ArrayList<String>();
-            numDataPoints = 7;
+            numDataPoints = 380;
             startDate = new model.util.Date(2021, 9, 26);
             endDate = new model.util.Date();
         } catch (IOException e) {
@@ -165,15 +167,14 @@ public class AppController implements Initializable {
 
     private void addStockToGraph(String acronym) {
         XYChart.Series<String, Number> seriesToAdd = new XYChart.Series<>();
-        DateHashMap<model.util.Date, DayData> data = DataHandler.getCompanyData(acronym);
+        DateHashMap<model.util.Date, DayData> data = DataHandler.getCompanyData(startDate, endDate, acronym);
 
         seriesToAdd.setName(acronym);
         List<model.util.Date> orderedDates;
         orderedDates = model.util.Date.sortDates(data.keySet());
 
-        double valueToAdd = 0, currentCount = 1, stepAmount;
-        int slot = 0;
-        double daysInterval = (startDate.listIntervalTo(endDate).size());
+        double daysInterval = orderedDates.size(), stepAmount, dIndex = 0;
+        int index, slot = 0;
 
         if (daysInterval <= numDataPoints) {
             stepAmount = 1;
@@ -181,17 +182,12 @@ public class AppController implements Initializable {
             stepAmount = daysInterval/numDataPoints;
         }
 
-        for (model.util.Date currentDate : orderedDates) {
-            if (!dateIsWithinLimits(currentDate)) { //TODO importera mindre lista
-                continue;
-            }
-            valueToAdd += data.get(currentDate).getClosed();
-            if (currentCount <= stepAmount) {
-                valueToAdd = valueToAdd / stepAmount;
-                seriesToAdd.getData().add(slot, new XYChart.Data<>(currentDate.toString(), valueToAdd));
-                valueToAdd = 0; currentCount = stepAmount - currentCount;
-                slot++;
-            } else currentCount++;
+        for (int i = 0; i < Math.min(numDataPoints, daysInterval); i++) {
+            index = (int) Math.round(dIndex);
+            Date currentDate = orderedDates.get(index);
+            double val = data.get(currentDate).getClosed();
+            seriesToAdd.getData().add(slot, new XYChart.Data<>(currentDate.toString(), val));
+            dIndex += stepAmount;
         }
         displayedGraph.getData().add(seriesToAdd);
     }
