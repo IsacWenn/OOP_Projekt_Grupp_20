@@ -24,16 +24,16 @@ public class GraphComputer {
      * A constructor for the GraphComputer class that sets {@link GraphComputer#algorithm} to the default algorithm.
      */
     public GraphComputer(){
-        this.algorithm = GraphableFactory.create(Graphables.DAILYCLOSINGPRICE);
+        this.algorithm = AlgorithmFactory.create(Graphables.DAILYCLOSINGPRICE);
     }
 
     /**
      * A method that sets the current algorithm to the one called with the method
      *
-     * @param graphableENUM A {@link Graphables} that represent a {@link Algorithm} in {@link GraphableFactory}.
+     * @param graphableENUM A {@link Graphables} that represent a {@link Algorithm} in {@link AlgorithmFactory}.
      */
     void setAlgorithm(Graphables graphableENUM) {
-        this.algorithm = GraphableFactory.create(graphableENUM);
+        this.algorithm = AlgorithmFactory.create(graphableENUM);
     }
 
     /**

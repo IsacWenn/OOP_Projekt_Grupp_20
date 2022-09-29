@@ -1,12 +1,12 @@
 package model.graphmanager.algorithms;
 
 /**
- * GraphableFactory is a class that acts as a creation front for the different classes that implement {@link Algorithm}
+ * AlgorithmFactory is a class that acts as a creation front for the different classes that implement {@link Algorithm}
  *
  * @author Carl
  * @author Pontus
  */
-public class GraphableFactory {
+public class AlgorithmFactory {
 
     /**
      * A method that creates a {@link Algorithm}
