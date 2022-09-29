@@ -6,6 +6,7 @@ package model.datahandling;
 *
 */
 
+import model.util.CurrencyEnum;
 import model.util.Date;
 
 import java.io.IOException;
@@ -179,4 +180,12 @@ public class DataHandler {
     public static List<String> getCompanyNames() {
         return CompanyData.getCompanyNames();
     }
+
+    /**
+     * A method that retrieves the {@link CurrencyEnum} representing a company's trading currency.
+     *
+     * @param mic A {@link String} of the company's MIC.
+     * @return A {@link CurrencyEnum} representing that company's trading currency.
+     */
+    public static CurrencyEnum getCompanyTradingCurrency(String mic) { return CompanyData.getCurrency(mic); }
 }
