@@ -96,13 +96,14 @@ public class GraphModel {
         this.graphComputer.setAlgorithm(graphable);
     }
 
+
     /**
      *A method that changes the currency the data is using
      *
      * @param currency
      */
     public void changeCurrency(String currency){
-        this.graphComputer.calculateCurrency(graphData.getCurrencyData(currency), values);
+        this.graphComputer.calculateCurrency(graphData.getCurrencyData(currency), data);
     }
 
     /**
@@ -110,6 +111,11 @@ public class GraphModel {
      *
      * @return the {@link DateHashMap} containing the values
      */
+
+    public void changeCurrencyValue(String currency){
+        this.graphComputer.calculateCurrency(graphData.getCurrencyData(currency), data);
+    }
+    
     public DateHashMap<Date, Number> getValues() {
         return this.values;
     }
