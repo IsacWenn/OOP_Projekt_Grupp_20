@@ -1,5 +1,6 @@
 package model.graphmanager.algorithms;
 
+import model.datahandling.DayData;
 import model.util.Date;
 import model.datahandling.DateHashMap;
 
@@ -12,6 +13,6 @@ import model.datahandling.DateHashMap;
  * @author Carl
  */
 public interface Algorithm {
-    DateHashMap<Date, Number> calculate(DateHashMap<Date,DayData> data);
+    DateHashMap<Date, Number> calculate(DateHashMap<Date, DayData> data);
 
 }

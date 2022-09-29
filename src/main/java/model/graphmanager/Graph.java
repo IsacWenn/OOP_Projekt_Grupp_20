@@ -1,11 +1,11 @@
 package model.graphmanager;
 
 
-import model.Date;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 import model.graphmanager.algorithms.Algorithm;
 import model.graphmanager.algorithms.Graphables;
+import model.util.Date;
 
 import java.util.List;
 

@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import model.AppModel;
+import model.graphmanager.Graph;
 import model.util.Date;
 import model.datahandling.DataHandler;
 import model.datahandling.DateHashMap;
@@ -12,7 +13,9 @@ import model.datahandling.DayData;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class AppController implements Initializable {
     private final AppModel model = AppModel.getInstance();
@@ -20,31 +23,35 @@ public class AppController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
-        series1.setName("Stonks");
+        XYChart.Series<String, Number> series2 = new XYChart.Series<>();
+        series1.setName("Stock");
         populateSeries(series1, "AAPL");
+
         chart1.setCreateSymbols(false);
+        //chart1.getData().add(series1);
         chart1.getData().add(series1);
     }
 
     private void populateSeries(XYChart.Series<String, Number> series, String mic) {
         DateHashMap<Date, DayData> data = DataHandler.getCompanyData(mic);
         try {
-            Date date = new Date(2012,1,1);
-            Object close = null;
-            for(int i = 0; i<data.size();i++) {
-                boolean succeded;
-                do {
-                    succeded = true;
-                    date = date.nextDate();
-                    try {
-                        close = data.get(date).getClosed();
-                    } catch (NullPointerException e) {
-                        succeded = false;
-                    }
-                } while (!succeded);
-                float closeValue = (float) close;
-                series.getData().add(i, new XYChart.Data<>(date.toString(), closeValue));
+            Date date1 = new Date(2020,1,1);
+            Date date2 = new Date(2020,2,1);
+
+            Graph graph = new Graph("TSLA", date1, date2);
+            graph.update();
+
+            DateHashMap<Date, Number> values = graph.getValues();
+
+            List<Date> sortedDates = Date.sortDates(values.keySet());
+
+            int index = 0;
+            for (Date date : sortedDates) {
+                Number yVal = values.get(date);
+                series.getData().add(index, new XYChart.Data<>(date.toString(), yVal));
+                index++;
             }
+
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

@@ -1,6 +1,6 @@
 package model.graphmanager;
 
-import model.Date;
+import model.util.Date;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
