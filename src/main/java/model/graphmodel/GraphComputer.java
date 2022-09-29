@@ -3,9 +3,7 @@ package model.graphmodel;
 import model.Date;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
-import model.graphmodel.graphablefunctions.DailyClosingPrice;
-import model.graphmodel.graphablefunctions.Graphable;
-import model.graphmodel.graphablefunctions.DailyChange;
+import model.graphmodel.graphablefunctions.*;
 
 /**
  * GraphComputer is the class that uses the strategy pattern to change what class that implements {@link Graphable}
@@ -32,10 +30,10 @@ public class GraphComputer {
     /**
      * A method that sets the current graphable to the one called with the method
      *
-     * @param graphable a class that implements {@link Graphable}
+     * @param graphableENUM A {@link Graphables} that represent a {@link Graphable} in {@link GraphableFactory}.
      */
-    void setAlgorithm(Graphable graphable) {
-        this.graphable = graphable;
+    void setAlgorithm(Graphables graphableENUM) {
+        this.graphable = GraphableFactory.createGraphable(graphableENUM);
     }
 
     public void calculateCurrency(DateHashMap<Date, Double> currency,

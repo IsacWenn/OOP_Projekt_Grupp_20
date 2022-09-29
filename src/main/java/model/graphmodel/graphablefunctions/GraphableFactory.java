@@ -6,7 +6,7 @@ import model.datahandling.DayData;
 
 public class GraphableFactory {
 
-    static Graphable createGraphable(Graphables graphables) {
+    static public Graphable createGraphable(Graphables graphables) {
         if (graphables.equals(Graphables.DAILYCHANGE))
             return new DailyChange();
         if (graphables.equals(Graphables.DAILYCLOSINGPRICE))

@@ -5,6 +5,8 @@ import model.Date;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 import model.graphmodel.graphablefunctions.Graphable;
+import model.graphmodel.graphablefunctions.Graphables;
+
 import java.util.List;
 
 /**
@@ -92,7 +94,7 @@ public class GraphModel {
      *
      * @param graphable
      */
-    public void updateAlgorithm(Graphable graphable) {
+    public void updateAlgorithm(Graphables graphable) {
         this.graphComputer.setAlgorithm(graphable);
     }
 
