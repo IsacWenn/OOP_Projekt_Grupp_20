@@ -12,6 +12,7 @@ import model.util.Date;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The class that communicates with the outside of the package datahandling. Contains methods for retrieving different
@@ -149,4 +150,22 @@ public class DataHandler {
      * @return A {@link CurrencyEnum} representing that company's trading currency.
      */
     public static CurrencyEnum getCompanyTradingCurrency(String mic) { return CompanyData.getCurrency(mic); }
+
+    /**
+     * A method that returns the closest exhange rate for a given date. If there is not an exchange rate for the given
+     * date it starts to search through the past.
+     *
+     * @param date The specified {@link Date}.
+     * @param map The {@link Map} to retrieve the exchange rate for the given date.
+     * @return A {@link Double} exchange rate for the given date.
+     * @throws IOException If there is not any given exchange rates before the given date.
+     */
+    public static Double retreiveClosestExchangeRate(Date date, Map<Date, Double> map) throws IOException {
+        try {
+            return map.get(date);
+        }
+        catch (NullPointerException e) {
+            return retreiveClosestExchangeRate(date.previousDate(), map);
+        }
+    }
 }
