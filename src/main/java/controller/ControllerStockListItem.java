@@ -34,7 +34,6 @@ public class ControllerStockListItem extends AnchorPane {
 
     private void initializeLabels(String acronym) {
         stockAcronym.setText(acronym);
-        //stockValue.setText(DataHandler.getCompanyData(acronym));
 
     }
 

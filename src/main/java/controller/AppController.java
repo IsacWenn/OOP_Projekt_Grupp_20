@@ -170,23 +170,23 @@ public class AppController implements Initializable {
         Map<Date, DayData> data = DataHandler.getCompanyData(acronym);
         seriesToAdd.setName(acronym);
         autoSetPrecision();
+        Date date = new Date(startDate);
+        double valueToAdd = 0;
+        int currentCount = 1, slot = 0;
         try {
-            Date date = new Date(2012,1,1);
-            double valueToAdd = 0;
-            for(int i = 0, currentCount = 1, slot = 0; i<data.size();) {
-                if (data.get(date) != null) {
-                    if (dateIsWithinLimits(date)) {
-                        valueToAdd += data.get(date).getClosed();
-                        if (currentCount == precisionAmount) {
-                            valueToAdd = valueToAdd / precisionAmount;
-                            seriesToAdd.getData().add(slot, new XYChart.Data<>(date.toString(), valueToAdd));
-                            valueToAdd = 0;
-                            currentCount = 1;
-                            slot++;
-                        } else currentCount++;
-                    }
-                    i++;
-                } date = date.nextDate();
+            while (date.isBeforeOrEqual(endDate)) {
+                if (data.get(date) == null) {
+                    date = date.nextDate();
+                    continue;
+                }
+                valueToAdd += data.get(date).getClosed();
+                if (currentCount == precisionAmount) {
+                    valueToAdd = valueToAdd / precisionAmount;
+                    seriesToAdd.getData().add(slot, new XYChart.Data<>(date.toString(), valueToAdd));
+                    valueToAdd = 0; currentCount = 1;
+                    slot++;
+                } else currentCount++;
+                date = date.nextDate();
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
