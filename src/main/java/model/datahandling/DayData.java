@@ -1,6 +1,7 @@
 package model.datahandling;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * A class that contains the data of a certain date in the database.
@@ -124,5 +125,29 @@ public class DayData {
                 ", high=" + high +
                 ", low=" + low +
                 '}';
+    }
+
+    /**
+     * A method that checks if two DayData objects contain the same values.
+     *
+     * @param o the other object for the comparison.
+     * @return the {@link Boolean} value of the comparison.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DayData dayData = (DayData) o;
+        return volume == dayData.volume && Double.compare(dayData.open, open) == 0 && Double.compare(dayData.closed, closed) == 0 && Double.compare(dayData.high, high) == 0 && Double.compare(dayData.low, low) == 0;
+    }
+
+    /**
+     * An implementation of the Object.hashCode method for the DayData class.
+     *
+     * @return the {@link Integer} hashcode.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(volume, open, closed, high, low);
     }
 }
