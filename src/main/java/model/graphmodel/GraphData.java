@@ -8,13 +8,15 @@ import model.datahandling.DayData;
 import java.util.List;
 
 /**
+ * GraphData is a class that retrieves data from the {@link DataHandler} class
  *
  * @author Pontus
  * @author Isac
  */
-public class GraphData {
+class GraphData {
 
-    public GraphData() {}
+    public GraphData() {
+    }
 
     /**
      * A method that calls the {@link DataHandler} class to retrieve all available data from a company
@@ -38,7 +40,7 @@ public class GraphData {
     }
 
     /**
-     * {@link DataHandler} class to retrieve company data from a list of {@link Date}
+     * A method that calls  the {@link DataHandler} class to retrieve company data from an interval of {@link Date}
      *
      * @param mic a {@link String} representing a company's mic
      * @param from a {@link Date} for the start of the interval
