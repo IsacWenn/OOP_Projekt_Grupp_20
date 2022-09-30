@@ -22,7 +22,6 @@ public class AppController implements Initializable {
     private final AppModel appModel = AppModel.getInstance();
     private Map<String, ControllerStockListItem> stockListItemMap = new HashMap<String, ControllerStockListItem>();
     private ArrayList<String> activeCompanies;
-    private int numDataPoints;
     private model.util.Date startDate;
     private model.util.Date endDate;
 
@@ -56,7 +55,6 @@ public class AppController implements Initializable {
     private void initializeVariables() {
         try {
             activeCompanies = new ArrayList<String>();
-            numDataPoints = 380;
             startDate = new model.util.Date(2021, 9, 26);
             endDate = new model.util.Date();
         } catch (IOException e) {
@@ -66,7 +64,7 @@ public class AppController implements Initializable {
     }
 
     private void initializeSettings() {
-        //displayedGraph.setCreateSymbols(false);
+        displayedGraph.setCreateSymbols(false);
         initializeStartDatePicker();
         initializeEndDatePicker();
     }
@@ -174,7 +172,7 @@ public class AppController implements Initializable {
         orderedDates = model.util.Date.sortDates(data.keySet());
 
         double daysInterval = orderedDates.size(), stepAmount, dIndex = 0;
-        int index, slot = 0;
+        int index, slot = 0, numDataPoints = 300;;
 
         if (daysInterval <= numDataPoints) {
             stepAmount = 1;
@@ -182,18 +180,14 @@ public class AppController implements Initializable {
             stepAmount = daysInterval/numDataPoints;
         }
 
-        for (int i = 0; i < Math.min(numDataPoints, daysInterval); i++) {
+        while (seriesToAdd.getData().size() < Math.min(numDataPoints, daysInterval)) {
             index = (int) Math.round(dIndex);
             Date currentDate = orderedDates.get(index);
             double val = data.get(currentDate).getClosed();
             seriesToAdd.getData().add(slot, new XYChart.Data<>(currentDate.toString(), val));
-            dIndex += stepAmount;
+            dIndex += stepAmount; slot++;
         }
         displayedGraph.getData().add(seriesToAdd);
-    }
-
-    private boolean dateIsWithinLimits(model.util.Date date) {
-        return (date.isAfterOrEqual(startDate) && date.isBeforeOrEqual(endDate));
     }
 
     private void refreshStocks() {
