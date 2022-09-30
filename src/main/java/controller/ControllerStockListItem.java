@@ -11,7 +11,7 @@ import model.util.Date;
 import java.io.IOException;
 
 public class ControllerStockListItem extends AnchorPane {
-    private final LineGraphController parentController;
+    private final GraphController parentController;
     private final String acronym;
     private boolean active;
     @FXML
@@ -22,7 +22,7 @@ public class ControllerStockListItem extends AnchorPane {
     private Label stockValue;
     @FXML
     private AnchorPane stockListItem;
-    ControllerStockListItem (String acronym, LineGraphController parentController){
+    ControllerStockListItem (String acronym, GraphController parentController){
         loadFXML();
         initializeLabels(acronym);
         active = false;
