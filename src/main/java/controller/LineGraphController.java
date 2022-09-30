@@ -186,11 +186,7 @@ public class LineGraphController extends AnchorPane {
         double daysInterval = orderedDates.size(), stepAmount, dIndex = 0;
         int index, slot = 0, numDataPoints = 300;
 
-        if (daysInterval <= numDataPoints) {
-            stepAmount = 1;
-        } else {
-            stepAmount = daysInterval/numDataPoints;
-        }
+        stepAmount = Math.max(1, daysInterval/numDataPoints);
 
         while (seriesToAdd.getData().size() < Math.min(numDataPoints, daysInterval)) {
             index = (int) Math.round(dIndex);
