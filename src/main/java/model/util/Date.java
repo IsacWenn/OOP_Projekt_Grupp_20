@@ -474,7 +474,7 @@ public class Date implements Comparable<Date> {
 
     /**
      * A static method implementation of QuickSort for sorting Lists of Dates in chronological order.
-     *
+
      * @param dateSet a {@link Set} of {@link Date}s to be sorted.
      * @return a sorted {@link List} of {@link Date}s.
      */
