@@ -50,6 +50,7 @@ public class ControllerStockListItem extends AnchorPane {
     }
 
     public void togglePressed(){
+
         if (!active) {
             stockListItem.getStyleClass().clear();
             stockListItem.getStyleClass().add("pane_active");
@@ -62,7 +63,12 @@ public class ControllerStockListItem extends AnchorPane {
 
     @FXML
     private void onClick(Event event){
-        parentController.openStockView(this.acronym);
-        togglePressed();
+        if (parentController.withinCompanyLimit() && !active) {
+            parentController.openStockView(this.acronym);
+            togglePressed();
+        } else if(active) {
+            parentController.openStockView(acronym);
+            togglePressed();
+        }
     }
 }

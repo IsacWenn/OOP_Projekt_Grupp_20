@@ -27,6 +27,7 @@ public abstract class GraphController extends AnchorPane {
     protected ArrayList<String> activeCompanies;
     protected Date startDate;
     protected Date endDate;
+    protected int maxCompanies = 0;
     @FXML
     protected FlowPane stockPane;
     @FXML
@@ -66,7 +67,6 @@ public abstract class GraphController extends AnchorPane {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     protected void initializeSettings() {
@@ -176,6 +176,12 @@ public abstract class GraphController extends AnchorPane {
         for (String activeCompany : activeCompanies) {
             addStockToGraph(activeCompany);
         }
+    }
+
+    protected boolean withinCompanyLimit(){
+        if (maxCompanies == 0) {
+            return true;
+        } else return activeCompanies.size() < maxCompanies;
     }
 
     private boolean isCompanyActive(String acronym) {

@@ -46,7 +46,6 @@ public class LineGraphController extends GraphController {
         }
         displayedGraph.getData().add(seriesToAdd);
     }
-
 }
 
 
