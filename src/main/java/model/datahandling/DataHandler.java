@@ -10,7 +10,7 @@ import model.util.CurrencyEnum;
 import model.util.Date;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -160,12 +160,8 @@ public class DataHandler {
      * @return A {@link Double} exchange rate for the given date.
      * @throws IOException If there is not any given exchange rates before the given date.
      */
-    public static Double retreiveClosestExchangeRate(Date date, Map<Date, Double> map) throws IOException {
-        try {
-            return map.get(date);
-        }
-        catch (NullPointerException e) {
-            return retreiveClosestExchangeRate(date.previousDate(), map);
-        }
+    public static Double retrieveClosestExchangeRate(Date date, Map<Date, Double> map) throws IOException {
+        return (map.containsKey(date) ? map.get(date) : retrieveClosestExchangeRate(date.previousDate(), map));
     }
+
 }
