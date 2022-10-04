@@ -13,8 +13,6 @@ import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 import model.util.Date;
 
-import java.io.IOException;
-import java.time.LocalDate;
 import java.util.*;
 
 public class LineGraphController extends GraphController {

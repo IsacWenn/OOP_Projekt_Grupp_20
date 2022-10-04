@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import model.AppModel;
-import model.graphmanager.Graph;
 
 import java.net.URL;
 import java.util.*;
@@ -33,6 +32,7 @@ public class AppController implements Initializable {
         GraphController newGraph = new LineGraphController(this);
         Tab newTab = new Tab("Line Graph", newGraph);
         tabsPane.getTabs().add(newTab);
+        tabsPane.getSelectionModel().select(newTab);
     }
 }
 
