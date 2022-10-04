@@ -27,7 +27,7 @@ public class StockExchangeReader {
     private static void testing() {
         System.out.println("Testing");
 
-        HashMap<Date, DayData> data = null;
+        Map<Date, DayData> data = null;
         try {
             data = convertCSVFileToHandledData(defaultPath + "HistoricalData_AAPL.csv");
         } catch (IOException err) {
@@ -50,15 +50,15 @@ public class StockExchangeReader {
     }
 
     /**
-     * A method that reads the file at the given path and converts that data into an {@link DateHashMap} for use
+     * A method that reads the file at the given path and converts that data into an {@link Map} for use
      * in the rest of the program.
      *
      * @param path A {@link String} containing the local path to the desired CSV-file.
-     * @return A {@link DateHashMap} containing all the information of that file.
+     * @return A {@link Map} containing all the information of that file.
      * @throws IOException if the file that the parameter path refers to does not exist.
      */
-    static DateHashMap<Date, DayData> convertCSVFileToHandledData(String path) throws IOException {
-        DateHashMap<Date, DayData> data = new DateHashMap<>();
+    static Map<Date, DayData> convertCSVFileToHandledData(String path) throws IOException {
+        Map<Date, DayData> data = new HashMap<>();
         String line;
         path = defaultPath + path;
         BufferedReader br = new BufferedReader(new FileReader(path));

@@ -177,9 +177,9 @@ public abstract class GraphController extends AnchorPane {
 
     protected void addStockToGraph(String acronym) {
         XYChart.Series<String, Number> seriesToAdd = new XYChart.Series<>();
-        DateHashMap<Date, DayData> data = DataHandler.getCompanyData(startDate, endDate, acronym);
+        Map<Date, DayData> data = DataHandler.getCompanyData(startDate, endDate, acronym);
 
-        DateHashMap<Date, Number> calcData = this.algorithm.calculate(data);
+        Map<Date, Number> calcData = this.algorithm.calculate(data);
 
         seriesToAdd.setName(acronym);
         List<Date> orderedDates;

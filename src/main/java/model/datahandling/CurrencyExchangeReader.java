@@ -5,9 +5,11 @@ import model.util.Date;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * A class that reads the different currency exchange files and converts them into {@link DateHashMap}s for use in
+ * A class that reads the different currency exchange files and converts them into {@link Map}s for use in
  * the rest of the program.
  *
  * @author Carl
@@ -22,7 +24,7 @@ public class CurrencyExchangeReader {
 
     public static void main(String[] args) throws IOException {
 
-        DateHashMap<Date, Double> data = null;
+        Map<Date, Double> data = null;
         try {
             data = convertCSVFileToHandledData(defaultPath + "SEK_USD.csv");
         } catch (IOException err) {
@@ -35,15 +37,15 @@ public class CurrencyExchangeReader {
     }
 
     /**
-     * A method that converts a CSV-file of currency exchange rates into a {@link DateHashMap} for use in the rest of
+     * A method that converts a CSV-file of currency exchange rates into a {@link Map} for use in the rest of
      * the program
      *
      * @param path A {@link String} containing the local path to the desired CSV-file.
-     * @return A {@link DateHashMap} containing all the information of that file.
+     * @return A {@link Map} containing all the information of that file.
      * @throws IOException if the file that the parameter path refers to does not exist.
      */
-    static DateHashMap<Date, Double> convertCSVFileToHandledData(String path) throws IOException {
-        DateHashMap<Date, Double> data = new DateHashMap<>();
+    static Map<Date, Double> convertCSVFileToHandledData(String path) throws IOException {
+        Map<Date, Double> data = new HashMap<>();
         String line;
         path = defaultPath + path;
         BufferedReader br = new BufferedReader(new FileReader(path));
