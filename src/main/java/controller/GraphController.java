@@ -3,22 +3,28 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import model.AppModel;
 import model.datahandling.DataHandler;
+import model.datahandling.DateHashMap;
+import model.datahandling.DayData;
+import model.graphmanager.algorithms.Algorithm;
 import model.util.Date;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class GraphController extends AnchorPane {
     protected final AppModel appModel = AppModel.getInstance();
     protected AppController parentController;
+    protected Algorithm algorithm;
     @FXML
     protected DatePicker startDatePicker;
     @FXML
@@ -169,7 +175,30 @@ public abstract class GraphController extends AnchorPane {
         activeCompanies.remove(i);
     }
 
-    protected abstract void addStockToGraph(String acronym);
+    protected void addStockToGraph(String acronym) {
+        XYChart.Series<String, Number> seriesToAdd = new XYChart.Series<>();
+        DateHashMap<Date, DayData> data = DataHandler.getCompanyData(startDate, endDate, acronym);
+
+        DateHashMap<Date, Number> calcData = this.algorithm.calculate(data);
+
+        seriesToAdd.setName(acronym);
+        List<Date> orderedDates;
+        orderedDates = Date.sortDates(calcData.keySet());
+
+        double daysInterval = orderedDates.size(), stepAmount, dIndex = 0;
+        int index, slot = 0, numDataPoints = 300;
+
+        stepAmount = Math.max(1, daysInterval/numDataPoints);
+
+        while (seriesToAdd.getData().size() < Math.min(numDataPoints, daysInterval)) {
+            index = (int) Math.round(dIndex);
+            Date currentDate = orderedDates.get(index);
+            Number val = calcData.get(currentDate);
+            seriesToAdd.getData().add(slot, new XYChart.Data<>(currentDate.toString(), val));
+            dIndex += stepAmount; slot++;
+        }
+        displayedGraph.getData().add(seriesToAdd);
+    }
 
     private void refreshStocks() {
         displayedGraph.getData().clear();

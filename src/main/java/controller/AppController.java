@@ -19,7 +19,16 @@ public class AppController implements Initializable {
     private TabPane tabsPane;
 
     @FXML
-    private Button newLineGraph;
+    private Button newClosingPriceGraphButton;
+
+    @FXML
+    private Button newDailyChangeGraphButton;
+
+    @FXML
+    private Button newLinearRegressionGraphButton;
+
+    @FXML
+    private Button newHighMinusLowGraphButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -29,13 +38,28 @@ public class AppController implements Initializable {
     private void initializeVariables() {
     }
 
-    public void newLineGraph() {
-        GraphController newGraph = new LineGraphController(this);
-        newTab(newGraph);
+    public void newClosingPriceGraph() {
+        GraphController newGraph = new ClosingPriceGraphController(this);
+        newTab(newGraph, "Closing Price");
     }
 
-    private void newTab(Node content) {
-        Tab newTab = new Tab("Line Graph", content);
+    public void newDailyChangeGraph() {
+        GraphController newGraph = new DailyChangeGraphController(this);
+        newTab(newGraph, "Daily Change");
+    }
+
+    public void newLinearRegressionGraph() {
+        GraphController newGraph = new LinearRegressionGraphController(this);
+        newTab(newGraph, "Linear Regression");
+    }
+
+    public void newHighMinusLowGraph() {
+        GraphController newGraph = new HighMinusLowGraphController(this);
+        newTab(newGraph, "High Minus Low");
+    }
+
+    private void newTab(Node content, String name) {
+        Tab newTab = new Tab(name, content);
         tabsPane.getTabs().add(newTab);
         tabsPane.getSelectionModel().select(newTab);
     }
