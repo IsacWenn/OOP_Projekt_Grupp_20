@@ -47,7 +47,7 @@ public class TestDataHandler {
 
     @Test
     public void retrieveClosestExchangeRateShouldReturnCorrectValue() throws IOException {
-        Map<Date, Double> map = new DateHashMap<>(){{       // Fungerar utan problem
+        Map<Date, Double> map = new HashMap<>(){{       // Fungerar utan problem
             put(new Date(2022, 9, 27), 5.3d);
         }};
         assertEquals(5.3d, DataHandler.retrieveClosestExchangeRate(new Date(), map));
