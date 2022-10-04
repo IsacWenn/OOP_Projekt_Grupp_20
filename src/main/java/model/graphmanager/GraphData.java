@@ -5,6 +5,8 @@ import model.datahandling.DataHandler;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +55,12 @@ class GraphData {
     }
 
     Map<Date, DayData> getLatestDayData(String mic){
-        return DataHandler.getLatestDayData(mic);
+        try {
+            return DataHandler.getLatestDayData(mic);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return new HashMap<>(){{ put(new Date(), new DayData(0,0, 0, 0, 0)); }};
     }
 
     /**

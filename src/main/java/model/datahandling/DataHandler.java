@@ -29,10 +29,10 @@ public class DataHandler {
      * @return A {@link Map} containing the Data of a company.
      */
     public static Map<Date, DayData> getCompanyData(String mic) {
-        String path = CompanyData.getFileName(mic);
         try {
+            String path = CompanyData.getFileName(mic);
             return StockExchangeReader.convertCSVFileToHandledData(path);
-        } catch (IOException e) {
+        } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
         return new HashMap<>() {{ put(new Date(), new DayData(0, 0, 0, 0, 0)); }};
@@ -48,12 +48,8 @@ public class DataHandler {
      */
     public static Map<Date, DayData> getCompanyData(List<Date> dates, String mic) {
         String path = CompanyData.getFileName(mic);
-        try {
-            return filterDataByDates(StockExchangeReader.convertCSVFileToHandledData(path), dates);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-        return new HashMap<>() {{ put(new Date(), new DayData(0, 0, 0, 0, 0)); }};
+
+        return filterDataByDates(StockExchangeReader.convertCSVFileToHandledData(path), dates);
     }
 
     /**
@@ -94,11 +90,9 @@ public class DataHandler {
      * @return A {@link Map} containing the currency exchange rate data.
      */
     public static Map<Date, Double> getCurrencyData(String path) {
-        IOException exception;
         try {
             return CurrencyExchangeReader.convertCSVFileToHandledData(path);
         } catch (IOException e) {
-            exception = e;
             System.out.println(e.getMessage());
         }
         return new HashMap<>() {{ put(new Date(), 0d); }};
@@ -110,16 +104,11 @@ public class DataHandler {
      * @param mic A {@link String} containing the MIC of a company.
      * @return A {@link Map} containing the {@link Date} and {@link DayData} of the latest day data for that company.
      */
-    public static Map<Date, DayData> getLatestDayData(String mic) {
+    public static Map<Date, DayData> getLatestDayData(String mic) throws IOException {
         Date iteratorDate = new Date();
         Map<Date, DayData> data = getCompanyData(mic);
-        while (!data.containsKey(iteratorDate)) {
-            try {
-                iteratorDate = iteratorDate.previousDate();
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+        while (!data.containsKey(iteratorDate))
+            iteratorDate = iteratorDate.previousDate();
         Date finalIteratorDate = iteratorDate;
         return new HashMap<>(){{ put(new Date(finalIteratorDate), data.get(finalIteratorDate)); }};
     }

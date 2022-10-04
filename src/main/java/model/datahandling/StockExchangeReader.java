@@ -27,12 +27,7 @@ public class StockExchangeReader {
     private static void testing() {
         System.out.println("Testing");
 
-        Map<Date, DayData> data = null;
-        try {
-            data = convertCSVFileToHandledData(defaultPath + "HistoricalData_AAPL.csv");
-        } catch (IOException err) {
-            System.out.println(err.getMessage());
-        }
+        Map<Date, DayData> data = convertCSVFileToHandledData(defaultPath + "HistoricalData_AAPL.csv");
 
         /*
         *   Varje dags data ligger i en HashMap som är "Keyed" till de givna datumet i CSV filen.
@@ -57,27 +52,30 @@ public class StockExchangeReader {
      * @return A {@link Map} containing all the information of that file.
      * @throws IOException if the file that the parameter path refers to does not exist.
      */
-    static Map<Date, DayData> convertCSVFileToHandledData(String path) throws IOException {
+    static Map<Date, DayData> convertCSVFileToHandledData(String path) {
         Map<Date, DayData> data = new HashMap<>();
         String line;
         path = defaultPath + path;
-        BufferedReader br = new BufferedReader(new FileReader(path));
-        br.readLine();
-        while ((line = br.readLine()) != null) {
-            String[] values = line.split(",");
-            // String date = values[0];
-            Date date = new Date(values[0]);
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                // String date = values[0];
+                Date date = new Date(values[0]);
 
-            int volume = Integer.parseInt(values[2]);
-            double close = Double.parseDouble(values[1].substring(1));
-            double open = Double.parseDouble(values[3].substring(1));
-            double high = Double.parseDouble(values[4].substring(1));
-            double low = Double.parseDouble(values[5].substring(1));
+                int volume = Integer.parseInt(values[2]);
+                double close = Double.parseDouble(values[1].substring(1));
+                double open = Double.parseDouble(values[3].substring(1));
+                double high = Double.parseDouble(values[4].substring(1));
+                double low = Double.parseDouble(values[5].substring(1));
 
-            DayData dayData = new DayData(volume, open, close, high, low);
-            data.put(date, dayData);
+                DayData dayData = new DayData(volume, open, close, high, low);
+                data.put(date, dayData);
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
-
         return data;
     }
 }

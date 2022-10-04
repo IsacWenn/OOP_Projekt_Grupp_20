@@ -49,7 +49,6 @@ public class CurrencyExchangeReader {
         String line;
         path = defaultPath + path;
         BufferedReader br = new BufferedReader(new FileReader(path));
-        br.readLine();
 
         while ((line = br.readLine()) != null) {
             String[] values = line.split("[,/]");
