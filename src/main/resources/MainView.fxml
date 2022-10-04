@@ -9,7 +9,10 @@
    <children>
       <Pane layoutX="63.0" layoutY="-57.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="newLineGraphButton" layoutX="81.0" layoutY="36.0" mnemonicParsing="false" onAction="#newLineGraph" text="New Line Graph" />
+            <Button fx:id="newClosingProceGraphButton" layoutX="14.0" layoutY="37.0" mnemonicParsing="false" onAction="#newClosingPriceGraph" text="New Closing Price Graph" />
+            <Button fx:id="newDailyChangeGraphButton" layoutX="183.0" layoutY="37.0" mnemonicParsing="false" onAction="#newDailyChangeGraph" text="New Daily Change Graph" />
+            <Button fx:id="newLinearRegressionGraphButton" layoutX="354.0" layoutY="37.0" mnemonicParsing="false" onAction="#newLinearRegressionGraph" text="New Linear Regression Graph" />
+            <Button fx:id="newHighMinusLowGraphButton" layoutX="549.0" layoutY="37.0" mnemonicParsing="false" onAction="#newHighMinusLowGraph" text="New High Minus Low Graph" />
          </children>
       </Pane>
       <TabPane fx:id="tabsPane" layoutX="362.0" layoutY="201.0" style="-fx-background-color: dddddd;" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
