@@ -2,6 +2,7 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -30,7 +31,11 @@ public class AppController implements Initializable {
 
     public void newLineGraph() {
         GraphController newGraph = new LineGraphController(this);
-        Tab newTab = new Tab("Line Graph", newGraph);
+        newTab(newGraph);
+    }
+
+    private void newTab(Node content) {
+        Tab newTab = new Tab("Line Graph", content);
         tabsPane.getTabs().add(newTab);
         tabsPane.getSelectionModel().select(newTab);
     }

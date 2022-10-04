@@ -1,13 +1,6 @@
 package controller;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.DatePicker;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
-import model.AppModel;
 import model.datahandling.DataHandler;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;

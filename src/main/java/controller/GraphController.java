@@ -187,8 +187,4 @@ public abstract class GraphController extends AnchorPane {
     private boolean isCompanyActive(String acronym) {
         return activeCompanies.contains(acronym);
     }
-
-    public void closeTab() {
-        this.closeTab();
-    }
 }
