@@ -243,6 +243,16 @@ public class Date implements Comparable<Date> {
     }
 
     /**
+     * Generates an {@link Integer} hash representation of the object.
+     *
+     * @return an {@link Integer} hash.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(year, month, day);
+    }
+
+    /**
      * A method that checks if this Date is before the Date given in the parameter otherDate.
      *
      * @param otherDate the {@link Date} to compare with.
