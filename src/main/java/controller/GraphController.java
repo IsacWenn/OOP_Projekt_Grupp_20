@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -25,19 +26,35 @@ public abstract class GraphController extends AnchorPane {
     protected final AppModel appModel = AppModel.getInstance();
     protected AppController parentController;
     protected Algorithm algorithm;
-    @FXML
-    protected DatePicker startDatePicker;
-    @FXML
-    protected DatePicker endDatePicker;
     protected Map<String, ControllerStockListItem> stockListItemMap = new HashMap<String, ControllerStockListItem>();
     protected ArrayList<String> activeCompanies;
     protected Date startDate;
     protected Date endDate;
     protected int maxCompanies = 0;
+
+    @FXML
+    protected DatePicker startDatePicker;
+
+    @FXML
+    protected DatePicker endDatePicker;
+
     @FXML
     protected FlowPane stockPane;
+
     @FXML
     protected LineChart<String, Number> displayedGraph;
+
+    @FXML
+    private Button timeframeOneDayButton;
+
+    @FXML
+    private Button timeframeOneWeekButton;
+
+    @FXML
+    private Button timeframeOneMonthButton;
+
+    @FXML
+    private Button timeframeOneYearButton;
 
     public GraphController(AppController parentController) {
         this.parentController = parentController;
@@ -82,7 +99,7 @@ public abstract class GraphController extends AnchorPane {
     }
 
     private void initializeStartDatePicker() {
-        startDatePicker.setValue(LocalDate.of(2021, 9, 26));
+        startDatePicker.setValue(LocalDate.now().minusYears(1));
 
         startDatePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             try {
@@ -107,7 +124,7 @@ public abstract class GraphController extends AnchorPane {
     }
 
     private void initializeEndDatePicker() {
-        endDatePicker.setValue(LocalDate.of(2022, 9, 26));
+        endDatePicker.setValue(LocalDate.now());
 
         endDatePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             try {
@@ -158,6 +175,46 @@ public abstract class GraphController extends AnchorPane {
         if (temp.isAfter(startDate)) {
             endDate = temp;
         } else throw new IOException("Invalid date");
+    }
+
+    public void timeframeOneDay() {
+        try {
+            updateStartDate(LocalDate.now().minusDays(1));
+            updateEndDate(LocalDate.now());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        refreshStocks();
+    }
+
+    public void timeframeOneWeek() {
+        try {
+            updateStartDate(LocalDate.now().minusWeeks(1));
+            updateEndDate(LocalDate.now());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        refreshStocks();
+    }
+
+    public void timeframeOneMonth() {
+        try {
+            updateStartDate(LocalDate.now().minusMonths(1));
+            updateEndDate(LocalDate.now());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        refreshStocks();
+    }
+
+    public void timeframeOneYear() {
+        try {
+            updateStartDate(LocalDate.now().minusYears(1));
+            updateEndDate(LocalDate.now());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        refreshStocks();
     }
 
     public void openStockView(String acronym) {
