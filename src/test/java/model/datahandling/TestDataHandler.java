@@ -40,8 +40,12 @@ public class TestDataHandler {
     }
 
     @Test
-    public void getCompanyDataWithListOfDatesShouldReturnCorrectDataInterval() {
-        assertTrue(true);
+    public void getCompanyDataWithListOfDatesShouldReturnCorrectDataInterval() throws IOException {
+        List<Date> dates = new Date(2022, 6, 1).listIntervalTo(new Date(2022, 9, 1));
+        Map<Date, DayData> data = DataHandler.getCompanyData(dates, "AAPL");
+        assertEquals(74229900, data.get(dates.get(dates.size() - 1)).getVolume());
+        assertEquals(148.71, data.get(dates.get(0)).getClosed());
+        assertEquals(149.8697, data.get(dates.get(7)).getHigh());
     }
 
 
