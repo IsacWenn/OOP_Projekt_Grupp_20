@@ -10,7 +10,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import model.AppModel;
 import model.datahandling.DataHandler;
+import model.graphmodel.GraphModel;
 import model.graphmodel.graphalgorithms.GraphAlgorithm;
+import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import model.util.Date;
 
 import java.io.IOException;
@@ -22,8 +24,7 @@ import java.util.Map;
 public abstract class ChartController extends AnchorPane {
     protected final AppModel appModel = AppModel.getInstance();
     protected AppController parentController;
-    protected GraphAlgorithm graphAlgorithm;
-    protected Map<String, ControllerStockListItem> stockListItemMap = new HashMap<String, ControllerStockListItem>();
+    protected Map<String, ControllerStockListItem> stockListItemMap = new HashMap<>();
     protected ArrayList<String> activeCompanies;
     protected Date startDate;
     protected Date endDate;
@@ -40,25 +41,25 @@ public abstract class ChartController extends AnchorPane {
     protected FlowPane stockPane;
 
     @FXML
-    private Button timeframeOneDayButton;
+    protected Button timeframeOneDayButton;
 
     @FXML
-    private Button timeframeOneWeekButton;
+    protected Button timeframeOneWeekButton;
 
     @FXML
-    private Button timeframeOneMonthButton;
+    protected Button timeframeOneMonthButton;
 
     @FXML
-    private Button timeframeOneYearButton;
+    protected Button timeframeOneYearButton;
 
     @FXML
-    private ComboBox<String> chartTypeComboBox;
+    protected ComboBox<String> chartTypeComboBox;
 
     @FXML
-    private ComboBox<String> algorithmComboBox;
+    protected ComboBox<String> algorithmComboBox;
 
     @FXML
-    private AnchorPane chartPane;
+    protected AnchorPane chartPane;
 
     public ChartController(AppController parentController) {
         this.parentController = parentController;
@@ -166,7 +167,21 @@ public abstract class ChartController extends AnchorPane {
         algorithmComboBox.getItems().addAll("Closing Price", "Daily Change", "Daily Deviation", "Linear Regression");
         algorithmComboBox.getSelectionModel().select("Closing Price");
         algorithmComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
-            System.out.println(newVal);
+            switch (newVal) {
+                case ("Closing Price"):
+                    chart.setAlgorithm(GraphAlgorithms.DAILYCLOSINGPRICE);
+                    break;
+                case ("Daily Change"):
+                    chart.setAlgorithm(GraphAlgorithms.DAILYCHANGE);
+                    break;
+                case ("Daily Deviation"):
+                    chart.setAlgorithm(GraphAlgorithms.DAILYHIGHMINUSLOW);
+                    break;
+                case ("Linear Regression"):
+                    chart.setAlgorithm(GraphAlgorithms.LINEARREGRESSION);
+                    break;
+            }
+            refreshStocks();
         });
     }
 
