@@ -11,6 +11,7 @@ import model.graphmanager.algorithms.Graphables;
 import model.util.Date;
 
 import java.util.List;
+import java.util.Map;
 
 public class LineChart extends javafx.scene.chart.LineChart<String, Number> {
     public LineChart() {
@@ -22,9 +23,9 @@ public class LineChart extends javafx.scene.chart.LineChart<String, Number> {
 
     public void addStockToChart(String acronym, Date startDate, Date endDate) {
         XYChart.Series<String, Number> seriesToAdd = new XYChart.Series<>();
-        DateHashMap<Date, DayData> data = DataHandler.getCompanyData(startDate, endDate, acronym);
+        Map<Date, DayData> data = DataHandler.getCompanyData(startDate, endDate, acronym);
 
-        DateHashMap<Date, Number> calcData = AlgorithmFactory.create(Graphables.DAILYCLOSINGPRICE).calculate(data);
+        Map<Date, Number> calcData = AlgorithmFactory.create(Graphables.DAILYCLOSINGPRICE).calculate(data);
 
         seriesToAdd.setName(acronym);
         List<Date> orderedDates;
