@@ -1,19 +1,18 @@
-package model.graphmanager.algorithms;
+package model.graphmodel.graphalgorithms;
 
 import model.util.Date;
-import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * DailyClosingPrice is class implementing the Algorithm interface that is used by {@link model.graphmanager.GraphComputer}
+ * DailyClosingPrice is class implementing the GraphAlgorithm interface that is used by {@link model.graphmodel.GraphComputer}
  * to retrieve the closing price for each date from an {@link Map} holding the information in a {@link DayData}.
  * @author Carl
  */
 
-class DailyClosingPrice implements Algorithm {
+class DailyClosingPrice implements GraphAlgorithm {
     /**
      * A method that returns the daily closing price of an asset.
      *

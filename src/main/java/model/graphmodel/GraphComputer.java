@@ -1,16 +1,16 @@
-package model.graphmanager;
+package model.graphmodel;
 
 import model.datahandling.DataHandler;
 import model.datahandling.DayData;
 import model.util.Date;
 import model.datahandling.DateHashMap;
-import model.graphmanager.algorithms.*;
+import model.graphmodel.graphalgorithms.*;
 
 import java.io.IOException;
 import java.util.Map;
 
 /**
- * GraphComputer is the class that uses the strategy pattern to change what class that implements {@link Algorithm}
+ * GraphComputer is the class that uses the strategy pattern to change what class that implements {@link GraphAlgorithm}
  * it should use
  *
  * @author Pontus
@@ -20,24 +20,24 @@ import java.util.Map;
 public class GraphComputer {
 
     /**
-     * A private {@link Algorithm} variable
+     * A private {@link GraphAlgorithm} variable
      */
-    private Algorithm algorithm;
+    private GraphAlgorithm graphAlgorithm;
 
     /**
-     * A constructor for the GraphComputer class that sets {@link GraphComputer#algorithm} to the default algorithm.
+     * A constructor for the GraphComputer class that sets {@link GraphComputer#graphAlgorithm} to the default graphAlgorithm.
      */
     public GraphComputer(){
-        this.algorithm = AlgorithmFactory.create(Graphables.DAILYCLOSINGPRICE);
+        this.graphAlgorithm = GraphAlgorithmFactory.create(GraphAlgorithms.DAILYCLOSINGPRICE);
     }
 
     /**
-     * A method that sets the current algorithm to the one called with the method
+     * A method that sets the current graphAlgorithm to the one called with the method
      *
-     * @param graphableENUM A {@link Graphables} that represent a {@link Algorithm} in {@link AlgorithmFactory}.
+     * @param graphableENUM A {@link GraphAlgorithms} that represent a {@link GraphAlgorithm} in {@link GraphAlgorithmFactory}.
      */
-    void setAlgorithm(Graphables graphableENUM) {
-        this.algorithm = AlgorithmFactory.create(graphableENUM);
+    void setAlgorithm(GraphAlgorithms graphableENUM) {
+        this.graphAlgorithm = GraphAlgorithmFactory.create(graphableENUM);
     }
 
     /**
@@ -64,12 +64,12 @@ public class GraphComputer {
     }
 
     /**
-     * A method that calculates the incoming data with the algorithm in {@link GraphComputer#algorithm}.
+     * A method that calculates the incoming data with the graphAlgorithm in {@link GraphComputer#graphAlgorithm}.
      * @param data A {@link DateHashMap} containing data in a {@link DayData} for each {@link Date}.
      * @return A {@link DateHashMap} containing a {@link Number} for each {@link Date}.
      */
     public Map<Date, Number> updateValues(Map<Date, DayData> data) {
-        return algorithm.calculate(data);
+        return graphAlgorithm.calculate(data);
     }
 
 }

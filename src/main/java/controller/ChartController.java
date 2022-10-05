@@ -3,7 +3,6 @@ package controller;
 import controller.charts.LineChart;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.chart.Chart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -11,7 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import model.AppModel;
 import model.datahandling.DataHandler;
-import model.graphmanager.algorithms.Algorithm;
+import model.graphmodel.graphalgorithms.GraphAlgorithm;
 import model.util.Date;
 
 import java.io.IOException;
@@ -23,7 +22,7 @@ import java.util.Map;
 public abstract class ChartController extends AnchorPane {
     protected final AppModel appModel = AppModel.getInstance();
     protected AppController parentController;
-    protected Algorithm algorithm;
+    protected GraphAlgorithm graphAlgorithm;
     protected Map<String, ControllerStockListItem> stockListItemMap = new HashMap<String, ControllerStockListItem>();
     protected ArrayList<String> activeCompanies;
     protected Date startDate;

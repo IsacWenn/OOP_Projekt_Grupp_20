@@ -1,4 +1,4 @@
-package model.graphmanager.algorithms;
+package model.graphmodel.graphalgorithms;
 
 import model.datahandling.DayData;
 import model.util.Date;
@@ -25,7 +25,7 @@ public class TestDailyHighMinusLow {
         date2 = new Date(2020, 1, 2);
         data.put(date1, dayData1);
         data.put(date2, dayData2);
-        Algorithm dailyHighMinusLow = AlgorithmFactory.create(Graphables.DAILYHIGHMINUSLOW);
+        GraphAlgorithm dailyHighMinusLow = GraphAlgorithmFactory.create(GraphAlgorithms.DAILYHIGHMINUSLOW);
         calculatedData = dailyHighMinusLow.calculate(data);
     }
 

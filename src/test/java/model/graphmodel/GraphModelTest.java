@@ -1,6 +1,6 @@
-package model.graphmanager;
+package model.graphmodel;
 
-import model.graphmanager.algorithms.Graphables;
+import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import model.util.Date;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GraphTest {
+public class GraphModelTest {
 
     private static Date date1;
     private static Date date2;
@@ -33,47 +33,47 @@ public class GraphTest {
 
     @Test
     public void graphModelCreatedWithOnlyMicShouldContainAllAvailableCompanyData() {
-        Graph graph = new Graph("AAPL");
-        assertEquals(2515, graph.data.size());
-        assertNotNull(graph.data.get(date1));
+        GraphModel graphModel = new GraphModel("AAPL");
+        assertEquals(2515, graphModel.data.size());
+        assertNotNull(graphModel.data.get(date1));
     }
 
     @Test
     public void graphModelCreatedWithMicAndDateIntervalShouldContainDataForThatInterval() {
-        Graph graph = new Graph("AAPL", date1, date2);
-        assertEquals(21, graph.data.size());
+        GraphModel graphModel = new GraphModel("AAPL", date1, date2);
+        assertEquals(21, graphModel.data.size());
     }
     @Test
     public void graphModelCreatedWithAListOfDatesShouldContainDataForThoseDates(){
-        Graph graph = new Graph("AAPL", dateList);
-        assertEquals(3, graph.data.size());
+        GraphModel graphModel = new GraphModel("AAPL", dateList);
+        assertEquals(3, graphModel.data.size());
     }
     @Test
     public void updateMethodShouldUpdateTheValuesOfTheGraphModel(){
-        Graph graph = new Graph("AAPL", date1, date2);
-        graph.update();
-        assertEquals(135.87, graph.getValues().get(date1));
+        GraphModel graphModel = new GraphModel("AAPL", date1, date2);
+        graphModel.update();
+        assertEquals(135.87, graphModel.getValues().get(date1));
     }
 
     @Test
     public void updateAlgorithmShouldUpdateTheCurrentAlgorithm(){
-        Graph graph = new Graph("AAPL", date2, date3);
-        graph.updateAlgorithm(Graphables.DAILYCHANGE);
-        graph.update();
-        assertEquals(1.27, (double)graph.getValues().get(date2), 0.01);
+        GraphModel graphModel = new GraphModel("AAPL", date2, date3);
+        graphModel.updateAlgorithm(GraphAlgorithms.DAILYCHANGE);
+        graphModel.update();
+        assertEquals(1.27, (double) graphModel.getValues().get(date2), 0.01);
     }
 
     @Test
     public void changeCurrencyShouldUpdateWhatCurrencyTheGraphValuesIsShownIn(){
-        Graph graph = new Graph("AAPL", date2, date3);
-        graph.changeCurrency("SEK_USD.csv");
-        graph.update();
-        //assertEquals(1569.95, (double)graph.getValues().get(date2), 0.1); TODO
+        GraphModel graphModel = new GraphModel("AAPL", date2, date3);
+        graphModel.changeCurrency("SEK_USD.csv");
+        graphModel.update();
+        //assertEquals(1569.95, (double)graphModel.getValues().get(date2), 0.1); TODO
     }
 
     @Test
     public void getValuesShouldReturnTheCurrentlyCalculatedValuesInGraphModel(){
-        Graph graph = new Graph("AAPL", date2, date3);
+        GraphModel graphModel = new GraphModel("AAPL", date2, date3);
         //TODO
     }
 }

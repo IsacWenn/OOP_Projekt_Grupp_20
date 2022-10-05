@@ -1,4 +1,4 @@
-package model.graphmanager.algorithms;
+package model.graphmodel.graphalgorithms;
 
 import model.util.Date;
 import model.datahandling.DateHashMap;
@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * LinearRegression is class implementing the Algorithm interface that is used by {@link model.graphmanager.GraphComputer} to
+ * LinearRegression is class implementing the GraphAlgorithm interface that is used by {@link model.graphmodel.GraphComputer} to
  * calculate the linear regression of a dataset.
  * @author Carl
  */
 
-class LinearRegression implements Algorithm {
+class LinearRegression implements GraphAlgorithm {
 
     /**
      * A method that calculates the values of a linear equation constructed by linear regression of a {@link DateHashMap}.

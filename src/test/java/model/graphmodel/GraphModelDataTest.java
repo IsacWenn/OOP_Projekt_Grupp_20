@@ -1,4 +1,4 @@
-package model.graphmanager;
+package model.graphmodel;
 
 
 import model.datahandling.DayData;
@@ -12,7 +12,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GraphDataTest {
+public class GraphModelDataTest {
 
     private static Date date1;
     private static Date date2;

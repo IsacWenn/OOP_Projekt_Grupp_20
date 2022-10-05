@@ -1,4 +1,4 @@
-package model.graphmanager.algorithms;
+package model.graphmodel.graphalgorithms;
 
 import model.datahandling.DayData;
 import model.util.Date;
@@ -23,7 +23,7 @@ public class TestLinearRegression {
     private static Date date3;
     private static Date date4;
     private static Date date5;
-    private Algorithm linearRegression;
+    private GraphAlgorithm linearRegression;
     Map<Date, DayData> data;
 
     @BeforeEach
@@ -43,7 +43,7 @@ public class TestLinearRegression {
         date4 = date3.nextDate();
         date5 = date4.nextDate();
 
-        linearRegression = AlgorithmFactory.create(Graphables.LINEARREGRESSION);
+        linearRegression = GraphAlgorithmFactory.create(GraphAlgorithms.LINEARREGRESSION);
     }
 
     @Test

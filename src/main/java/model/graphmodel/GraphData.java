@@ -1,8 +1,7 @@
-package model.graphmanager;
+package model.graphmodel;
 
 import model.util.Date;
 import model.datahandling.DataHandler;
-import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 
 import java.io.IOException;

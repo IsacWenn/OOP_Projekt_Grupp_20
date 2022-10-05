@@ -4,10 +4,9 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import model.datahandling.DataHandler;
-import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
-import model.graphmanager.algorithms.AlgorithmFactory;
-import model.graphmanager.algorithms.Graphables;
+import model.graphmodel.graphalgorithms.GraphAlgorithmFactory;
+import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import model.util.Date;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public class LineChart extends javafx.scene.chart.LineChart<String, Number> {
         XYChart.Series<String, Number> seriesToAdd = new XYChart.Series<>();
         Map<Date, DayData> data = DataHandler.getCompanyData(startDate, endDate, acronym);
 
-        Map<Date, Number> calcData = AlgorithmFactory.create(Graphables.DAILYCLOSINGPRICE).calculate(data);
+        Map<Date, Number> calcData = GraphAlgorithmFactory.create(GraphAlgorithms.DAILYCLOSINGPRICE).calculate(data);
 
         seriesToAdd.setName(acronym);
         List<Date> orderedDates;
