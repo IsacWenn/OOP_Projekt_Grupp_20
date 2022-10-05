@@ -1,18 +1,17 @@
 package model.graphmanager.algorithms;
 
-import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 import model.util.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestDailyChange {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+public class TestDailyHighMinusLow {
     private static Map<Date, Number> calculatedData;
     private static Date date1;
     private static Date date2;
@@ -26,14 +25,13 @@ public class TestDailyChange {
         date2 = new Date(2020, 1, 2);
         data.put(date1, dayData1);
         data.put(date2, dayData2);
-        Algorithm dailyChange = AlgorithmFactory.create(Graphables.DAILYCHANGE);
-        calculatedData = dailyChange.calculate(data);
+        Algorithm dailyHighMinusLow = AlgorithmFactory.create(Graphables.DAILYHIGHMINUSLOW);
+        calculatedData = dailyHighMinusLow.calculate(data);
     }
 
     @Test
-    public void returnDataShouldBeExpressedInCorrectPercentages() {
-        assertEquals(100.0, calculatedData.get(date1));
-        assertEquals(-50.0,calculatedData.get(date2));
+    public void returnDataShouldBeExpressedInCorrectPriceDifference() {
+        assertEquals(950.0, calculatedData.get(date1));
+        assertEquals(9.0, calculatedData.get(date2));
     }
-
 }
