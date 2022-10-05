@@ -8,6 +8,7 @@ import model.graphmanager.algorithms.Graphables;
 import model.util.Date;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Graph is a class for representing the data and graph-functionality of a visual graph object.
@@ -19,14 +20,14 @@ import java.util.List;
 public class Graph {
 
     /**
-     * The private {@link DateHashMap} that holds the {@link Date} and its corresponding {@link Number}
+     * The private {@link Map} that holds the {@link Date} and its corresponding {@link Number}
      */
-    private DateHashMap<Date, Number> values;
+    private Map<Date, Number> values;
 
     /**
-     * The {@link DateHashMap} that holds the raw company data from the GraphData class, a {@link Date}
+     * The {@link Map} that holds the raw company data from the GraphData class, a {@link Date}
      */
-    DateHashMap<Date, DayData> data;
+    Map<Date, DayData> data;
 
     /**
      * The reference to the {@link GraphData} class
@@ -109,11 +110,11 @@ public class Graph {
     }
 
     /**
-     * A getter method for the {@link DateHashMap} with {@link Date} and {@link Number} values in Graph
+     * A getter method for the {@link Map} with {@link Date} and {@link Number} values in Graph
      *
-     * @return the {@link DateHashMap} containing the values
+     * @return the {@link Map} containing the values
      */
-    public DateHashMap<Date, Number> getValues() {
+    public Map<Date, Number> getValues() {
         return this.values;
     }
 

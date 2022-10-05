@@ -23,7 +23,7 @@ public class AlgorithmFactory {
             return new DailyHighMinusLow();
         if (graphables.equals(Graphables.LINEARREGRESSION))
             return new LinearRegression();
-        return null;
+        return null; // TODO MÅSTE FIXAS
     }
 
 }

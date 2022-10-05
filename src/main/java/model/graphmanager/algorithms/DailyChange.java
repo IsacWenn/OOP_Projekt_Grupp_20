@@ -4,6 +4,9 @@ import model.util.Date;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * DailyChange is class implementing the Algorithm interface that is used by {@link model.graphmanager.GraphComputer} to
  * perform calculations of the daily change of a given asset expressed in percentages.
@@ -15,11 +18,11 @@ class DailyChange implements Algorithm {
 
     /**
      * A method that calculates the daily change of a given asset expressed in percentages.
-     * @return {@link DateHashMap}
+     * @return {@link Map}
     */
     @Override
-    public DateHashMap<Date, Number> calculate(DateHashMap<Date, DayData> data) {
-        DateHashMap<Date, Number> calcData = new DateHashMap<>();
+    public Map<Date, Number> calculate(Map<Date, DayData> data) {
+        Map<Date, Number> calcData = new HashMap<>();
         for (Date date : data.keySet()) {
             DayData dayData = data.get(date);
             double open = dayData.getOpen();

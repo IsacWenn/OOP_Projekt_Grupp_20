@@ -1,9 +1,13 @@
 package model.graphmanager;
 
+import model.datahandling.DataHandler;
 import model.datahandling.DayData;
 import model.util.Date;
 import model.datahandling.DateHashMap;
 import model.graphmanager.algorithms.*;
+
+import java.io.IOException;
+import java.util.Map;
 
 /**
  * GraphComputer is the class that uses the strategy pattern to change what class that implements {@link Algorithm}
@@ -37,19 +41,25 @@ public class GraphComputer {
     }
 
     /**
-     * A method that converts the asset prices in a {@link DateHashMap} and replaces the old prices with the new currencies price.
-     * @param currency A {@link DateHashMap} containing the currency rates for each {@link Date}.
-     * @param data A {@link DateHashMap} containing the asset prices for each {@link Date} in a {@link DayData}.
+     * A method that converts the asset prices in a {@link Map} and replaces the old prices with the new currencies price.
+     * @param currency A {@link Map} containing the currency rates for each {@link Date}.
+     * @param data A {@link Map} containing the asset prices for each {@link Date} in a {@link DayData}.
      */
-    public void calculateCurrency(DateHashMap<Date, Double> currency,
-                                  DateHashMap<Date, DayData> data) {
+    public void calculateCurrency(Map<Date, Double> currency,
+                                  Map<Date, DayData> data) {
         for (Date date : data.keySet()) {
-            int volume = data.get(date).getVolume();
-            double open = data.get(date).getOpen() * currency.get(date);
-            double close = data.get(date).getClosed() * currency.get(date);
-            double high = data.get(date).getHigh() * currency.get(date);
-            double low = data.get(date).getLow() * currency.get(date);
-            data.put(date, new DayData(volume, open, close, high, low));
+            try {
+                double rate = DataHandler.retrieveClosestExchangeRate(date, currency);
+                int volume = data.get(date).getVolume();
+                double open = data.get(date).getOpen() * rate;
+                double close = data.get(date).getClosed() * rate;
+                double high = data.get(date).getHigh() * rate;
+                double low = data.get(date).getLow() * rate;
+                data.put(date, new DayData(volume, open, close, high, low));
+            } catch (IOException e) {
+                System.out.println(e); // TODO behandla exceptions
+            }
+            
         }
     }
 
@@ -58,7 +68,7 @@ public class GraphComputer {
      * @param data A {@link DateHashMap} containing data in a {@link DayData} for each {@link Date}.
      * @return A {@link DateHashMap} containing a {@link Number} for each {@link Date}.
      */
-    public DateHashMap<Date, Number> updateValues(DateHashMap<Date, DayData> data) {
+    public Map<Date, Number> updateValues(Map<Date, DayData> data) {
         return algorithm.calculate(data);
     }
 
