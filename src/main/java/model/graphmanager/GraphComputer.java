@@ -1,10 +1,12 @@
 package model.graphmanager;
 
+import model.datahandling.DataHandler;
 import model.datahandling.DayData;
 import model.util.Date;
 import model.datahandling.DateHashMap;
 import model.graphmanager.algorithms.*;
 
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -46,12 +48,18 @@ public class GraphComputer {
     public void calculateCurrency(Map<Date, Double> currency,
                                   Map<Date, DayData> data) {
         for (Date date : data.keySet()) {
-            int volume = data.get(date).getVolume();
-            double open = data.get(date).getOpen() * currency.get(date);
-            double close = data.get(date).getClosed() * currency.get(date);
-            double high = data.get(date).getHigh() * currency.get(date);
-            double low = data.get(date).getLow() * currency.get(date);
-            data.put(date, new DayData(volume, open, close, high, low));
+            try {
+                double rate = DataHandler.retrieveClosestExchangeRate(date, currency);
+                int volume = data.get(date).getVolume();
+                double open = data.get(date).getOpen() * rate;
+                double close = data.get(date).getClosed() * rate;
+                double high = data.get(date).getHigh() * rate;
+                double low = data.get(date).getLow() * rate;
+                data.put(date, new DayData(volume, open, close, high, low));
+            } catch (IOException e) {
+                System.out.println(e); // TODO behandla exceptions
+            }
+            
         }
     }
 

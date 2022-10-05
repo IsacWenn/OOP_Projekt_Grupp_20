@@ -8,11 +8,13 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TestDailyChange {
 
-    private static DateHashMap<Date, DayData> data;
-    private static DateHashMap<Date, Number> calculatedData;
+    private static Map<Date, DayData> data;
+    private static Map<Date, Number> calculatedData;
     private static DayData dayData1;
     private static DayData dayData2;
     private static Date date1;
@@ -21,7 +23,7 @@ public class TestDailyChange {
 
     @BeforeEach
     public void setVariables() throws IOException {
-        data = new DateHashMap<Date, DayData>();
+        data = new HashMap<Date, DayData>();
         dayData1 = new DayData(100,100,200,1000,50);
         dayData2 = new DayData(8,4,2,10,1);
         date1 = new Date(2020, 1, 1);
