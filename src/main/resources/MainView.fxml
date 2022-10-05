@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
-
+<?import javafx.scene.layout.Pane?>
 
 <AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppController">
    <children>
-      <LineChart fx:id="chart1" layoutX="14.0" layoutY="82.0" prefHeight="554.0" prefWidth="772.0">
-        <xAxis>
-          <CategoryAxis side="BOTTOM" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis side="LEFT" />
-        </yAxis>
-      </LineChart>
+      <Pane layoutX="63.0" layoutY="-57.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button fx:id="newClosingProceGraphButton" layoutX="14.0" layoutY="37.0" mnemonicParsing="false" onAction="#newClosingPriceGraph" text="New Closing Price Graph" />
+            <Button fx:id="newDailyChangeGraphButton" layoutX="183.0" layoutY="37.0" mnemonicParsing="false" onAction="#newDailyChangeGraph" text="New Daily Change Graph" />
+            <Button fx:id="newLinearRegressionGraphButton" layoutX="354.0" layoutY="37.0" mnemonicParsing="false" onAction="#newLinearRegressionGraph" text="New Linear Regression Graph" />
+            <Button fx:id="newHighMinusLowGraphButton" layoutX="549.0" layoutY="37.0" mnemonicParsing="false" onAction="#newHighMinusLowGraph" text="New High Minus Low Graph" />
+         </children>
+      </Pane>
+      <TabPane fx:id="tabsPane" layoutX="362.0" layoutY="201.0" style="-fx-background-color: dddddd;" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
    </children>
 </AnchorPane>

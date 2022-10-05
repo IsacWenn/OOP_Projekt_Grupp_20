@@ -2,59 +2,66 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import model.AppModel;
-import model.graphmanager.Graph;
-import model.util.Date;
-import model.datahandling.DataHandler;
-import model.datahandling.DateHashMap;
-import model.datahandling.DayData;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 
 public class AppController implements Initializable {
-    private final AppModel model = AppModel.getInstance();
-    @FXML private LineChart<String, Number> chart1;
+
+    private final AppModel appModel = AppModel.getInstance();
+
+    @FXML
+    private TabPane tabsPane;
+
+    @FXML
+    private Button newClosingPriceGraphButton;
+
+    @FXML
+    private Button newDailyChangeGraphButton;
+
+    @FXML
+    private Button newLinearRegressionGraphButton;
+
+    @FXML
+    private Button newHighMinusLowGraphButton;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
-        XYChart.Series<String, Number> series2 = new XYChart.Series<>();
-        series1.setName("Stock");
-        populateSeries(series1, "AAPL");
-
-        chart1.setCreateSymbols(false);
-        //chart1.getData().add(series1);
-        chart1.getData().add(series1);
+        initializeVariables();
     }
 
-    private void populateSeries(XYChart.Series<String, Number> series, String mic) {
-        DateHashMap<Date, DayData> data = DataHandler.getCompanyData(mic);
-        try {
-            Date date1 = new Date(2020,1,1);
-            Date date2 = new Date(2020,2,1);
+    private void initializeVariables() {
+    }
 
-            Graph graph = new Graph("TSLA", date1, date2);
-            graph.update();
+    public void newClosingPriceGraph() {
+        GraphController newGraph = new ClosingPriceGraphController(this);
+        newTab(newGraph, "Closing Price");
+    }
 
-            DateHashMap<Date, Number> values = graph.getValues();
+    public void newDailyChangeGraph() {
+        GraphController newGraph = new DailyChangeGraphController(this);
+        newTab(newGraph, "Daily Change");
+    }
 
-            List<Date> sortedDates = Date.sortDates(values.keySet());
+    public void newLinearRegressionGraph() {
+        GraphController newGraph = new LinearRegressionGraphController(this);
+        newTab(newGraph, "Linear Regression");
+    }
 
-            int index = 0;
-            for (Date date : sortedDates) {
-                Number yVal = values.get(date);
-                series.getData().add(index, new XYChart.Data<>(date.toString(), yVal));
-                index++;
-            }
+    public void newHighMinusLowGraph() {
+        GraphController newGraph = new HighMinusLowGraphController(this);
+        newTab(newGraph, "High Minus Low");
+    }
 
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+    private void newTab(Node content, String name) {
+        Tab newTab = new Tab(name, content);
+        tabsPane.getTabs().add(newTab);
+        tabsPane.getSelectionModel().select(newTab);
     }
 }
 

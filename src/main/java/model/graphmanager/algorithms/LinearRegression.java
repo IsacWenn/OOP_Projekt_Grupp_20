@@ -4,7 +4,9 @@ import model.util.Date;
 import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * LinearRegression is class implementing the Algorithm interface that is used by {@link model.graphmanager.GraphComputer} to
@@ -21,7 +23,7 @@ class LinearRegression implements Algorithm {
      */
 
     @Override
-    public DateHashMap<Date, Number> calculate(DateHashMap<Date, DayData> data) {;
+    public Map<Date, Number> calculate(Map<Date, DayData> data) {;
         List<Date> sortedDates = Date.sortDates(data.keySet());
         double[] coefficients = getCoefficients(data, sortedDates);
         return getLinearValues(coefficients[1], coefficients[0], sortedDates);
@@ -32,10 +34,10 @@ class LinearRegression implements Algorithm {
      * @param k A {@link Double} is the slope of the function.
      * @param m A {@link Double} is the y-intercept of the function.
      * @param sortedDates A {@link List} containing {@link Date} in chronological order.
-     * @return A {@link DateHashMap} containing values of the linear equation over timeframe {@link ??????????}.
+     * @return A {@link Map} containing values of the linear equation over timeframe {@link ??????????}.
      */
-    private DateHashMap<Date, Number> getLinearValues(double k, double m, List<Date> sortedDates) {
-        DateHashMap<Date, Number> returnData = new DateHashMap<>();
+    private Map<Date, Number> getLinearValues(double k, double m, List<Date> sortedDates) {
+        Map<Date, Number> returnData = new HashMap<>();
         double xAxisValue = 1;
         for (Date date: sortedDates) {
             double val = k * xAxisValue + m;
@@ -51,7 +53,7 @@ class LinearRegression implements Algorithm {
      * A method that calculates the coefficients of {@link }.
      * @return an array of {@link Double}s.
      */
-    private double[] getCoefficients(DateHashMap<Date, DayData> data, List<Date> sortedDates) {
+    private double[] getCoefficients(Map<Date, DayData> data, List<Date> sortedDates) {
         double xAxisValue = 0;
         double sumX = 0;
         double sumY = 0;

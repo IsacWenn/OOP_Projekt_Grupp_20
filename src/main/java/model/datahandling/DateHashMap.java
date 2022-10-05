@@ -11,6 +11,7 @@ import java.util.HashMap;
  * @param <K> The parametrized type of the Keys.
  * @param <V> The parametrized type of the Values.
  */
+@Deprecated
 public class DateHashMap<K, V> extends HashMap<K, V> {
 
     /**

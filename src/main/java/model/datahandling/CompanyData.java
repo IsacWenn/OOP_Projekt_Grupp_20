@@ -5,9 +5,10 @@ import model.util.CurrencyEnum;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- *  A class that holds a {@link HashMap} containing the essential data for each of the companies in our Database.
+ *  A class that holds a {@link Map} containing the essential data for each of the companies in our Database.
  *
  * @author Isac
  */
@@ -16,7 +17,7 @@ public class CompanyData {
     /**
      * A {@link HashMap} that contains the essential data for the different companies in our Database.
      */
-    private static final HashMap<String, HashMap<String, Object>> companyData = new HashMap<>(){{
+    private static final Map<String, HashMap<String, Object>> companyData = new HashMap<>(){{
         put("AAPL", new HashMap<>(){{
             put("name", "Apple, Inc.");
             put("filename", "HistoricalData_AAPL.csv");
