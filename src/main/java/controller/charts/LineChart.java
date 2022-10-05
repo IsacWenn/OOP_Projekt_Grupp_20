@@ -18,7 +18,6 @@ public class LineChart extends javafx.scene.chart.LineChart<String, Number> {
         this.setPrefSize(872, 544);
         this.setCreateSymbols(false);
         this.setAnimated(false);
-        
     }
 
     public void addStockToChart(String acronym, Date startDate, Date endDate) {
