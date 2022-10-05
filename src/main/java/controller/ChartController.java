@@ -1,17 +1,16 @@
 package controller;
 
+import controller.charts.LineChart;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.Chart;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import model.AppModel;
 import model.datahandling.DataHandler;
-import model.datahandling.DateHashMap;
-import model.datahandling.DayData;
 import model.graphmanager.algorithms.Algorithm;
 import model.util.Date;
 
@@ -19,10 +18,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public abstract class GraphController extends AnchorPane {
+public abstract class ChartController extends AnchorPane {
     protected final AppModel appModel = AppModel.getInstance();
     protected AppController parentController;
     protected Algorithm algorithm;
@@ -31,6 +29,7 @@ public abstract class GraphController extends AnchorPane {
     protected Date startDate;
     protected Date endDate;
     protected int maxCompanies = 0;
+    protected LineChart chart;
 
     @FXML
     protected DatePicker startDatePicker;
@@ -40,9 +39,6 @@ public abstract class GraphController extends AnchorPane {
 
     @FXML
     protected FlowPane stockPane;
-
-    @FXML
-    protected LineChart<String, Number> displayedGraph;
 
     @FXML
     private Button timeframeOneDayButton;
@@ -56,9 +52,19 @@ public abstract class GraphController extends AnchorPane {
     @FXML
     private Button timeframeOneYearButton;
 
-    public GraphController(AppController parentController) {
+    @FXML
+    private ComboBox<String> chartTypeComboBox;
+
+    @FXML
+    private ComboBox<String> algorithmComboBox;
+
+    @FXML
+    private AnchorPane chartPane;
+
+    public ChartController(AppController parentController) {
         this.parentController = parentController;
         loadFXML();
+        lineChart();
         initializeVariables();
         initializeStockPane();
         initializeSettings();
@@ -72,7 +78,7 @@ public abstract class GraphController extends AnchorPane {
     }
 
     protected void loadFXML() {
-        FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../LineGraph.fxml")));
+        FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../LineChart.fxml")));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
@@ -93,9 +99,10 @@ public abstract class GraphController extends AnchorPane {
     }
 
     protected void initializeSettings() {
-        displayedGraph.setCreateSymbols(false);
         initializeStartDatePicker();
         initializeEndDatePicker();
+        initializeChartTypeComboBox();
+        initializeAlgorithmComboBox();
     }
 
     private void initializeStartDatePicker() {
@@ -145,6 +152,22 @@ public abstract class GraphController extends AnchorPane {
                     e.printStackTrace();
                 }
             }
+        });
+    }
+
+    private void initializeChartTypeComboBox() {
+        chartTypeComboBox.getItems().addAll("Area Chart", "Bar Chart", "Line Chart");
+        chartTypeComboBox.getSelectionModel().select("Line Chart");
+        chartTypeComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
+            System.out.println(newVal);
+        });
+    }
+
+    private void initializeAlgorithmComboBox() {
+        algorithmComboBox.getItems().addAll("Closing Price", "Daily Change", "Daily Deviation", "Linear Regression");
+        algorithmComboBox.getSelectionModel().select("Closing Price");
+        algorithmComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
+            System.out.println(newVal);
         });
     }
 
@@ -217,50 +240,31 @@ public abstract class GraphController extends AnchorPane {
         refreshStocks();
     }
 
+    private void lineChart() {
+        chart = new LineChart();
+        chartPane.getChildren().clear();
+        chartPane.getChildren().add(chart);
+    }
+
     public void openStockView(String acronym) {
         if (isCompanyActive(acronym)) {
             removeActiveCompany(acronym);
         } else {
             activeCompanies.add(acronym);
-            addStockToGraph(acronym);
+            chart.addStockToChart(acronym, startDate, endDate);
         }
     }
 
     private void removeActiveCompany(String acronym) {
         int i = activeCompanies.indexOf(acronym);
-        displayedGraph.getData().remove(i);
+        chart.removeChartFromStock(i);
         activeCompanies.remove(i);
     }
 
-    protected void addStockToGraph(String acronym) {
-        XYChart.Series<String, Number> seriesToAdd = new XYChart.Series<>();
-        DateHashMap<Date, DayData> data = DataHandler.getCompanyData(startDate, endDate, acronym);
-
-        DateHashMap<Date, Number> calcData = this.algorithm.calculate(data);
-
-        seriesToAdd.setName(acronym);
-        List<Date> orderedDates;
-        orderedDates = Date.sortDates(calcData.keySet());
-
-        double daysInterval = orderedDates.size(), stepAmount, dIndex = 0;
-        int index, slot = 0, numDataPoints = 300;
-
-        stepAmount = Math.max(1, daysInterval/numDataPoints);
-
-        while (seriesToAdd.getData().size() < Math.min(numDataPoints, daysInterval)) {
-            index = (int) Math.round(dIndex);
-            Date currentDate = orderedDates.get(index);
-            Number val = calcData.get(currentDate);
-            seriesToAdd.getData().add(slot, new XYChart.Data<>(currentDate.toString(), val));
-            dIndex += stepAmount; slot++;
-        }
-        displayedGraph.getData().add(seriesToAdd);
-    }
-
     private void refreshStocks() {
-        displayedGraph.getData().clear();
+        chart.clearChart();
         for (String activeCompany : activeCompanies) {
-            addStockToGraph(activeCompany);
+            chart.addStockToChart(activeCompany, startDate, endDate);
         }
     }
 

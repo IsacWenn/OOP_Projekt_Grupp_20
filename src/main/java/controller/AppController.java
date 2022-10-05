@@ -19,16 +19,7 @@ public class AppController implements Initializable {
     private TabPane tabsPane;
 
     @FXML
-    private Button newClosingPriceGraphButton;
-
-    @FXML
-    private Button newDailyChangeGraphButton;
-
-    @FXML
-    private Button newLinearRegressionGraphButton;
-
-    @FXML
-    private Button newHighMinusLowGraphButton;
+    private Button newComparisonChartButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -38,24 +29,19 @@ public class AppController implements Initializable {
     private void initializeVariables() {
     }
 
-    public void newClosingPriceGraph() {
-        GraphController newGraph = new ClosingPriceGraphController(this);
-        newTab(newGraph, "Closing Price");
+    public void newComparisonChart() {
+        ChartController newChart = new ComparisonChartController(this);
+        newTab(newChart, "Comparison Chart");
     }
 
-    public void newDailyChangeGraph() {
-        GraphController newGraph = new DailyChangeGraphController(this);
-        newTab(newGraph, "Daily Change");
+    public void newDetailedChart() {
+        ChartController newChart = new ComparisonChartController(this);
+        newTab(newChart, "Detailed Chart");
     }
 
-    public void newLinearRegressionGraph() {
-        GraphController newGraph = new LinearRegressionGraphController(this);
-        newTab(newGraph, "Linear Regression");
-    }
-
-    public void newHighMinusLowGraph() {
-        GraphController newGraph = new HighMinusLowGraphController(this);
-        newTab(newGraph, "High Minus Low");
+    public void newCorrelationChart() {
+        ChartController newChart = new ComparisonChartController(this);
+        newTab(newChart, "Correlation Chart");
     }
 
     private void newTab(Node content, String name) {
