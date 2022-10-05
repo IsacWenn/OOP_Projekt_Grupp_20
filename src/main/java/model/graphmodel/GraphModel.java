@@ -1,12 +1,12 @@
 package model.graphmodel;
 
 
-import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 import model.graphmodel.graphalgorithms.GraphAlgorithm;
 import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import model.util.Date;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -79,7 +79,7 @@ public class GraphModel {
     private void init() {
         this.graphComputer = new GraphComputer();
         this.graphData = new GraphData();
-        this.values = new DateHashMap<>();
+        this.values = new HashMap<>();
     }
 
     /**

@@ -3,7 +3,6 @@ package model.graphmodel;
 import model.datahandling.DataHandler;
 import model.datahandling.DayData;
 import model.util.Date;
-import model.datahandling.DateHashMap;
 import model.graphmodel.graphalgorithms.*;
 
 import java.io.IOException;
@@ -65,8 +64,8 @@ public class GraphComputer {
 
     /**
      * A method that calculates the incoming data with the graphAlgorithm in {@link GraphComputer#graphAlgorithm}.
-     * @param data A {@link DateHashMap} containing data in a {@link DayData} for each {@link Date}.
-     * @return A {@link DateHashMap} containing a {@link Number} for each {@link Date}.
+     * @param data A {@link Map} containing data in a {@link DayData} for each {@link Date}.
+     * @return A {@link Map} containing a {@link Number} for each {@link Date}.
      */
     public Map<Date, Number> updateValues(Map<Date, DayData> data) {
         return graphAlgorithm.calculate(data);
