@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Chart extends AnchorPane {
+
     protected GraphAlgorithms algorithm;
     protected XYChart<String, Number> chart;
 

@@ -17,7 +17,6 @@ public class AppController implements Initializable {
 
     @FXML
     private TabPane tabsPane;
-
     @FXML
     private Button newComparisonChartButton;
 

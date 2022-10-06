@@ -9,9 +9,11 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 
 public class ControllerStockListItem extends AnchorPane {
+
     private final ChartController parentController;
     private final String acronym;
     private boolean active;
+
     @FXML
     private Label stockAcronym;
     @FXML
@@ -20,12 +22,12 @@ public class ControllerStockListItem extends AnchorPane {
     private Label stockValue;
     @FXML
     private AnchorPane stockListItem;
+
     ControllerStockListItem (String acronym, ChartController parentController){
         loadFXML();
         initializeLabels(acronym);
         active = false;
         stockListItem.setOnMouseClicked(this::onClick);
-
 
         this.acronym = acronym;
         this.parentController = parentController;
@@ -33,7 +35,6 @@ public class ControllerStockListItem extends AnchorPane {
 
     private void initializeLabels(String acronym) {
         stockAcronym.setText(acronym);
-
     }
 
     private void loadFXML() {
@@ -59,10 +60,8 @@ public class ControllerStockListItem extends AnchorPane {
 
     @FXML
     private void onClick(Event event){
-        if (parentController.withinCompanyLimit() && !active) {
-            parentController.openStockView(this.acronym);
-        } else if(active) {
-            parentController.openStockView(acronym);
+        if (parentController.withinCompanyLimit() || active) {
+            parentController.stockListOnClick(this.acronym);
         }
         togglePressed();
     }

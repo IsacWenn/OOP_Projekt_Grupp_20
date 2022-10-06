@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class ChartController extends AnchorPane {
+
     protected final AppModel appModel = AppModel.getInstance();
     protected AppController parentController;
     protected Map<String, ControllerStockListItem> stockListItemMap = new HashMap<>();
@@ -275,19 +276,23 @@ public abstract class ChartController extends AnchorPane {
         chartPane.getChildren().add(chart);
     }
 
-    public void openStockView(String acronym) {
+    public void stockListOnClick(String acronym) {
         if (isCompanyActive(acronym)) {
-            removeActiveCompany(acronym);
+            removeCompany(acronym);
         } else {
-            activeCompanies.add(acronym);
-            chart.addStockToChart(acronym, startDate, endDate);
+            addCompany(acronym);
         }
     }
 
-    private void removeActiveCompany(String acronym) {
+    private void removeCompany(String acronym) {
         int i = activeCompanies.indexOf(acronym);
         chart.removeChartFromStock(i);
         activeCompanies.remove(i);
+    }
+
+    private void addCompany(String acronym) {
+        activeCompanies.add(acronym);
+        chart.addStockToChart(acronym, startDate, endDate);
     }
 
     private void refreshStocks() {
