@@ -1,6 +1,6 @@
 package controller;
 
-import controller.charts.LineChart;
+import controller.charts.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -10,8 +10,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import model.AppModel;
 import model.datahandling.DataHandler;
-import model.graphmodel.GraphModel;
-import model.graphmodel.graphalgorithms.GraphAlgorithm;
 import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import model.util.Date;
 
@@ -29,44 +27,34 @@ public abstract class ChartController extends AnchorPane {
     protected Date startDate;
     protected Date endDate;
     protected int maxCompanies = 0;
-    protected LineChart chart;
+    protected Chart chart;
+    protected GraphAlgorithms algorithm;
 
     @FXML
     protected DatePicker startDatePicker;
-
     @FXML
     protected DatePicker endDatePicker;
-
     @FXML
     protected FlowPane stockPane;
-
     @FXML
     protected Button timeframeOneDayButton;
-
     @FXML
     protected Button timeframeOneWeekButton;
-
     @FXML
     protected Button timeframeOneMonthButton;
-
     @FXML
     protected Button timeframeOneYearButton;
-
     @FXML
     protected ComboBox<String> chartTypeComboBox;
-
     @FXML
     protected ComboBox<String> algorithmComboBox;
-
     @FXML
     protected AnchorPane chartPane;
 
     public ChartController(AppController parentController) {
         this.parentController = parentController;
         loadFXML();
-        lineChart();
         initializeVariables();
-        initializeStockPane();
         initializeSettings();
         try {
             updateStartDate(startDatePicker.getValue());
@@ -93,16 +81,19 @@ public abstract class ChartController extends AnchorPane {
             activeCompanies = new ArrayList<String>();
             startDate = new Date(2021, 9, 26);
             endDate = new Date();
+            algorithm = GraphAlgorithms.DAILYCLOSINGPRICE;
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
 
     protected void initializeSettings() {
+        initializeStockPane();
         initializeStartDatePicker();
         initializeEndDatePicker();
         initializeChartTypeComboBox();
         initializeAlgorithmComboBox();
+        openLineChart();
     }
 
     private void initializeStartDatePicker() {
@@ -159,7 +150,18 @@ public abstract class ChartController extends AnchorPane {
         chartTypeComboBox.getItems().addAll("Area Chart", "Bar Chart", "Line Chart");
         chartTypeComboBox.getSelectionModel().select("Line Chart");
         chartTypeComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
-            System.out.println(newVal);
+            switch (newVal) {
+                case ("Area Chart"):
+                    openAreaChart();
+                    break;
+                case ("Bar Chart"):
+                    openBarChart();
+                    break;
+                case ("Line Chart"):
+                    openLineChart();
+                    break;
+            }
+            refreshStocks();
         });
     }
 
@@ -169,18 +171,19 @@ public abstract class ChartController extends AnchorPane {
         algorithmComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
             switch (newVal) {
                 case ("Closing Price"):
-                    chart.setAlgorithm(GraphAlgorithms.DAILYCLOSINGPRICE);
+                    algorithm = GraphAlgorithms.DAILYCLOSINGPRICE;
                     break;
                 case ("Daily Change"):
-                    chart.setAlgorithm(GraphAlgorithms.DAILYCHANGE);
+                    algorithm = GraphAlgorithms.DAILYCHANGE;
                     break;
                 case ("Daily Deviation"):
-                    chart.setAlgorithm(GraphAlgorithms.DAILYHIGHMINUSLOW);
+                    algorithm = GraphAlgorithms.DAILYHIGHMINUSLOW;
                     break;
                 case ("Linear Regression"):
-                    chart.setAlgorithm(GraphAlgorithms.LINEARREGRESSION);
+                    algorithm = GraphAlgorithms.LINEARREGRESSION;
                     break;
             }
+            chart.setAlgorithm(algorithm);
             refreshStocks();
         });
     }
@@ -254,8 +257,20 @@ public abstract class ChartController extends AnchorPane {
         refreshStocks();
     }
 
-    private void lineChart() {
-        chart = new LineChart();
+    private void openLineChart() {
+        chart = new LineChart(algorithm);
+        chartPane.getChildren().clear();
+        chartPane.getChildren().add(chart);
+    }
+
+    private void openBarChart() {
+        chart = new BarChart(algorithm);
+        chartPane.getChildren().clear();
+        chartPane.getChildren().add(chart);
+    }
+
+    private void openAreaChart() {
+        chart = new AreaChart(algorithm);
         chartPane.getChildren().clear();
         chartPane.getChildren().add(chart);
     }
