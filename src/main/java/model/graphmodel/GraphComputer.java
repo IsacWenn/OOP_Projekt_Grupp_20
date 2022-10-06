@@ -46,6 +46,7 @@ public class GraphComputer {
      */
     public void calculateCurrency(Map<Date, Double> currency,
                                   Map<Date, DayData> data) {
+
         for (Date date : data.keySet()) {
             try {
                 double rate = DataHandler.retrieveClosestExchangeRate(date, currency);
