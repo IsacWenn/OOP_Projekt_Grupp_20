@@ -84,12 +84,13 @@ class GraphData {
     }
 
     private Map<Date, Double> putOnes(Set<Date> dates){
-        Map<Date, Double> result = new HashMap<>();
-        for (Date date: dates){
-            result.put(date, 1d);
-        }
-        return result;
+
+        return  new HashMap<Date, Double>(){{
+            for (Date date : dates)
+                put(date, 1d);
+        }};
     }
+    
     /**
      *
      * @param mic
