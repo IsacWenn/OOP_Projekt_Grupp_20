@@ -7,10 +7,7 @@ import org.junit.jupiter.api.*;
 
 import javax.xml.crypto.Data;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,6 +17,8 @@ public class TestDataHandler {
     private static Date lastDate;
     private static DayData lastDateDayData;
     private static List<Date> dateList;
+
+    private static final String currencyFilePath = "SEK_USD.csv";
 
     @BeforeEach
     public void resetStaticVariables() throws IOException {
@@ -78,7 +77,7 @@ public class TestDataHandler {
 
     @Test
     public void getCurrencyDataShouldReturnCorrectData() throws IOException {
-        Map<Date, Double> data = DataHandler.getCurrencyData("SEK_USD.csv");
+        Map<Date, Double> data = DataHandler.getCurrencyData(currencyFilePath);
         assertEquals(0.0938, data.get(new Date(2022, 8, 24)));
         assertEquals(0.1245, data.get(new Date(1999, 1, 4)));
         assertEquals(6054, data.size());
@@ -114,7 +113,6 @@ public class TestDataHandler {
         assertTrue(names.contains("Qualcomm Incorporated"));
     }
 
-
     @Test
     public void retrieveClosestExchangeRateShouldReturnCorrectValue() throws IOException {
         Map<Date, Double> map = new HashMap<>(){{       // Fungerar utan problem
@@ -127,5 +125,54 @@ public class TestDataHandler {
     public void getCompanyTradingCurrencyShouldReturnCorrectCurrencyEnum() {
         assertEquals(CurrencyEnum.USD, DataHandler.getCompanyTradingCurrency("AMZN"));
     }
-    
+
+    @Test
+    public void getExpandedCurrencyDataShouldReturnMapWithCorrespondingEntriesForNonExistentDates() throws IOException {
+        Map<Date, Double> map = DataHandler.getExpandedCurrencyData(currencyFilePath);
+        assertEquals(0.093, map.get(new Date(2022, 9, 4)));
+    }
+
+    @Test
+    public void getExpandedCurrencyDataWithInvalidPathShouldReturnMapWithOnlyCurrentDateAndAZero() {
+        Map<Date, Double> map = DataHandler.getExpandedCurrencyData("hej");
+        assertEquals(0d, map.get(new Date()));
+    }
+
+    @Test
+    public void getCurrencyDataWithSetShouldReturnCurrencyDataForThatInterval() throws IOException {
+        Set<Date> set = new HashSet<>(){{
+            add(new Date(2022, 9, 1));
+            add(new Date(2022, 9, 15));
+            add(new Date(1950, 1, 1));
+        }};
+        Map<Date, Double> map = DataHandler.getCurrencyData(set, currencyFilePath);
+        System.out.println(map);
+        assertEquals(0.0925, map.get(new Date(2022, 9, 15)));
+        assertEquals(0d, map.get(new Date(1950, 1, 1)));
+    }
+
+    @Test
+    public void getCurrencyDataWithInvalidPathShouldReturnMapOfCurrentDateWithZero() {
+        List<Date> newList = new ArrayList<>(){{ add(new Date()); }};
+        Map<Date, Double> map = DataHandler.getCurrencyData(newList, "hej");
+        assertEquals(0d, map.get(new Date()));
+    }
+
+    @Test
+    public void getExpandedCurrencyDataWithListOfDatesShouldReturnValuesForThoseDates() throws IOException {
+        List<Date> dateList = new Date(2022, 9, 1).listIntervalTo(new Date());
+        Map<Date, Double> map = DataHandler.getExpandedCurrencyData(dateList, currencyFilePath);
+        assertEquals(0.0925, map.get(new Date()));
+        assertFalse(map.containsKey(new Date(2022, 8, 30)));
+    }
+
+    @Test
+    public void getExpandedCurrencyDataWithSetShouldReturnValuesForThoseDates() throws IOException {
+        Set<Date> dateSet = new HashSet<>(new Date(2022, 9, 1).listIntervalTo(new Date()));
+        Map<Date, Double> map = DataHandler.getExpandedCurrencyData(dateSet, currencyFilePath);
+        assertEquals(0.0925, map.get(new Date()));
+        assertFalse(map.containsKey(new Date(2022, 8, 30)));
+    }
+
+
 }

@@ -46,7 +46,6 @@ public class DataHandler {
      */
     public static Map<Date, DayData> getCompanyData(List<Date> dates, String mic) {
         String path = CompanyData.getFileName(mic);
-
         return filterDataByDates(StockExchangeReader.convertCSVFileToHandledData(path), dates);
     }
 
@@ -96,10 +95,26 @@ public class DataHandler {
         return new HashMap<>() {{ put(new Date(), 0d); }};
     }
 
+    /**
+     * A method for retrieving a {@link Map} of {@link Date}s and {@link Double} for an exchange rate on specified
+     * dates.
+     *
+     * @param dates A {@link Set} of {@link Date}s that contains the specified dates for retrieving the data.
+     * @param path A {@link String} for the files' path.
+     * @return A {@link Map} containing the Data of an exchange rate on the specified dates.
+     */
     public static Map<Date, Double> getCurrencyData(Set<Date> dates, String path) {
         return getCurrencyData(new ArrayList<>(dates), path);
     }
 
+    /**
+     * A method for retrieving a {@link Map} of {@link Date}s and {@link Double} for an exchange rate on specified
+     * dates.
+     *
+     * @param dates A {@link List} of {@link Date}s that contains the specified dates for retrieving the data.
+     * @param path A {@link String} for the files' path.
+     * @return A {@link Map} containing the Data of an exchange rate on the specified dates.
+     */
     public static Map<Date, Double> getCurrencyData(List<Date> dates, String path) {
         try {
             return filterCurrencyData(CurrencyExchangeReader.convertCSVFileToHandledData(path), dates);
@@ -109,20 +124,73 @@ public class DataHandler {
         return new HashMap<>() {{ put(new Date(), 0d); }};
     }
 
-    public static Map<Date, Double> filterCurrencyData(Map<Date, Double> map, List<Date> dates) {
+    /**
+     * A method for retrieving a {@link HashMap} of {@link Date}s and their corresponding {@link Double}s of a
+     * currency exchange rate. Expands the Map to include data for the dates that does not exist originally.
+     *
+     * @param path A {@link String} containing the local path of the desired CSV-file of currency exchange rates.
+     * @return A {@link Map} containing the currency exchange rate data.
+     */
+    public static Map<Date, Double> getExpandedCurrencyData(String path) {
+        Map<Date, Double> map;
+        try {
+            map = CurrencyExchangeReader.convertCSVFileToHandledData(path);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return new HashMap<>(){{ put(new Date(), 0d); }};
+        }
+        List<Date> dates = new ArrayList<>(map.keySet());
+        dates = Date.sortDates(dates);
+        dates = dates.get(0).listIntervalTo(dates.get(dates.size() - 1));
+        return filterCurrencyData(map, dates);
+    }
+
+    /**
+     * A method for retrieving a {@link HashMap} of {@link Date}s and their corresponding {@link Double}s of a
+     * currency exchange rate. Expands the Map to include data for the dates that does not exist originally. Limits
+     * the amount of Data to the {@link List} of dates given.
+     *
+     * @param dates the list of dates.
+     * @param path the file-path for the currency exchange rate.
+     * @return a Map of Dates and Doubles.
+     */
+    public static Map<Date, Double> getExpandedCurrencyData(List<Date> dates, String path) {
+        Map<Date, Double>  map = getExpandedCurrencyData(path);
+        return filterCurrencyData(map, dates);
+    }
+
+    /**
+     * A method for retrieving a {@link HashMap} of {@link Date}s and their corresponding {@link Double}s of a
+     * currency exchange rate. Expands the Map to include data for the dates that does not exist originally. Limits
+     * the amount of Data to the {@link List} of dates given.
+     *
+     * @param dates the set of dates.
+     * @param path the file-path for the currency exchange rate.
+     * @return a Map of Dates and Doubles.
+     */
+    public static Map<Date, Double> getExpandedCurrencyData(Set<Date> dates, String path) {
+        return getExpandedCurrencyData(new ArrayList<>(dates), path);
+    }
+
+    /**
+     * A method that filters currency Data for a given {@link Map} and {@link List} of dates.
+     *
+     * @param map the {@link Map} of currency data.
+     * @param dates the {@link List} of dates.
+     * @return A {@link Map} of {@link Date}s and {@link Double}s containing the new data.
+     */
+    private static Map<Date, Double> filterCurrencyData(Map<Date, Double> map, List<Date> dates) {
         Map<Date, Double> filteredCurrencyData = new HashMap<>();
         for (Date date : dates) {
             if (map.containsKey(date))
                 filteredCurrencyData.put(date, map.get(date));
-            else {
+            else
                 try {
-                    filteredCurrencyData.put(date, retrieveClosestExchangeRate(date, map));
+                    filteredCurrencyData.put(date, DataHandler.retrieveClosestExchangeRate(date, map));
                 } catch (IOException | StackOverflowError e) {
-                    filteredCurrencyData.put(date, 0d);
                     System.out.println(e.getMessage());
-                    System.out.println("For :" + date + " put a zero since no data could be recovered");
+                    filteredCurrencyData.put(date, 0d);
                 }
-            }
         }
         return filteredCurrencyData;
     }
