@@ -174,5 +174,10 @@ public class TestDataHandler {
         assertFalse(map.containsKey(new Date(2022, 8, 30)));
     }
 
-
+    @Test
+    public void getCompanyDataWithListAndInvalidMICShouldReturnHashMapWithCurrentDateAndZeroedDayData() {
+        Map<Date, DayData> map = DataHandler.getCompanyData(new ArrayList<>(), "T");
+        DayData zeroed = new DayData(0, 0, 0, 0, 0);
+        assertEquals(zeroed.hashCode(), map.get(new Date()).hashCode());
+    }
 }
