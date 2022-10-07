@@ -4,8 +4,11 @@ package model.graphmodel;
 import model.datahandling.DayData;
 import model.graphmodel.graphalgorithms.GraphAlgorithm;
 import model.graphmodel.graphalgorithms.GraphAlgorithms;
+import model.util.CurrencyConversionEnum;
+import model.util.CurrencyEnum;
 import model.util.Date;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +32,7 @@ public class GraphModel {
      */
     Map<Date, DayData> data;
 
+    Map<Date, DayData> currencyAdjustedData;
     /**
      * The reference to the {@link GraphData} class
      */
@@ -41,7 +45,6 @@ public class GraphModel {
 
     private String companyMic;
 
-
     /**
      * A constructor for the class GraphModel that retrieves all available data for the given mic of a company
      *
@@ -50,13 +53,16 @@ public class GraphModel {
     public GraphModel(String mic){
         init(mic);
         this.data = graphData.getCompanyData(mic);
+        currencyAdjustedData = data;
+        update();
     }
 
     public GraphModel(String mic, GraphAlgorithms graphAlgorithms){
         init(mic);
         this.data = graphData.getCompanyData(mic);
         updateAlgorithm(graphAlgorithms);
-
+        currencyAdjustedData = data;
+        update();
     }
 
     /**
@@ -70,6 +76,8 @@ public class GraphModel {
     public GraphModel(String mic, Date from, Date to) {
         init(mic);
         this.data = graphData.getCompanyData(mic, from, to);
+        currencyAdjustedData = data;
+        update();
     }
 
 
@@ -99,8 +107,9 @@ public class GraphModel {
      * A method that sends a call to {@link GraphComputer} to calculate the data with its current {@link GraphAlgorithm}
      * and data
      */
-    public void update() {
-        this.values = this.graphComputer.updateValues(data);
+
+    private void update(){
+        this.values = this.graphComputer.updateValues(currencyAdjustedData);
     }
 
     /**
@@ -126,12 +135,13 @@ public class GraphModel {
     }
 
     /**
-     *A method that changes the currency the data is using
      *
-     * @param currency TODO ska vi ha strings eller enums???
+     * @param toCurrency
      */
-    public void changeCurrency(String currency){
-        this.graphComputer.calculateCurrency(graphData.getCurrencyData(currency), data);
+    public void changeCurrency(CurrencyEnum toCurrency){
+        Map<Date,Double> from = graphData.getNativeCurrencyData(companyMic, data.keySet());
+        Map<Date,Double> to = graphData.getCurrencyData(toCurrency,data.keySet());
+        this.currencyAdjustedData = graphComputer.calculateCurrency(from, to, data);
         update();
     }
 
@@ -146,6 +156,16 @@ public class GraphModel {
 
     public static void main(String[] args) {
 
+        try {
+            Date date1 = new Date(2022,7,1);
+            Date date2 = new Date(2022,8,1);
+            GraphModel graphModel = new GraphModel("AAPL");
+            graphModel.updateTimeInterval(date1, date2);
+            graphModel.changeCurrency(CurrencyEnum.USD);
+            System.out.println(graphModel.getValues());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

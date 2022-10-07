@@ -1,6 +1,7 @@
 package model.graphmodel;
 
 import model.graphmodel.graphalgorithms.GraphAlgorithms;
+import model.util.CurrencyEnum;
 import model.util.Date;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -51,7 +52,6 @@ public class GraphModelTest {
     @Test
     public void updateMethodShouldUpdateTheValuesOfTheGraphModel(){
         GraphModel graphModel = new GraphModel("AAPL", date1, date2);
-        graphModel.update();
         assertEquals(135.87, graphModel.getValues().get(date1));
     }
 
@@ -59,16 +59,14 @@ public class GraphModelTest {
     public void updateAlgorithmShouldUpdateTheCurrentAlgorithm(){
         GraphModel graphModel = new GraphModel("AAPL", date2, date3);
         graphModel.updateAlgorithm(GraphAlgorithms.DAILYCHANGE);
-        graphModel.update();
         assertEquals(1.27, (double) graphModel.getValues().get(date2), 0.01);
     }
 
     @Test
     public void changeCurrencyShouldUpdateWhatCurrencyTheGraphValuesIsShownIn(){
         GraphModel graphModel = new GraphModel("AAPL", date2, date3);
-        graphModel.changeCurrency("SEK_USD.csv");
-        graphModel.update();
-        //assertEquals(1569.95, (double)graphModel.getValues().get(date2), 0.1); TODO
+        graphModel.changeCurrency(CurrencyEnum.SEK);
+        //assertEquals(1569.95, (double)graphModel.getValues().get(date2), 0.1);
     }
 
     @Test
