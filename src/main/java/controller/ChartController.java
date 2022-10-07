@@ -66,16 +66,7 @@ public abstract class ChartController extends AnchorPane {
         updateStockList();
     }
 
-    protected void loadFXML() {
-        FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../LineChart.fxml")));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-        try {
-            fxmlLoader.load();
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
-    }
+    abstract void loadFXML();
 
     protected void initializeVariables() {
         try {
