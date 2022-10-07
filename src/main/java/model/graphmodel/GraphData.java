@@ -86,7 +86,7 @@ class GraphData {
             return putOnes(dates);
         }
         String path = "USD_TO_" + toCurrency.toString() + ".csv";
-        return DataHandler.getCurrencyData(dates, path);
+        return DataHandler.getExpandedCurrencyData(dates, path);
     }
 
     /**
