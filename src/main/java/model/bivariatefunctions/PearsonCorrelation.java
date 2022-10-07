@@ -1,6 +1,6 @@
-package model.graphmodel;
+package model.bivariatefunctions;
 
-import model.graphmodel.BivariateFunctions;
+import model.bivariatefunctions.BivariateFunctions;
 import model.util.Date;
 
 import java.util.Map;

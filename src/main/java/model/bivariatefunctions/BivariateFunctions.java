@@ -1,4 +1,4 @@
-package model.graphmodel;
+package model.bivariatefunctions;
 
 import model.util.Date;
 
