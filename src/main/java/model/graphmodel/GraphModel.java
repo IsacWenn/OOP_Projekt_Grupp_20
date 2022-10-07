@@ -1,10 +1,8 @@
 package model.graphmodel;
 
-
 import model.datahandling.DayData;
 import model.graphmodel.graphalgorithms.GraphAlgorithm;
 import model.graphmodel.graphalgorithms.GraphAlgorithms;
-import model.util.CurrencyConversionEnum;
 import model.util.CurrencyEnum;
 import model.util.Date;
 
@@ -32,7 +30,7 @@ public class GraphModel {
      */
     Map<Date, DayData> data;
 
-    Map<Date, DayData> currencyAdjustedData;
+    private Map<Date, DayData> currencyAdjustedData;
     /**
      * The reference to the {@link GraphData} class
      */
@@ -112,10 +110,14 @@ public class GraphModel {
         this.values = this.graphComputer.updateValues(currencyAdjustedData);
     }
 
+    private void updateKeyFigures(){
+        
+    }
+
     /**
      *A method that updates the current graphAlgorithm function the GraphModel is using.
      *
-     * @param graphAlgorithms a {@link GraphAlgorithm} that are the new graphAlgorithm that the {@link GraphComputer} will use for its calculations.
+     * @param graphAlgorithms a {@link GraphAlgorithm} that the {@link GraphComputer} will use for its calculations.
      */
     public void updateAlgorithm(GraphAlgorithms graphAlgorithms) {
         this.graphComputer.setAlgorithm(graphAlgorithms);
@@ -128,7 +130,6 @@ public class GraphModel {
      * @param from a {@link Date} that is the first day of the new time interval.
      * @param to a {@link Date} that is the last day of the new time interval.
      */
-
     public void updateTimeInterval(Date from, Date to) {
         this.data = graphData.getCompanyData(this.companyMic, from, to);
         update();

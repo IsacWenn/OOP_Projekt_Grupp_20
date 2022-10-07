@@ -65,13 +65,20 @@ public class GraphModelTest {
     @Test
     public void changeCurrencyShouldUpdateWhatCurrencyTheGraphValuesIsShownIn(){
         GraphModel graphModel = new GraphModel("AAPL", date2, date3);
-        graphModel.changeCurrency(CurrencyEnum.SEK);
+        //graphModel.changeCurrency(CurrencyEnum.SEK);
         //assertEquals(1569.95, (double)graphModel.getValues().get(date2), 0.1);
+    }
+
+    @Test
+    public void updateTimeIntervalShouldUpdateTheIntervalOfTheDataInGraphModel(){
+        GraphModel graphModel = new GraphModel("AAPL", date2, date3);
+        graphModel.updateTimeInterval(date1, date3);
+        assertEquals(22, graphModel.data.size());
     }
 
     @Test
     public void getValuesShouldReturnTheCurrentlyCalculatedValuesInGraphModel(){
         GraphModel graphModel = new GraphModel("AAPL", date2, date3);
-        //TODO
+
     }
 }

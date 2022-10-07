@@ -42,8 +42,8 @@ public class GraphComputer {
 
     /**
      * A method that converts the asset prices in a {@link Map} and replaces the old prices with the new currencies price.
-     * @param from A {@link Map} containing the currency rates for each {@link Date}.
-     *
+     * @param from A {@link Map} containing the currency rates for the currency we want to change from
+     * @param to A {@link Map} containing the currency rates for the currency we want to change to
      * @param data A {@link Map} containing the asset prices for each {@link Date} in a {@link DayData}.
      */
     public Map<Date, DayData> calculateCurrency(Map<Date, Double> from, Map<Date, Double> to,
@@ -51,22 +51,16 @@ public class GraphComputer {
 
         Map<Date, DayData> adjustedMap = new HashMap<>();
         for (Date date : data.keySet()) {
+            double fromRate = from.get(date);
+            double toRate = to.get(date);
+            double combinedRate = toRate / fromRate;
 
-            try {
-                double fromRate = DataHandler.retrieveClosestExchangeRate(date, from);
-                double toRate = DataHandler.retrieveClosestExchangeRate(date, to);
-                double combinedRate = toRate / fromRate;
-
-                int volume = data.get(date).getVolume();
-                double open = data.get(date).getOpen() * combinedRate;
-                double close = data.get(date).getClosed() * combinedRate;
-                double high = data.get(date).getHigh() * combinedRate;
-                double low = data.get(date).getLow() * combinedRate;
-                adjustedMap.put(date, new DayData(volume, open, close, high, low));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+            int volume = data.get(date).getVolume();
+            double open = data.get(date).getOpen() * combinedRate;
+            double close = data.get(date).getClosed() * combinedRate;
+            double high = data.get(date).getHigh() * combinedRate;
+            double low = data.get(date).getLow() * combinedRate;
+            adjustedMap.put(date, new DayData(volume, open, close, high, low));
         }
         return adjustedMap;
     }

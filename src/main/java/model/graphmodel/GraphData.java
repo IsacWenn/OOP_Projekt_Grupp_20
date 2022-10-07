@@ -66,23 +66,34 @@ class GraphData {
 
     /**
      *
-     * @param companyMIC
-     * @param
-     * @return
+     * @param companyMIC a {@link String} representing a company's mic
+     * @param dates the {@link Set} of {@link Date} that the data in GraphModel currently contains
+     * @return a {@link Map} of the native currency's exchange rate for the company
      */
     Map<Date, Double> getNativeCurrencyData(String companyMIC, Set<Date> dates){
         CurrencyEnum nativeCurrency = getCompanyCurrency(companyMIC);
         return getCurrencyData(nativeCurrency, dates);
     }
 
+    /**
+     *
+     * @param toCurrency an {@link Enum} representing the currency that you want convert to
+     * @param dates the {@link Set} of {@link Date} that the data in GraphModel currently contains
+     * @return a {@link Map} of the exchange rate
+     */
     Map<Date, Double> getCurrencyData(CurrencyEnum toCurrency, Set<Date> dates){
         if(toCurrency ==CurrencyEnum.USD){
             return putOnes(dates);
         }
         String path = "USD_TO_" + toCurrency.toString() + ".csv";
-        return DataHandler.getCurrencyData(path);
+        return DataHandler.getCurrencyData(dates, path);
     }
 
+    /**
+     *
+     * @param dates the {@link Set} of {@link Date} that the data in GraphModel currently contains
+     * @return a {@link Map} that effectively keeps the native exchange rate
+     */
     private Map<Date, Double> putOnes(Set<Date> dates){
 
         return  new HashMap<Date, Double>(){{
@@ -93,8 +104,8 @@ class GraphData {
     
     /**
      *
-     * @param mic
-     * @return
+     * @param mic a {@link String} representing a company's mic
+     * @return a {@link CurrencyEnum} that represents the currency the Company stock has natively
      */
     CurrencyEnum getCompanyCurrency(String mic){
         return DataHandler.getCompanyTradingCurrency(mic);
