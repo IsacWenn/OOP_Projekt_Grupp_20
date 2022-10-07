@@ -10,9 +10,7 @@ import model.util.CurrencyEnum;
 import model.util.Date;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * The class that communicates with the outside of the package datahandling. Contains methods for retrieving different
@@ -96,6 +94,37 @@ public class DataHandler {
             System.out.println(e.getMessage());
         }
         return new HashMap<>() {{ put(new Date(), 0d); }};
+    }
+
+    public static Map<Date, Double> getCurrencyData(Set<Date> dates, String path) {
+        return getCurrencyData(new ArrayList<>(dates), path);
+    }
+
+    public static Map<Date, Double> getCurrencyData(List<Date> dates, String path) {
+        try {
+            return filterCurrencyData(CurrencyExchangeReader.convertCSVFileToHandledData(path), dates);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return new HashMap<>() {{ put(new Date(), 0d); }};
+    }
+
+    public static Map<Date, Double> filterCurrencyData(Map<Date, Double> map, List<Date> dates) {
+        Map<Date, Double> filteredCurrencyData = new HashMap<>();
+        for (Date date : dates) {
+            if (map.containsKey(date))
+                filteredCurrencyData.put(date, map.get(date));
+            else {
+                try {
+                    filteredCurrencyData.put(date, retrieveClosestExchangeRate(date, map));
+                } catch (IOException | StackOverflowError e) {
+                    filteredCurrencyData.put(date, 0d);
+                    System.out.println(e.getMessage());
+                    System.out.println("For :" + date + " put a zero since no data could be recovered");
+                }
+            }
+        }
+        return filteredCurrencyData;
     }
 
     /**
