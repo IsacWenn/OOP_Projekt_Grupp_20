@@ -2,6 +2,7 @@ package model.graphmodel;
 
 import model.datahandling.DayData;
 import model.graphmodel.graphalgorithms.GraphAlgorithm;
+import model.graphmodel.graphalgorithms.GraphAlgorithmCollection;
 import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import model.util.CurrencyEnum;
 import model.util.Date;
@@ -99,6 +100,7 @@ public class GraphModel {
         this.graphData = new GraphData();
         this.values = new HashMap<>();
         this.companyMic = mic;
+        GraphAlgorithmCollection.init();
     }
 
     /**
