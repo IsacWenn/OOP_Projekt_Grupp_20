@@ -1,11 +1,12 @@
 package model.graphmodel;
 
-import model.datahandling.DataHandler;
 import model.datahandling.DayData;
+import model.graphmodel.graphalgorithms.GraphAlgorithm;
+import model.graphmodel.graphalgorithms.GraphAlgorithmFactory;
+import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import model.util.Date;
-import model.graphmodel.graphalgorithms.*;
+import model.graphalgorithms.*;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
