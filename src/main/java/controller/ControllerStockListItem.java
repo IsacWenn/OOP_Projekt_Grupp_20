@@ -79,9 +79,9 @@ public class ControllerStockListItem extends AnchorPane {
     private void initializeFavoriteButton(){
         String iconPath;
         if (favorite) {
-            iconPath = "src/main/resources/Images/starActive.png";
+            iconPath = "/Images/starActive.png";
         } else {
-            iconPath = "src/main/resources/Images/starInactive.png";
+            iconPath = "/Images/starInactive.png";
         }
         Image imageToLoad = new Image(new File(iconPath).toURI().toString());
         favoriteImage = new ImageView(imageToLoad);
@@ -91,9 +91,9 @@ public class ControllerStockListItem extends AnchorPane {
         String iconPath;
 
         if (favorite) {
-            iconPath = "src/main/resources/Images/starInactive.png";
+            iconPath = "/Images/starInactive.png";
         } else {
-            iconPath = "src/main/resources/Images/starActive.png";
+            iconPath = "/Images/starActive.png";
         }
         Image imageToLoad = new Image(new File(iconPath).toURI().toString());
         favoriteImage = new ImageView(imageToLoad);
@@ -102,9 +102,9 @@ public class ControllerStockListItem extends AnchorPane {
 
     @FXML
     private void onClick(Event event){
-        /*if (parentController.withinCompanyLimit() || active) {
+        if (parentController.withinCompanyLimit() || active) {
             parentController.stockListOnClick(this.acronym);
         }
-        togglePressed();*/
+        togglePressed();
     }
 }
