@@ -1,10 +1,8 @@
-package model.bivariatefunctions;
+package model.bivariatealgorithms;
 
-import model.bivariatefunctions.BivariateFunctions;
 import model.util.Date;
 
-import java.io.IOException;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,7 +10,7 @@ import java.util.Set;
  * A class used for calculating the Pearson correlation.
  */
 
-public class PearsonCorrelation implements BivariateFunctions {
+class PearsonCorrelation implements BivariateAlgorithms {
 
     /**
      * A method for calculating the Pearson correlation coefficient between two data sets.
@@ -21,7 +19,7 @@ public class PearsonCorrelation implements BivariateFunctions {
      * @return a {@link Double} that is the calculated correlation coefficient.
      */
     @Override
-    public double calculateKeyFigure(Map<Date, Number> series1, Map<Date, Number> series2) {
+    public double calculateKeyFigure(Map<Date, Number> series1, Map<Date, Number> series2, Set<Date> commonDates) {
         double sumX = 0;
         double sumY = 0;
         double sumXY = 0;
@@ -29,9 +27,7 @@ public class PearsonCorrelation implements BivariateFunctions {
         double sumYY = 0;
         int n = series1.size();
 
-        series1.keySet().retainAll(series2.keySet());
-
-        for (Date date : series1.keySet()) {
+        for (Date date : commonDates) {
             double x = (double) series1.get(date);
             double y = (double) series2.get(date);
             sumX += x;
