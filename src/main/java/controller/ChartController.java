@@ -25,6 +25,7 @@ public abstract class ChartController extends AnchorPane {
     protected AppController parentController;
     protected Map<String, ControllerStockListItem> stockListItemMap = new HashMap<>();
     protected ArrayList<String> activeCompanies;
+    protected ArrayList<String> favouriteCompanies;
     protected Date startDate;
     protected Date endDate;
     protected int maxCompanies = 0;
@@ -54,6 +55,7 @@ public abstract class ChartController extends AnchorPane {
 
     public ChartController(AppController parentController) {
         this.parentController = parentController;
+        favouriteCompanies = new ArrayList<>();
         loadFXML();
         initializeVariables();
         initializeSettings();
@@ -143,15 +145,9 @@ public abstract class ChartController extends AnchorPane {
         chartTypeComboBox.getSelectionModel().select("Line Chart");
         chartTypeComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
             switch (newVal) {
-                case ("Area Chart"):
-                    openAreaChart();
-                    break;
-                case ("Bar Chart"):
-                    openBarChart();
-                    break;
-                case ("Line Chart"):
-                    openLineChart();
-                    break;
+                case ("Area Chart") -> openAreaChart();
+                case ("Bar Chart") -> openBarChart();
+                case ("Line Chart") -> openLineChart();
             }
             refreshStocks();
         });
@@ -162,18 +158,10 @@ public abstract class ChartController extends AnchorPane {
         algorithmComboBox.getSelectionModel().select("Closing Price");
         algorithmComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
             switch (newVal) {
-                case ("Closing Price"):
-                    algorithm = GraphAlgorithms.DAILYCLOSINGPRICE;
-                    break;
-                case ("Daily Change"):
-                    algorithm = GraphAlgorithms.DAILYCHANGE;
-                    break;
-                case ("Daily Deviation"):
-                    algorithm = GraphAlgorithms.DAILYHIGHMINUSLOW;
-                    break;
-                case ("Linear Regression"):
-                    algorithm = GraphAlgorithms.LINEARREGRESSION;
-                    break;
+                case ("Closing Price") -> algorithm = GraphAlgorithms.DAILYCLOSINGPRICE;
+                case ("Daily Change") -> algorithm = GraphAlgorithms.DAILYCHANGE;
+                case ("Daily Deviation") -> algorithm = GraphAlgorithms.DAILYHIGHMINUSLOW;
+                case ("Linear Regression") -> algorithm = GraphAlgorithms.LINEARREGRESSION;
             }
             chart.setAlgorithm(algorithm);
             refreshStocks();
@@ -183,7 +171,7 @@ public abstract class ChartController extends AnchorPane {
     protected void initializeStockPane() {
         stockPane.getChildren().clear();
         for (String MIC : DataHandler.getMICs()) {
-            ControllerStockListItem listItem = new ControllerStockListItem(MIC, this);
+            ControllerStockListItem listItem = new ControllerStockListItem(MIC, this, false);
             stockListItemMap.put(MIC, listItem);
         }
     }
