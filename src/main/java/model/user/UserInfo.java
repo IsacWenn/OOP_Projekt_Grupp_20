@@ -48,4 +48,15 @@ public class UserInfo implements Serializable {
         return bio;
     }
 
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", bio='" + bio + '\'' +
+                '}';
+    }
 }

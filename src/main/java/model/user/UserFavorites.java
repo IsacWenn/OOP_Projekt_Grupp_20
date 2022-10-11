@@ -10,4 +10,11 @@ public class UserFavorites implements Serializable {
     UserFavorites() {
         foo = "bar";
     }
+
+    @Override
+    public String toString() {
+        return "UserFavorites{" +
+                "foo='" + foo + '\'' +
+                '}';
+    }
 }
