@@ -2,8 +2,8 @@ package model.graphmodel;
 
 import model.datahandling.DayData;
 import model.graphmodel.graphalgorithms.GraphAlgorithm;
-import model.graphmodel.graphalgorithms.GraphAlgorithmCollection;
 import model.graphmodel.graphalgorithms.GraphAlgorithms;
+import model.graphmodel.graphalgorithms.GraphAlgorithmCollection;
 import model.util.CurrencyEnum;
 import model.util.Date;
 
@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * GraphModel is a class for representing the data and graph-functionality of a visual graph object.
@@ -52,7 +53,6 @@ public class GraphModel {
     public GraphModel(String mic){
         init(mic);
         this.data = graphData.getCompanyData(mic);
-        currencyAdjustedData = data;
         update();
     }
 
@@ -60,8 +60,6 @@ public class GraphModel {
         init(mic);
         this.data = graphData.getCompanyData(mic);
         updateAlgorithm(graphAlgorithms);
-        currencyAdjustedData = data;
-        update();
     }
 
     /**
@@ -75,7 +73,6 @@ public class GraphModel {
     public GraphModel(String mic, Date from, Date to) {
         init(mic);
         this.data = graphData.getCompanyData(mic, from, to);
-        currencyAdjustedData = data;
         update();
     }
 
@@ -101,6 +98,7 @@ public class GraphModel {
         this.values = new HashMap<>();
         this.companyMic = mic;
         GraphAlgorithmCollection.init();
+        KeyFigureCollection.init();
     }
 
     /**
@@ -109,11 +107,10 @@ public class GraphModel {
      */
 
     private void update(){
-        this.values = this.graphComputer.updateValues(currencyAdjustedData);
-    }
-
-    private void updateKeyFigures(){
-        
+        if(currencyAdjustedData == null){
+            this.values = this.graphComputer.updateValues(data);
+        }
+        else{this.values = this.graphComputer.updateValues(currencyAdjustedData);}
     }
 
     /**
@@ -133,7 +130,15 @@ public class GraphModel {
      * @param to a {@link Date} that is the last day of the new time interval.
      */
     public void updateTimeInterval(Date from, Date to) {
-        this.data = graphData.getCompanyData(this.companyMic, from, to);
+        this.data = graphData.getCompanyData(companyMic, from, to);
+        if(currencyAdjustedData==null){
+            this.currencyAdjustedData=data;
+        }
+        else{
+            this.currencyAdjustedData = currencyAdjustedData.entrySet().stream().filter(x->x.getKey()
+                            .isAfterOrEqual(from) && x.getKey().isBeforeOrEqual(to))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        }
         update();
     }
 
@@ -157,15 +162,30 @@ public class GraphModel {
         return this.values;
     }
 
+    public Map<String, Double> getKeyFigures(){
+       return this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigureCollection(), currencyAdjustedData);
+    }
+
     public static void main(String[] args) {
 
         try {
             Date date1 = new Date(2022,7,1);
             Date date2 = new Date(2022,8,1);
             GraphModel graphModel = new GraphModel("AAPL");
+            graphModel.changeCurrency(CurrencyEnum.SEK);
             graphModel.updateTimeInterval(date1, date2);
-            graphModel.changeCurrency(CurrencyEnum.USD);
             System.out.println(graphModel.getValues());
+
+
+            /*
+            Map<String, Double> keyFigures = graphModel.getKeyFigures();
+            System.out.println(keyFigures.get("Volatility"));
+            Map<Date, DayData> data = graphModel.data;
+
+            Map<Date, DayData> filteredDates = data.entrySet().stream().filter(x->x.getKey()
+                            .isAfterOrEqual(from) && x.getKey().isBeforeOrEqual(to))
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            */
         } catch (IOException e) {
             e.printStackTrace();
         }
