@@ -8,10 +8,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class BivariateComputer {
+/**
+ * A class for computing the key figures from all {@link BivariateAlgorithms} retrieved from {@link BivariateAlgorithmCollection}.
+ */
 
+public class BivariateComputer { // TODO command query separation?
+
+    /**
+     * TODO ska vi ens ha kvar denna? beror på frågan ovan !!!!!!!!!!!!
+     */
     public static Double keyFigures = null;
 
+    /**
+     * A method for computing the key figures given two series of data.
+     * @param series1 a {@link Map} containing {@link Date} connected to a {@link Number}.
+     * @param series2 a {@link Map} containing {@link Date} connected to a {@link Number}.
+     * @return A {@link Map} containing the key figures as a {@link Double} and the name of the key figure as a
+     * {@link String}.
+     */
     public static Map<String, Double> calculateKeyFigures(Map<Date, Number> series1, Map<Date, Number> series2) {
 
         BivariateAlgorithmCollection.init();
