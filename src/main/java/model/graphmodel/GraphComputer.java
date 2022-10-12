@@ -5,7 +5,7 @@ import model.graphmodel.graphalgorithms.GraphAlgorithm;
 import model.graphmodel.graphalgorithms.GraphAlgorithmFactory;
 import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import model.util.Date;
-import model.graphalgorithms.*;
+import model.graphmodel.graphalgorithms.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +28,7 @@ public class GraphComputer {
     /**
      * A constructor for the GraphComputer class that sets {@link GraphComputer#graphAlgorithm} to the default graphAlgorithm.
      */
-    public GraphComputer(){
+    GraphComputer(){
         this.graphAlgorithm = GraphAlgorithmFactory.create(GraphAlgorithms.DAILYCLOSINGPRICE);
     }
 
@@ -47,9 +47,7 @@ public class GraphComputer {
      * @param to A {@link Map} containing the currency rates for the currency we want to change to
      * @param data A {@link Map} containing the asset prices for each {@link Date} in a {@link DayData}.
      */
-    public Map<Date, DayData> calculateCurrency(Map<Date, Double> from, Map<Date, Double> to,
-                                                Map<Date, DayData> data) {
-
+    Map<Date, DayData> calculateCurrency(Map<Date, Double> from, Map<Date, Double> to, Map<Date, DayData> data) {
         Map<Date, DayData> adjustedMap = new HashMap<>();
         for (Date date : data.keySet()) {
             double fromRate = from.get(date);
@@ -71,8 +69,23 @@ public class GraphComputer {
      * @param data A {@link Map} containing data in a {@link DayData} for each {@link Date}.
      * @return A {@link Map} containing a {@link Number} for each {@link Date}.
      */
-    public Map<Date, Number> updateValues(Map<Date, DayData> data) {
+    Map<Date, Number> updateValues(Map<Date, DayData> data) {
         return graphAlgorithm.calculate(data);
+    }
+
+    /**
+     * A method that calls all the {@link KeyFigureAlgorithm} that exists in {@link KeyFigureCollection} to calculate
+     * @param keyFigures
+     * @param data
+     * @return
+     */
+    Map<String, Double> calculateKeyFigure(Map<String, KeyFigureAlgorithm> keyFigures, Map<Date, DayData> data){
+        Map<String, Double> calculatedKeyFigures = new HashMap<>();
+        for (Map.Entry<String,KeyFigureAlgorithm> entry : keyFigures.entrySet()){
+            double calculatedData = entry.getValue().calculate(data);
+            calculatedKeyFigures.put(entry.getKey(), calculatedData);
+        }
+        return  calculatedKeyFigures;
     }
 
 }
