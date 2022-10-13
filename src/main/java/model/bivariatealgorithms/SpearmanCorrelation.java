@@ -46,26 +46,6 @@ public class SpearmanCorrelation implements BivariateAlgorithms {
     private void sortByValue(List<Map.Entry<Date, Number>> list1) {
         list1.sort(Comparator.comparingDouble(o -> o.getValue().doubleValue()));
     }
-
-    public static void main(String[] args) throws IOException {
-        Map<Date, Number> hm1 = new HashMap<>();
-        Map<Date, Number> hm2 = new HashMap<>();
-
-        hm1.put(new Date(2020,1,1), 1);
-        hm1.put(new Date(2020,2,2), 10);
-        hm1.put(new Date(2020,4,2), 30);
-        hm1.put(new Date(2020,8,2), 50);
-        hm1.put(new Date(2020,12,2), 1000);
-
-        hm2.put(new Date(2020,1,1), 5);
-        hm2.put(new Date(2020,2,2), 4);
-        hm2.put(new Date(2020,4,2), 3);
-        hm2.put(new Date(2020,8,2), 2);
-        hm2.put(new Date(2020,12,2), 1);
-
-        SpearmanCorrelation sp = new SpearmanCorrelation();
-        System.out.println(sp.calculateKeyFigure(hm1,hm2, hm1.keySet()));
-    }
 }
 
 

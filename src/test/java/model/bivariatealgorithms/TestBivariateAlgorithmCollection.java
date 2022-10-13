@@ -9,7 +9,7 @@ public class TestBivariateAlgorithmCollection {
     @Test
     public void classForCalclatingPearsonCorrelationShouldBeRetrieved() {
         BivariateAlgorithmCollection.init();
-        BivariateAlgorithms ba  = BivariateAlgorithmCollection.getGraphAlgorithms().get("Pearson correlation coefficient");
+        BivariateAlgorithms ba  = BivariateAlgorithmCollection.getGraphAlgorithms().get("Pearson correlation");
         assertTrue(ba instanceof PearsonCorrelation);
     }
 
