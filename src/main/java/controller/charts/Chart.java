@@ -18,7 +18,7 @@ public abstract class Chart extends AnchorPane {
         this.algorithm = algorithm;
     }
 
-    public void addStockToChart(String acronym, Date startDate, Date endDate) {
+    public void addStockToChart(String acronym, String name, Date startDate, Date endDate) {
         XYChart.Series<String, Number> seriesToAdd = new XYChart.Series<>();
 
         GraphModel graphModel = new GraphModel(acronym, startDate, endDate);
@@ -26,7 +26,7 @@ public abstract class Chart extends AnchorPane {
         graphModel.update();
         Map<Date, Number> calcData = graphModel.getValues();
 
-        seriesToAdd.setName(acronym);
+        seriesToAdd.setName(name);
         List<Date> orderedDates;
         orderedDates = Date.sortDates(calcData.keySet());
 

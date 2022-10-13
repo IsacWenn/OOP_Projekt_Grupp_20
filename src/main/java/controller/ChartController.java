@@ -262,27 +262,27 @@ public abstract class ChartController extends AnchorPane {
 
     protected void stockListOnClick(String acronym) {
         if (isCompanyActive(acronym)) {
-            removeCompany(acronym);
+            removeFromChart(acronym);
         } else {
-            addCompany(acronym);
+            addToChart(acronym);
         }
     }
 
-    protected void removeCompany(String acronym) {
-        int i = activeCompanies.indexOf(acronym);
+    protected void removeFromChart(String name) {
+        int i = activeCompanies.indexOf(name);
         chart.removeChartFromStock(i);
         activeCompanies.remove(i);
     }
 
-    protected void addCompany(String acronym) {
-        activeCompanies.add(acronym);
-        chart.addStockToChart(acronym, startDate, endDate);
+    protected void addToChart(String name) {
+        activeCompanies.add(name);
+        chart.addStockToChart(name, name, startDate, endDate);
     }
 
     protected void refreshStocks() {
         chart.clearChart();
         for (String activeCompany : activeCompanies) {
-            chart.addStockToChart(activeCompany, startDate, endDate);
+            chart.addStockToChart(activeCompany, activeCompany, startDate, endDate);
         }
     }
 

@@ -1,9 +1,4 @@
 package controller;
-
-import controller.charts.AreaChart;
-import controller.charts.BarChart;
-import controller.charts.DetailedChart;
-import controller.charts.LineChart;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -80,6 +75,7 @@ public class DetailedChartController extends ChartController{
         } else {
             algorithms.add(GraphAlgorithms.DAILYCLOSINGPRICE);
         }
+        refreshStocks();
     }
 
     private void dailyChangeBoxPressed() {
@@ -88,6 +84,7 @@ public class DetailedChartController extends ChartController{
         } else {
             algorithms.add(GraphAlgorithms.DAILYCHANGE);
         }
+        refreshStocks();
     }
 
     private void dailyDeviationBoxPressed() {
@@ -96,6 +93,7 @@ public class DetailedChartController extends ChartController{
         } else {
             algorithms.add(GraphAlgorithms.DAILYHIGHMINUSLOW);
         }
+        refreshStocks();
     }
 
     private void linearRegressionBoxPressed() {
@@ -104,19 +102,31 @@ public class DetailedChartController extends ChartController{
         } else {
             algorithms.add(GraphAlgorithms.LINEARREGRESSION);
         }
+        refreshStocks();
     }
 
     @Override
-    protected void removeCompany(String acronym) {
-        int i = activeCompanies.indexOf(acronym);
-        chart.removeChartFromStock(i);
-        activeCompanies.remove(i);
+    protected void removeFromChart(String name) {
+        activeCompanies.clear();
+        chart.clearChart();
     }
 
     @Override
-    protected void addCompany(String acronym) {
-        activeCompanies.add(acronym);
-        chart.addStockToChart(acronym, startDate, endDate);
+    protected void addToChart(String name) {
+        activeCompanies.add(name);
+        refreshStocks();
+    }
+
+
+    @Override
+    protected void refreshStocks() {
+        chart.clearChart();
+        if (0 < algorithms.size() && 0 < activeCompanies.size()) {
+            for (GraphAlgorithms algorithm : algorithms) {
+                chart.setAlgorithm(algorithm);
+                chart.addStockToChart(activeCompanies.get(0), algorithm.name(), startDate, endDate);
+            }
+        }
     }
 
 
