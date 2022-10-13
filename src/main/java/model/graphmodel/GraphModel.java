@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 /**
  * GraphModel is a class for representing the data and graph-functionality of a visual graph object.
@@ -122,8 +122,13 @@ public class GraphModel {
      *
      * @param graphAlgorithms a {@link GraphAlgorithm} that the {@link GraphComputer} will use for its calculations.
      */
+    @Deprecated
     public void updateAlgorithm(GraphAlgorithms graphAlgorithms) {
         this.graphComputer.setAlgorithm(graphAlgorithms);
+        update();
+    }
+    public void updateAlgorithm(String graphAlg) {
+        this.graphComputer.setAlgorithm(GraphAlgorithmCollection.getGraphAlgorithms().get(graphAlg));
         update();
     }
 
@@ -160,8 +165,19 @@ public class GraphModel {
         return this.values;
     }
 
-    public Map<String, Double> getKeyFigures(){
+    public Map<String, Double> getKeyFigureValues(){
        return this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigureCollection(), currencyAdjustedData);
+    }
+
+    //TODO
+    public Set<String> getListOfGraphAlgorithms(){
+        return GraphAlgorithmCollection.getGraphAlgorithms().keySet();
+    }
+
+    //TODO
+    public Set<String> getListOfKeyFigures(){
+        return KeyFigureCollection.getKeyFigureCollection().keySet();
+
     }
 
     public static void main(String[] args) {
@@ -172,6 +188,7 @@ public class GraphModel {
             GraphModel graphModel = new GraphModel("AAPL");
             graphModel.updateCurrency(CurrencyEnum.SEK);
             graphModel.updateTimeInterval(date1, date2);
+            graphModel.updateAlgorithm("Daily change");
             System.out.println(graphModel.getValues());
 
 

@@ -37,8 +37,12 @@ public class GraphComputer {
      *
      * @param graphableENUM A {@link GraphAlgorithms} that represent a {@link GraphAlgorithm} in {@link GraphAlgorithmFactory}.
      */
+    @Deprecated
     void setAlgorithm(GraphAlgorithms graphableENUM) {
         this.graphAlgorithm = GraphAlgorithmFactory.create(graphableENUM);
+    }
+    void setAlgorithm(GraphAlgorithm graphAlg){
+        this.graphAlgorithm = graphAlg;
     }
 
     /**

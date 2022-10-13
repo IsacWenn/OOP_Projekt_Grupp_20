@@ -82,7 +82,7 @@ class GraphData {
      * @return a {@link Map} of the exchange rate
      */
     Map<Date, Double> getCurrencyData(CurrencyEnum toCurrency, Set<Date> dates){
-        if(toCurrency ==CurrencyEnum.USD){
+        if(toCurrency==CurrencyEnum.USD){
             return putOnes(dates);
         }
         String path = "USD_TO_" + toCurrency.toString() + ".csv";
