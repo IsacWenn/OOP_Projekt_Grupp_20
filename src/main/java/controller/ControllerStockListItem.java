@@ -7,9 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 public class ControllerStockListItem extends AnchorPane {
