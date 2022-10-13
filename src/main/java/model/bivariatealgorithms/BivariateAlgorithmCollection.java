@@ -16,7 +16,7 @@ class BivariateAlgorithmCollection {
     static void init() {
         if (algorithms == null) {
             algorithms = new HashMap<>();
-            algorithms.put("Pearson correlation coefficient", new PearsonCorrelation());
+            algorithms.put("Pearson correlation", new PearsonCorrelation());
         }
     }
 

@@ -42,8 +42,9 @@ public class TestBivariateComputer {
     @Test
     public void pearsonCorrelationShouldBeNegativeOne() {
         Map<String, Double> resultMap = new HashMap<>();
-        resultMap = BivariateComputer.calculateKeyFigures(series1, series2);
-        double pearsonCoefficient = resultMap.get("Pearson correlation coefficient");
+        BivariateComputer.calculateKeyFigures(series1, series2);
+        resultMap = BivariateComputer.getKeyFigures();
+        double pearsonCoefficient = resultMap.get("Pearson correlation");
         assertEquals(-1d, pearsonCoefficient);
     }
 
