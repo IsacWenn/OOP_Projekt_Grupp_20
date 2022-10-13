@@ -100,7 +100,7 @@ public class ControllerStockListItem extends AnchorPane {
     private void onClick(Event event){
         if (parentController.withinCompanyLimit() || active) {
             parentController.stockListOnClick(this.acronym);
+            togglePressed();
         }
-        togglePressed();
     }
 }

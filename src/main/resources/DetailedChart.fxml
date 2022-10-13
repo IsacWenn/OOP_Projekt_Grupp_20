@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+
+<fx:root prefHeight="700.0" prefWidth="1200.0" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <AnchorPane fx:id="chartPane" layoutX="287.0" layoutY="57.0" prefHeight="544.0" prefWidth="872.0" />
+    <SplitPane dividerPositions="0.15" orientation="VERTICAL" prefHeight="700.0" prefWidth="280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane minHeight="100.0" minWidth="180.0" prefHeight="100.0" prefWidth="160.0">
+         <Label layoutX="14.0" layoutY="9.0" text="From date" />
+         <DatePicker fx:id="startDatePicker" layoutX="14.0" layoutY="33.0" prefHeight="26.0" prefWidth="110.0" />
+         <Label layoutX="221.0" layoutY="9.0" text="To date" />
+         <DatePicker fx:id="endDatePicker" layoutX="153.0" layoutY="33.0" prefHeight="26.0" prefWidth="110.0" />
+         <Button fx:id="timeframeOneDayButton" layoutX="14.0" layoutY="65.0" mnemonicParsing="false" onAction="#timeframeOneDay" text="1 Dag" />
+         <Button fx:id="timeframeOneWeekButton" layoutX="75.0" layoutY="65.0" mnemonicParsing="false" onAction="#timeframeOneWeek" text="1 Vecka" />
+         <Button fx:id="timeframeOneMonthButton" layoutX="148.0" layoutY="65.0" mnemonicParsing="false" onAction="#timeframeOneMonth" text="1 Månad" />
+         <Button fx:id="timeframOneYearButton" layoutX="225.0" layoutY="65.0" mnemonicParsing="false" onAction="#timeframeOneYear" text="1 År" />
+        </AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="180.0" prefHeight="100.0" prefWidth="160.0">
+            <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="280.0">
+                <FlowPane fx:id="stockPane" maxWidth="-Infinity" minWidth="-Infinity" rowValignment="TOP">
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                </FlowPane>
+            </ScrollPane>
+        </AnchorPane>
+    </SplitPane>
+   <ComboBox fx:id="chartTypeComboBox" layoutX="320.0" layoutY="21.0" prefWidth="150.0" />
+   <CheckBox fx:id="closingPriceBox" layoutX="494.0" layoutY="12.0" mnemonicParsing="false" text="Closing Price" />
+   <CheckBox fx:id="dailyChangeBox" layoutX="494.0" layoutY="38.0" mnemonicParsing="false" text="Daily Change" />
+   <CheckBox fx:id="dailyDeviationBox" layoutX="600.0" layoutY="12.0" mnemonicParsing="false" text="Daily Deviation" />
+   <CheckBox fx:id="linearRegressionBox" layoutX="600.0" layoutY="38.0" mnemonicParsing="false" text="Linear Regression" />
+</fx:root>

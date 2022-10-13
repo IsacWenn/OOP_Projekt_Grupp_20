@@ -2,7 +2,6 @@ package controller;
 
 import controller.charts.*;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -49,8 +48,6 @@ public abstract class ChartController extends AnchorPane {
     @FXML
     protected ComboBox<String> chartTypeComboBox;
     @FXML
-    protected ComboBox<String> algorithmComboBox;
-    @FXML
     protected AnchorPane chartPane;
 
     public ChartController(AppController parentController) {
@@ -86,7 +83,6 @@ public abstract class ChartController extends AnchorPane {
         initializeStartDatePicker();
         initializeEndDatePicker();
         initializeChartTypeComboBox();
-        initializeAlgorithmComboBox();
         openLineChart();
     }
 
@@ -153,21 +149,6 @@ public abstract class ChartController extends AnchorPane {
         });
     }
 
-    private void initializeAlgorithmComboBox() {
-        algorithmComboBox.getItems().addAll("Closing Price", "Daily Change", "Daily Deviation", "Linear Regression");
-        algorithmComboBox.getSelectionModel().select("Closing Price");
-        algorithmComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
-            switch (newVal) {
-                case ("Closing Price") -> algorithm = GraphAlgorithms.DAILYCLOSINGPRICE;
-                case ("Daily Change") -> algorithm = GraphAlgorithms.DAILYCHANGE;
-                case ("Daily Deviation") -> algorithm = GraphAlgorithms.DAILYHIGHMINUSLOW;
-                case ("Linear Regression") -> algorithm = GraphAlgorithms.LINEARREGRESSION;
-            }
-            chart.setAlgorithm(algorithm);
-            refreshStocks();
-        });
-    }
-
     protected void initializeStockPane() {
         stockPane.getChildren().clear();
         for (String MIC : DataHandler.getMICs()) {
@@ -217,6 +198,7 @@ public abstract class ChartController extends AnchorPane {
         } else throw new IOException("Invalid date");
     }
 
+    @FXML
     public void timeframeOneDay() {
         try {
             updateStartDate(LocalDate.now().minusDays(1));
@@ -227,6 +209,7 @@ public abstract class ChartController extends AnchorPane {
         refreshStocks();
     }
 
+    @FXML
     public void timeframeOneWeek() {
         try {
             updateStartDate(LocalDate.now().minusWeeks(1));
@@ -237,6 +220,7 @@ public abstract class ChartController extends AnchorPane {
         refreshStocks();
     }
 
+    @FXML
     public void timeframeOneMonth() {
         try {
             updateStartDate(LocalDate.now().minusMonths(1));
@@ -247,6 +231,7 @@ public abstract class ChartController extends AnchorPane {
         refreshStocks();
     }
 
+    @FXML
     public void timeframeOneYear() {
         try {
             updateStartDate(LocalDate.now().minusYears(1));
@@ -275,7 +260,7 @@ public abstract class ChartController extends AnchorPane {
         chartPane.getChildren().add(chart);
     }
 
-    public void stockListOnClick(String acronym) {
+    protected void stockListOnClick(String acronym) {
         if (isCompanyActive(acronym)) {
             removeCompany(acronym);
         } else {
@@ -283,18 +268,18 @@ public abstract class ChartController extends AnchorPane {
         }
     }
 
-    private void removeCompany(String acronym) {
+    protected void removeCompany(String acronym) {
         int i = activeCompanies.indexOf(acronym);
         chart.removeChartFromStock(i);
         activeCompanies.remove(i);
     }
 
-    private void addCompany(String acronym) {
+    protected void addCompany(String acronym) {
         activeCompanies.add(acronym);
         chart.addStockToChart(acronym, startDate, endDate);
     }
 
-    private void refreshStocks() {
+    protected void refreshStocks() {
         chart.clearChart();
         for (String activeCompany : activeCompanies) {
             chart.addStockToChart(activeCompany, startDate, endDate);
