@@ -171,7 +171,7 @@ public abstract class ChartController extends AnchorPane {
     protected void initializeStockPane() {
         stockPane.getChildren().clear();
         for (String MIC : DataHandler.getMICs()) {
-            ControllerStockListItem listItem = new ControllerStockListItem(MIC, this, false);
+            ControllerStockListItem listItem = new ControllerStockListItem(MIC, this, favouriteCompanies.contains(MIC));
             stockListItemMap.put(MIC, listItem);
         }
     }
@@ -179,8 +179,28 @@ public abstract class ChartController extends AnchorPane {
     public void updateStockList() {
         stockPane.getChildren().clear();
         for (String MIC : DataHandler.getMICs()) {
-            stockPane.getChildren().add(stockListItemMap.get(MIC));
+            if (favouriteCompanies.contains(MIC)) {
+                stockPane.getChildren().add(stockListItemMap.get(MIC));
+            }
         }
+        for (String MIC : DataHandler.getMICs()) {
+            if (!favouriteCompanies.contains(MIC)) {
+                stockPane.getChildren().add(stockListItemMap.get(MIC));
+            }
+        }
+    }
+
+    public void favoritize(String acronym){
+        if (isCompanyFavorite(acronym)) {
+            favouriteCompanies.remove(acronym);
+        } else {
+            favouriteCompanies.add(acronym);
+        }
+        updateStockList();
+    }
+
+    private boolean isCompanyFavorite(String acronym) {
+        return favouriteCompanies.contains(acronym);
     }
 
     public void updateStartDate(LocalDate newDate) throws IOException {

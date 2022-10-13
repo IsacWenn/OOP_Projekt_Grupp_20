@@ -71,32 +71,28 @@ public class ControllerStockListItem extends AnchorPane {
         active = !active;
     }
 
-    @FXML
-    private void onFavoriteHover(Event event){
-
-    }
-
     private void initializeFavoriteButton(){
         String iconPath;
         if (favorite) {
-            iconPath = "/Images/starActive.png";
+            iconPath = "../Images/starActive.png";
         } else {
-            iconPath = "/Images/starInactive.png";
+            iconPath = "../Images/starInactive.png";
         }
-        Image imageToLoad = new Image(new File(iconPath).toURI().toString());
-        favoriteImage = new ImageView(imageToLoad);
+        Image imageToLoad = new Image(getClass().getResource(iconPath).toExternalForm());
+        favoriteImage.setImage(imageToLoad);
     }
     @FXML
     private void onFavoriteClick(Event event){
         String iconPath;
 
         if (favorite) {
-            iconPath = "/Images/starInactive.png";
+            iconPath = "../Images/starInactive.png";
         } else {
-            iconPath = "/Images/starActive.png";
+            iconPath = "../Images/starActive.png";
         }
-        Image imageToLoad = new Image(new File(iconPath).toURI().toString());
-        favoriteImage = new ImageView(imageToLoad);
+        Image imageToLoad = new Image(getClass().getResource(iconPath).toExternalForm());
+        favoriteImage.setImage(imageToLoad);
+        parentController.favoritize(acronym);
         favorite = !favorite;
     }
 
