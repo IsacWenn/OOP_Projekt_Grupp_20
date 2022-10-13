@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
  *
  * @author Pontus
  * @author Isac
+ * @author Carl
  */
 
 public class GraphModel {
@@ -44,6 +45,8 @@ public class GraphModel {
     private GraphComputer graphComputer;
 
     private String companyMic;
+
+    private CurrencyEnum currency;
 
     /**
      * A constructor for the class GraphModel that retrieves all available data for the given mic of a company
@@ -106,11 +109,12 @@ public class GraphModel {
      * and data
      */
 
-    private void update(){
-        if(currencyAdjustedData == null){
+    private void update() {
+        if (this.currency == null) {
             this.values = this.graphComputer.updateValues(data);
+        } else {
+            this.values = this.graphComputer.updateValues(currencyAdjustedData);
         }
-        else{this.values = this.graphComputer.updateValues(currencyAdjustedData);}
     }
 
     /**
@@ -131,24 +135,18 @@ public class GraphModel {
      */
     public void updateTimeInterval(Date from, Date to) {
         this.data = graphData.getCompanyData(companyMic, from, to);
-        if(currencyAdjustedData==null){
-            this.currencyAdjustedData=data;
-        }
-        else{
-            this.currencyAdjustedData = currencyAdjustedData.entrySet().stream().filter(x->x.getKey()
-                            .isAfterOrEqual(from) && x.getKey().isBeforeOrEqual(to))
-                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        }
         update();
     }
 
     /**
-     *
-     * @param toCurrency
+     * A method for updating the {@link GraphModel#currencyAdjustedData} to the latest {@link GraphModel#data} adjusted
+     * for the provided currency.
+     * @param toCurrency is a {@link CurrencyEnum} representing the currency the method should adjust for.
      */
-    public void changeCurrency(CurrencyEnum toCurrency){
+    public void updateCurrency(CurrencyEnum toCurrency) {
+        this.currency = toCurrency;
         Map<Date,Double> from = graphData.getNativeCurrencyData(companyMic, data.keySet());
-        Map<Date,Double> to = graphData.getCurrencyData(toCurrency,data.keySet());
+        Map<Date,Double> to = graphData.getCurrencyData(toCurrency, data.keySet());
         this.currencyAdjustedData = graphComputer.calculateCurrency(from, to, data);
         update();
     }
@@ -172,7 +170,7 @@ public class GraphModel {
             Date date1 = new Date(2022,7,1);
             Date date2 = new Date(2022,8,1);
             GraphModel graphModel = new GraphModel("AAPL");
-            graphModel.changeCurrency(CurrencyEnum.SEK);
+            graphModel.updateCurrency(CurrencyEnum.SEK);
             graphModel.updateTimeInterval(date1, date2);
             System.out.println(graphModel.getValues());
 
