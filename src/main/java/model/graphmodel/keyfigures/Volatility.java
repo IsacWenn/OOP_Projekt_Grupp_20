@@ -1,11 +1,11 @@
-package model.graphmodel;
+package model.graphmodel.keyfigures;
 
 import model.datahandling.DayData;
 import model.util.Date;
 
 import java.util.Map;
 
-public class Volatility implements KeyFigureAlgorithm{
+public class Volatility implements KeyFigureAlgorithm {
 
     @Override
     public Double calculate(Map<Date, DayData> data) {
