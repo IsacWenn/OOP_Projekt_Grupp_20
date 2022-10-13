@@ -2,9 +2,10 @@ package model.util;
 
 import model.graphmodel.graphalgorithms.GraphAlgorithms;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class GraphRepresentation {
+public class GraphRepresentation implements Serializable {
 
     private List<Date> interval;
 
