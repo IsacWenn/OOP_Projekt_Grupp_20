@@ -1,7 +1,6 @@
 package model.graphmodel.graphalgorithms;
 
 import model.util.Date;
-import model.datahandling.DateHashMap;
 import model.datahandling.DayData;
 
 import java.util.HashMap;
@@ -17,8 +16,8 @@ import java.util.Map;
 class LinearRegression implements GraphAlgorithm {
 
     /**
-     * A method that calculates the values of a linear equation constructed by linear regression of a {@link DateHashMap}.
-     * @param data {@link DateHashMap} containing {@link Date} and {@link DayData}
+     * A method that calculates the values of a linear equation constructed by linear regression of a {@link Map}.
+     * @param data {@link Map} containing {@link Date} and {@link DayData}
      * @return the {@link Boolean} values of the linear equation corresponding to the provided data.
      */
 

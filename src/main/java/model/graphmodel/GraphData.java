@@ -1,5 +1,6 @@
 package model.graphmodel;
 
+import model.util.CurrencyEnum;
 import model.util.Date;
 import model.datahandling.DataHandler;
 import model.datahandling.DayData;
@@ -8,6 +9,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * GraphData is a class that retrieves data from the {@link DataHandler} class
@@ -64,10 +66,48 @@ class GraphData {
 
     /**
      *
-     * @param currency
-     * @return a {@link Map} containing the data
+     * @param companyMIC a {@link String} representing a company's mic
+     * @param dates the {@link Set} of {@link Date} that the data in GraphModel currently contains
+     * @return a {@link Map} of the native currency's exchange rate for the company
      */
-    Map<Date, Double> getCurrencyData(String currency){
-        return DataHandler.getCurrencyData(currency);
+    Map<Date, Double> getNativeCurrencyData(String companyMIC, Set<Date> dates){
+        CurrencyEnum nativeCurrency = getCompanyCurrency(companyMIC);
+        return getCurrencyData(nativeCurrency, dates);
+    }
+
+    /**
+     *
+     * @param toCurrency an {@link Enum} representing the currency that you want convert to
+     * @param dates the {@link Set} of {@link Date} that the data in GraphModel currently contains
+     * @return a {@link Map} of the exchange rate
+     */
+    Map<Date, Double> getCurrencyData(CurrencyEnum toCurrency, Set<Date> dates){
+        if(toCurrency ==CurrencyEnum.USD){
+            return putOnes(dates);
+        }
+        String path = "USD_TO_" + toCurrency.toString() + ".csv";
+        return DataHandler.getExpandedCurrencyData(dates, path);
+    }
+
+    /**
+     *
+     * @param dates the {@link Set} of {@link Date} that the data in GraphModel currently contains
+     * @return a {@link Map} that effectively keeps the native exchange rate
+     */
+    private Map<Date, Double> putOnes(Set<Date> dates){
+
+        return  new HashMap<Date, Double>(){{
+            for (Date date : dates)
+                put(date, 1d);
+        }};
+    }
+    
+    /**
+     *
+     * @param mic a {@link String} representing a company's mic
+     * @return a {@link CurrencyEnum} that represents the currency the Company stock has natively
+     */
+    CurrencyEnum getCompanyCurrency(String mic){
+        return DataHandler.getCompanyTradingCurrency(mic);
     }
 }
