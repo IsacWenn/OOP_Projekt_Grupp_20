@@ -5,8 +5,7 @@ import java.util.List;
 
 public class UserFavorites implements Serializable {
 
-    private String foo;
-
+    
     UserFavorites() {
         foo = "bar";
     }

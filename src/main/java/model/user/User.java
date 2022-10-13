@@ -17,6 +17,8 @@ public class User implements Serializable {
         this.favorites = new UserFavorites();
     }
 
+    // Getters
+
     UserInfo getUserInfo() {
         return userInfo;
     }
@@ -24,6 +26,18 @@ public class User implements Serializable {
     UserFavorites getFavorites() {
         return favorites;
     }
+
+    public String getUserName() { return userInfo.getName(); }
+
+    public String getPassword() { return userInfo.getPassword(); }
+
+    public String getEmail() { return userInfo.getEmail(); }
+
+    public String getFirstName() { return userInfo.getName(); }
+
+    public String getLastName() { return userInfo.getLastname(); }
+
+    public String getBio() { return userInfo.getBio(); }
 
     public static void loadUsers() {
         try ( FileInputStream fis = new FileInputStream(filePath);
