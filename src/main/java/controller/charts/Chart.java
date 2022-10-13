@@ -23,7 +23,6 @@ public abstract class Chart extends AnchorPane {
 
         GraphModel graphModel = new GraphModel(acronym, startDate, endDate);
         graphModel.updateAlgorithm(algorithm);
-        graphModel.update();
         Map<Date, Number> calcData = graphModel.getValues();
 
         seriesToAdd.setName(name);
