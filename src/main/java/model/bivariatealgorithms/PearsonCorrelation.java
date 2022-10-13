@@ -28,8 +28,8 @@ class PearsonCorrelation implements BivariateAlgorithms {
         int n = series1.size();
 
         for (Date date : commonDates) {
-            double x = (double) series1.get(date);
-            double y = (double) series2.get(date);
+            double x = series1.get(date).doubleValue();
+            double y = series2.get(date).doubleValue();
             sumX += x;
             sumY += y;
             sumXY += x * y;
