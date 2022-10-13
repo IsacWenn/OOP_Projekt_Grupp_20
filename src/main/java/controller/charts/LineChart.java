@@ -2,54 +2,16 @@ package controller.charts;
 
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-import model.datahandling.DataHandler;
-import model.datahandling.DayData;
-import model.graphmodel.graphalgorithms.GraphAlgorithmFactory;
 import model.graphmodel.graphalgorithms.GraphAlgorithms;
-import model.util.Date;
 
-import java.util.List;
-import java.util.Map;
-
-public class LineChart extends javafx.scene.chart.LineChart<String, Number> {
-    public LineChart() {
-        super(new CategoryAxis(), new NumberAxis());
-        this.setPrefSize(872, 544);
-        this.setCreateSymbols(false);
-        this.setAnimated(false);
-    }
-
-    public void addStockToChart(String acronym, Date startDate, Date endDate) {
-        XYChart.Series<String, Number> seriesToAdd = new XYChart.Series<>();
-        Map<Date, DayData> data = DataHandler.getCompanyData(startDate, endDate, acronym);
-
-        Map<Date, Number> calcData = GraphAlgorithmFactory.create(GraphAlgorithms.DAILYCLOSINGPRICE).calculate(data);
-
-        seriesToAdd.setName(acronym);
-        List<Date> orderedDates;
-        orderedDates = Date.sortDates(calcData.keySet());
-
-        double daysInterval = orderedDates.size(), stepAmount, dIndex = 0;
-        int index, slot = 0, numDataPoints = 300;
-
-        stepAmount = Math.max(1, daysInterval/numDataPoints);
-
-        while (seriesToAdd.getData().size() < Math.min(numDataPoints, daysInterval)) {
-            index = (int) Math.round(dIndex);
-            Date currentDate = orderedDates.get(index);
-            Number val = calcData.get(currentDate);
-            seriesToAdd.getData().add(slot, new XYChart.Data<>(currentDate.toString(), val));
-            dIndex += stepAmount; slot++;
-        }
-        this.getData().add(seriesToAdd);
-    }
-
-    public void removeChartFromStock(int index) {
-        this.getData().remove(index);
-    }
-
-    public void clearChart() {
-        this.getData().clear();
+public class LineChart extends Chart {
+    public LineChart(GraphAlgorithms algorithm) {
+        this.algorithm = algorithm;
+        javafx.scene.chart.LineChart<String, Number> lineChart = new javafx.scene.chart.LineChart<>(new CategoryAxis(), new NumberAxis());
+        lineChart.setPrefSize(872, 544);
+        lineChart.setCreateSymbols(false);
+        lineChart.setAnimated(false);
+        this.getChildren().add(lineChart);
+        chart = lineChart;
     }
 }
