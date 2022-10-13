@@ -14,6 +14,10 @@ public class KeyFigureCollection {
         if (keyFigures == null){
             keyFigures = new HashMap<>();
             keyFigures.put("Volatility", new Volatility());
+            keyFigures.put("Average Price", new AveragePrice());
+            keyFigures.put("Average Volume", new AverageVolume());
+            keyFigures.put("Highest Price", new HighestPrice());
+            keyFigures.put("Lowest Price", new LowestPrice());
         }
     }
 
