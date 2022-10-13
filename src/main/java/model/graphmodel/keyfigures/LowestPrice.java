@@ -1,4 +1,4 @@
-package model.graphmodel;
+package model.graphmodel.keyfigures;
 
 import model.datahandling.DayData;
 import model.util.Date;

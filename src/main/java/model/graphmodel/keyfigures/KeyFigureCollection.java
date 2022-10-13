@@ -1,4 +1,6 @@
-package model.graphmodel;
+package model.graphmodel.keyfigures;
+
+import model.graphmodel.keyfigures.*;
 
 import java.util.HashMap;
 import java.util.Map;

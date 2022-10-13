@@ -1,7 +1,6 @@
-package model.graphmodel;
+package model.graphmodel.keyfigures;
 
 import model.datahandling.DayData;
-import model.graphmodel.KeyFigureAlgorithm;
 import model.util.Date;
 
 import java.util.Map;
