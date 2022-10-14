@@ -233,6 +233,14 @@ public class DataHandler {
     }
 
     /**
+     * A method that retrieves a {@link String} containing the specified company name.
+     *
+     * @param mic A {@link String} of the company's MIC.
+     * @return A {@link String} of the company's name.
+     */
+    public static String getCompanyName(String mic) { return CompanyData.getCompanyName(mic); }
+
+    /**
      * A method that retrieves the {@link CurrencyEnum} representing a company's trading currency.
      *
      * @param mic A {@link String} of the company's MIC.
