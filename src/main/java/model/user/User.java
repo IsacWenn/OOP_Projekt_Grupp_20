@@ -204,7 +204,7 @@ public class User implements Serializable {
     /**
      * An implementation of hashCode that creates a unique hash based on the instance attributes.
      *
-     * @return
+     * @return An {@link Integer} hash of the different instance values.
      */
     @Override
     public int hashCode() {
