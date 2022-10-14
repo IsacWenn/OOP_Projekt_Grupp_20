@@ -1,5 +1,6 @@
 package model.user;
 
+import model.util.GraphRepresentation;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
@@ -10,6 +11,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestUser {
 
     private static List<User> actualUserList;
+
+    private List<User> userList;
+    private User testUser;
 
     @BeforeAll
     public static void initializeTestingConditions() {
@@ -40,13 +44,14 @@ public class TestUser {
     @BeforeEach
     public void resetUserListToTestVariables() {
         User.loadUsers();
-        System.out.println(User.getUsers());
+        userList = User.getUsers();
+        testUser = userList.get(0);
     }
 
     @Test
     public void constructingAUserShouldAddThatUserToListOfUsers() {
         User dummyUser = new User("", "", "", "", "", "");
-        List<User> userList = User.getUsers();
+        userList = User.getUsers();
         assertEquals(2, userList.size());
         assertEquals(dummyUser, userList.get(1));
     }
@@ -60,7 +65,61 @@ public class TestUser {
         assertEquals(dummyUser, newList.get(1));
         User.loadUsers();
         assertEquals(1, User.getUsers().size());
-        assertEquals(ogUserList.get(0), User.getUsers().get(0));
+        assertEquals(ogUserList.get(0), testUser);
     }
 
+    @Test
+    public void getUserInfoShouldReturnUserInfo() {
+        UserInfo info = testUser.getUserInfo();
+        assertEquals("Isac", info.getName());
+    }
+
+    @Test
+    public void getUserFavoriteInstanceShouldReturnUserInfo() {
+        UserFavorites favorites = testUser.getUserFavoriteInstance();
+        assertTrue(favorites.getFavorites().isEmpty());
+    }
+
+    @Test
+    public void getUserNameShouldReturnUserName() {
+        assertEquals("IsacWenn", testUser.getUserName());
+    }
+
+    @Test
+    public void getPasswordShouldReturnPassword() {
+        assertEquals("Lösenord", testUser.getPassword());
+    }
+
+    @Test
+    public void getEmailShouldReturnEmail() {
+        assertEquals("i@grupp20.se", testUser.getEmail());
+    }
+
+    @Test
+    public void getFirstNameShouldReturnFirstName() {
+        assertEquals("Isac", testUser.getFirstName());
+    }
+
+    @Test
+    public void getLastNameShouldReturnLastName() {
+        assertEquals("Ingvast Wennerström", testUser.getLastName());
+    }
+
+    @Test
+    public void getBioShouldReturnBio() {
+        assertEquals("python <<<<<<", testUser.getBio());
+    }
+
+    @Test
+    public void getUserFavoritesShouldReturnListOfFavorites() {
+        List<GraphRepresentation> favorites = testUser.getUserFavorites();
+        assertTrue(favorites.isEmpty());
+    }
+
+    @Test
+    public void hashCodeShouldReturnUniqueHashForThatSetOfInstanceVariables() {
+        User dummyUser1 = new User("IsacWenn", "Lösenord", "i@grupp20.se", "Isac",
+                "Ingvast Wennerström", "python <<<<<<");
+        assertEquals(testUser.hashCode(), dummyUser1.hashCode());
+    }
 }
