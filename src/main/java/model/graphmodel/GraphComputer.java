@@ -31,7 +31,6 @@ public class GraphComputer {
      * A constructor for the GraphComputer class that sets {@link GraphComputer#graphAlgorithm} to the default graphAlgorithm.
      */
     GraphComputer(){
-        this.graphAlgorithm = GraphAlgorithmFactory.create(GraphAlgorithms.DAILYCLOSINGPRICE);
     }
 
     /**
@@ -80,12 +79,16 @@ public class GraphComputer {
     }
 
     /**
-     * A method that calls all the {@link KeyFigureAlgorithm} that exists in {@link KeyFigureCollection} to calculate
-     * @param keyFigures
+     *
+     * @param keyFigure
      * @param data
      * @return
      */
-    Map<String, Double> calculateKeyFigure(Map<String, KeyFigureAlgorithm> keyFigures, Map<Date, DayData> data){
+    Double calculateKeyFigure(KeyFigureAlgorithm keyFigure, Map<Date, DayData> data){return keyFigure.calculate(data);}
+}
+
+/*
+Map<String, Double> calculateKeyFigure(Map<String, KeyFigureAlgorithm> keyFigures, Map<Date, DayData> data){
         Map<String, Double> calculatedKeyFigures = new HashMap<>();
         for (Map.Entry<String,KeyFigureAlgorithm> entry : keyFigures.entrySet()){
             double calculatedData = entry.getValue().calculate(data);
@@ -93,5 +96,5 @@ public class GraphComputer {
         }
         return  calculatedKeyFigures;
     }
+ */
 
-}

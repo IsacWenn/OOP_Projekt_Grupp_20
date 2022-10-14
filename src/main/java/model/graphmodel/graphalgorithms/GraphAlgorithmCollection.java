@@ -2,6 +2,7 @@ package model.graphmodel.graphalgorithms;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class GraphAlgorithmCollection {
 
@@ -20,7 +21,9 @@ public class GraphAlgorithmCollection {
         }
     }
 
-    public static Map<String, GraphAlgorithm> getGraphAlgorithms() {
-        return algorithms;
+    public static GraphAlgorithm getGraphAlgorithm(String graphAlg) {
+        return algorithms.get(graphAlg);
     }
+
+    public static Set<String> getKeySet(){return algorithms.keySet();}
 }

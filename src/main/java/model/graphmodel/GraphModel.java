@@ -57,13 +57,21 @@ public class GraphModel {
     public GraphModel(String mic){
         init(mic);
         this.data = graphData.getCompanyData(mic);
+        updateAlgorithm("Daily closing price");
         update();
     }
 
+    @Deprecated
     public GraphModel(String mic, GraphAlgorithms graphAlgorithms){
         init(mic);
         this.data = graphData.getCompanyData(mic);
         updateAlgorithm(graphAlgorithms);
+    }
+
+    public GraphModel(String mic, Date from, Date to, String graphAlg){
+        init(mic);
+        this.data = graphData.getCompanyData(mic, from, to);
+        updateAlgorithm(graphAlg);
     }
 
     /**
@@ -97,12 +105,12 @@ public class GraphModel {
      * A method that initializes the private variables of this class, used by every constructor in this class
      */
     private void init(String mic) {
+        GraphAlgorithmCollection.init();
+        KeyFigureCollection.init();
         this.graphComputer = new GraphComputer();
         this.graphData = new GraphData();
         this.values = new HashMap<>();
         this.companyMic = mic;
-        GraphAlgorithmCollection.init();
-        KeyFigureCollection.init();
     }
 
     /**
@@ -129,7 +137,7 @@ public class GraphModel {
         update();
     }
     public void updateAlgorithm(String graphAlg) {
-        this.graphComputer.setAlgorithm(GraphAlgorithmCollection.getGraphAlgorithms().get(graphAlg));
+        this.graphComputer.setAlgorithm(GraphAlgorithmCollection.getGraphAlgorithm(graphAlg));
         update();
     }
 
@@ -166,19 +174,19 @@ public class GraphModel {
         return this.values;
     }
 
-    public Map<String, Double> getKeyFigureValues(){
-       return this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigureCollection(), currencyAdjustedData);
+
+    public Double getKeyFigureValue(String keyFigure){
+       return this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure), currencyAdjustedData);
     }
 
     //TODO
-    public Set<String> getListOfGraphAlgorithms(){
-        return GraphAlgorithmCollection.getGraphAlgorithms().keySet();
+    public Set<String> getKeyFigureNames(){
+        return KeyFigureCollection.getKeySet();
     }
 
     //TODO
-    public Set<String> getListOfKeyFigures(){
-        return KeyFigureCollection.getKeyFigureCollection().keySet();
-
+    public Set<String> getGraphAlgorithmNames(){
+        return  GraphAlgorithmCollection.getKeySet();
     }
 
     public static void main(String[] args) {
@@ -191,7 +199,6 @@ public class GraphModel {
             graphModel.updateTimeInterval(date1, date2);
             graphModel.updateAlgorithm("Daily change");
             System.out.println(graphModel.getValues());
-
 
             /*
             Map<String, Double> keyFigures = graphModel.getKeyFigures();
