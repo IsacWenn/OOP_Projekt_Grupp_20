@@ -45,7 +45,9 @@ public class GraphModel {
      */
     private GraphComputer graphComputer;
 
-    private String companyMic;
+    private String companyMIC, graphName;
+
+    private CurrencyEnum currency;
 
     private CurrencyEnum currency;
 
@@ -54,22 +56,21 @@ public class GraphModel {
      *
      * @param mic a {@link String} which represents a company on the stock market
      */
-    public GraphModel(String mic){
-        init(mic);
+    public GraphModel(String mic, String graphName){
+        init(mic, graphName);
         this.data = graphData.getCompanyData(mic);
         updateAlgorithm("Daily closing price");
         update();
     }
 
-    @Deprecated
-    public GraphModel(String mic, GraphAlgorithms graphAlgorithms){
-        init(mic);
+    public GraphModel(String mic, String graphName, GraphAlgorithms graphAlgorithms){
+        init(mic, graphName);
         this.data = graphData.getCompanyData(mic);
         updateAlgorithm(graphAlgorithms);
     }
 
-    public GraphModel(String mic, Date from, Date to, String graphAlg){
-        init(mic);
+    public GraphModel(String mic, String graphName, Date from, Date to, String graphAlg){
+        init(mic, graphName);
         this.data = graphData.getCompanyData(mic, from, to);
         updateAlgorithm(graphAlg);
     }
@@ -82,8 +83,8 @@ public class GraphModel {
      * @param to a {@link Date} for the end of the interval
      */
 
-    public GraphModel(String mic, Date from, Date to) {
-        init(mic);
+    public GraphModel(String mic, String graphName, Date from, Date to) {
+        init(mic, graphName);
         this.data = graphData.getCompanyData(mic, from, to);
         updateAlgorithm("Daily closing price");
         update();
@@ -97,21 +98,22 @@ public class GraphModel {
      * @param dates a {@link List} of {@link Date}
      */
     @Deprecated
-    public GraphModel(String mic, List<Date> dates){
-        init(mic);
+    public GraphModel(String mic, String graphName, List<Date> dates){
+        init(mic, graphName);
         this.data = graphData.getCompanyData(mic ,dates);
     }
 
     /**
      * A method that initializes the private variables of this class, used by every constructor in this class
      */
-    private void init(String mic) {
+    private void init(String mic, String graphName) {
         GraphAlgorithmCollection.init();
         KeyFigureCollection.init();
         this.graphComputer = new GraphComputer();
         this.graphData = new GraphData();
         this.values = new HashMap<>();
-        this.companyMic = mic;
+        this.companyMIC = mic;
+        this.graphName = graphName;
     }
 
     /**
@@ -149,7 +151,7 @@ public class GraphModel {
      * @param to a {@link Date} that is the last day of the new time interval.
      */
     public void updateTimeInterval(Date from, Date to) {
-        this.data = graphData.getCompanyData(companyMic, from, to);
+        this.data = graphData.getCompanyData(companyMIC, from, to);
         update();
     }
 
@@ -160,10 +162,14 @@ public class GraphModel {
      */
     public void updateCurrency(CurrencyEnum toCurrency) {
         this.currency = toCurrency;
-        Map<Date,Double> from = graphData.getNativeCurrencyData(companyMic, data.keySet());
+        Map<Date,Double> from = graphData.getNativeCurrencyData(companyMIC, data.keySet());
         Map<Date,Double> to = graphData.getCurrencyData(toCurrency, data.keySet());
         this.currencyAdjustedData = graphComputer.calculateCurrency(from, to, data);
         update();
+    }
+
+    public String getName() {
+        return graphName;
     }
 
     /**
@@ -201,7 +207,7 @@ public class GraphModel {
         try {
             Date date1 = new Date(2022,7,1);
             Date date2 = new Date(2022,8,1);
-            GraphModel graphModel = new GraphModel("AAPL");
+            GraphModel graphModel = new GraphModel("AAPL", "Test");
             graphModel.updateCurrency(CurrencyEnum.SEK);
             graphModel.updateTimeInterval(date1, date2);
             graphModel.updateAlgorithm("Daily change");
