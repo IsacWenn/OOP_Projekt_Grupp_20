@@ -1,9 +1,12 @@
 package model.user;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A serializable class containing the basic user data of a user.
+ *
+ * @author Isac
  */
 public class UserInfo implements Serializable {
 
@@ -123,5 +126,31 @@ public class UserInfo implements Serializable {
                 ", lastname='" + lastname + '\'' +
                 ", bio='" + bio + '\'' +
                 '}';
+    }
+
+    /**
+     * An implementation of the .equals() method in Java.
+     *
+     * @param o An {@link Object} to compare with.
+     * @return A {@link Boolean} value of that comparison.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserInfo userInfo = (UserInfo) o;
+        return username.equals(userInfo.username) && password.equals(userInfo.password)
+                && email.equals(userInfo.email) && name.equals(userInfo.name)
+                && lastname.equals(userInfo.lastname) && Objects.equals(bio, userInfo.bio);
+    }
+
+    /**
+     * A method that uses the different instance attributes to create a unique hash.
+     *
+     * @return An {@link Integer} of that hash.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, password, email, name, lastname, bio);
     }
 }
