@@ -4,6 +4,7 @@ import model.datahandling.DayData;
 import model.graphmodel.graphalgorithms.GraphAlgorithm;
 import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import model.graphmodel.graphalgorithms.GraphAlgorithmCollection;
+import model.graphmodel.keyfigures.KeyFigureCollection;
 import model.util.CurrencyEnum;
 import model.util.Date;
 
@@ -111,9 +112,9 @@ public class GraphModel {
 
     private void update() {
         if (this.currency == null) {
-            this.values = this.graphComputer.updateValues(data);
+            this.values = this.graphComputer.calculateValues(data);
         } else {
-            this.values = this.graphComputer.updateValues(currencyAdjustedData);
+            this.values = this.graphComputer.calculateValues(currencyAdjustedData);
         }
     }
 

@@ -22,7 +22,7 @@ class LinearRegression implements GraphAlgorithm {
      */
 
     @Override
-    public Map<Date, Number> calculate(Map<Date, DayData> data) {;
+    public Map<Date, Number> calculate(Map<Date, DayData> data) {
         List<Date> sortedDates = Date.sortDates(data.keySet());
         double[] coefficients = getCoefficients(data, sortedDates);
         return getLinearValues(coefficients[1], coefficients[0], sortedDates);
