@@ -172,7 +172,7 @@ public class GraphModel {
      * @return the {@link Map} containing the values
      */
     public Map<Date, Number> getValues() {
-        return this.values;
+        return Map.copyOf(this.values);
     }
 
 

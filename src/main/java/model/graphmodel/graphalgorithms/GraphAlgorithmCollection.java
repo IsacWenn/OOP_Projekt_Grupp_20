@@ -47,5 +47,5 @@ public class GraphAlgorithmCollection {
      *
      * @return A {@link Set} of {@link String} for each {@link GraphAlgorithm} in {@link GraphAlgorithmCollection#algorithms}.
      */
-    public static Set<String> getKeySet(){return algorithms.keySet();}
+    public static Set<String> getKeySet(){return Set.copyOf(algorithms.keySet());}
 }
