@@ -95,9 +95,10 @@ public class ControllerStockListItem extends AnchorPane {
 
     @FXML
     private void onClick(Event event){
-        if (parentController.withinCompanyLimit() || active) {
-            parentController.stockListOnClick(this.acronym);
-            togglePressed();
-        }
+        parentController.stockListOnClick(acronym);
+    }
+
+    public boolean isActive() {
+        return active;
     }
 }

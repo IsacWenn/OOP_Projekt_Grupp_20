@@ -43,4 +43,17 @@ public class ComparisonChartController extends ChartController {
         });
     }
 
+    @Override
+    public void stockListOnClick(String acronym) {
+        ControllerStockListItem item = stockListItemMap.get(acronym);
+        if (withinCompanyLimit() || item.isActive()) {
+            if (isCompanyActive(acronym)) {
+                removeFromChart(acronym);
+            } else {
+                addToChart(acronym);
+            }
+            item.togglePressed();
+        }
+    }
+
 }

@@ -124,9 +124,29 @@ public class DetailedChartController extends ChartController{
         if (0 < algorithms.size() && 0 < activeCompanies.size()) {
             for (GraphAlgorithms algorithm : algorithms) {
                 chart.setAlgorithm(algorithm);
-                chart.addStockToChart(activeCompanies.get(0), algorithm.name(), startDate, endDate);
+                chart.addStockToChart(activeCompanies.get(activeCompanies.size()-1), algorithm.name(), startDate, endDate);
             }
         }
+    }
+
+    @Override
+    public void stockListOnClick(String acronym) {
+        ControllerStockListItem item = stockListItemMap.get(acronym);
+        if (0 < activeCompanies.size() && activeCompanies.get(activeCompanies.size()-1).contains(acronym)) {
+            removeFromChart(acronym);
+        } else {
+            if (!item.isActive()) {
+                if (0 < activeCompanies.size()) {
+                    stockListItemMap.get(activeCompanies.get(activeCompanies.size() - 1)).togglePressed();
+                    activeCompanies.clear();
+                }
+                activeCompanies.add(acronym);
+            } else {
+                activeCompanies.clear();
+            }
+        }
+        item.togglePressed();
+        refreshStocks();
     }
 
 

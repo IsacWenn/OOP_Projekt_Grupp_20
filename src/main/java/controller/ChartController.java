@@ -260,13 +260,7 @@ public abstract class ChartController extends AnchorPane {
         chartPane.getChildren().add(chart);
     }
 
-    protected void stockListOnClick(String acronym) {
-        if (isCompanyActive(acronym)) {
-            removeFromChart(acronym);
-        } else {
-            addToChart(acronym);
-        }
-    }
+    public abstract void stockListOnClick(String acronym);
 
     protected void removeFromChart(String name) {
         int i = activeCompanies.indexOf(name);
@@ -292,7 +286,7 @@ public abstract class ChartController extends AnchorPane {
         } else return activeCompanies.size() < maxCompanies;
     }
 
-    private boolean isCompanyActive(String acronym) {
+    boolean isCompanyActive(String acronym) {
         return activeCompanies.contains(acronym);
     }
 }
