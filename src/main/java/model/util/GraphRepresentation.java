@@ -28,7 +28,7 @@ public class GraphRepresentation implements Serializable {
     /**
      * A {@link CurrencyEnum} for the specified company trading currency.
      */
-    private CurrencyEnum tradingCurrency;
+    private CurrencyConversionEnum preferredCurrency;
 
     /**
      * A constructor for the class.
@@ -36,13 +36,14 @@ public class GraphRepresentation implements Serializable {
      * @param interval A {@link List} of {@link Date}s of a specified interval.
      * @param alg A {@link GraphAlgorithms} of a specified algorithm.
      * @param companyMIC A {@link String} of a specified company MIC.
-     * @param tradingCurrency A {@link CurrencyEnum} of the company's trading currency.
+     * @param preferredCurrency A {@link CurrencyConversionEnum} of the users preferred trading currency.
      */
-    public GraphRepresentation(List<Date> interval, GraphAlgorithms alg, String companyMIC, CurrencyEnum tradingCurrency) {
+    public GraphRepresentation(List<Date> interval, GraphAlgorithms alg, String companyMIC,
+                               CurrencyConversionEnum preferredCurrency) {
         this.interval = interval;
         this.algorithm = alg;
         this.companyMIC = companyMIC;
-        this.tradingCurrency = tradingCurrency;
+        this.preferredCurrency = preferredCurrency;
     }
 
     // Getters
@@ -75,12 +76,12 @@ public class GraphRepresentation implements Serializable {
     }
 
     /**
-     * A getter method for the trading currency.
+     * A getter method for the currency conversion to the users preferred trading currency.
      *
-     * @return A {@link CurrencyEnum} of the company's trading currency.
+     * @return A {@link CurrencyConversionEnum} of the users preferred trading currency.
      */
-    public CurrencyEnum getTradingCurrency() {
-        return tradingCurrency;
+    public CurrencyConversionEnum getConversionCurrency() {
+        return preferredCurrency;
     }
 
 }

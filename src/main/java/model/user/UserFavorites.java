@@ -1,6 +1,7 @@
 package model.user;
 
 import model.graphmodel.graphalgorithms.GraphAlgorithms;
+import model.util.CurrencyConversionEnum;
 import model.util.Date;
 import model.util.GraphRepresentation;
 
@@ -53,8 +54,8 @@ public class UserFavorites implements Serializable {
      * @param alg a {@link GraphRepresentation} for the algorithm.
      * @param mic a {@link String} for the company mic.
      */
-    void addFavorite(List<Date> interval, GraphAlgorithms alg, String mic) {
-        favorites.add(new GraphRepresentation(interval, alg, mic));
+    void addFavorite(List<Date> interval, GraphAlgorithms alg, String mic, CurrencyConversionEnum prefCurrency) {
+        favorites.add(new GraphRepresentation(interval, alg, mic, prefCurrency));
     }
 
     /**
