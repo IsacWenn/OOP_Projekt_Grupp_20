@@ -111,4 +111,19 @@ public class GraphRepresentation implements Serializable {
     public int hashCode() {
         return Objects.hash(interval, algorithm, companyMIC, preferredCurrency);
     }
+
+    /**
+     * An implementation of toString that returns a string representation of the object values.
+     *
+     * @return A {@link String} representation of the objects values.
+     */
+    @Override
+    public String toString() {
+        return "GraphRepresentation{" +
+                "interval=" + interval +
+                ", algorithm=" + algorithm +
+                ", companyMIC='" + companyMIC + '\'' +
+                ", preferredCurrency=" + preferredCurrency +
+                '}';
+    }
 }
