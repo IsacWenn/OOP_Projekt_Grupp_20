@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class DetailedChartController extends ChartController{
 
     private ArrayList<GraphAlgorithms> algorithms;
+    protected ControllerStockListItem activeCompany;
 
     @FXML
     private CheckBox closingPriceBox;
@@ -25,8 +26,8 @@ public class DetailedChartController extends ChartController{
 
     public DetailedChartController(AppController parentController) {
         super(parentController);
-        maxCompanies = 1;
         algorithms = new ArrayList<>();
+        activeCompany = null;
         initializeCheckBoxes();
     }
 
@@ -105,29 +106,40 @@ public class DetailedChartController extends ChartController{
         refreshStocks();
     }
 
-    @Override
-    protected void removeFromChart(String name) {
-        activeCompanies.clear();
+    protected void removeFromChart() {
+        activeCompany = null;
         chart.clearChart();
     }
 
-    @Override
-    protected void addToChart(String name) {
-        activeCompanies.add(name);
+    protected void addToChart(ControllerStockListItem item) {
+        activeCompany = item;
         refreshStocks();
     }
 
-
-    @Override
     protected void refreshStocks() {
         chart.clearChart();
-        if (0 < algorithms.size() && 0 < activeCompanies.size()) {
+        if (!algorithms.isEmpty() && activeCompany != null) {
             for (GraphAlgorithms algorithm : algorithms) {
                 chart.setAlgorithm(algorithm);
-                chart.addStockToChart(activeCompanies.get(0), algorithm.name(), startDate, endDate);
+                chart.addStockToChart(activeCompany.getMIC(), algorithm.name(), startDate, endDate);
             }
         }
     }
 
-
+    public void stockListOnClick(ControllerStockListItem item) {
+        if (activeCompany != null && activeCompany == item) {
+            removeFromChart();
+        } else {
+            if (!item.isActive()) {
+                if (activeCompany != null) {
+                    activeCompany.togglePressed();
+                }
+                activeCompany = item;
+            } else {
+                activeCompany = null;
+            }
+        }
+        item.togglePressed();
+        refreshStocks();
+    }
 }
