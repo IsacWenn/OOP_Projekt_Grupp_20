@@ -43,7 +43,7 @@ class BivariateAlgorithmCollection {
      * @return A {@link Set} of {@link String} for each {@link BivariateAlgorithms} in {@link BivariateAlgorithmCollection#algorithms}.
      */
     public static Set<String> getKeySet() {
-        return algorithms.keySet();
+        return Set.copyOf(algorithms.keySet());
     }
 
 }

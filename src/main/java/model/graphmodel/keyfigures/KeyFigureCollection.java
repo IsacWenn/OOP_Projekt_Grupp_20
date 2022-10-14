@@ -28,5 +28,5 @@ public class KeyFigureCollection {
         return keyFigures.get(keyFigure);
     }
 
-    public static Set<String> getKeySet(){return keyFigures.keySet();}
+    public static Set<String> getKeySet(){return Set.copyOf(keyFigures.keySet());}
 }
