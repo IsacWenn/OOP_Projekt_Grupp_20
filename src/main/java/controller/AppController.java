@@ -17,7 +17,6 @@ public class AppController implements Initializable {
 
     @FXML
     private TabPane tabsPane;
-
     @FXML
     private Button newComparisonChartButton;
 
@@ -35,7 +34,7 @@ public class AppController implements Initializable {
     }
 
     public void newDetailedChart() {
-        ChartController newChart = new ComparisonChartController(this);
+        ChartController newChart = new DetailedChartController(this);
         newTab(newChart, "Detailed Chart");
     }
 
@@ -49,6 +48,7 @@ public class AppController implements Initializable {
         tabsPane.getTabs().add(newTab);
         tabsPane.getSelectionModel().select(newTab);
     }
+
 }
 
 

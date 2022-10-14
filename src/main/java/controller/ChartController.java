@@ -1,8 +1,7 @@
 package controller;
 
-import controller.charts.LineChart;
+import controller.charts.*;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -10,7 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import model.AppModel;
 import model.datahandling.DataHandler;
-import model.graphmodel.graphalgorithms.GraphAlgorithm;
+import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import model.util.Date;
 
 import java.io.IOException;
@@ -20,52 +19,40 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class ChartController extends AnchorPane {
+
     protected final AppModel appModel = AppModel.getInstance();
     protected AppController parentController;
-    protected GraphAlgorithm graphAlgorithm;
-    protected Map<String, ControllerStockListItem> stockListItemMap = new HashMap<String, ControllerStockListItem>();
-    protected ArrayList<String> activeCompanies;
+    protected Map<String, ControllerStockListItem> stockListItemMap = new HashMap<>();
+    protected ArrayList<String> favouriteCompanies;
     protected Date startDate;
     protected Date endDate;
-    protected int maxCompanies = 0;
-    protected LineChart chart;
+    protected Chart chart;
+    protected GraphAlgorithms algorithm;
 
     @FXML
     protected DatePicker startDatePicker;
-
     @FXML
     protected DatePicker endDatePicker;
-
     @FXML
     protected FlowPane stockPane;
-
     @FXML
-    private Button timeframeOneDayButton;
-
+    protected Button timeframeOneDayButton;
     @FXML
-    private Button timeframeOneWeekButton;
-
+    protected Button timeframeOneWeekButton;
     @FXML
-    private Button timeframeOneMonthButton;
-
+    protected Button timeframeOneMonthButton;
     @FXML
-    private Button timeframeOneYearButton;
-
+    protected Button timeframeOneYearButton;
     @FXML
-    private ComboBox<String> chartTypeComboBox;
-
+    protected ComboBox<String> chartTypeComboBox;
     @FXML
-    private ComboBox<String> algorithmComboBox;
-
-    @FXML
-    private AnchorPane chartPane;
+    protected AnchorPane chartPane;
 
     public ChartController(AppController parentController) {
         this.parentController = parentController;
+        favouriteCompanies = new ArrayList<>();
         loadFXML();
-        lineChart();
         initializeVariables();
-        initializeStockPane();
         initializeSettings();
         try {
             updateStartDate(startDatePicker.getValue());
@@ -76,32 +63,24 @@ public abstract class ChartController extends AnchorPane {
         updateStockList();
     }
 
-    protected void loadFXML() {
-        FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../LineChart.fxml")));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-        try {
-            fxmlLoader.load();
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
-    }
+    abstract void loadFXML();
 
     protected void initializeVariables() {
         try {
-            activeCompanies = new ArrayList<String>();
             startDate = new Date(2021, 9, 26);
             endDate = new Date();
+            algorithm = GraphAlgorithms.DAILYCLOSINGPRICE;
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
 
     protected void initializeSettings() {
+        initializeStockPane();
         initializeStartDatePicker();
         initializeEndDatePicker();
         initializeChartTypeComboBox();
-        initializeAlgorithmComboBox();
+        openLineChart();
     }
 
     private void initializeStartDatePicker() {
@@ -158,22 +137,19 @@ public abstract class ChartController extends AnchorPane {
         chartTypeComboBox.getItems().addAll("Area Chart", "Bar Chart", "Line Chart");
         chartTypeComboBox.getSelectionModel().select("Line Chart");
         chartTypeComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
-            System.out.println(newVal);
-        });
-    }
-
-    private void initializeAlgorithmComboBox() {
-        algorithmComboBox.getItems().addAll("Closing Price", "Daily Change", "Daily Deviation", "Linear Regression");
-        algorithmComboBox.getSelectionModel().select("Closing Price");
-        algorithmComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
-            System.out.println(newVal);
+            switch (newVal) {
+                case ("Area Chart") -> openAreaChart();
+                case ("Bar Chart") -> openBarChart();
+                case ("Line Chart") -> openLineChart();
+            }
+            refreshStocks();
         });
     }
 
     protected void initializeStockPane() {
         stockPane.getChildren().clear();
         for (String MIC : DataHandler.getMICs()) {
-            ControllerStockListItem listItem = new ControllerStockListItem(MIC, this);
+            ControllerStockListItem listItem = new ControllerStockListItem(MIC, this, favouriteCompanies.contains(MIC));
             stockListItemMap.put(MIC, listItem);
         }
     }
@@ -181,8 +157,28 @@ public abstract class ChartController extends AnchorPane {
     public void updateStockList() {
         stockPane.getChildren().clear();
         for (String MIC : DataHandler.getMICs()) {
-            stockPane.getChildren().add(stockListItemMap.get(MIC));
+            if (favouriteCompanies.contains(MIC)) {
+                stockPane.getChildren().add(stockListItemMap.get(MIC));
+            }
         }
+        for (String MIC : DataHandler.getMICs()) {
+            if (!favouriteCompanies.contains(MIC)) {
+                stockPane.getChildren().add(stockListItemMap.get(MIC));
+            }
+        }
+    }
+
+    public void favoritize(String acronym){
+        if (isCompanyFavorite(acronym)) {
+            favouriteCompanies.remove(acronym);
+        } else {
+            favouriteCompanies.add(acronym);
+        }
+        updateStockList();
+    }
+
+    private boolean isCompanyFavorite(String acronym) {
+        return favouriteCompanies.contains(acronym);
     }
 
     public void updateStartDate(LocalDate newDate) throws IOException {
@@ -199,6 +195,7 @@ public abstract class ChartController extends AnchorPane {
         } else throw new IOException("Invalid date");
     }
 
+    @FXML
     public void timeframeOneDay() {
         try {
             updateStartDate(LocalDate.now().minusDays(1));
@@ -209,6 +206,7 @@ public abstract class ChartController extends AnchorPane {
         refreshStocks();
     }
 
+    @FXML
     public void timeframeOneWeek() {
         try {
             updateStartDate(LocalDate.now().minusWeeks(1));
@@ -219,6 +217,7 @@ public abstract class ChartController extends AnchorPane {
         refreshStocks();
     }
 
+    @FXML
     public void timeframeOneMonth() {
         try {
             updateStartDate(LocalDate.now().minusMonths(1));
@@ -229,6 +228,7 @@ public abstract class ChartController extends AnchorPane {
         refreshStocks();
     }
 
+    @FXML
     public void timeframeOneYear() {
         try {
             updateStartDate(LocalDate.now().minusYears(1));
@@ -239,41 +239,25 @@ public abstract class ChartController extends AnchorPane {
         refreshStocks();
     }
 
-    private void lineChart() {
-        chart = new LineChart();
+    private void openLineChart() {
+        chart = new LineChart(algorithm);
         chartPane.getChildren().clear();
         chartPane.getChildren().add(chart);
     }
 
-    public void openStockView(String acronym) {
-        if (isCompanyActive(acronym)) {
-            removeActiveCompany(acronym);
-        } else {
-            activeCompanies.add(acronym);
-            chart.addStockToChart(acronym, startDate, endDate);
-        }
+    private void openBarChart() {
+        chart = new BarChart(algorithm);
+        chartPane.getChildren().clear();
+        chartPane.getChildren().add(chart);
     }
 
-    private void removeActiveCompany(String acronym) {
-        int i = activeCompanies.indexOf(acronym);
-        chart.removeChartFromStock(i);
-        activeCompanies.remove(i);
+    private void openAreaChart() {
+        chart = new AreaChart(algorithm);
+        chartPane.getChildren().clear();
+        chartPane.getChildren().add(chart);
     }
 
-    private void refreshStocks() {
-        chart.clearChart();
-        for (String activeCompany : activeCompanies) {
-            chart.addStockToChart(activeCompany, startDate, endDate);
-        }
-    }
+    public abstract void stockListOnClick(ControllerStockListItem item);
 
-    protected boolean withinCompanyLimit(){
-        if (maxCompanies == 0) {
-            return true;
-        } else return activeCompanies.size() < maxCompanies;
-    }
-
-    private boolean isCompanyActive(String acronym) {
-        return activeCompanies.contains(acronym);
-    }
+    protected abstract void refreshStocks();
 }

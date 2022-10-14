@@ -30,7 +30,7 @@ public class DataHandler {
         try {
             String path = CompanyData.getFileName(mic);
             return StockExchangeReader.convertCSVFileToHandledData(path);
-        } catch (NullPointerException e) {
+        } catch (NullPointerException | IOException e) {
             System.out.println(e.getMessage());
         }
         return new HashMap<>() {{ put(new Date(), new DayData(0, 0, 0, 0, 0)); }};
@@ -45,8 +45,12 @@ public class DataHandler {
      * @return A {@link Map} containing the Data of a company on the specified dates.
      */
     public static Map<Date, DayData> getCompanyData(List<Date> dates, String mic) {
-        String path = CompanyData.getFileName(mic);
-        return filterDataByDates(StockExchangeReader.convertCSVFileToHandledData(path), dates);
+        try {
+            String path = CompanyData.getFileName(mic);
+            return filterDataByDates(StockExchangeReader.convertCSVFileToHandledData(path), dates);
+        } catch (NullPointerException | IOException e) {
+            return new HashMap<>(){{ put(new Date(), new DayData(0, 0, 0, 0, 0)); }};
+        }
     }
 
     /**
@@ -227,6 +231,14 @@ public class DataHandler {
     public static List<String> getCompanyNames() {
         return CompanyData.getCompanyNames();
     }
+
+    /**
+     * A method that retrieves a {@link String} containing the specified company name.
+     *
+     * @param mic A {@link String} of the company's MIC.
+     * @return A {@link String} of the company's name.
+     */
+    public static String getCompanyName(String mic) { return CompanyData.getCompanyName(mic); }
 
     /**
      * A method that retrieves the {@link CurrencyEnum} representing a company's trading currency.

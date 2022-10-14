@@ -22,20 +22,6 @@ public class CurrencyExchangeReader {
      */
     private static final String defaultPath = "src/main/resources/CurrencyExchangeData/";
 
-    public static void main(String[] args) throws IOException {
-
-        Map<Date, Double> data = null;
-        try {
-            data = convertCSVFileToHandledData(defaultPath + "SEK_USD.csv");
-        } catch (IOException err) {
-            System.out.println(err.getMessage());
-        }
-
-        Date date1 = new Date(2020,6,1);
-
-        System.out.println(data.get(date1));
-    }
-
     /**
      * A method that converts a CSV-file of currency exchange rates into a {@link Map} for use in the rest of
      * the program

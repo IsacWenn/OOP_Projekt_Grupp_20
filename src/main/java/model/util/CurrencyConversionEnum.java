@@ -2,6 +2,8 @@ package model.util;
 
 /**
  * An Enum representing the different currency conversion rates available.
+ *
+ * @author Isac
  */
 public enum CurrencyConversionEnum {
     USD_TO_SEK,

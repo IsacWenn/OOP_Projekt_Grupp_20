@@ -4,14 +4,23 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-
 import java.io.IOException;
 
 public class ControllerStockListItem extends AnchorPane {
+
     private final ChartController parentController;
     private final String acronym;
     private boolean active;
+    private boolean favorite;
+
+
+    @FXML
+    private ImageView favoriteImage;
+    @FXML
+    private AnchorPane favoriteButton;
     @FXML
     private Label stockAcronym;
     @FXML
@@ -20,12 +29,15 @@ public class ControllerStockListItem extends AnchorPane {
     private Label stockValue;
     @FXML
     private AnchorPane stockListItem;
-    ControllerStockListItem (String acronym, ChartController parentController){
+
+    ControllerStockListItem (String acronym, ChartController parentController, boolean favorite){
         loadFXML();
         initializeLabels(acronym);
+        initializeFavoriteButton();
+        this.favorite = favorite;
         active = false;
         stockListItem.setOnMouseClicked(this::onClick);
-
+        favoriteButton.setOnMouseClicked(this::onFavoriteClick);
 
         this.acronym = acronym;
         this.parentController = parentController;
@@ -33,7 +45,6 @@ public class ControllerStockListItem extends AnchorPane {
 
     private void initializeLabels(String acronym) {
         stockAcronym.setText(acronym);
-
     }
 
     private void loadFXML() {
@@ -57,13 +68,41 @@ public class ControllerStockListItem extends AnchorPane {
         active = !active;
     }
 
+    private void initializeFavoriteButton(){
+        String iconPath;
+        if (favorite) {
+            iconPath = "../Images/starActive.png";
+        } else {
+            iconPath = "../Images/starInactive.png";
+        }
+        Image imageToLoad = new Image(getClass().getResource(iconPath).toExternalForm());
+        favoriteImage.setImage(imageToLoad);
+    }
+    @FXML
+    private void onFavoriteClick(Event event){
+        String iconPath;
+
+        if (favorite) {
+            iconPath = "../Images/starInactive.png";
+        } else {
+            iconPath = "../Images/starActive.png";
+        }
+        Image imageToLoad = new Image(getClass().getResource(iconPath).toExternalForm());
+        favoriteImage.setImage(imageToLoad);
+        parentController.favoritize(acronym);
+        favorite = !favorite;
+    }
+
     @FXML
     private void onClick(Event event){
-        if (parentController.withinCompanyLimit() && !active) {
-            parentController.openStockView(this.acronym);
-        } else if(active) {
-            parentController.openStockView(acronym);
-        }
-        togglePressed();
+        parentController.stockListOnClick(this);
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public String getMIC() {
+        return acronym;
     }
 }

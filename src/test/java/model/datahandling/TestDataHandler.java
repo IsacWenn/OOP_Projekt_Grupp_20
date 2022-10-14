@@ -174,5 +174,21 @@ public class TestDataHandler {
         assertFalse(map.containsKey(new Date(2022, 8, 30)));
     }
 
+    @Test
+    public void getCompanyDataWithListAndInvalidMICShouldReturnHashMapWithCurrentDateAndZeroedDayData() {
+        Map<Date, DayData> map = DataHandler.getCompanyData(new ArrayList<>(), "T");
+        DayData zeroed = new DayData(0, 0, 0, 0, 0);
+        assertEquals(zeroed.hashCode(), map.get(new Date()).hashCode());
+    }
 
+    @Test
+    public void getCompanyNameShouldReturnTheSpecifiedCompanysName() {
+        String name = DataHandler.getCompanyName("MSFT");
+        assertEquals("Microsoft Corporation", name);
+    }
+
+    @Test
+    public void getCompanyNameWithInvalidMICShouldReturnEmptyString() {
+        assertEquals("", DataHandler.getCompanyName("hej"));
+    }
 }

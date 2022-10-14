@@ -2,6 +2,7 @@ package model.datahandling;
 
 import org.junit.jupiter.api.*;
 
+import java.util.Date;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -65,5 +66,19 @@ public class TestDayData {
                 "DayData{volume=100, open=10.0, closed=12.0, high=14.0, low=8.0}",
                 testDayData.toString()
         );
+    }
+
+    @Test
+    public void hashCodeForInstancesRepresentingTheSameDateShouldBeEqual() {
+        DayData data1 = new DayData(5, 6, 7, 8, 9);
+        DayData data2 = new DayData(5, 6, 7, 8, 9);
+        assertEquals(data1.hashCode(), data2.hashCode());
+    }
+
+    @Test
+    public void hashCodeForInstancesNotRepresentingTheSameDateShouldNotBeEqual() {
+        DayData data1 = new DayData(1, 2, 3, 4, 5);
+        DayData data2 = new DayData(2, 3, 4, 5, 6);
+        assertNotEquals(data1.hashCode(), data2.hashCode());
     }
 }
