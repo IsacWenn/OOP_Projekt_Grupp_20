@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * A class that reads the different stock exchange files and converts them into {@link DateHashMap}s for use in
+ * A class that reads the different stock exchange files and converts them into {@link HashMap}s for use in
  * the rest of the program.
  *
  * @author Isac
