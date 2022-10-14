@@ -36,10 +36,10 @@ public class User implements Serializable {
      *
      * @param username A {@link String} containing the Username of a user.
      * @param password A {@link String} containing the password of a user.
-     * @param email A {@link String} containing the email of a user.
-     * @param name A {@link String} containing the firstname of a user.
+     * @param email    A {@link String} containing the email of a user.
+     * @param name     A {@link String} containing the firstname of a user.
      * @param lastname A {@link String} containing the lastname of a user.
-     * @param bio A {@link String} containing a biography of a user.
+     * @param bio      A {@link String} containing a biography of a user.
      */
     public User(String username, String password, String email, String name, String lastname, String bio) {
         this.userInfo = new UserInfo(username, password, email, name, lastname, bio);
@@ -72,42 +72,54 @@ public class User implements Serializable {
      *
      * @return a {@link String} of the username.
      */
-    public String getUserName() { return userInfo.getName(); }
+    public String getUserName() {
+        return userInfo.getName();
+    }
 
     /**
      * A getter method for the password.
      *
      * @return a {@link String} of the password.
      */
-    public String getPassword() { return userInfo.getPassword(); }
+    public String getPassword() {
+        return userInfo.getPassword();
+    }
 
     /**
      * A getter method for the email address.
      *
      * @return a {@link String} of the email.
      */
-    public String getEmail() { return userInfo.getEmail(); }
+    public String getEmail() {
+        return userInfo.getEmail();
+    }
 
     /**
      * A getter method for the firstname of the user.
      *
      * @return a {@link String} of the firstname.
      */
-    public String getFirstName() { return userInfo.getName(); }
+    public String getFirstName() {
+        return userInfo.getName();
+    }
 
     /**
      * A getter method for the lastname of the user.
      *
      * @return a {@link String} of the lastname.
      */
-    public String getLastName() { return userInfo.getLastname(); }
+    public String getLastName() {
+        return userInfo.getLastname();
+    }
 
     /**
      * A getter method for the biography of the user.
      *
      * @return a {@link String} of the bio.
      */
-    public String getBio() { return userInfo.getBio(); }
+    public String getBio() {
+        return userInfo.getBio();
+    }
 
     /**
      * A getter method for a list of different favorites.
@@ -122,8 +134,8 @@ public class User implements Serializable {
      * A method loading all the Users of the file in {@link User#filePath} to the {@link User#users}.
      */
     public static void loadUsers() {
-        try ( FileInputStream fis = new FileInputStream(filePath);
-                ObjectInputStream ois = new ObjectInputStream(fis); ){
+        try (FileInputStream fis = new FileInputStream(filePath);
+             ObjectInputStream ois = new ObjectInputStream(fis);) {
             users = (List<User>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
@@ -155,11 +167,27 @@ public class User implements Serializable {
         }
     }
 
+    /**
+     * A getter method for the list of users.
+     *
+     * @return a {@link List} of {@link User}s containing all the different users in the system.
+     */
+    public static List<User> getUsers() {
+        return users;
+    }
+
+    /**
+     * A method that sets the List {@link User#users} to an empty {@link ArrayList}.
+     */
+    static void resetUserList() {
+        users = new ArrayList<>();
+    }
+
     public static void main(String[] args) {
 
 
         users = new ArrayList<>();
-        users.add(new User("Isac" ,"4", "i@j.se",
+        users.add(new User("Isac", "4", "i@j.se",
                 "Isac", "Ingvast Wennerström", ""));
         users.add(new User("Carl", "1", "c@j.se",
                 "Carl", "Odqvist", ""));
