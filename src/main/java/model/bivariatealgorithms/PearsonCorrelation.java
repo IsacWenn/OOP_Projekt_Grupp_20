@@ -14,6 +14,7 @@ class PearsonCorrelation implements BivariateAlgorithms {
 
     /**
      * A method for calculating the Pearson correlation coefficient between two data sets.
+     *
      * @param series1 a {@link Map} containing a {@link Date} and a {@link Number} representing one data set.
      * @param series2 a {@link Map} containing a {@link Date} and a {@link Number} representing one data set.
      * @return a {@link Double} that is the calculated correlation coefficient.

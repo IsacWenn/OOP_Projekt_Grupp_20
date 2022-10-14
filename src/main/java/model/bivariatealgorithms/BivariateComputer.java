@@ -17,7 +17,7 @@ public class BivariateComputer {
     /**
      * A class variable containing the key figures from the last time the {@link BivariateComputer#calculateKeyFigures(Map, Map)} was calculated.
      */
-    public static Map<String, Double> keyFigures = null;
+    private static Map<String, Double> keyFigures = null;
 
     /**
      * A method for computing the key figures given two series of data.
@@ -27,15 +27,16 @@ public class BivariateComputer {
     public static void calculateKeyFigures(Map<Date, Number> series1, Map<Date, Number> series2) {
 
         BivariateAlgorithmCollection.init();
-        Map<String, BivariateAlgorithms> algorithms = BivariateAlgorithmCollection.getGraphAlgorithms();
         Map<String, Double> calculatedValues = new HashMap<>();
+        Set<String> algoKeys = BivariateAlgorithmCollection.getKeySet();
 
         Set<Date> commonDates = series1.keySet();
         commonDates.retainAll(series2.keySet());
 
-        for (String algorithmName: algorithms.keySet()) {
-            double keyfigure = algorithms.get(algorithmName).calculateKeyFigure(series1, series2, commonDates);
-            calculatedValues.put(algorithmName, keyfigure);
+        for (String algoName: algoKeys) {
+            BivariateAlgorithms algo = BivariateAlgorithmCollection.getGraphAlgorithms(algoName);
+            double keyFigure = algo.calculateKeyFigure(series1, series2, commonDates);
+            calculatedValues.put(algoName, keyFigure);
         }
 
         keyFigures = calculatedValues;

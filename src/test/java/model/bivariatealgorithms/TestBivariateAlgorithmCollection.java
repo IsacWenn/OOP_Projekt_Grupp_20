@@ -7,9 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestBivariateAlgorithmCollection {
 
     @Test
-    public void classForCalclatingPearsonCorrelationShouldBeRetrieved() {
+    public void classForCalculatingPearsonCorrelationShouldBeRetrieved() {
         BivariateAlgorithmCollection.init();
-        BivariateAlgorithms ba  = BivariateAlgorithmCollection.getGraphAlgorithms().get("Pearson correlation");
+        BivariateAlgorithms ba  = BivariateAlgorithmCollection.getGraphAlgorithms("Pearson correlation");
         assertTrue(ba instanceof PearsonCorrelation);
     }
 
