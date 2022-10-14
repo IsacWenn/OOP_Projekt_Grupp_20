@@ -13,8 +13,9 @@ public class Volatility implements KeyFigureAlgorithm {
         double standardDeviation = 0;
         for(Date date : data.keySet()){
             DayData dayData = data.get(date);
-            mean+= dayData.getClosed()/data.size();
+            mean+= dayData.getClosed();
         }
+        mean /= data.size();
 
         for(Date date : data.keySet()){
             DayData dayData = data.get(date);
