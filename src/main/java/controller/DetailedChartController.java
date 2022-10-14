@@ -111,17 +111,16 @@ public class DetailedChartController extends ChartController{
         chart.clearChart();
     }
 
-    protected void addToChart(ControllerStockListItem item) {
-        activeCompany = item;
-        refreshStocks();
+    protected void addToChart(GraphAlgorithms algorithm) {
+        chart.setAlgorithm(algorithm);
+        chart.addStockToChart(activeCompany.getMIC(), algorithm.name(), startDate, endDate);
     }
 
     protected void refreshStocks() {
         chart.clearChart();
         if (!algorithms.isEmpty() && activeCompany != null) {
             for (GraphAlgorithms algorithm : algorithms) {
-                chart.setAlgorithm(algorithm);
-                chart.addStockToChart(activeCompany.getMIC(), algorithm.name(), startDate, endDate);
+                addToChart(algorithm);
             }
         }
     }

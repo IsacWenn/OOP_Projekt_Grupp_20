@@ -3,6 +3,7 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
+import model.datahandling.DataHandler;
 import model.graphmodel.graphalgorithms.GraphAlgorithms;
 
 import java.io.IOException;
@@ -64,7 +65,7 @@ public class ComparisonChartController extends ChartController {
 
     protected void addToChart(ControllerStockListItem item) {
         activeCompanies.add(item);
-        chart.addStockToChart(item.getMIC(), item.getMIC(), startDate, endDate);
+        chart.addStockToChart(item.getMIC(), item.getName(), startDate, endDate);
     }
 
     protected void refreshStocks() {
