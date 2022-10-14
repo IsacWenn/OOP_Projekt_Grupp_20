@@ -10,14 +10,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ComparisonChartController extends ChartController {
+    protected GraphAlgorithms algorithm;
     @FXML
     protected ComboBox<String> algorithmComboBox;
-    protected ArrayList<ControllerStockListItem> activeCompanies;
 
     public ComparisonChartController(AppController parentController){
         super(parentController);
-        activeCompanies = new ArrayList<>();
         initializeAlgorithmComboBox();
+        algorithm = GraphAlgorithms.DAILYCLOSINGPRICE;
     }
 
     @Override
@@ -34,7 +34,6 @@ public class ComparisonChartController extends ChartController {
 
     private void initializeAlgorithmComboBox() {
         algorithmComboBox.getItems().addAll("Closing Price", "Daily Change", "Daily Deviation", "Linear Regression");
-        algorithmComboBox.getSelectionModel().select("Closing Price");
         algorithmComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
             switch (newVal) {
                 case ("Closing Price") -> algorithm = GraphAlgorithms.DAILYCLOSINGPRICE;
@@ -42,36 +41,19 @@ public class ComparisonChartController extends ChartController {
                 case ("Daily Deviation") -> algorithm = GraphAlgorithms.DAILYHIGHMINUSLOW;
                 case ("Linear Regression") -> algorithm = GraphAlgorithms.LINEARREGRESSION;
             }
-            chart.setAlgorithm(algorithm);
-            refreshStocks();
+            chartModel.updateAlgorithms(algorithm);
+            chart.refreshChart(chartModel.getGraphModels());
         });
+        algorithmComboBox.getSelectionModel().select("Closing Price");
     }
 
     @Override
     public void stockListOnClick(ControllerStockListItem item) {
         if (item.isActive()) {
-            removeFromChart(item);
+            chart.removeFromChart(chartModel.removeFromChart(item.getName()));
         } else {
-            addToChart(item);
+            chart.showStockOnChart(chartModel.addToChart(item.getMIC(), item.getName(), algorithm));
         }
         item.togglePressed();
-    }
-
-    protected void removeFromChart(ControllerStockListItem item) {
-        int i = activeCompanies.indexOf(item);
-        chart.removeChartFromStock(i);
-        activeCompanies.remove(i);
-    }
-
-    protected void addToChart(ControllerStockListItem item) {
-        activeCompanies.add(item);
-        chart.addStockToChart(item.getMIC(), item.getName(), startDate, endDate);
-    }
-
-    protected void refreshStocks() {
-        chart.clearChart();
-        for (ControllerStockListItem company : activeCompanies) {
-            chart.addStockToChart(company.getMIC(), company.getMIC(), startDate, endDate);
-        }
     }
 }

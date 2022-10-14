@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import model.datahandling.DataHandler;
+import model.util.Date;
 
 import java.io.IOException;
 
@@ -50,6 +51,11 @@ public class ControllerStockListItem extends AnchorPane {
     private void initializeLabels(String acronym) {
         stockAcronym.setText(acronym);
         stockName.setText(name);
+        /*try{
+            stockValue.setText(DataHandler.getLatestDayData(acronym).values().toString());
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
+        }*/
     }
 
     private void loadFXML() {

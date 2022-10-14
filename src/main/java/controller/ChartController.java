@@ -8,6 +8,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import model.AppModel;
+import model.chartmodel.ChartModel;
 import model.datahandling.DataHandler;
 import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import model.util.Date;
@@ -22,12 +23,10 @@ public abstract class ChartController extends AnchorPane {
 
     protected final AppModel appModel = AppModel.getInstance();
     protected AppController parentController;
+    protected ChartModel chartModel;
     protected Map<String, ControllerStockListItem> stockListItemMap = new HashMap<>();
     protected ArrayList<String> favouriteCompanies;
-    protected Date startDate;
-    protected Date endDate;
     protected Chart chart;
-    protected GraphAlgorithms algorithm;
 
     @FXML
     protected DatePicker startDatePicker;
@@ -51,12 +50,12 @@ public abstract class ChartController extends AnchorPane {
     public ChartController(AppController parentController) {
         this.parentController = parentController;
         favouriteCompanies = new ArrayList<>();
+        chartModel = new ChartModel();
         loadFXML();
-        initializeVariables();
         initializeSettings();
         try {
-            updateStartDate(startDatePicker.getValue());
-            updateEndDate(endDatePicker.getValue());
+            chartModel.updateStartDate(startDatePicker.getValue());
+            chartModel.updateEndDate(endDatePicker.getValue());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,16 +63,6 @@ public abstract class ChartController extends AnchorPane {
     }
 
     abstract void loadFXML();
-
-    protected void initializeVariables() {
-        try {
-            startDate = new Date(2021, 9, 26);
-            endDate = new Date();
-            algorithm = GraphAlgorithms.DAILYCLOSINGPRICE;
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
 
     protected void initializeSettings() {
         initializeStockPane();
@@ -88,8 +77,8 @@ public abstract class ChartController extends AnchorPane {
 
         startDatePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             try {
-                updateStartDate(newValue);
-                refreshStocks();
+                chartModel.updateStartDate(newValue);
+                chart.refreshChart(chartModel.getGraphModels());
             } catch (IOException e) {
                 startDatePicker.setValue(oldValue);
                 e.printStackTrace();
@@ -99,8 +88,8 @@ public abstract class ChartController extends AnchorPane {
         startDatePicker.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
                 try {
-                    updateStartDate(startDatePicker.getValue());
-                    refreshStocks();
+                    chartModel.updateStartDate(startDatePicker.getValue());
+                    chart.refreshChart(chartModel.getGraphModels());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -113,8 +102,8 @@ public abstract class ChartController extends AnchorPane {
 
         endDatePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             try {
-                updateEndDate(newValue);
-                refreshStocks();
+                chartModel.updateEndDate(newValue);
+                chart.refreshChart(chartModel.getGraphModels());
             } catch (IOException e) {
                 endDatePicker.setValue(oldValue);
                 e.printStackTrace();
@@ -124,8 +113,8 @@ public abstract class ChartController extends AnchorPane {
         endDatePicker.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
                 try {
-                    updateEndDate(endDatePicker.getValue());
-                    refreshStocks();
+                    chartModel.updateEndDate(endDatePicker.getValue());
+                    chart.refreshChart(chartModel.getGraphModels());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -142,7 +131,7 @@ public abstract class ChartController extends AnchorPane {
                 case ("Bar Chart") -> openBarChart();
                 case ("Line Chart") -> openLineChart();
             }
-            refreshStocks();
+            chart.refreshChart(chartModel.getGraphModels());
         });
     }
 
@@ -181,83 +170,63 @@ public abstract class ChartController extends AnchorPane {
         return favouriteCompanies.contains(acronym);
     }
 
-    public void updateStartDate(LocalDate newDate) throws IOException {
-        Date temp = new Date(newDate.getYear(), newDate.getMonthValue(), newDate.getDayOfMonth());
-        if (temp.isBefore(endDate)) {
-            startDate = temp;
-        } else throw new IOException("Invalid date");
-    }
-
-    public void updateEndDate(LocalDate newDate) throws IOException {
-        Date temp = new Date(newDate.getYear(), newDate.getMonthValue(), newDate.getDayOfMonth());
-        if (temp.isAfter(startDate)) {
-            endDate = temp;
-        } else throw new IOException("Invalid date");
-    }
-
     @FXML
     public void timeframeOneDay() {
         try {
-            updateStartDate(LocalDate.now().minusDays(1));
-            updateEndDate(LocalDate.now());
+            chartModel.updateTimeInterval(LocalDate.now().minusDays(1), LocalDate.now());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        refreshStocks();
+        chart.refreshChart(chartModel.getGraphModels());
     }
 
     @FXML
     public void timeframeOneWeek() {
         try {
-            updateStartDate(LocalDate.now().minusWeeks(1));
-            updateEndDate(LocalDate.now());
+            chartModel.updateTimeInterval(LocalDate.now().minusWeeks(1), LocalDate.now());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        refreshStocks();
+        chart.refreshChart(chartModel.getGraphModels());
     }
 
     @FXML
     public void timeframeOneMonth() {
         try {
-            updateStartDate(LocalDate.now().minusMonths(1));
-            updateEndDate(LocalDate.now());
+            chartModel.updateTimeInterval(LocalDate.now().minusMonths(1), LocalDate.now());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        refreshStocks();
+        chart.refreshChart(chartModel.getGraphModels());
     }
 
     @FXML
     public void timeframeOneYear() {
         try {
-            updateStartDate(LocalDate.now().minusYears(1));
-            updateEndDate(LocalDate.now());
+            chartModel.updateTimeInterval(LocalDate.now().minusYears(1), LocalDate.now());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        refreshStocks();
+        chart.refreshChart(chartModel.getGraphModels());
     }
 
     private void openLineChart() {
-        chart = new LineChart(algorithm);
+        chart = new LineChart();
         chartPane.getChildren().clear();
         chartPane.getChildren().add(chart);
     }
 
     private void openBarChart() {
-        chart = new BarChart(algorithm);
+        chart = new BarChart();
         chartPane.getChildren().clear();
         chartPane.getChildren().add(chart);
     }
 
     private void openAreaChart() {
-        chart = new AreaChart(algorithm);
+        chart = new AreaChart();
         chartPane.getChildren().clear();
         chartPane.getChildren().add(chart);
     }
 
     public abstract void stockListOnClick(ControllerStockListItem item);
-
-    protected abstract void refreshStocks();
 }
