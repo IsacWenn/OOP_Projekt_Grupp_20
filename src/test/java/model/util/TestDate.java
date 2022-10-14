@@ -230,7 +230,6 @@ public class TestDate {
     public void plusDaysShouldThrowExceptionIfInvalid() {
         assertThrows(IOException.class, () -> {
             Date currentDate = new Date();
-            System.out.println(currentDate);
             Date inTenDays = currentDate.plusDays(10);
         });
     }
