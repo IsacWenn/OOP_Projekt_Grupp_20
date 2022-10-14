@@ -49,6 +49,8 @@ public class GraphModel {
 
     private CurrencyEnum currency;
 
+    private CurrencyEnum currency;
+
     /**
      * A constructor for the class GraphModel that retrieves all available data for the given mic of a company
      *
