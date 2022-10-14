@@ -85,6 +85,7 @@ public class GraphModel {
     public GraphModel(String mic, Date from, Date to) {
         init(mic);
         this.data = graphData.getCompanyData(mic, from, to);
+        updateAlgorithm("Daily closing price");
         update();
     }
 
