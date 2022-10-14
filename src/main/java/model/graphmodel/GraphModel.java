@@ -105,8 +105,6 @@ public class GraphModel {
      * A method that initializes the private variables of this class, used by every constructor in this class
      */
     private void init(String mic, String graphName) {
-        GraphAlgorithmCollection.init();
-        KeyFigureCollection.init();
         this.graphComputer = new GraphComputer();
         this.graphData = new GraphData();
         this.values = new HashMap<>();

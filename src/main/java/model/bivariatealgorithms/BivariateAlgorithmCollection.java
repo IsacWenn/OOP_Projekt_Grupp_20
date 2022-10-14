@@ -7,7 +7,7 @@ import java.util.Set;
 /**
  * {@link BivariateAlgorithmCollection} is a class used to retrieve different {@link BivariateAlgorithms}
  */
-class BivariateAlgorithmCollection {
+public class BivariateAlgorithmCollection {
 
     /**
      * A static {@link Map} used to store a collection of {@link BivariateAlgorithms}.
