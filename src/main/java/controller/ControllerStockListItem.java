@@ -33,6 +33,9 @@ public class ControllerStockListItem extends AnchorPane {
     private AnchorPane stockListItem;
 
     ControllerStockListItem (String acronym, ChartController parentController, boolean favorite){
+        this.acronym = acronym;
+        this.name = DataHandler.getCompanyName(acronym);
+
         loadFXML();
         initializeLabels(acronym);
         initializeFavoriteButton();
@@ -41,8 +44,6 @@ public class ControllerStockListItem extends AnchorPane {
         stockListItem.setOnMouseClicked(this::onClick);
         favoriteButton.setOnMouseClicked(this::onFavoriteClick);
 
-        this.acronym = acronym;
-        this.name = DataHandler.getCompanyName(acronym);
         this.parentController = parentController;
     }
 
