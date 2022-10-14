@@ -8,7 +8,7 @@ import java.util.*;
 
 /**
  * Date is a class used for representing a certain day of a year. It is used in our program primarily as a key in
- * {@link model.datahandling.DateHashMap} class in our data representations.
+ * {@link HashMap} class in our data representations.
  *
  * @author Isac
  */
@@ -397,8 +397,6 @@ public class Date implements Comparable<Date> {
             try {
                 iterator = iterator.nextDate();
             } catch (IOException e) {
-                System.out.println(e.getMessage());
-                System.out.println("listInterval iterator out of bounds");
                 break;
             }
         }

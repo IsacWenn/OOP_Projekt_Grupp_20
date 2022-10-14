@@ -180,4 +180,15 @@ public class TestDataHandler {
         DayData zeroed = new DayData(0, 0, 0, 0, 0);
         assertEquals(zeroed.hashCode(), map.get(new Date()).hashCode());
     }
+
+    @Test
+    public void getCompanyNameShouldReturnTheSpecifiedCompanysName() {
+        String name = DataHandler.getCompanyName("MSFT");
+        assertEquals("Microsoft Corporation", name);
+    }
+
+    @Test
+    public void getCompanyNameWithInvalidMICShouldReturnEmptyString() {
+        assertEquals("", DataHandler.getCompanyName("hej"));
+    }
 }
