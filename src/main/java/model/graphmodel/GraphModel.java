@@ -177,7 +177,13 @@ public class GraphModel {
 
 
     public Double getKeyFigureValue(String keyFigure){
-       return this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure), currencyAdjustedData);
+        if(currencyAdjustedData!=null) {
+            return this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure)
+                    , currencyAdjustedData);
+        }
+        else{
+            return this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure), data);
+        }
     }
 
     //TODO
