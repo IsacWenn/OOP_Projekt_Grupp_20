@@ -5,9 +5,13 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * {@link BivariateAlgorithmCollection} is a static class used to retrieve a collection of {@link BivariateAlgorithms}
+ * {@link BivariateAlgorithmCollection} is a class used to retrieve different {@link BivariateAlgorithms}
  */
 class BivariateAlgorithmCollection {
+
+    /**
+     * A static {@link Map} used to store a collection of {@link BivariateAlgorithms}.
+     */
     private static Map<String, BivariateAlgorithms> algorithms = null;
 
     /**
@@ -26,7 +30,7 @@ class BivariateAlgorithmCollection {
     /**
      * A method for retrieving a {@link BivariateAlgorithms} created from {@link BivariateAlgorithmCollection#algorithms}.
      *
-     * @param algo is a {@link String} used to ge a specific {@link BivariateAlgorithms} from {@link BivariateAlgorithmCollection#algorithms}.
+     * @param algo is a {@link String} used to get a specific {@link BivariateAlgorithms} from {@link BivariateAlgorithmCollection#algorithms}.
      * @return A {@link BivariateAlgorithms}.
      */
     public static BivariateAlgorithms getGraphAlgorithms(String algo) {
@@ -39,7 +43,7 @@ class BivariateAlgorithmCollection {
      * @return A {@link Set} of {@link String} for each {@link BivariateAlgorithms} in {@link BivariateAlgorithmCollection#algorithms}.
      */
     public static Set<String> getKeySet() {
-        return algorithms.keySet();
+        return Set.copyOf(algorithms.keySet());
     }
 
 }

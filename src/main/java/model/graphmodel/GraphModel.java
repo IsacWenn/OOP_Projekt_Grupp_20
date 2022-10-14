@@ -172,12 +172,18 @@ public class GraphModel {
      * @return the {@link Map} containing the values
      */
     public Map<Date, Number> getValues() {
-        return this.values;
+        return Map.copyOf(this.values);
     }
 
 
     public Double getKeyFigureValue(String keyFigure){
-       return this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure), currencyAdjustedData);
+        if(currencyAdjustedData!=null) {
+            return this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure)
+                    , currencyAdjustedData);
+        }
+        else{
+            return this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure), data);
+        }
     }
 
     //TODO

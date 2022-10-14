@@ -1,6 +1,7 @@
 package model.graphmodel;
 
 import model.graphmodel.graphalgorithms.GraphAlgorithms;
+import model.graphmodel.keyfigures.KeyFigureCollection;
 import model.util.CurrencyEnum;
 import model.util.Date;
 import org.junit.jupiter.api.*;
@@ -18,6 +19,10 @@ public class GraphModelTest {
 
     private static List<Date> dateList;
 
+    @BeforeAll
+    public static void init(){
+        KeyFigureCollection.init();
+    }
 
     @BeforeEach
     public void createTestVariables() throws IOException {
@@ -81,8 +86,18 @@ public class GraphModelTest {
         graphModel.updateTimeInterval(date1, date3);
         assertEquals(22, graphModel.data.size());
     }
+
     @Test
-    public void getKeyFiguresShouldReturnAMapOfTheGraphModelsKeyFigures(){
+    public void getKeyFigureValueShouldReturnTheValueOfThatKeyFigureForTheCurrentData(){
         GraphModel graphModel = new GraphModel("AAPL", date1, date2);
+        double result = graphModel.getKeyFigureValue("Volatility");
+        assertEquals(5.1, result, 0.05);
+    }
+    @Test
+    public void getKeyFigureValueShouldReturnTheValueOfThatKeyFigureEvenIfCurrencyBeenChanged(){
+        GraphModel graphModel = new GraphModel("AAPL", date1, date2);
+        graphModel.updateCurrency(CurrencyEnum.SEK);
+        double result = graphModel.getKeyFigureValue("Volatility");
+        //assertEquals(5.1, result, 0.05);
     }
 }
