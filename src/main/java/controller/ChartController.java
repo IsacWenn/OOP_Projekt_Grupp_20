@@ -23,11 +23,9 @@ public abstract class ChartController extends AnchorPane {
     protected final AppModel appModel = AppModel.getInstance();
     protected AppController parentController;
     protected Map<String, ControllerStockListItem> stockListItemMap = new HashMap<>();
-    protected ArrayList<String> activeCompanies;
     protected ArrayList<String> favouriteCompanies;
     protected Date startDate;
     protected Date endDate;
-    protected int maxCompanies = 0;
     protected Chart chart;
     protected GraphAlgorithms algorithm;
 
@@ -69,7 +67,6 @@ public abstract class ChartController extends AnchorPane {
 
     protected void initializeVariables() {
         try {
-            activeCompanies = new ArrayList<String>();
             startDate = new Date(2021, 9, 26);
             endDate = new Date();
             algorithm = GraphAlgorithms.DAILYCLOSINGPRICE;
@@ -260,33 +257,7 @@ public abstract class ChartController extends AnchorPane {
         chartPane.getChildren().add(chart);
     }
 
-    public abstract void stockListOnClick(String acronym);
+    public abstract void stockListOnClick(ControllerStockListItem item);
 
-    protected void removeFromChart(String name) {
-        int i = activeCompanies.indexOf(name);
-        chart.removeChartFromStock(i);
-        activeCompanies.remove(i);
-    }
-
-    protected void addToChart(String name) {
-        activeCompanies.add(name);
-        chart.addStockToChart(name, name, startDate, endDate);
-    }
-
-    protected void refreshStocks() {
-        chart.clearChart();
-        for (String activeCompany : activeCompanies) {
-            chart.addStockToChart(activeCompany, activeCompany, startDate, endDate);
-        }
-    }
-
-    protected boolean withinCompanyLimit(){
-        if (maxCompanies == 0) {
-            return true;
-        } else return activeCompanies.size() < maxCompanies;
-    }
-
-    boolean isCompanyActive(String acronym) {
-        return activeCompanies.contains(acronym);
-    }
+    protected abstract void refreshStocks();
 }

@@ -95,10 +95,14 @@ public class ControllerStockListItem extends AnchorPane {
 
     @FXML
     private void onClick(Event event){
-        parentController.stockListOnClick(acronym);
+        parentController.stockListOnClick(this);
     }
 
     public boolean isActive() {
         return active;
+    }
+
+    public String getMIC() {
+        return acronym;
     }
 }

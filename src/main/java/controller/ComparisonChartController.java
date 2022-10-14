@@ -6,13 +6,16 @@ import javafx.scene.control.ComboBox;
 import model.graphmodel.graphalgorithms.GraphAlgorithms;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ComparisonChartController extends ChartController {
     @FXML
     protected ComboBox<String> algorithmComboBox;
+    protected ArrayList<ControllerStockListItem> activeCompanies;
 
     public ComparisonChartController(AppController parentController){
         super(parentController);
+        activeCompanies = new ArrayList<>();
         initializeAlgorithmComboBox();
     }
 
@@ -44,16 +47,30 @@ public class ComparisonChartController extends ChartController {
     }
 
     @Override
-    public void stockListOnClick(String acronym) {
-        ControllerStockListItem item = stockListItemMap.get(acronym);
-        if (withinCompanyLimit() || item.isActive()) {
-            if (isCompanyActive(acronym)) {
-                removeFromChart(acronym);
-            } else {
-                addToChart(acronym);
-            }
-            item.togglePressed();
+    public void stockListOnClick(ControllerStockListItem item) {
+        if (item.isActive()) {
+            removeFromChart(item);
+        } else {
+            addToChart(item);
         }
+        item.togglePressed();
     }
 
+    protected void removeFromChart(ControllerStockListItem item) {
+        int i = activeCompanies.indexOf(item);
+        chart.removeChartFromStock(i);
+        activeCompanies.remove(i);
+    }
+
+    protected void addToChart(ControllerStockListItem item) {
+        activeCompanies.add(item);
+        chart.addStockToChart(item.getMIC(), item.getMIC(), startDate, endDate);
+    }
+
+    protected void refreshStocks() {
+        chart.clearChart();
+        for (ControllerStockListItem company : activeCompanies) {
+            chart.addStockToChart(company.getMIC(), company.getMIC(), startDate, endDate);
+        }
+    }
 }
