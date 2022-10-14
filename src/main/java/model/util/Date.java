@@ -436,63 +436,6 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     * A static method implementation of QuickSort for sorting Lists of Dates in chronological order.
-     *
-     * @param inList A {@link List} of {@link Date}s to be sorted.
-     * @return a sorted {@link List} of {@link Date}s.
-     */
-    @Deprecated
-    public static List<Date> sortDatesQ(List<Date> inList) {
-        if (inList.size() <= 1)
-            return inList;
-        else if (inList.size() == 2) {
-            Date date1 = inList.get(0);
-            Date date2 = inList.get(1);
-
-            // Conditional assignment of the return value using the Java Ternary operator '?'.
-            return (date1.isBeforeOrEqual(date2)) ? inList : (new ArrayList<>(){{
-                add(date2);
-                add(date1);
-            }});
-        }
-
-        List<Date> subListLower = new ArrayList<>();
-        List<Date> subListHigher = new ArrayList<>();
-        Date pivot = inList.get(inList.size() - 1); // Selects the rightmost element as the pivot
-
-        /*
-        * Adds the different dates in Inlist (excluding the pivot) to either subListLower or subListHigher
-        * depending on if the selected date is before/equal or after the pivot.
-        */
-        for (int i = 0; i < inList.size() - 1; i++) {
-            Date date = inList.get(i);
-            if (date.isBeforeOrEqual(pivot))
-                subListLower.add(date);
-            else
-                subListHigher.add(date);
-        }
-
-        // Use recursion to sort the sublists of lower and higher Date:s and add them around the pivot. This  
-        return new ArrayList<>(){{
-            addAll(sortDatesQ(subListLower));
-            add(pivot);
-            addAll(sortDatesQ(subListHigher));
-        }};
-    }
-
-    /**
-     * A static method implementation of QuickSort for sorting Lists of Dates in chronological order.
-
-     * @param dateSet a {@link Set} of {@link Date}s to be sorted.
-     * @return a sorted {@link List} of {@link Date}s.
-     */
-    @Deprecated
-    public static List<Date> sortDatesQ(Set<Date> dateSet) {
-        List<Date> dateList = new ArrayList<>(dateSet);
-        return sortDatesQ(dateList);
-    }
-
-    /**
      * A static method for sorting Lists of Dates in chronological order.
      *
      * @param inList a {@link List} of {@link Date}s to be sorted.
