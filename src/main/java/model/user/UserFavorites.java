@@ -46,7 +46,7 @@ public class UserFavorites implements Serializable {
     @Override
     public String toString() {
         return "UserFavorites{" +
-                favorites + '\'' +
+                favorites +
                 '}';
     }
 

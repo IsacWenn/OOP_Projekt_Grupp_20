@@ -46,7 +46,7 @@ public class TestUserFavorites {
                 CurrencyConversionEnum.USD_TO_ISK
         );
         assertEquals("UserFavorites{[GraphRepresentation{interval=[14/10/2022], algorithm=DAILYHIGHMINUSLOW," +
-                " companyMIC='MSFT', preferredCurrency=USD_TO_ISK}]'}", testUserFavorites.toString());
+                " companyMIC='MSFT', preferredCurrency=USD_TO_ISK}]}", testUserFavorites.toString());
     }
 
     @Test

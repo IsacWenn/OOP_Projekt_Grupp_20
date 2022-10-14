@@ -127,7 +127,7 @@ public class TestUser {
     public void toStringShouldReturnStringRepresentationOfUser() {
         assertEquals("User{userInfo=UserInfo{username='IsacWenn', password='Lösenord', email='i@grupp20.se'," +
                 " name='Isac', lastname='Ingvast Wennerström', bio='python <<<<<<'}," +
-                " favorites=UserFavorites{[]'}}", testUser.toString());
+                " favorites=UserFavorites{[]}}", testUser.toString());
     }
 
     @Test
