@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 public class DetailedChartController extends ChartController{
 
-    private ArrayList<GraphAlgorithms> algorithms;
     protected ControllerStockListItem activeCompany;
+    protected ArrayList<GraphAlgorithms> activeAlgorithms;
 
     @FXML
     private CheckBox closingPriceBox;
@@ -26,8 +26,8 @@ public class DetailedChartController extends ChartController{
 
     public DetailedChartController(AppController parentController) {
         super(parentController);
-        algorithms = new ArrayList<>();
         activeCompany = null;
+        activeAlgorithms = new ArrayList<>();
         initializeCheckBoxes();
     }
 
@@ -56,6 +56,7 @@ public class DetailedChartController extends ChartController{
                 linearRegressionBoxPressed();
             }
         });
+        closingPriceBox.selectedProperty().set(true);
     }
 
     @Override
@@ -71,58 +72,57 @@ public class DetailedChartController extends ChartController{
     }
 
     private void closingPriceBoxPressed() {
-        if (algorithms.contains(GraphAlgorithms.DAILYCLOSINGPRICE)) {
-            algorithms.remove(GraphAlgorithms.DAILYCLOSINGPRICE);
-        } else {
-            algorithms.add(GraphAlgorithms.DAILYCLOSINGPRICE);
-        }
-        refreshStocks();
+        toggleAlgorithm(closingPriceBox, GraphAlgorithms.DAILYCLOSINGPRICE);
     }
 
     private void dailyChangeBoxPressed() {
-        if (algorithms.contains(GraphAlgorithms.DAILYCHANGE)) {
-            algorithms.remove(GraphAlgorithms.DAILYCHANGE);
-        } else {
-            algorithms.add(GraphAlgorithms.DAILYCHANGE);
-        }
-        refreshStocks();
+        toggleAlgorithm(dailyChangeBox, GraphAlgorithms.DAILYCHANGE);
     }
 
     private void dailyDeviationBoxPressed() {
-        if (algorithms.contains(GraphAlgorithms.DAILYHIGHMINUSLOW)) {
-            algorithms.remove(GraphAlgorithms.DAILYHIGHMINUSLOW);
-        } else {
-            algorithms.add(GraphAlgorithms.DAILYHIGHMINUSLOW);
-        }
-        refreshStocks();
+        toggleAlgorithm(dailyDeviationBox, GraphAlgorithms.DAILYHIGHMINUSLOW);
     }
 
     private void linearRegressionBoxPressed() {
-        if (algorithms.contains(GraphAlgorithms.LINEARREGRESSION)) {
-            algorithms.remove(GraphAlgorithms.LINEARREGRESSION);
+        toggleAlgorithm(linearRegressionBox, GraphAlgorithms.LINEARREGRESSION);
+    }
+
+    private void toggleAlgorithm(CheckBox checkBox, GraphAlgorithms algorithm) {
+        if (activeAlgorithms.contains(algorithm)) {
+            activeAlgorithms.remove(algorithm);
         } else {
-            algorithms.add(GraphAlgorithms.LINEARREGRESSION);
+            activeAlgorithms.add(algorithm);
         }
-        refreshStocks();
+
+        if (chartModel.contains(algorithm.name())) {
+            chart.removeFromChart(chartModel.removeFromChart(algorithm.name()));
+        } else if (activeCompany != null && checkBox.isSelected()) {
+            chartModel.addToChart(
+                activeCompany.getMIC(),
+                algorithm.name(),
+                algorithm
+            );
+        }
+        chart.refreshChart(chartModel.getGraphModels());
     }
 
     protected void removeFromChart() {
         activeCompany = null;
+        chartModel.clearGraphModels();
         chart.clearChart();
     }
 
     protected void addToChart(ControllerStockListItem item) {
+        removeFromChart();
         activeCompany = item;
-        refreshStocks();
-    }
-
-    protected void refreshStocks() {
-        chart.clearChart();
-        if (!algorithms.isEmpty() && activeCompany != null) {
-            for (GraphAlgorithms algorithm : algorithms) {
-                chart.setAlgorithm(algorithm);
-                chart.addStockToChart(activeCompany.getMIC(), algorithm.name(), startDate, endDate);
-            }
+        for (GraphAlgorithms algorithm: activeAlgorithms) {
+            chart.showStockOnChart(
+                chartModel.addToChart(
+                    item.getMIC(),
+                    algorithm.name(),
+                    algorithm
+                )
+            );
         }
     }
 
@@ -134,12 +134,12 @@ public class DetailedChartController extends ChartController{
                 if (activeCompany != null) {
                     activeCompany.togglePressed();
                 }
-                activeCompany = item;
+                addToChart(item);
             } else {
-                activeCompany = null;
+                removeFromChart();
             }
         }
         item.togglePressed();
-        refreshStocks();
+        chart.refreshChart(chartModel.getGraphModels());
     }
 }

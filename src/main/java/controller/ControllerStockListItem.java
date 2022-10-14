@@ -7,12 +7,15 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import model.datahandling.DataHandler;
+import model.util.Date;
+
 import java.io.IOException;
 
 public class ControllerStockListItem extends AnchorPane {
 
     private final ChartController parentController;
-    private final String acronym;
+    private final String acronym, name;
     private boolean active;
     private boolean favorite;
 
@@ -31,6 +34,9 @@ public class ControllerStockListItem extends AnchorPane {
     private AnchorPane stockListItem;
 
     ControllerStockListItem (String acronym, ChartController parentController, boolean favorite){
+        this.acronym = acronym;
+        this.name = DataHandler.getCompanyName(acronym);
+
         loadFXML();
         initializeLabels(acronym);
         initializeFavoriteButton();
@@ -39,12 +45,17 @@ public class ControllerStockListItem extends AnchorPane {
         stockListItem.setOnMouseClicked(this::onClick);
         favoriteButton.setOnMouseClicked(this::onFavoriteClick);
 
-        this.acronym = acronym;
         this.parentController = parentController;
     }
 
     private void initializeLabels(String acronym) {
         stockAcronym.setText(acronym);
+        stockName.setText(name);
+        /*try{
+            stockValue.setText(DataHandler.getLatestDayData(acronym).values().toString());
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
+        }*/
     }
 
     private void loadFXML() {
@@ -104,5 +115,9 @@ public class ControllerStockListItem extends AnchorPane {
 
     public String getMIC() {
         return acronym;
+    }
+
+    public String getName() {
+        return name;
     }
 }

@@ -1,6 +1,9 @@
 package model;
 
+import model.bivariatealgorithms.BivariateAlgorithmCollection;
 import model.datahandling.DataHandler;
+import model.graphmodel.graphalgorithms.GraphAlgorithmCollection;
+import model.graphmodel.keyfigures.KeyFigureCollection;
 import view.Observable;
 
 import java.util.ArrayList;
@@ -21,6 +24,9 @@ public class AppModel {
 
     public static AppModel getInstance() {
         if (instance == null) instance = new AppModel();
+        GraphAlgorithmCollection.init();
+        KeyFigureCollection.init();
+        BivariateAlgorithmCollection.init();
         return instance;
     }
 
