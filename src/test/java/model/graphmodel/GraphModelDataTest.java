@@ -2,6 +2,7 @@ package model.graphmodel;
 
 
 import model.datahandling.DayData;
+import model.util.CurrencyEnum;
 import model.util.Date;
 import org.junit.jupiter.api.*;
 
@@ -20,6 +21,8 @@ public class GraphModelDataTest {
 
     private static List<Date> dateList;
 
+
+
     static GraphData graphData;
 
     @BeforeEach
@@ -35,6 +38,9 @@ public class GraphModelDataTest {
             add(date2);
             add(date3);
         }};
+
+
+
 
     }
 
@@ -59,6 +65,11 @@ public class GraphModelDataTest {
 
     @Test
     public void getCurrencyDataCalledWithACurrencyShouldReturnTheExchangeForThatCurrency(){
+      //  Map<Date, Double> currencyData = graphData.getCurrencyData(CurrencyEnum.SEK, )
+    }
 
+    @Test
+    public void getCompanyCurrencyShouldReturnTheDefaultCurrencyForThatCompany(){
+        assertEquals(CurrencyEnum.USD, graphData.getCompanyCurrency("AAPL"));
     }
 }

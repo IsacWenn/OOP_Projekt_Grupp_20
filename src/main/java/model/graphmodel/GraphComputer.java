@@ -79,13 +79,12 @@ public class GraphComputer {
     }
 
     /**
-     *
-     * @param keyFigure
-     * @param data
-     * @return
+     * A method that calculates and returns a value for the given key figure
+     * @param keyFigure the {@link KeyFigureAlgorithm} that the method should calculate with
+     * @param data the {@link Map} of {@link Date} and {@link DayData} that represents the data it will calculate on
+     * @return a {@link Double}
      */
     Double calculateKeyFigure(KeyFigureAlgorithm keyFigure, Map<Date, DayData> data){return keyFigure.calculate(data);}
-}
 
 /*
 Map<String, Double> calculateKeyFigure(Map<String, KeyFigureAlgorithm> keyFigures, Map<Date, DayData> data){
@@ -98,3 +97,4 @@ Map<String, Double> calculateKeyFigure(Map<String, KeyFigureAlgorithm> keyFigure
     }
  */
 
+}
