@@ -122,4 +122,30 @@ public class TestUser {
                 "Ingvast Wennerström", "python <<<<<<");
         assertEquals(testUser.hashCode(), dummyUser1.hashCode());
     }
+
+    @Test
+    public void toStringShouldReturnStringRepresentationOfUser() {
+        assertEquals("User{userInfo=UserInfo{username='IsacWenn', password='Lösenord', email='i@grupp20.se'," +
+                " name='Isac', lastname='Ingvast Wennerström', bio='python <<<<<<'}," +
+                " favorites=UserFavorites{[]'}}", testUser.toString());
+    }
+
+    @Test
+    public void equalsWithEmptyOtherObjectTypeShouldReturnFalse() {
+        assertNotEquals("User", testUser);
+    }
+
+    @Test
+    public void equalsWithUserContainingSameValuesShouldReturnTrue() {
+        User dummyUser1 = new User("IsacWenn", "Lösenord", "i@grupp20.se", "Isac",
+                "Ingvast Wennerström", "python <<<<<<");
+        assertEquals(testUser, dummyUser1);
+    }
+
+    @Test
+    public void equalsWithUserNotContainingSameValuesShouldReturnFalse() {
+        User dummyUser1 = new User("IsacWenn", "Password", "i@grupp20.se", "Isac",
+                "Ingvast Wennerström", "python <<<<<<");
+        assertNotEquals(testUser, dummyUser1);
+    }
 }
