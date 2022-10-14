@@ -4,8 +4,9 @@ import model.datahandling.DayData;
 import model.graphmodel.graphalgorithms.GraphAlgorithm;
 import model.graphmodel.graphalgorithms.GraphAlgorithmFactory;
 import model.graphmodel.graphalgorithms.GraphAlgorithms;
+import model.graphmodel.keyfigures.KeyFigureAlgorithm;
+import model.graphmodel.keyfigures.KeyFigureCollection;
 import model.util.Date;
-import model.graphmodel.graphalgorithms.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +25,7 @@ public class GraphComputer {
      * A private {@link GraphAlgorithm} variable
      */
     private GraphAlgorithm graphAlgorithm;
+
 
     /**
      * A constructor for the GraphComputer class that sets {@link GraphComputer#graphAlgorithm} to the default graphAlgorithm.
@@ -73,7 +75,7 @@ public class GraphComputer {
      * @param data A {@link Map} containing data in a {@link DayData} for each {@link Date}.
      * @return A {@link Map} containing a {@link Number} for each {@link Date}.
      */
-    Map<Date, Number> updateValues(Map<Date, DayData> data) {
+    Map<Date, Number> calculateValues(Map<Date, DayData> data) {
         return graphAlgorithm.calculate(data);
     }
 
