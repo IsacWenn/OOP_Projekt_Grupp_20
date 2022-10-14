@@ -1,33 +1,33 @@
 package controller.charts;
 
+import com.sun.javafx.scene.GroupHelper;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.AnchorPane;
 import model.graphmodel.GraphModel;
 import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import model.util.Date;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public abstract class Chart extends AnchorPane {
 
-    protected GraphAlgorithms algorithm;
     protected XYChart<String, Number> chart;
 
-    public void setAlgorithm(GraphAlgorithms algorithm) {
-        this.algorithm = algorithm;
+    public void refreshChart(ArrayList<GraphModel> graphModels) {
+        clearChart();
+        for (GraphModel graphModel: graphModels) {
+            showStockOnChart(graphModel);
+        }
     }
 
-    public void addStockToChart(String acronym, String name, Date startDate, Date endDate) {
+    public void showStockOnChart(GraphModel graphModel) {
         XYChart.Series<String, Number> seriesToAdd = new XYChart.Series<>();
-
-        GraphModel graphModel = new GraphModel(acronym, startDate, endDate);
-        graphModel.updateAlgorithm(algorithm);
         Map<Date, Number> calcData = graphModel.getValues();
 
-        seriesToAdd.setName(name);
-        List<Date> orderedDates;
-        orderedDates = Date.sortDates(calcData.keySet());
+        seriesToAdd.setName(graphModel.getName());
+        List<Date> orderedDates = Date.sortDates(calcData.keySet());
 
         double daysInterval = orderedDates.size(), stepAmount, dIndex = 0;
         int index, slot = 0, numDataPoints = 300;
@@ -44,8 +44,8 @@ public abstract class Chart extends AnchorPane {
         chart.getData().add(seriesToAdd);
     }
 
-    public void removeChartFromStock(int index) {
-        chart.getData().remove(index);
+    public void removeFromChart(int i) {
+        chart.getData().remove(i);
     }
 
     public void clearChart() {

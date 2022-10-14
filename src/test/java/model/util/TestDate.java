@@ -230,7 +230,6 @@ public class TestDate {
     public void plusDaysShouldThrowExceptionIfInvalid() {
         assertThrows(IOException.class, () -> {
             Date currentDate = new Date();
-            System.out.println(currentDate);
             Date inTenDays = currentDate.plusDays(10);
         });
     }
@@ -305,22 +304,4 @@ public class TestDate {
         assertEquals(dateList, newList);
     }
 
-    @Test
-    public void sortDatesQShouldReturnAListOfDatesInChronologicalOrder() throws IOException {
-        List<Date> listOfThisYearsDates = new Date(2022, 1, 1).listIntervalTo(new Date());
-        List<Date> testList = new ArrayList<>(){{ addAll(listOfThisYearsDates); }};
-
-        assertEquals(listOfThisYearsDates, testList);
-        while (listOfThisYearsDates.equals(testList))
-            Collections.shuffle(testList);
-        assertNotEquals(listOfThisYearsDates, testList);
-        testList = Date.sortDatesQ(testList);
-        assertEquals(listOfThisYearsDates, testList);
-    }
-
-    @Test
-    public void sortDatesQShouldBeAbleToHandleSets() {
-        List<Date> newList = Date.sortDatesQ(dateSet);
-        assertEquals(dateList, newList);
-    }
 }

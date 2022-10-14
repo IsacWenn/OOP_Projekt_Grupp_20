@@ -8,9 +8,12 @@ import model.util.GraphRepresentation;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A serializable class containing the different user selected favorites.
+ *
+ * @author Isac
  */
 public class UserFavorites implements Serializable {
 
@@ -43,7 +46,7 @@ public class UserFavorites implements Serializable {
     @Override
     public String toString() {
         return "UserFavorites{" +
-                favorites + '\'' +
+                favorites +
                 '}';
     }
 
@@ -65,5 +68,30 @@ public class UserFavorites implements Serializable {
      */
     void addFavorite(GraphRepresentation graphRep) {
         favorites.add(graphRep);
+    }
+
+    /**
+     * An implementation of the .equals() method of Java.
+     *
+     * @param o the {@link Object} to compare with.
+     * @return a {@link Boolean} value of that comparison.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserFavorites that = (UserFavorites) o;
+        return favorites.equals(that.favorites);
+    }
+
+    /**
+     * An implementation of the .hashCode method that creates a unique hash based on the instance attributes of
+     * the object
+     *
+     * @return a {@link Integer} value of that hash.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(favorites);
     }
 }
