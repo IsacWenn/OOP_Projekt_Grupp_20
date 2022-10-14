@@ -5,6 +5,7 @@ import model.util.GraphRepresentation;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A serializable class for our users in our system
@@ -75,7 +76,7 @@ public class User implements Serializable {
      * @return a {@link String} of the username.
      */
     public String getUserName() {
-        return userInfo.getName();
+        return userInfo.getUsername();
     }
 
     /**
@@ -185,5 +186,28 @@ public class User implements Serializable {
                 ", favorites=" + userFavorites +
                 '}';
     }
-    
+
+    /**
+     * An implementation of .equals() of Java.
+     *
+     * @param o an {@link Object} to compare with.
+     * @return a {@link Boolean} value of the comparison.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(userInfo, user.userInfo) && Objects.equals(userFavorites, user.userFavorites);
+    }
+
+    /**
+     * An implementation of hashCode that creates a unique hash based on the instance attributes.
+     *
+     * @return
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(userInfo, userFavorites);
+    }
 }
