@@ -8,6 +8,8 @@ import java.util.List;
 
 /**
  * A serializable class for our users in our system
+ *
+ * @author Isac
  */
 public class User implements Serializable {
 
@@ -122,12 +124,28 @@ public class User implements Serializable {
     }
 
     /**
+     * A getter method for the list of users.
+     *
+     * @return a {@link List} of {@link User}s containing all the different users in the system.
+     */
+    public static List<User> getUsers() {
+        return users;
+    }
+
+    /**
      * A getter method for a list of different favorites.
      *
      * @return a {@link List} of {@link GraphRepresentation}s of the favorite graphs.
      */
     public List<GraphRepresentation> getUserFavorites() {
         return userFavorites.getFavorites();
+    }
+
+    /**
+     * A method that sets the List {@link User#users} to an empty {@link ArrayList}.
+     */
+    static void resetUserList() {
+        users = new ArrayList<>();
     }
 
     /**
@@ -143,19 +161,6 @@ public class User implements Serializable {
     }
 
     /**
-     * A toString method for the User class.
-     *
-     * @return a {@link String} representation of the User class.
-     */
-    @Override
-    public String toString() {
-        return "User{" +
-                "userInfo=" + userInfo +
-                ", favorites=" + userFavorites +
-                '}';
-    }
-
-    /**
      * A method saving all the current Users in the {@link User#users} list to the file given in {@link User#filePath}.
      */
     public static void saveUsers() {
@@ -167,31 +172,18 @@ public class User implements Serializable {
         }
     }
 
+
     /**
-     * A getter method for the list of users.
+     * A toString method for the User class.
      *
-     * @return a {@link List} of {@link User}s containing all the different users in the system.
+     * @return a {@link String} representation of the User class.
      */
-    public static List<User> getUsers() {
-        return users;
+    @Override
+    public String toString() {
+        return "User{" +
+                "userInfo=" + userInfo +
+                ", favorites=" + userFavorites +
+                '}';
     }
-
-    /**
-     * A method that sets the List {@link User#users} to an empty {@link ArrayList}.
-     */
-    static void resetUserList() {
-        users = new ArrayList<>();
-    }
-
-    public static void main(String[] args) {
-
-
-        users = new ArrayList<>();
-        users.add(new User("Isac", "4", "i@j.se",
-                "Isac", "Ingvast Wennerström", ""));
-        users.add(new User("Carl", "1", "c@j.se",
-                "Carl", "Odqvist", ""));
-
-    }
-
+    
 }
