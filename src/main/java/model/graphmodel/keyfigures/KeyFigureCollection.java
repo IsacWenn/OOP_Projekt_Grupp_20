@@ -4,6 +4,7 @@ import model.graphmodel.keyfigures.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class KeyFigureCollection {
 
@@ -23,7 +24,9 @@ public class KeyFigureCollection {
         }
     }
 
-    public static Map<String, KeyFigureAlgorithm> getKeyFigureCollection(){
-        return keyFigures;
+    public static KeyFigureAlgorithm getKeyFigure(String keyFigure){
+        return keyFigures.get(keyFigure);
     }
+
+    public static Set<String> getKeySet(){return keyFigures.keySet();}
 }
