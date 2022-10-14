@@ -26,9 +26,8 @@ public class ChartModel {
         }
     }
 
-    public GraphModel addToChart(String acronym, String name, GraphAlgorithms algorithm) {
-        GraphModel graphModel = new GraphModel(acronym, name, startDate, endDate);
-        graphModel.updateAlgorithm(algorithm);
+    public GraphModel addToChart(String acronym, String name, String algorithm) {
+        GraphModel graphModel = new GraphModel(acronym, name, startDate, endDate, algorithm);
         graphModels.add(graphModel);
         return graphModel;
     }
@@ -52,7 +51,7 @@ public class ChartModel {
         return false;
     }
 
-    public void updateAlgorithms(GraphAlgorithms algorithm) {
+    public void updateAlgorithms(String algorithm) {
         for (GraphModel graphModel: graphModels) {
             graphModel.updateAlgorithm(algorithm);
         }

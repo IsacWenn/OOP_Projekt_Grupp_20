@@ -25,10 +25,10 @@ public class GraphAlgorithmCollection {
     public static void init() {
         if (algorithms == null) {
             algorithms = new HashMap<>();
-            algorithms.put("Daily change", new DailyChange());
-            algorithms.put("Daily closing price", new DailyClosingPrice());
-            algorithms.put("Daily high minus low", new DailyHighMinusLow());
-            algorithms.put("Linear regression", new LinearRegression());
+            algorithms.put("Daily Change", new DailyChange());
+            algorithms.put("Closing Price", new DailyClosingPrice());
+            algorithms.put("Daily Deviation", new DailyHighMinusLow());
+            algorithms.put("Linear Regression", new LinearRegression());
         }
     }
 

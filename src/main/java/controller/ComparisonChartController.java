@@ -3,19 +3,18 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
-import model.graphmodel.graphalgorithms.GraphAlgorithms;
+import model.graphmodel.GraphModel;
 
 import java.io.IOException;
 
 public class ComparisonChartController extends ChartController {
-    protected GraphAlgorithms algorithm;
+
     @FXML
     protected ComboBox<String> algorithmComboBox;
 
     public ComparisonChartController(AppController parentController){
         super(parentController);
         initializeAlgorithmComboBox();
-        algorithm = GraphAlgorithms.DAILYCLOSINGPRICE;
     }
 
     @Override
@@ -31,18 +30,12 @@ public class ComparisonChartController extends ChartController {
     }
 
     private void initializeAlgorithmComboBox() {
-        algorithmComboBox.getItems().addAll("Closing Price", "Daily Change", "Daily Deviation", "Linear Regression");
+        algorithmComboBox.getItems().addAll(GraphModel.getGraphAlgorithmNames());
+        algorithmComboBox.getSelectionModel().select("Closing Price");
         algorithmComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
-            switch (newVal) {
-                case ("Closing Price") -> algorithm = GraphAlgorithms.DAILYCLOSINGPRICE;
-                case ("Daily Change") -> algorithm = GraphAlgorithms.DAILYCHANGE;
-                case ("Daily Deviation") -> algorithm = GraphAlgorithms.DAILYHIGHMINUSLOW;
-                case ("Linear Regression") -> algorithm = GraphAlgorithms.LINEARREGRESSION;
-            }
-            chartModel.updateAlgorithms(algorithm);
+            chartModel.updateAlgorithms(newVal);
             chart.refreshChart(chartModel.getGraphModels());
         });
-        algorithmComboBox.getSelectionModel().select("Closing Price");
     }
 
     @Override
@@ -50,7 +43,7 @@ public class ComparisonChartController extends ChartController {
         if (item.isActive()) {
             chart.removeFromChart(chartModel.removeFromChart(item.getName()));
         } else {
-            chart.showStockOnChart(chartModel.addToChart(item.getMIC(), item.getName(), algorithm));
+            chart.showStockOnChart(chartModel.addToChart(item.getMIC(), item.getName(), algorithmComboBox.getValue()));
         }
         item.togglePressed();
     }

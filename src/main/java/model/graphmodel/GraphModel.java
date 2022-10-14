@@ -194,7 +194,7 @@ public class GraphModel {
     }
 
     //TODO
-    public Set<String> getGraphAlgorithmNames(){
+    public static Set<String> getGraphAlgorithmNames(){
         return  GraphAlgorithmCollection.getKeySet();
     }
 

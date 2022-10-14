@@ -4,7 +4,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
-import model.graphmodel.graphalgorithms.GraphAlgorithms;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 public class DetailedChartController extends ChartController{
 
     protected ControllerStockListItem activeCompany;
-    protected ArrayList<GraphAlgorithms> activeAlgorithms;
+    protected ArrayList<String> activeAlgorithms;
 
     @FXML
     private CheckBox closingPriceBox;
@@ -72,34 +71,34 @@ public class DetailedChartController extends ChartController{
     }
 
     private void closingPriceBoxPressed() {
-        toggleAlgorithm(closingPriceBox, GraphAlgorithms.DAILYCLOSINGPRICE);
+        toggleAlgorithm(closingPriceBox, "Closing Price");
     }
 
     private void dailyChangeBoxPressed() {
-        toggleAlgorithm(dailyChangeBox, GraphAlgorithms.DAILYCHANGE);
+        toggleAlgorithm(dailyChangeBox, "Daily Change");
     }
 
     private void dailyDeviationBoxPressed() {
-        toggleAlgorithm(dailyDeviationBox, GraphAlgorithms.DAILYHIGHMINUSLOW);
+        toggleAlgorithm(dailyDeviationBox, "Daily Deviation");
     }
 
     private void linearRegressionBoxPressed() {
-        toggleAlgorithm(linearRegressionBox, GraphAlgorithms.LINEARREGRESSION);
+        toggleAlgorithm(linearRegressionBox, "Linear Regression");
     }
 
-    private void toggleAlgorithm(CheckBox checkBox, GraphAlgorithms algorithm) {
+    private void toggleAlgorithm(CheckBox checkBox, String algorithm) {
         if (activeAlgorithms.contains(algorithm)) {
             activeAlgorithms.remove(algorithm);
         } else {
             activeAlgorithms.add(algorithm);
         }
 
-        if (chartModel.contains(algorithm.name())) {
-            chart.removeFromChart(chartModel.removeFromChart(algorithm.name()));
+        if (chartModel.contains(algorithm)) {
+            chart.removeFromChart(chartModel.removeFromChart(algorithm));
         } else if (activeCompany != null && checkBox.isSelected()) {
             chartModel.addToChart(
                 activeCompany.getMIC(),
-                algorithm.name(),
+                algorithm,
                 algorithm
             );
         }
@@ -115,11 +114,11 @@ public class DetailedChartController extends ChartController{
     protected void addToChart(ControllerStockListItem item) {
         removeFromChart();
         activeCompany = item;
-        for (GraphAlgorithms algorithm: activeAlgorithms) {
+        for (String algorithm: activeAlgorithms) {
             chart.showStockOnChart(
                 chartModel.addToChart(
                     item.getMIC(),
-                    algorithm.name(),
+                    algorithm,
                     algorithm
                 )
             );
