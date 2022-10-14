@@ -17,8 +17,6 @@ public class AppController implements Initializable {
 
     @FXML
     private TabPane tabsPane;
-    @FXML
-    private Button newComparisonChartButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

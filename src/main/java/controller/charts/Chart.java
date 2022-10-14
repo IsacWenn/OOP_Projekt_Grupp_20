@@ -1,10 +1,8 @@
 package controller.charts;
 
-import com.sun.javafx.scene.GroupHelper;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.AnchorPane;
 import model.graphmodel.GraphModel;
-import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import model.util.Date;
 
 import java.util.ArrayList;

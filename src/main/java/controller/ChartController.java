@@ -10,8 +10,6 @@ import javafx.scene.layout.FlowPane;
 import model.AppModel;
 import model.chartmodel.ChartModel;
 import model.datahandling.DataHandler;
-import model.graphmodel.graphalgorithms.GraphAlgorithms;
-import model.util.Date;
 
 import java.io.IOException;
 import java.time.LocalDate;

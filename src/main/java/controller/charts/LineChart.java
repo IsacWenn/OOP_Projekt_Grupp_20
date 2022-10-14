@@ -2,7 +2,6 @@ package controller.charts;
 
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
-import model.graphmodel.graphalgorithms.GraphAlgorithms;
 
 public class LineChart extends Chart {
     public LineChart() {

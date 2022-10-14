@@ -32,25 +32,25 @@ public class DetailedChartController extends ChartController{
     }
 
     private void initializeCheckBoxes() {
-        closingPriceBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+        closingPriceBox.selectedProperty().addListener(new ChangeListener<>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
                 closingPriceBoxPressed();
             }
         });
-        dailyChangeBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+        dailyChangeBox.selectedProperty().addListener(new ChangeListener<>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
                 dailyChangeBoxPressed();
             }
         });
-        dailyDeviationBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+        dailyDeviationBox.selectedProperty().addListener(new ChangeListener<>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
                 dailyDeviationBoxPressed();
             }
         });
-        linearRegressionBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+        linearRegressionBox.selectedProperty().addListener(new ChangeListener<>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
                 linearRegressionBoxPressed();
