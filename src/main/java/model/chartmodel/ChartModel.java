@@ -1,7 +1,6 @@
 package model.chartmodel;
 
 import model.graphmodel.GraphModel;
-import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import model.util.Date;
 
 import java.io.IOException;
