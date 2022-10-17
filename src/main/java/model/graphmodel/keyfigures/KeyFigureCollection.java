@@ -11,26 +11,18 @@ public class KeyFigureCollection {
     /**
      * A static {@link Map} of {@link String} and {@link KeyFigureAlgorithm}.
      */
-    private static Map<String, KeyFigureAlgorithm> keyFigures = null;
+    private static final Map<String, KeyFigureAlgorithm> keyFigures = new HashMap<>() {{
+        put("Volatility", new Volatility());
+        put("Average Price", new AveragePrice());
+        put("Average Volume", new AverageVolume());
+        put("Highest Price", new HighestPrice());
+        put("Lowest Price", new LowestPrice());
+    }};
 
     /**
      * A class for retrieving all available implementations of {@link KeyFigureAlgorithm}.
      */
     private KeyFigureCollection(){
-    }
-
-    /**
-     * A method for creating implementations of {@link KeyFigureAlgorithm} and adding them to {@link KeyFigureCollection#keyFigures}.
-     */
-    public static void init(){
-        if (keyFigures == null){
-            keyFigures = new HashMap<>();
-            keyFigures.put("Volatility", new Volatility());
-            keyFigures.put("Average Price", new AveragePrice());
-            keyFigures.put("Average Volume", new AverageVolume());
-            keyFigures.put("Highest Price", new HighestPrice());
-            keyFigures.put("Lowest Price", new LowestPrice());
-        }
     }
 
     /**

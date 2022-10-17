@@ -24,9 +24,7 @@ public class AppModel {
 
     public static AppModel getInstance() {
         if (instance == null) instance = new AppModel();
-        GraphAlgorithmCollection.init();
-        KeyFigureCollection.init();
-        BivariateAlgorithmCollection.init();
+
         return instance;
     }
 

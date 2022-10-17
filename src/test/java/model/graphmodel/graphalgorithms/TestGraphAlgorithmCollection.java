@@ -11,11 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestGraphAlgorithmCollection {
 
-    @BeforeAll
-    static void initGraphAlgorithmsCollection() {
-        GraphAlgorithmCollection.init();
-    }
-
     @Test
     public void classForCalculatingPearsonCorrelationShouldBeRetrieved() {
         GraphAlgorithm ba  = GraphAlgorithmCollection.getGraphAlgorithm("Linear regression");

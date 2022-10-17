@@ -14,23 +14,12 @@ public class GraphAlgorithmCollection {
     /**
      * A static {@link Map} used to store a collection of {@link GraphAlgorithm}.
      */
-    private static Map<String, GraphAlgorithm> algorithms = null;
-
-
-    /**
-     * A method for creating the implementations of {@link GraphAlgorithm} if they are not already created and
-     *
-     * put them in the static variable {@link GraphAlgorithmCollection#algorithms}.
-     */
-    public static void init() {
-        if (algorithms == null) {
-            algorithms = new HashMap<>();
-            algorithms.put("Daily Change", new DailyChange());
-            algorithms.put("Closing Price", new DailyClosingPrice());
-            algorithms.put("Daily Deviation", new DailyHighMinusLow());
-            algorithms.put("Linear Regression", new LinearRegression());
-        }
-    }
+    private static final Map<String, GraphAlgorithm> algorithms = new HashMap<>() {{
+        put("Daily change", new DailyChange());
+        put("Daily closing price", new DailyClosingPrice());
+        put("Daily high minus low", new DailyHighMinusLow());
+        put("Linear regression", new LinearRegression());
+    }};
 
     /**
      * A method for retrieving a {@link GraphAlgorithm} created from {@link GraphAlgorithmCollection#algorithms}.

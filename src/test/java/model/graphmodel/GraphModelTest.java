@@ -19,11 +19,6 @@ public class GraphModelTest {
 
     private static List<Date> dateList;
 
-    @BeforeAll
-    public static void init(){
-        KeyFigureCollection.init();
-    }
-
     @BeforeEach
     public void createTestVariables() throws IOException {
         date1 = new Date(2022, 6, 21);
