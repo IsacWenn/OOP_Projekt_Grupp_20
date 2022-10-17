@@ -26,7 +26,6 @@ public class BivariateComputer {
      */
     public static void calculateKeyFigures(Map<Date, Number> series1, Map<Date, Number> series2) {
 
-        BivariateAlgorithmCollection.init();
         Map<String, Double> calculatedValues = new HashMap<>();
         Set<String> algoKeys = BivariateAlgorithmCollection.getKeySet();
 
