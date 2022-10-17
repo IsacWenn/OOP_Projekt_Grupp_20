@@ -46,8 +46,6 @@ public class GraphComputerTest {
         toCurrency.put(date1, currency1); toCurrency.put(date2, currency1); toCurrency.put(date3, currency1);
 
         graphComputer = new GraphComputer();
-        GraphAlgorithmCollection.init();
-        KeyFigureCollection.init();
         graphComputer.setAlgorithm(GraphAlgorithmCollection.getGraphAlgorithm("Daily closing price"));
     }
 
