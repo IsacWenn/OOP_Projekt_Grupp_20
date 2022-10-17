@@ -94,29 +94,27 @@ public class DetailedChartController extends ChartController{
         }
 
         if (chartModel.contains(algorithm)) {
-            chart.removeFromChart(chartModel.removeFromChart(algorithm));
+            int index = chartModel.indexOf(algorithm);
+            chartModel.remove(index);
+            chart.remove(index);
         } else if (activeCompany != null && checkBox.isSelected()) {
-            chartModel.addToChart(
-                activeCompany.getMIC(),
-                algorithm,
-                algorithm
-            );
+            chartModel.add(activeCompany.getMIC(), algorithm, algorithm);
         }
-        chart.refreshChart(chartModel.getGraphModels());
+        chart.refresh(chartModel.getGraphModels());
     }
 
     protected void removeFromChart() {
         activeCompany = null;
         chartModel.clearGraphModels();
-        chart.clearChart();
+        chart.clear();
     }
 
     protected void addToChart(ControllerStockListItem item) {
         removeFromChart();
         activeCompany = item;
         for (String algorithm: activeAlgorithms) {
-            chart.showStockOnChart(
-                chartModel.addToChart(
+            chart.add(
+                chartModel.add(
                     item.getMIC(),
                     algorithm,
                     algorithm
@@ -139,6 +137,6 @@ public class DetailedChartController extends ChartController{
             }
         }
         item.togglePressed();
-        chart.refreshChart(chartModel.getGraphModels());
+        chart.refresh(chartModel.getGraphModels());
     }
 }

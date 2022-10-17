@@ -76,7 +76,7 @@ public abstract class ChartController extends AnchorPane {
         startDatePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             try {
                 chartModel.updateStartDate(newValue);
-                chart.refreshChart(chartModel.getGraphModels());
+                chart.refresh(chartModel.getGraphModels());
             } catch (IOException e) {
                 startDatePicker.setValue(oldValue);
                 e.printStackTrace();
@@ -87,7 +87,7 @@ public abstract class ChartController extends AnchorPane {
             if (!newValue) {
                 try {
                     chartModel.updateStartDate(startDatePicker.getValue());
-                    chart.refreshChart(chartModel.getGraphModels());
+                    chart.refresh(chartModel.getGraphModels());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -101,7 +101,7 @@ public abstract class ChartController extends AnchorPane {
         endDatePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             try {
                 chartModel.updateEndDate(newValue);
-                chart.refreshChart(chartModel.getGraphModels());
+                chart.refresh(chartModel.getGraphModels());
             } catch (IOException e) {
                 endDatePicker.setValue(oldValue);
                 e.printStackTrace();
@@ -112,7 +112,7 @@ public abstract class ChartController extends AnchorPane {
             if (!newValue) {
                 try {
                     chartModel.updateEndDate(endDatePicker.getValue());
-                    chart.refreshChart(chartModel.getGraphModels());
+                    chart.refresh(chartModel.getGraphModels());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -129,7 +129,7 @@ public abstract class ChartController extends AnchorPane {
                 case ("Bar Chart") -> openBarChart();
                 case ("Line Chart") -> openLineChart();
             }
-            chart.refreshChart(chartModel.getGraphModels());
+            chart.refresh(chartModel.getGraphModels());
         });
     }
 
@@ -175,7 +175,7 @@ public abstract class ChartController extends AnchorPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        chart.refreshChart(chartModel.getGraphModels());
+        chart.refresh(chartModel.getGraphModels());
     }
 
     @FXML
@@ -185,7 +185,7 @@ public abstract class ChartController extends AnchorPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        chart.refreshChart(chartModel.getGraphModels());
+        chart.refresh(chartModel.getGraphModels());
     }
 
     @FXML
@@ -195,7 +195,7 @@ public abstract class ChartController extends AnchorPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        chart.refreshChart(chartModel.getGraphModels());
+        chart.refresh(chartModel.getGraphModels());
     }
 
     @FXML
@@ -205,7 +205,7 @@ public abstract class ChartController extends AnchorPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        chart.refreshChart(chartModel.getGraphModels());
+        chart.refresh(chartModel.getGraphModels());
     }
 
     private void openLineChart() {
