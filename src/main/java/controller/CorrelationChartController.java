@@ -22,7 +22,7 @@ public class CorrelationChartController extends ChartController {
 
     @Override
     void loadFXML() {
-        FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../LineChart.fxml")));
+        FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../ComparisonChart.fxml")));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
@@ -66,5 +66,10 @@ public class CorrelationChartController extends ChartController {
         } else {
             addCompany(item);
         }
+    }
+
+    @Override
+    public void refreshChart() {
+        chart.refresh(chartModel.getGraphModels());
     }
 }

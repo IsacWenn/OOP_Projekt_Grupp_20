@@ -98,4 +98,12 @@ public class ChartModel {
     public ArrayList<GraphModel> getGraphModels() {
         return graphModels;
     }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
 }

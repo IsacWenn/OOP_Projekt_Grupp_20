@@ -82,7 +82,7 @@ public class GraphModel {
     public GraphModel(String mic, String graphName, Date from, Date to) {
         init(mic, graphName);
         this.data = graphData.getCompanyData(mic, from, to);
-        updateAlgorithm("Daily closing price");
+        updateAlgorithm(getGraphAlgorithmNames().get(0));
         update();
     }
 
@@ -176,13 +176,13 @@ public class GraphModel {
     }
 
 
-    public Double getKeyFigureValue(String keyFigure){
+    public String getKeyFigureValue(String keyFigure){
         if(currencyAdjustedData!=null) {
-            return this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure)
-                    , currencyAdjustedData);
+            return String.format("%.2f", this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure)
+                    , currencyAdjustedData));
         }
         else{
-            return this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure), data);
+            return String.format("%.2f", this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure), data));
         }
     }
 
@@ -203,7 +203,7 @@ public class GraphModel {
             if (!Objects.equals(algoName, defaultAlgoName))
                 returnList.add(algoName);
         }
-        return  returnList;
+        return returnList;
     }
 
     /**

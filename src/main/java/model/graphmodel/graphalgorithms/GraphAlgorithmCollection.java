@@ -14,15 +14,15 @@ public class GraphAlgorithmCollection {
     /**
      * A static {@link String} containing the name of the {@link GraphAlgorithm} that should be selected as default.
      */
-    private static final String defaultGraphAlgorithmName = "Daily closing price";
+    private static final String defaultGraphAlgorithmName = "Closing Price";
 
     /**
      * A static {@link Map} used to store a collection of {@link GraphAlgorithm}.
      */
     private static final Map<String, GraphAlgorithm> algorithms = new HashMap<>() {{
         put(defaultGraphAlgorithmName, new DailyClosingPrice());
-        put("Daily change", new DailyChange());
-        put("Daily high minus low", new DailyHighMinusLow());
+        put("Daily Change", new DailyChange());
+        put("Daily Deviation", new DailyHighMinusLow());
         put("Linear regression", new LinearRegression());
     }};
 

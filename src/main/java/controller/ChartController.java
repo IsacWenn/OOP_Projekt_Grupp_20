@@ -10,6 +10,7 @@ import javafx.scene.layout.FlowPane;
 import model.AppModel;
 import model.chartmodel.ChartModel;
 import model.datahandling.DataHandler;
+import model.graphmodel.GraphModel;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -43,6 +44,8 @@ public abstract class ChartController extends AnchorPane {
     @FXML
     protected ComboBox<String> chartTypeComboBox;
     @FXML
+    protected ComboBox<String> currencyComboBox;
+    @FXML
     protected AnchorPane chartPane;
 
     public ChartController(AppController parentController) {
@@ -67,6 +70,7 @@ public abstract class ChartController extends AnchorPane {
         initializeStartDatePicker();
         initializeEndDatePicker();
         initializeChartTypeComboBox();
+        initializeCurrencyComboBox();
         openLineChart();
     }
 
@@ -76,7 +80,7 @@ public abstract class ChartController extends AnchorPane {
         startDatePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             try {
                 chartModel.updateStartDate(newValue);
-                chart.refresh(chartModel.getGraphModels());
+                refreshChart();
             } catch (IOException e) {
                 startDatePicker.setValue(oldValue);
                 e.printStackTrace();
@@ -87,7 +91,7 @@ public abstract class ChartController extends AnchorPane {
             if (!newValue) {
                 try {
                     chartModel.updateStartDate(startDatePicker.getValue());
-                    chart.refresh(chartModel.getGraphModels());
+                    refreshChart();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -101,7 +105,7 @@ public abstract class ChartController extends AnchorPane {
         endDatePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             try {
                 chartModel.updateEndDate(newValue);
-                chart.refresh(chartModel.getGraphModels());
+                refreshChart();
             } catch (IOException e) {
                 endDatePicker.setValue(oldValue);
                 e.printStackTrace();
@@ -112,7 +116,7 @@ public abstract class ChartController extends AnchorPane {
             if (!newValue) {
                 try {
                     chartModel.updateEndDate(endDatePicker.getValue());
-                    chart.refresh(chartModel.getGraphModels());
+                    refreshChart();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -129,6 +133,15 @@ public abstract class ChartController extends AnchorPane {
                 case ("Bar Chart") -> openBarChart();
                 case ("Line Chart") -> openLineChart();
             }
+            chart.refresh(chartModel.getGraphModels());
+        });
+    }
+
+    private void initializeCurrencyComboBox() {
+        currencyComboBox.getItems().addAll(GraphModel.getGraphAlgorithmNames());
+        currencyComboBox.getSelectionModel().select(GraphModel.getGraphAlgorithmNames().get(0));
+        currencyComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
+            chartModel.updateAlgorithms(newVal);
             chart.refresh(chartModel.getGraphModels());
         });
     }
@@ -168,6 +181,8 @@ public abstract class ChartController extends AnchorPane {
         return favouriteCompanies.contains(acronym);
     }
 
+    protected abstract void refreshChart();
+
     @FXML
     public void timeframeOneDay() {
         try {
@@ -175,7 +190,7 @@ public abstract class ChartController extends AnchorPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        chart.refresh(chartModel.getGraphModels());
+        refreshChart();
     }
 
     @FXML
@@ -185,7 +200,7 @@ public abstract class ChartController extends AnchorPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        chart.refresh(chartModel.getGraphModels());
+        refreshChart();
     }
 
     @FXML
@@ -195,7 +210,7 @@ public abstract class ChartController extends AnchorPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        chart.refresh(chartModel.getGraphModels());
+        refreshChart();
     }
 
     @FXML
@@ -205,7 +220,7 @@ public abstract class ChartController extends AnchorPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        chart.refresh(chartModel.getGraphModels());
+        refreshChart();
     }
 
     private void openLineChart() {

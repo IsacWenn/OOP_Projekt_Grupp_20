@@ -58,7 +58,7 @@ public class ControllerStockListItem extends AnchorPane {
     }
 
     private void loadFXML() {
-        FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../MainViewCompanyEntity.fxml")));
+        FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../StockListitem.fxml")));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
