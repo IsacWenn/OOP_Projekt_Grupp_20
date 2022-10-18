@@ -12,11 +12,16 @@ import java.util.Set;
 public class GraphAlgorithmCollection {
 
     /**
+     * A static {@link String} containing the name of the {@link GraphAlgorithm} that should be selected as default.
+     */
+    private static final String defaultGraphAlgorithmName = "Daily closing price";
+
+    /**
      * A static {@link Map} used to store a collection of {@link GraphAlgorithm}.
      */
     private static final Map<String, GraphAlgorithm> algorithms = new HashMap<>() {{
+        put(defaultGraphAlgorithmName, new DailyClosingPrice());
         put("Daily change", new DailyChange());
-        put("Daily closing price", new DailyClosingPrice());
         put("Daily high minus low", new DailyHighMinusLow());
         put("Linear regression", new LinearRegression());
     }};
@@ -36,5 +41,11 @@ public class GraphAlgorithmCollection {
      *
      * @return A {@link Set} of {@link String} for each {@link GraphAlgorithm} in {@link GraphAlgorithmCollection#algorithms}.
      */
-    public static Set<String> getKeySet(){return Set.copyOf(algorithms.keySet());}
+    public static Set<String> getGraphAlgorithmNames() {
+        return Set.copyOf(algorithms.keySet());
+    }
+
+    public static String getDefaultGraphAlgorithmName() {
+        return defaultGraphAlgorithmName;
+    }
 }

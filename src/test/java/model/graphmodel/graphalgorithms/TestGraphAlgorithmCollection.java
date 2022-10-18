@@ -19,8 +19,14 @@ public class TestGraphAlgorithmCollection {
 
     @Test
     public void methodShouldRetrieveASpecificAlgorithmName() {
-        int numberOfAlgorithms = GraphAlgorithmCollection.getKeySet().size();
+        int numberOfAlgorithms = GraphAlgorithmCollection.getGraphAlgorithmNames().size();
         assertNotEquals(0,numberOfAlgorithms);
+    }
+
+    @Test
+    public void defaultAlgorithmNameShouldContainPrice() {
+        String nameOfDefaultAlgo = GraphAlgorithmCollection.getDefaultGraphAlgorithmName();
+        assertTrue(nameOfDefaultAlgo.toLowerCase().contains("price"));
     }
 
 
