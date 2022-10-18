@@ -141,7 +141,7 @@ public abstract class ChartController extends AnchorPane {
         currencyComboBox.getItems().addAll(GraphModel.getCurrencyNames());
         currencyComboBox.getSelectionModel().select(GraphModel.getCurrencyNames().get(0));
         currencyComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
-            chartModel.updateCurrencies(newVal);
+            chartModel.updateCurrency(newVal);
             refreshChart();
         });
     }
@@ -239,6 +239,10 @@ public abstract class ChartController extends AnchorPane {
         chart = new AreaChart();
         chartPane.getChildren().clear();
         chartPane.getChildren().add(chart);
+    }
+
+    protected String getCurrency() {
+        return currencyComboBox.getSelectionModel().getSelectedItem();
     }
 
     public abstract void stockListOnClick(ControllerStockListItem item);

@@ -34,7 +34,7 @@ public class ComparisonChartController extends ChartController {
         algorithmComboBox.getSelectionModel().select(GraphModel.getGraphAlgorithmNames().get(0));
         algorithmComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
             chartModel.updateAlgorithms(newVal);
-            chart.refresh(chartModel.getGraphModels());
+            refreshChart();
         });
     }
 

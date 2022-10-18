@@ -121,7 +121,7 @@ public class TestDataHandler {
 
     @Test
     public void getCompanyTradingCurrencyShouldReturnCorrectCurrencyEnum() {
-        assertEquals(CurrencyEnum.USD, DataHandler.getCompanyTradingCurrency("AMZN"));
+        assertEquals("USD", DataHandler.getCompanyTradingCurrency("AMZN"));
     }
 
     @Test

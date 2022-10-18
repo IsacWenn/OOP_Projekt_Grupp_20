@@ -59,16 +59,11 @@ public class GraphModel {
         update();
     }
 
-    public GraphModel(String mic, String graphName, GraphAlgorithms graphAlgorithms){
-        init(mic, graphName);
-        this.data = graphData.getCompanyData(mic);
-        updateAlgorithm(graphAlgorithms);
-    }
-
-    public GraphModel(String mic, String graphName, Date from, Date to, String graphAlg){
+    public GraphModel(String mic, String graphName, Date from, Date to, String graphAlg, String currency){
         init(mic, graphName);
         this.data = graphData.getCompanyData(mic, from, to);
         updateAlgorithm(graphAlg);
+        updateCurrency(currency);
     }
 
     /**

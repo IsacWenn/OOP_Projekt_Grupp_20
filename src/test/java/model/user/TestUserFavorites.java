@@ -1,7 +1,6 @@
 package model.user;
 
 import model.graphmodel.graphalgorithms.GraphAlgorithms;
-import model.util.CurrencyConversionEnum;
 import model.util.Date;
 import model.util.GraphRepresentation;
 import org.junit.jupiter.api.*;
@@ -24,7 +23,7 @@ public class TestUserFavorites {
                 new Date(2022, 9, 1).listIntervalTo(new Date(2022, 9, 30)),
                 GraphAlgorithms.DAILYCLOSINGPRICE,
                 "AMZN",
-                CurrencyConversionEnum.USD_TO_EUR
+                "EUR"
         );
         userFavorites.addFavorite(graphRepresentation);
     }
@@ -43,7 +42,7 @@ public class TestUserFavorites {
                 new ArrayList<>(){{ add(new Date(2022, 10, 14)); }},
                 GraphAlgorithms.DAILYHIGHMINUSLOW,
                 "MSFT",
-                CurrencyConversionEnum.USD_TO_ISK
+                "ISK"
         );
         assertEquals("UserFavorites{[GraphRepresentation{interval=[14/10/2022], algorithm=DAILYHIGHMINUSLOW," +
                 " companyMIC='MSFT', preferredCurrency=USD_TO_ISK}]}", testUserFavorites.toString());
@@ -55,7 +54,7 @@ public class TestUserFavorites {
                 new ArrayList<>(){{ add(new Date()); }},
                 GraphAlgorithms.DAILYHIGHMINUSLOW,
                 "MSFT",
-                CurrencyConversionEnum.USD_TO_ISK
+                "ISK"
         );
         List<GraphRepresentation> favorites = userFavorites.getFavorites();
         assertEquals(2, favorites.size());
@@ -68,7 +67,7 @@ public class TestUserFavorites {
                 new ArrayList<>(){{ add(new Date()); }},
                 GraphAlgorithms.DAILYCLOSINGPRICE,
                 "AAPL",
-                CurrencyConversionEnum.USD_TO_DKK
+                "DKK"
         );
         userFavorites.addFavorite(testGraph);
         assertEquals(testGraph, userFavorites.getFavorites().get(1));

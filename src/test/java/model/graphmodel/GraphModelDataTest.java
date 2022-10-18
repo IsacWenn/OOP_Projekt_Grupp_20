@@ -69,6 +69,6 @@ public class GraphModelDataTest {
 
     @Test
     public void getCompanyCurrencyShouldReturnTheDefaultCurrencyForThatCompany(){
-        assertEquals(CurrencyEnum.USD, graphData.getCompanyCurrency("AAPL"));
+        assertEquals("USD", graphData.getCompanyCurrency("AAPL"));
     }
 }

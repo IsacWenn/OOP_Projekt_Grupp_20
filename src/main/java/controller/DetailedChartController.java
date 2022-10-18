@@ -128,7 +128,7 @@ public class DetailedChartController extends ChartController{
         chart.refresh(chartModel.getGraphModels());
         if (keyFigGraphModel != null) {
             keyFigGraphModel.updateTimeInterval(chartModel.getStartDate(), chartModel.getEndDate());
-            keyFigGraphModel.updateCurrency(currencyComboBox.getSelectionModel().getSelectedItem());
+            keyFigGraphModel.updateCurrency(getCurrency());
         }
         populateKeyFigureContainer();
     }

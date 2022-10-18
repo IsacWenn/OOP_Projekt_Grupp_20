@@ -37,7 +37,7 @@ public class CorrelationChartController extends ChartController {
         algorithmComboBox.getSelectionModel().select("Closing Price");
         algorithmComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
             chartModel.updateAlgorithms(newVal);
-            chart.refresh(chartModel.getGraphModels());
+            refreshChart();
         });
     }
 
