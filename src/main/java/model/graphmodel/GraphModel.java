@@ -9,10 +9,7 @@ import model.util.CurrencyEnum;
 import model.util.Date;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * GraphModel is a class for representing the data and graph-functionality of a visual graph object.
@@ -188,14 +185,22 @@ public class GraphModel {
         }
     }
 
-    //TODO
-    public Set<String> getKeyFigureNames(){
+    static public Set<String> getKeyFigureNames(){
         return KeyFigureCollection.getKeySet();
     }
 
-    //TODO
-    public Set<String> getGraphAlgorithmNames(){
-        return  GraphAlgorithmCollection.getKeySet();
+    static public List<String> getGraphAlgorithmNames(){
+        List<String> returnList = new ArrayList<>();
+        String defaultAlgoName = GraphAlgorithmCollection.getDefaultGraphAlgorithmName();
+        List<String> namesInOrder = new ArrayList<>(GraphAlgorithmCollection.getGraphAlgorithmNames());
+        Collections.sort(namesInOrder);
+
+        returnList.add(defaultAlgoName);
+        for (String algoName : namesInOrder) {
+            if (!Objects.equals(algoName, defaultAlgoName))
+                returnList.add(algoName);
+        }
+        return  returnList;
     }
 
     public static void main(String[] args) {
