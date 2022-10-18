@@ -6,15 +6,18 @@ import javafx.scene.control.ComboBox;
 import model.graphmodel.GraphModel;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class ComparisonChartController extends ChartController {
+public class CorrelationChartController extends ChartController {
 
+    protected ArrayList<ControllerStockListItem> activeCompanies;
     @FXML
     protected ComboBox<String> algorithmComboBox;
 
-    public ComparisonChartController(AppController parentController){
+    public CorrelationChartController(AppController parentController){
         super(parentController);
         initializeAlgorithmComboBox();
+        activeCompanies = new ArrayList<>();
     }
 
     @Override
@@ -38,16 +41,30 @@ public class ComparisonChartController extends ChartController {
         });
     }
 
+    private void removeCompany(ControllerStockListItem item) {
+        int index = chartModel.indexOf(item.getName());
+        chartModel.remove(index);
+        chart.remove(index);
+        activeCompanies.remove(item);
+        item.togglePressed();
+    }
+
+    private void addCompany(ControllerStockListItem item) {
+        if (activeCompanies.size() >= 2) {
+            return;
+        }
+        GraphModel newGraph = chartModel.add(item.getMIC(), item.getName(), algorithmComboBox.getValue());
+        chart.add(newGraph);
+        activeCompanies.add(item);
+        item.togglePressed();
+    }
+
     @Override
     public void stockListOnClick(ControllerStockListItem item) {
         if (item.isActive()) {
-            int index = chartModel.indexOf(item.getName());
-            chartModel.remove(index);
-            chart.remove(index);
+            removeCompany(item);
         } else {
-            GraphModel newGraph = chartModel.add(item.getMIC(), item.getName(), algorithmComboBox.getValue());
-            chart.add(newGraph);
+            addCompany(item);
         }
-        item.togglePressed();
     }
 }

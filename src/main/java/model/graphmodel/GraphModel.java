@@ -1,5 +1,6 @@
 package model.graphmodel;
 
+import javafx.scene.chart.XYChart;
 import model.datahandling.DayData;
 import model.graphmodel.graphalgorithms.GraphAlgorithm;
 import model.graphmodel.graphalgorithms.GraphAlgorithms;
@@ -201,6 +202,34 @@ public class GraphModel {
                 returnList.add(algoName);
         }
         return  returnList;
+    }
+
+    /**
+     * A getter method that converts {@link GraphModel#values} to a {@link javafx.scene.chart.XYChart.Series}
+     *
+     * @param numDataPoints an {@link Integer} representing the amount of data points for the XYChart series
+     *
+     * @return the {@link javafx.scene.chart.XYChart.Series} containing the values
+     */
+    public XYChart.Series<String, Number> getChartSeries(int numDataPoints) {
+        XYChart.Series<String, Number> chartSeries = new XYChart.Series<>();
+
+        chartSeries.setName(this.getName());
+        List<Date> orderedDates = Date.sortDates(values.keySet());
+
+        double daysInterval = orderedDates.size(), stepAmount, dIndex = 0;
+        int index, slot = 0;
+
+        stepAmount = Math.max(1, daysInterval/numDataPoints);
+
+        while (chartSeries.getData().size() < Math.min(numDataPoints, daysInterval)) {
+            index = (int) Math.round(dIndex);
+            Date currentDate = orderedDates.get(index);
+            Number val = values.get(currentDate);
+            chartSeries.getData().add(slot, new XYChart.Data<>(currentDate.toString(), val));
+            dIndex += stepAmount; slot++;
+        }
+        return chartSeries;
     }
 
     public static void main(String[] args) {

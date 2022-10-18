@@ -4,7 +4,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
-import model.graphmodel.graphalgorithms.GraphAlgorithms;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 public class DetailedChartController extends ChartController{
 
     protected ControllerStockListItem activeCompany;
-    protected ArrayList<GraphAlgorithms> activeAlgorithms;
+    protected ArrayList<String> activeAlgorithms;
 
     @FXML
     private CheckBox closingPriceBox;
@@ -32,25 +31,25 @@ public class DetailedChartController extends ChartController{
     }
 
     private void initializeCheckBoxes() {
-        closingPriceBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+        closingPriceBox.selectedProperty().addListener(new ChangeListener<>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
                 closingPriceBoxPressed();
             }
         });
-        dailyChangeBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+        dailyChangeBox.selectedProperty().addListener(new ChangeListener<>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
                 dailyChangeBoxPressed();
             }
         });
-        dailyDeviationBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+        dailyDeviationBox.selectedProperty().addListener(new ChangeListener<>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
                 dailyDeviationBoxPressed();
             }
         });
-        linearRegressionBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+        linearRegressionBox.selectedProperty().addListener(new ChangeListener<>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
                 linearRegressionBoxPressed();
@@ -72,54 +71,52 @@ public class DetailedChartController extends ChartController{
     }
 
     private void closingPriceBoxPressed() {
-        toggleAlgorithm(closingPriceBox, GraphAlgorithms.DAILYCLOSINGPRICE);
+        toggleAlgorithm(closingPriceBox, "Closing Price");
     }
 
     private void dailyChangeBoxPressed() {
-        toggleAlgorithm(dailyChangeBox, GraphAlgorithms.DAILYCHANGE);
+        toggleAlgorithm(dailyChangeBox, "Daily Change");
     }
 
     private void dailyDeviationBoxPressed() {
-        toggleAlgorithm(dailyDeviationBox, GraphAlgorithms.DAILYHIGHMINUSLOW);
+        toggleAlgorithm(dailyDeviationBox, "Daily Deviation");
     }
 
     private void linearRegressionBoxPressed() {
-        toggleAlgorithm(linearRegressionBox, GraphAlgorithms.LINEARREGRESSION);
+        toggleAlgorithm(linearRegressionBox, "Linear Regression");
     }
 
-    private void toggleAlgorithm(CheckBox checkBox, GraphAlgorithms algorithm) {
+    private void toggleAlgorithm(CheckBox checkBox, String algorithm) {
         if (activeAlgorithms.contains(algorithm)) {
             activeAlgorithms.remove(algorithm);
         } else {
             activeAlgorithms.add(algorithm);
         }
 
-        if (chartModel.contains(algorithm.name())) {
-            chart.removeFromChart(chartModel.removeFromChart(algorithm.name()));
+        if (chartModel.contains(algorithm)) {
+            int index = chartModel.indexOf(algorithm);
+            chartModel.remove(index);
+            chart.remove(index);
         } else if (activeCompany != null && checkBox.isSelected()) {
-            chartModel.addToChart(
-                activeCompany.getMIC(),
-                algorithm.name(),
-                algorithm
-            );
+            chartModel.add(activeCompany.getMIC(), algorithm, algorithm);
         }
-        chart.refreshChart(chartModel.getGraphModels());
+        chart.refresh(chartModel.getGraphModels());
     }
 
     protected void removeFromChart() {
         activeCompany = null;
         chartModel.clearGraphModels();
-        chart.clearChart();
+        chart.clear();
     }
 
     protected void addToChart(ControllerStockListItem item) {
         removeFromChart();
         activeCompany = item;
-        for (GraphAlgorithms algorithm: activeAlgorithms) {
-            chart.showStockOnChart(
-                chartModel.addToChart(
+        for (String algorithm: activeAlgorithms) {
+            chart.add(
+                chartModel.add(
                     item.getMIC(),
-                    algorithm.name(),
+                    algorithm,
                     algorithm
                 )
             );
@@ -140,6 +137,6 @@ public class DetailedChartController extends ChartController{
             }
         }
         item.togglePressed();
-        chart.refreshChart(chartModel.getGraphModels());
+        chart.refresh(chartModel.getGraphModels());
     }
 }

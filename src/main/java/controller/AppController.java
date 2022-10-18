@@ -3,7 +3,6 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import model.AppModel;
@@ -17,8 +16,6 @@ public class AppController implements Initializable {
 
     @FXML
     private TabPane tabsPane;
-    @FXML
-    private Button newComparisonChartButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -39,7 +36,7 @@ public class AppController implements Initializable {
     }
 
     public void newCorrelationChart() {
-        ChartController newChart = new ComparisonChartController(this);
+        ChartController newChart = new CorrelationChartController(this);
         newTab(newChart, "Correlation Chart");
     }
 

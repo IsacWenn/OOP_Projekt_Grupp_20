@@ -1,7 +1,6 @@
 package model.chartmodel;
 
 import model.graphmodel.GraphModel;
-import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import model.util.Date;
 
 import java.io.IOException;
@@ -26,17 +25,19 @@ public class ChartModel {
         }
     }
 
-    public GraphModel addToChart(String acronym, String name, GraphAlgorithms algorithm) {
-        GraphModel graphModel = new GraphModel(acronym, name, startDate, endDate);
-        graphModel.updateAlgorithm(algorithm);
+    public GraphModel add(String acronym, String name, String algorithm) {
+        GraphModel graphModel = new GraphModel(acronym, name, startDate, endDate, algorithm);
         graphModels.add(graphModel);
         return graphModel;
     }
 
-    public int removeFromChart(String name) {
+    public void remove(int i) {
+        graphModels.remove(i);
+    }
+
+    public int indexOf(String name) {
         for (int i = 0; i < graphModels.size(); i++){
             if (graphModels.get(i).getName().equals(name)) {
-                graphModels.remove(i);
                 return i;
             }
         }
@@ -52,7 +53,7 @@ public class ChartModel {
         return false;
     }
 
-    public void updateAlgorithms(GraphAlgorithms algorithm) {
+    public void updateAlgorithms(String algorithm) {
         for (GraphModel graphModel: graphModels) {
             graphModel.updateAlgorithm(algorithm);
         }
