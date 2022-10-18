@@ -22,7 +22,6 @@ public class GraphAlgorithmCollection {
     private static final Map<String, GraphAlgorithm> algorithms = new HashMap<>() {{
         put(defaultGraphAlgorithmName, new DailyClosingPrice());
         put("Daily Change", new DailyChange());
-        put("Closing Price", new DailyClosingPrice());
         put("Daily Deviation", new DailyHighMinusLow());
         put("Linear regression", new LinearRegression());
     }};
