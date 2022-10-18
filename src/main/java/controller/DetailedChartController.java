@@ -4,9 +4,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
+import javafx.scene.layout.FlowPane;
+import model.graphmodel.GraphModel;
+import model.graphmodel.keyfigures.KeyFigureAlgorithm;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class DetailedChartController extends ChartController{
@@ -22,6 +26,8 @@ public class DetailedChartController extends ChartController{
     private CheckBox dailyDeviationBox;
     @FXML
     private CheckBox linearRegressionBox;
+    @FXML
+    private FlowPane keyFigureContainer;
 
     public DetailedChartController(AppController parentController) {
         super(parentController);
@@ -107,6 +113,7 @@ public class DetailedChartController extends ChartController{
         activeCompany = null;
         chartModel.clearGraphModels();
         chart.clear();
+        keyFigureContainer.getChildren().clear();
     }
 
     protected void addToChart(ControllerStockListItem item) {
@@ -121,6 +128,7 @@ public class DetailedChartController extends ChartController{
                 )
             );
         }
+        populateKeyFigureContainer(item);
     }
 
     public void stockListOnClick(ControllerStockListItem item) {
@@ -138,5 +146,11 @@ public class DetailedChartController extends ChartController{
         }
         item.togglePressed();
         chart.refresh(chartModel.getGraphModels());
+    }
+    private void populateKeyFigureContainer(ControllerStockListItem item) {
+        keyFigureContainer.getChildren().clear();
+        for (String keyFig : GraphModel.getKeyFigureNames()) {
+            keyFigureContainer.getChildren().add(new KeyFigureListItem(this, keyFig, chartModel.getGraphModels().get(0)));
+        }
     }
 }

@@ -179,18 +179,18 @@ public class GraphModel {
     }
 
 
-    public Double getKeyFigureValue(String keyFigure){
+    public Long getKeyFigureValue(String keyFigure){
         if(currencyAdjustedData!=null) {
-            return this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure)
-                    , currencyAdjustedData);
+            return Math.round(this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure)
+                    , currencyAdjustedData));
         }
         else{
-            return this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure), data);
+            return Math.round(this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure), data));
         }
     }
 
     //TODO
-    public Set<String> getKeyFigureNames(){
+    public static Set<String> getKeyFigureNames(){
         return KeyFigureCollection.getKeySet();
     }
 
