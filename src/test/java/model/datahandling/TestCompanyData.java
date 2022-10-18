@@ -18,7 +18,7 @@ public class TestCompanyData {
 
     @Test
     public void getCurrencyShouldReturnCorrectCurrencyEnum() {
-        assertEquals(CurrencyEnum.USD, CompanyData.getCurrency("AAPL"));
+        assertEquals("USD", CompanyData.getCurrency("AAPL"));
     }
 
     @Test
