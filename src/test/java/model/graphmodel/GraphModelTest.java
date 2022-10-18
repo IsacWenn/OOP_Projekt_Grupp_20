@@ -1,8 +1,5 @@
 package model.graphmodel;
 
-import model.graphmodel.graphalgorithms.GraphAlgorithms;
-import model.graphmodel.keyfigures.KeyFigureCollection;
-import model.util.CurrencyEnum;
 import model.util.Date;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;

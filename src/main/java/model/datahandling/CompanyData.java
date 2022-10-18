@@ -1,8 +1,5 @@
 package model.datahandling;
 
-import model.util.CurrencyCollection;
-import model.util.CurrencyEnum;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

@@ -6,7 +6,6 @@ package model.datahandling;
 *
 */
 
-import model.util.CurrencyEnum;
 import model.util.Date;
 
 import java.io.IOException;

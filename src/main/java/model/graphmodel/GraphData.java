@@ -1,7 +1,6 @@
 package model.graphmodel;
 
 import model.util.CurrencyCollection;
-import model.util.CurrencyEnum;
 import model.util.Date;
 import model.datahandling.DataHandler;
 import model.datahandling.DayData;

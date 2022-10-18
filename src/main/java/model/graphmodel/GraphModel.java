@@ -7,7 +7,6 @@ import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import model.graphmodel.graphalgorithms.GraphAlgorithmCollection;
 import model.graphmodel.keyfigures.KeyFigureCollection;
 import model.util.CurrencyCollection;
-import model.util.CurrencyEnum;
 import model.util.Date;
 
 import java.io.IOException;
@@ -153,7 +152,7 @@ public class GraphModel {
     /**
      * A method for updating the {@link GraphModel#currencyAdjustedData} to the latest {@link GraphModel#data} adjusted
      * for the provided currency.
-     * @param toCurrency is a {@link CurrencyEnum} representing the currency the method should adjust for.
+     * @param toCurrency is a {@link String} representing the currency the method should adjust for.
      */
     public void updateCurrency(String toCurrency) {
         this.currency = toCurrency;

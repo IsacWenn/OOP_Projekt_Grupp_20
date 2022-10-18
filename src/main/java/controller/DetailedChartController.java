@@ -1,19 +1,13 @@
 package controller;
-import com.sun.javafx.scene.traversal.Algorithm;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import model.graphmodel.GraphModel;
-import model.graphmodel.keyfigures.KeyFigureAlgorithm;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 
 public class DetailedChartController extends ChartController{

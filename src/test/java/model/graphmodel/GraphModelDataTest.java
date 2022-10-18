@@ -2,7 +2,6 @@ package model.graphmodel;
 
 
 import model.datahandling.DayData;
-import model.util.CurrencyEnum;
 import model.util.Date;
 import org.junit.jupiter.api.*;
 

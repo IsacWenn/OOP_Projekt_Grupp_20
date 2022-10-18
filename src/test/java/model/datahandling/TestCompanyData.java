@@ -1,7 +1,6 @@
 package model.datahandling;
 
 
-import model.util.CurrencyEnum;
 import org.junit.jupiter.api.*;
 
 import java.util.List;

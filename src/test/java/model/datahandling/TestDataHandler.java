@@ -1,11 +1,9 @@
 package model.datahandling;
 
 
-import model.util.CurrencyEnum;
 import model.util.Date;
 import org.junit.jupiter.api.*;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.util.*;
 

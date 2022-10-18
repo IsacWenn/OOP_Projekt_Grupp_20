@@ -1,7 +1,5 @@
 package model.bivariatealgorithms;
 
-import model.util.CurrencyEnum;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
