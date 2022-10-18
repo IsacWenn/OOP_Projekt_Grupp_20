@@ -50,4 +50,9 @@ public class ComparisonChartController extends ChartController {
         }
         item.togglePressed();
     }
+
+    @Override
+    public void refreshChart() {
+        chart.refresh(chartModel.getGraphModels());
+    }
 }

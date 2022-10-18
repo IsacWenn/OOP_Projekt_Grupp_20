@@ -128,7 +128,7 @@ public class DetailedChartController extends ChartController{
                 )
             );
         }
-        populateKeyFigureContainer(item);
+        populateKeyFigureContainer();
     }
 
     public void stockListOnClick(ControllerStockListItem item) {
@@ -147,10 +147,17 @@ public class DetailedChartController extends ChartController{
         item.togglePressed();
         chart.refresh(chartModel.getGraphModels());
     }
-    private void populateKeyFigureContainer(ControllerStockListItem item) {
+
+    private void populateKeyFigureContainer() {
         keyFigureContainer.getChildren().clear();
         for (String keyFig : GraphModel.getKeyFigureNames()) {
             keyFigureContainer.getChildren().add(new KeyFigureListItem(this, keyFig, chartModel.getGraphModels().get(0)));
         }
+    }
+
+    @Override
+    public void refreshChart() {
+        chart.refresh(chartModel.getGraphModels());
+        populateKeyFigureContainer();
     }
 }

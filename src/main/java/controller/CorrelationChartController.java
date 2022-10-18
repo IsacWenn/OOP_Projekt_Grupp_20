@@ -67,4 +67,9 @@ public class CorrelationChartController extends ChartController {
             addCompany(item);
         }
     }
+
+    @Override
+    public void refreshChart() {
+        chart.refresh(chartModel.getGraphModels());
+    }
 }
