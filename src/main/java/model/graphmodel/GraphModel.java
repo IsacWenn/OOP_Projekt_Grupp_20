@@ -186,8 +186,10 @@ public class GraphModel {
         }
     }
 
-    static public Set<String> getKeyFigureNames(){
-        return KeyFigureCollection.getKeySet();
+    static public List<String> getKeyFigureNames(){
+        List<String> returnList = new ArrayList<>(KeyFigureCollection.getKeySet());
+        Collections.sort(returnList);
+        return returnList;
     }
 
     static public List<String> getGraphAlgorithmNames(){
