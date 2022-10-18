@@ -153,12 +153,16 @@ public class User implements Serializable {
      * A method loading all the Users of the file in {@link User#filePath} to the {@link User#users}.
      */
     public static void loadUsers() {
+        List<User> savedUsers = new ArrayList<>();
         try (FileInputStream fis = new FileInputStream(filePath);
              ObjectInputStream ois = new ObjectInputStream(fis);) {
-            users = (List<User>) ois.readObject();
+            savedUsers = (List<User>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
+        for (User user : savedUsers)
+            if (!users.contains(user))
+                users.add(user);
     }
 
     /**
