@@ -6,6 +6,7 @@ import model.graphmodel.graphalgorithms.GraphAlgorithm;
 import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import model.graphmodel.graphalgorithms.GraphAlgorithmCollection;
 import model.graphmodel.keyfigures.KeyFigureCollection;
+import model.util.CurrencyCollection;
 import model.util.CurrencyEnum;
 import model.util.Date;
 
@@ -45,7 +46,7 @@ public class GraphModel {
 
     private String companyMIC, graphName;
 
-    private CurrencyEnum currency;
+    private String currency;
 
     /**
      * A constructor for the class GraphModel that retrieves all available data for the given mic of a company
@@ -154,7 +155,7 @@ public class GraphModel {
      * for the provided currency.
      * @param toCurrency is a {@link CurrencyEnum} representing the currency the method should adjust for.
      */
-    public void updateCurrency(CurrencyEnum toCurrency) {
+    public void updateCurrency(String toCurrency) {
         this.currency = toCurrency;
         Map<Date,Double> from = graphData.getNativeCurrencyData(companyMIC, data.keySet());
         Map<Date,Double> to = graphData.getCurrencyData(toCurrency, data.keySet());
@@ -206,6 +207,20 @@ public class GraphModel {
         return returnList;
     }
 
+    static public List<String> getCurrencyNames(){
+        List<String> returnList = new ArrayList<>();
+        String defaultAlgoName = CurrencyCollection.getDefaultCurrencyName();
+        List<String> namesInOrder = new ArrayList<>(CurrencyCollection.getCurrencyNames());
+        Collections.sort(namesInOrder);
+
+        returnList.add(defaultAlgoName);
+        for (String algoName : namesInOrder) {
+            if (!Objects.equals(algoName, defaultAlgoName))
+                returnList.add(algoName);
+        }
+        return returnList;
+    }
+
     /**
      * A getter method that converts {@link GraphModel#values} to a {@link javafx.scene.chart.XYChart.Series}
      *
@@ -240,7 +255,7 @@ public class GraphModel {
             Date date1 = new Date(2022,7,1);
             Date date2 = new Date(2022,8,1);
             GraphModel graphModel = new GraphModel("AAPL", "Test");
-            graphModel.updateCurrency(CurrencyEnum.SEK);
+            graphModel.updateCurrency("SEK");
             graphModel.updateTimeInterval(date1, date2);
             graphModel.updateAlgorithm("Daily change");
             System.out.println(graphModel.getValues());

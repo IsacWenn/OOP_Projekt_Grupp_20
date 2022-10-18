@@ -26,6 +26,8 @@ public class DetailedChartController extends ChartController{
     private MenuButton algorithmMenuButton;
     @FXML
     private FlowPane keyFigureContainer;
+    @FXML
+    protected ComboBox<String> currencyComboBox;
 
     public DetailedChartController(AppController parentController) {
         super(parentController);
@@ -132,6 +134,7 @@ public class DetailedChartController extends ChartController{
         chart.refresh(chartModel.getGraphModels());
         if (keyFigGraphModel != null) {
             keyFigGraphModel.updateTimeInterval(chartModel.getStartDate(), chartModel.getEndDate());
+            keyFigGraphModel.updateCurrency(currencyComboBox.getSelectionModel().getSelectedItem());
         }
         populateKeyFigureContainer();
     }

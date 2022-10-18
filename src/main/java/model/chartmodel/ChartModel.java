@@ -59,6 +59,12 @@ public class ChartModel {
         }
     }
 
+    public void updateCurrencies(String currency) {
+        for (GraphModel graphModel: graphModels) {
+            graphModel.updateCurrency(currency);
+        }
+    }
+
     public void updateTimeInterval(LocalDate newStartDate, LocalDate newEndDate) throws IOException {
         Date tempStartDate = new Date(newStartDate.getYear(), newStartDate.getMonthValue(), newStartDate.getDayOfMonth());
         Date tempEndDate = new Date(newEndDate.getYear(), newEndDate.getMonthValue(), newEndDate.getDayOfMonth());

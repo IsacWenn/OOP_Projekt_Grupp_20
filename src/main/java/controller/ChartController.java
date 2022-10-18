@@ -133,16 +133,16 @@ public abstract class ChartController extends AnchorPane {
                 case ("Bar Chart") -> openBarChart();
                 case ("Line Chart") -> openLineChart();
             }
-            chart.refresh(chartModel.getGraphModels());
+            refreshChart();
         });
     }
 
     private void initializeCurrencyComboBox() {
-        currencyComboBox.getItems().addAll(GraphModel.getGraphAlgorithmNames());
-        currencyComboBox.getSelectionModel().select(GraphModel.getGraphAlgorithmNames().get(0));
+        currencyComboBox.getItems().addAll(GraphModel.getCurrencyNames());
+        currencyComboBox.getSelectionModel().select(GraphModel.getCurrencyNames().get(0));
         currencyComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
-            chartModel.updateAlgorithms(newVal);
-            chart.refresh(chartModel.getGraphModels());
+            chartModel.updateCurrencies(newVal);
+            refreshChart();
         });
     }
 

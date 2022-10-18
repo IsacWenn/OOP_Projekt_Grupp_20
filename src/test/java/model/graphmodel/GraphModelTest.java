@@ -71,7 +71,7 @@ public class GraphModelTest {
     @Test
     public void changeCurrencyShouldUpdateWhatCurrencyTheGraphValuesIsShownIn(){
         GraphModel graphModel = new GraphModel("AAPL", "Test", date2, date3);
-        graphModel.updateCurrency(CurrencyEnum.SEK);
+        graphModel.updateCurrency("SEK");
         assertEquals(1569.65, (double)graphModel.getValues().get(date2), 0.1);
     }
 
@@ -91,7 +91,7 @@ public class GraphModelTest {
     @Test
     public void getKeyFigureValueShouldReturnTheValueOfThatKeyFigureEvenIfCurrencyBeenChanged(){
         GraphModel graphModel = new GraphModel("AAPL", "Test", date1, date2);
-        graphModel.updateCurrency(CurrencyEnum.SEK);
+        graphModel.updateCurrency("SEK");
         String result = graphModel.getKeyFigureValue("Volatility");
         //assertEquals(5.1, result, 0.05);
     }

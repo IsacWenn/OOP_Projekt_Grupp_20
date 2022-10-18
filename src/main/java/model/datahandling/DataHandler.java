@@ -246,7 +246,7 @@ public class DataHandler {
      * @param mic A {@link String} of the company's MIC.
      * @return A {@link CurrencyEnum} representing that company's trading currency.
      */
-    public static CurrencyEnum getCompanyTradingCurrency(String mic) { return CompanyData.getCurrency(mic); }
+    public static String getCompanyTradingCurrency(String mic) { return CompanyData.getCurrency(mic); }
 
     /**
      * A method that returns the closest exhange rate for a given date. If there is not an exchange rate for the given

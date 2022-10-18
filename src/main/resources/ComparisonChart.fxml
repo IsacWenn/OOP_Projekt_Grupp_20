@@ -34,6 +34,6 @@
         </AnchorPane>
     </SplitPane>
    <ComboBox fx:id="chartTypeComboBox" layoutX="320.0" layoutY="21.0" prefWidth="150.0" />
-   <ComboBox fx:id="algorithmComboBox" layoutX="503.0" layoutY="21.0" prefWidth="150.0" />
-   <ComboBox fx:id="currencyComboBox" layoutX="1025.0" layoutY="22.0" prefWidth="150.0" />
+   <ComboBox fx:id="algorithmComboBox" layoutX="500.0" layoutY="21.0" prefWidth="150.0" />
+   <ComboBox fx:id="currencyComboBox" layoutX="1025.0" layoutY="21.0" prefWidth="150.0" />
 </fx:root>
