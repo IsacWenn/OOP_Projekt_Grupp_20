@@ -36,7 +36,7 @@ public class AppController implements Initializable {
     }
 
     public void newCorrelationChart() {
-        ChartController newChart = new ComparisonChartController(this);
+        ChartController newChart = new CorrelationChartController(this);
         newTab(newChart, "Correlation Chart");
     }
 
