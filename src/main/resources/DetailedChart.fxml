@@ -39,9 +39,9 @@
    <CheckBox fx:id="dailyChangeBox" layoutX="494.0" layoutY="38.0" mnemonicParsing="false" text="Daily Change" />
    <CheckBox fx:id="dailyDeviationBox" layoutX="600.0" layoutY="12.0" mnemonicParsing="false" text="Daily Deviation" />
    <CheckBox fx:id="linearRegressionBox" layoutX="600.0" layoutY="38.0" mnemonicParsing="false" text="Linear Regression" />
-   <AnchorPane layoutX="807.0" layoutY="10.0" prefHeight="62.0" prefWidth="290.0">
+   <AnchorPane layoutX="727.0" layoutY="10.0" prefHeight="62.0" prefWidth="510.0">
       <children>
-         <FlowPane fx:id="keyFigureContainer" prefHeight="62.0" prefWidth="460.0" prefWrapLength="460.0" />
+         <FlowPane fx:id="keyFigureContainer" prefHeight="62.0" prefWidth="510.0" prefWrapLength="540.0" />
       </children>
    </AnchorPane>
 </fx:root>
