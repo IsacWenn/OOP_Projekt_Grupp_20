@@ -19,7 +19,7 @@ public class ComparisonChartController extends ChartController {
 
     @Override
     void loadFXML() {
-        FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../LineChart.fxml")));
+        FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../ComparisonChart.fxml")));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {

@@ -24,8 +24,8 @@
          <Button fx:id="timeframOneYearButton" layoutX="225.0" layoutY="65.0" mnemonicParsing="false" onAction="#timeframeOneYear" text="1 År" />
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="180.0" prefHeight="100.0" prefWidth="160.0">
-            <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <FlowPane fx:id="stockPane" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="275.0" rowValignment="TOP">
+            <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="280.0">
+                <FlowPane fx:id="stockPane" maxWidth="-Infinity" minWidth="-Infinity" rowValignment="TOP">
                     <opaqueInsets>
                         <Insets />
                     </opaqueInsets>
@@ -34,5 +34,6 @@
         </AnchorPane>
     </SplitPane>
    <ComboBox fx:id="chartTypeComboBox" layoutX="320.0" layoutY="21.0" prefWidth="150.0" />
-   <ComboBox fx:id="algorithmComboBox" layoutX="523.0" layoutY="21.0" prefWidth="150.0" />
+   <ComboBox fx:id="algorithmComboBox" layoutX="503.0" layoutY="21.0" prefWidth="150.0" />
+   <ComboBox fx:id="currencyComboBox" layoutX="1025.0" layoutY="22.0" prefWidth="150.0" />
 </fx:root>

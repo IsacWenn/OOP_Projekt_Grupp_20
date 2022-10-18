@@ -19,11 +19,15 @@ public class KeyFigureListItem extends AnchorPane {
         this.parentController = parentController;
         loadFXML();
         keyFigLabel.setText(keyFig + ":");
-        keyFigVal.setText(graphModel.getKeyFigureValue(keyFig).toString());
+        if (graphModel != null) {
+            keyFigVal.setText(graphModel.getKeyFigureValue(keyFig));
+        } else {
+            keyFigVal.setText("-");
+        }
 
     }
     private void loadFXML() {
-        FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../KeyFigureEntity.fxml")));
+        FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../KeyFigureItem.fxml")));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {

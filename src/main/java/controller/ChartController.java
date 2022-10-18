@@ -10,6 +10,7 @@ import javafx.scene.layout.FlowPane;
 import model.AppModel;
 import model.chartmodel.ChartModel;
 import model.datahandling.DataHandler;
+import model.graphmodel.GraphModel;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -43,6 +44,8 @@ public abstract class ChartController extends AnchorPane {
     @FXML
     protected ComboBox<String> chartTypeComboBox;
     @FXML
+    protected ComboBox<String> currencyComboBox;
+    @FXML
     protected AnchorPane chartPane;
 
     public ChartController(AppController parentController) {
@@ -67,6 +70,7 @@ public abstract class ChartController extends AnchorPane {
         initializeStartDatePicker();
         initializeEndDatePicker();
         initializeChartTypeComboBox();
+        initializeCurrencyComboBox();
         openLineChart();
     }
 
@@ -129,6 +133,15 @@ public abstract class ChartController extends AnchorPane {
                 case ("Bar Chart") -> openBarChart();
                 case ("Line Chart") -> openLineChart();
             }
+            chart.refresh(chartModel.getGraphModels());
+        });
+    }
+
+    private void initializeCurrencyComboBox() {
+        currencyComboBox.getItems().addAll(GraphModel.getGraphAlgorithmNames());
+        currencyComboBox.getSelectionModel().select(GraphModel.getGraphAlgorithmNames().get(0));
+        currencyComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
+            chartModel.updateAlgorithms(newVal);
             chart.refresh(chartModel.getGraphModels());
         });
     }

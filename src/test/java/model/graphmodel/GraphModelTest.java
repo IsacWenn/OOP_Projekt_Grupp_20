@@ -85,14 +85,14 @@ public class GraphModelTest {
     @Test
     public void getKeyFigureValueShouldReturnTheValueOfThatKeyFigureForTheCurrentData(){
         GraphModel graphModel = new GraphModel("AAPL", "Test", date1, date2);
-        double result = graphModel.getKeyFigureValue("Volatility");
-        assertEquals(5.1, result, 0.05);
+        String result = graphModel.getKeyFigureValue("Volatility");
+        assertEquals("5.10", result);
     }
     @Test
     public void getKeyFigureValueShouldReturnTheValueOfThatKeyFigureEvenIfCurrencyBeenChanged(){
         GraphModel graphModel = new GraphModel("AAPL", "Test", date1, date2);
         graphModel.updateCurrency(CurrencyEnum.SEK);
-        double result = graphModel.getKeyFigureValue("Volatility");
+        String result = graphModel.getKeyFigureValue("Volatility");
         //assertEquals(5.1, result, 0.05);
     }
 }

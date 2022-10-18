@@ -82,7 +82,7 @@ public class GraphModel {
     public GraphModel(String mic, String graphName, Date from, Date to) {
         init(mic, graphName);
         this.data = graphData.getCompanyData(mic, from, to);
-        updateAlgorithm("Daily closing price");
+        updateAlgorithm(getGraphAlgorithmNames().get(0));
         update();
     }
 
@@ -176,26 +176,16 @@ public class GraphModel {
     }
 
 
-    public Long getKeyFigureValue(String keyFigure){
+    public String getKeyFigureValue(String keyFigure){
         if(currencyAdjustedData!=null) {
-            return Math.round(this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure)
+            return String.format("%.2f", this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure)
                     , currencyAdjustedData));
         }
         else{
-            return Math.round(this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure), data));
+            return String.format("%.2f", this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure), data));
         }
     }
 
-<<<<<<< HEAD
-    //TODO
-    public static Set<String> getKeyFigureNames(){
-        return KeyFigureCollection.getKeySet();
-    }
-
-    //TODO
-    public static Set<String> getGraphAlgorithmNames(){
-        return  GraphAlgorithmCollection.getKeySet();
-=======
     static public Set<String> getKeyFigureNames(){
         return KeyFigureCollection.getKeySet();
     }
@@ -211,8 +201,7 @@ public class GraphModel {
             if (!Objects.equals(algoName, defaultAlgoName))
                 returnList.add(algoName);
         }
-        return  returnList;
->>>>>>> 0f7159f (Names of graph algroithm are now in order)
+        return returnList;
     }
 
     /**
