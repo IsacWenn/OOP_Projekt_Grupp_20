@@ -85,6 +85,7 @@ public class CorrelationChartController extends ChartController {
     @Override
     public void refreshChart() {
         chart.refresh(chartModel.getGraphModels());
+        populateKeyFigureContainer();
     }
 
     private void populateKeyFigureContainer() {
