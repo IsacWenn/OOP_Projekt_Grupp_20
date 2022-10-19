@@ -6,9 +6,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import model.AppModel;
 
-import java.net.URL;
-import java.util.*;
-
 public class AppController {
 
     private final AppModel appModel = AppModel.getInstance();
