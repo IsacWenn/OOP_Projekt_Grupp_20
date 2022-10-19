@@ -148,8 +148,8 @@ public class GraphModel {
     }
 
     /**
-     * A method for updating the {@link GraphModel#currencyAdjustedData} to the latest {@link GraphModel#data} adjusted
-     * for the provided currency.
+     * A method for updating the {@link GraphModel#currency} to the provided {@link String}.
+     *
      * @param toCurrency is a {@link String} representing the currency the method should adjust for.
      */
     public void updateCurrency(String toCurrency) {
@@ -157,6 +157,10 @@ public class GraphModel {
         updateCurrencyAdjustedData();
     }
 
+    /**
+     * A method for updating the {@link GraphModel#currencyAdjustedData} to the latest {@link GraphModel#data} adjusted
+     * for the currency in {@link GraphModel#currency}.
+     */
     private void updateCurrencyAdjustedData() {
         Map<Date,Double> from = graphData.getNativeCurrencyData(companyMIC, data.keySet());
         Map<Date,Double> to = graphData.getCurrencyData(this.currency, data.keySet());
@@ -248,31 +252,6 @@ public class GraphModel {
             dIndex += stepAmount; slot++;
         }
         return chartSeries;
-    }
-
-    public static void main(String[] args) {
-
-        try {
-            Date date1 = new Date(2022,7,1);
-            Date date2 = new Date(2022,8,1);
-            GraphModel graphModel = new GraphModel("AAPL", "Test");
-            graphModel.updateCurrency("SEK");
-            graphModel.updateTimeInterval(date1, date2);
-            graphModel.updateAlgorithm("Daily change");
-            System.out.println(graphModel.getValues());
-
-            /*
-            Map<String, Double> keyFigures = graphModel.getKeyFigures();
-            System.out.println(keyFigures.get("Volatility"));
-            Map<Date, DayData> data = graphModel.data;
-
-            Map<Date, DayData> filteredDates = data.entrySet().stream().filter(x->x.getKey()
-                            .isAfterOrEqual(from) && x.getKey().isBeforeOrEqual(to))
-                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-            */
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
 

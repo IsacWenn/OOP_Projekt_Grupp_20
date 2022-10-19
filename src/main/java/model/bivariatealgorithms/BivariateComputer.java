@@ -20,7 +20,7 @@ public class BivariateComputer {
         Set<Date> commonDates = series1.keySet();
         commonDates.retainAll(series2.keySet());
 
-        BivariateAlgorithms algo = BivariateAlgorithmCollection.getGraphAlgorithms(bivariateAlgorithmName);
+        BivariateAlgorithms algo = BivariateAlgorithmCollection.getBivariateAlgorithm(bivariateAlgorithmName);
         double keyFigure = algo.calculateKeyFigure(series1, series2, commonDates);
 
         return keyFigure;
