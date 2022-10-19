@@ -18,6 +18,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Abstract JavaFX-dependent class which acts as a user interface between the user and different charts and graphs.
+ *
+ * @author Johan
+ * @author Dennis
+ */
 public abstract class ChartController extends AnchorPane {
 
     protected final AppModel appModel = AppModel.getInstance();
@@ -219,8 +225,14 @@ public abstract class ChartController extends AnchorPane {
         return favouriteCompanies.contains(acronym);
     }
 
+    /**
+     * Redraws the chart.
+     */
     protected abstract void refreshChart();
 
+    /**
+     * Sets the timeframe for which the chart is generated for to the past day.
+     */
     @FXML
     public void timeframeOneDay() {
         try {
@@ -231,6 +243,9 @@ public abstract class ChartController extends AnchorPane {
         refreshChart();
     }
 
+    /**
+     * Sets the timeframe for which the chart is generated for to the past week.
+     */
     @FXML
     public void timeframeOneWeek() {
         try {
@@ -241,6 +256,9 @@ public abstract class ChartController extends AnchorPane {
         refreshChart();
     }
 
+    /**
+     * Sets the timeframe for which the chart is generated for to the past month.
+     */
     @FXML
     public void timeframeOneMonth() {
         try {
@@ -251,6 +269,9 @@ public abstract class ChartController extends AnchorPane {
         refreshChart();
     }
 
+    /**
+     * Sets the timeframe for which the chart is generated for to the past year.
+     */
     @FXML
     public void timeframeOneYear() {
         try {
@@ -261,27 +282,43 @@ public abstract class ChartController extends AnchorPane {
         refreshChart();
     }
 
+    /**
+     * Changes the displayed chart to a line chart.
+     */
     private void openLineChart() {
         chart = new LineChart();
         chartPane.getChildren().clear();
         chartPane.getChildren().add(chart);
     }
 
+    /**
+     * Changes the displayed chart to a bar chart.
+     */
     private void openBarChart() {
         chart = new BarChart();
         chartPane.getChildren().clear();
         chartPane.getChildren().add(chart);
     }
 
+    /**
+     * Changes the displayed chart to an area chart.
+     */
     private void openAreaChart() {
         chart = new AreaChart();
         chartPane.getChildren().clear();
         chartPane.getChildren().add(chart);
     }
 
+    /**
+     * @return the current currency selected by the currencyComboBox.
+     */
     protected String getCurrency() {
         return currencyComboBox.getSelectionModel().getSelectedItem();
     }
 
+    /**
+     * Method which dictates what happens when a {@link ControllerStockListItem} is clicked.
+     * @param item the {@link ControllerStockListItem} clicked upon.
+     */
     public abstract void stockListOnClick(ControllerStockListItem item);
 }
