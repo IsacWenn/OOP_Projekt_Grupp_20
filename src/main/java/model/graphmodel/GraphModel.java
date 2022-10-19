@@ -141,7 +141,10 @@ public class GraphModel {
      */
     public void updateTimeInterval(Date from, Date to) {
         this.data = graphData.getCompanyData(companyMIC, from, to);
-        update();
+        if (currency != null)
+            updateCurrencyAdjustedData();
+        else
+            update();
     }
 
     /**
@@ -151,8 +154,12 @@ public class GraphModel {
      */
     public void updateCurrency(String toCurrency) {
         this.currency = toCurrency;
+        updateCurrencyAdjustedData();
+    }
+
+    private void updateCurrencyAdjustedData() {
         Map<Date,Double> from = graphData.getNativeCurrencyData(companyMIC, data.keySet());
-        Map<Date,Double> to = graphData.getCurrencyData(toCurrency, data.keySet());
+        Map<Date,Double> to = graphData.getCurrencyData(this.currency, data.keySet());
         this.currencyAdjustedData = graphComputer.calculateCurrency(from, to, data);
         update();
     }
