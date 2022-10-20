@@ -3,6 +3,9 @@ package view.charts;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 
+/**
+ * Class which represents a line chart.
+ */
 public class LineChart extends Chart {
     public LineChart() {
         javafx.scene.chart.LineChart<String, Number> lineChart = new javafx.scene.chart.LineChart<>(new CategoryAxis(), new NumberAxis());
