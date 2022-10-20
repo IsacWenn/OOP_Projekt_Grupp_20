@@ -3,6 +3,8 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
+import javafx.scene.layout.FlowPane;
+import model.bivariatealgorithms.BivariateComputer;
 import model.graphmodel.GraphModel;
 
 import java.io.IOException;
@@ -10,7 +12,10 @@ import java.util.ArrayList;
 
 public class CorrelationChartController extends ChartController {
 
-    protected ArrayList<ControllerStockListItem> activeCompanies;
+    private ArrayList<ControllerStockListItem> activeCompanies;
+    private ArrayList<GraphModel> graphModels;
+    @FXML
+    private FlowPane keyFigureContainer;
     @FXML
     protected ComboBox<String> algorithmComboBox;
 
@@ -18,11 +23,12 @@ public class CorrelationChartController extends ChartController {
         super(parentController);
         initializeAlgorithmComboBox();
         activeCompanies = new ArrayList<>();
+        graphModels = new ArrayList<>();
     }
 
     @Override
     void loadFXML() {
-        FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../ComparisonChart.fxml")));
+        FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../CorrelationChart.fxml")));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
@@ -47,6 +53,10 @@ public class CorrelationChartController extends ChartController {
         chart.remove(index);
         activeCompanies.remove(item);
         item.togglePressed();
+        if (activeCompanies.size() < 2) {
+            keyFigureContainer.getChildren().clear();
+            graphModels.remove(index);
+        }
     }
 
     private void addCompany(ControllerStockListItem item) {
@@ -56,7 +66,11 @@ public class CorrelationChartController extends ChartController {
         GraphModel newGraph = chartModel.add(item.getMIC(), item.getName(), algorithmComboBox.getValue());
         chart.add(newGraph);
         activeCompanies.add(item);
+        graphModels.add(newGraph);
         item.togglePressed();
+        if (activeCompanies.size() == 2 ) {
+            populateKeyFigureContainer();
+        }
     }
 
     @Override
@@ -71,5 +85,15 @@ public class CorrelationChartController extends ChartController {
     @Override
     public void refreshChart() {
         chart.refresh(chartModel.getGraphModels());
+        populateKeyFigureContainer();
+    }
+
+    private void populateKeyFigureContainer() {
+        keyFigureContainer.getChildren().clear();
+        for (String algorithm : BivariateComputer.getBivariateAlgorithmNames()) {
+            keyFigureContainer.getChildren().add(new KeyFigureListItem(this, algorithm,
+                    BivariateComputer.calculateKeyFigures(algorithm, graphModels.get(0).getValues(), graphModels.get(1).getValues())));
+        }
     }
 }
+

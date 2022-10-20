@@ -15,10 +15,10 @@ public class KeyFigureListItem extends AnchorPane {
     private Label keyFigVal;
     private final ChartController parentController;
 
-    public KeyFigureListItem(ChartController parentController, String keyFig, GraphModel graphModel) {
+    public KeyFigureListItem(ChartController parentController, String name, GraphModel graphModel) {
         this.parentController = parentController;
         loadFXML();
-        keyFigLabel.setText(keyFig + ":");
+        keyFigLabel.setText(name + ":");
         if (graphModel != null) {
             keyFigVal.setText(String.format("%.2f", graphModel.getKeyFigureValue(keyFig)));
         } else {
@@ -26,6 +26,15 @@ public class KeyFigureListItem extends AnchorPane {
         }
 
     }
+
+    public KeyFigureListItem(ChartController parentController, String name, double data) {
+        this.parentController = parentController;
+        loadFXML();
+        keyFigLabel.setText(name + ":");
+        keyFigVal.setText(String.format("%.4f", data));
+        this.setPrefSize(250, 30);
+    }
+
     private void loadFXML() {
         FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../KeyFigureItem.fxml")));
         fxmlLoader.setRoot(this);
