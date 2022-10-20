@@ -1,4 +1,5 @@
 import model.AppModel;
+import model.user.UsersCollection;
 import view.AppView;
 
 public class Main {
@@ -11,6 +12,7 @@ public class Main {
         view.startup();
         
         model.notifyObservers();
+        UsersCollection.saveUsers();
         System.out.println("Färdig");
     }
 
