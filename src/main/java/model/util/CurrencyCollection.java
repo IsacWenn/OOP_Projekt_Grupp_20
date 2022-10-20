@@ -20,13 +20,11 @@ public class CurrencyCollection {
         currencies.add("SEK");
         currencies.add("EUR");
         currencies.add("GBP");
-        currencies.add("NOK");
-        currencies.add("RUB");
+        currencies.add("CNY");
+        currencies.add("PLN");
         currencies.add("JPY");
         currencies.add("INR");
-        currencies.add("KRW");
-        currencies.add("DKK");
-        currencies.add("ISK");
+        currencies.add("CAD");
     }
 
     /**
