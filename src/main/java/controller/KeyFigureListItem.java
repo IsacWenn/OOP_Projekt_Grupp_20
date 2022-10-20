@@ -20,7 +20,7 @@ public class KeyFigureListItem extends AnchorPane {
         loadFXML();
         keyFigLabel.setText(name + ":");
         if (graphModel != null) {
-            keyFigVal.setText(String.format("%.2f", graphModel.getKeyFigureValue(keyFig)));
+            keyFigVal.setText(String.format("%.2f", graphModel.getKeyFigureValue(name)));
         } else {
             keyFigVal.setText("-");
         }
