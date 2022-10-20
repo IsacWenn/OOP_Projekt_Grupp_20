@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.AnchorPane;
 import model.AppModel;
 
 public class AppController {
@@ -12,6 +13,12 @@ public class AppController {
 
     @FXML
     private TabPane tabsPane;
+    @FXML
+    private AnchorPane mainView;
+    @FXML
+    private AnchorPane registerView;
+    @FXML
+    private AnchorPane loginView;
 
     /**
      * Generates a new {@link ComparisonChartController} as a tab in the AppController GUI.
@@ -46,6 +53,18 @@ public class AppController {
         Tab newTab = new Tab(name, content);
         tabsPane.getTabs().add(newTab);
         tabsPane.getSelectionModel().select(newTab);
+    }
+
+    public void mainView() {
+        mainView.toFront();
+    }
+
+    public void loginView() {
+        loginView.toFront();
+    }
+
+    public void registerView() {
+        registerView.toFront();
     }
 
 }

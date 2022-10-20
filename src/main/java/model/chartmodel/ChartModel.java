@@ -17,6 +17,7 @@ public class ChartModel {
     public ChartModel() {
         initializeVariables();
     }
+
     protected void initializeVariables() {
         try {
             startDate = new Date(2021, 9, 26);

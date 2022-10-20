@@ -4,16 +4,34 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppController">
+
+<StackPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppController">
    <children>
-      <Pane layoutX="63.0" layoutY="-57.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="mainView" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #ffffff;">
          <children>
-            <Button fx:id="newComparisonChartButton" layoutX="14.0" layoutY="37.0" mnemonicParsing="false" onAction="#newComparisonChart" text="New Comparison Graph" />
-            <Button fx:id="newDetailedChartButton" layoutX="179.0" layoutY="37.0" mnemonicParsing="false" onAction="#newDetailedChart" text="New Detailed Graph" />
-            <Button fx:id="newCorrelationChartButton" layoutX="323.0" layoutY="37.0" mnemonicParsing="false" onAction="#newCorrelationChart" text="New Correlation Graph" />
+            <Pane layoutX="63.0" layoutY="-57.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Button fx:id="newComparisonChartButton" layoutX="14.0" layoutY="37.0" mnemonicParsing="false" onAction="#newComparisonChart" text="New Comparison Graph" />
+                  <Button fx:id="newDetailedChartButton" layoutX="179.0" layoutY="37.0" mnemonicParsing="false" onAction="#newDetailedChart" text="New Detailed Graph" />
+                  <Button fx:id="newCorrelationChartButton" layoutX="323.0" layoutY="37.0" mnemonicParsing="false" onAction="#newCorrelationChart" text="New Correlation Graph" />
+                  <Button layoutX="1081.0" layoutY="38.0" mnemonicParsing="false" onAction="#loginView" text="Login" />
+                  <Button layoutX="998.0" layoutY="39.0" mnemonicParsing="false" onAction="#registerView" text="Register" />
+               </children>
+            </Pane>
+            <TabPane fx:id="tabsPane" layoutX="362.0" layoutY="201.0" style="-fx-background-color: dddddd;" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
          </children>
-      </Pane>
-      <TabPane fx:id="tabsPane" layoutX="362.0" layoutY="201.0" style="-fx-background-color: dddddd;" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
+      </AnchorPane>
+      <AnchorPane fx:id="registerView" onMouseClicked="#mainView" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00000044;">
+         <children>
+            <AnchorPane layoutX="494.0" layoutY="294.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #eeeeee;" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="loginView" onMouseClicked="#mainView" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00000044;">
+         <children>
+            <AnchorPane layoutX="494.0" layoutY="294.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #eeeeee;" />
+         </children>
+      </AnchorPane>
    </children>
-</AnchorPane>
+</StackPane>
