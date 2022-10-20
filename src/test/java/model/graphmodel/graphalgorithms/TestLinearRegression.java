@@ -43,7 +43,7 @@ public class TestLinearRegression {
         date4 = date3.nextDate();
         date5 = date4.nextDate();
 
-        linearRegression = GraphAlgorithmFactory.create(GraphAlgorithms.LINEARREGRESSION);
+        linearRegression = GraphAlgorithmCollection.getGraphAlgorithm("Linear Regression");
     }
 
     @Test
