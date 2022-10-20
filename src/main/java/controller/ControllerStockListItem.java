@@ -38,6 +38,12 @@ public class ControllerStockListItem extends AnchorPane {
     @FXML
     private AnchorPane stockListItem;
 
+    /**
+     * Creates a new instance of {@link ControllerStockListItem} and initializes its variables.
+     * @param acronym the MIC of which the {@link ControllerStockListItem} is a representation of.
+     * @param parentController the parent controller.
+     * @param favorite whether the stock is marked as favorite or not upon creation.
+     */
     ControllerStockListItem (String acronym, ChartController parentController, boolean favorite){
         this.acronym = acronym;
         this.name = DataHandler.getCompanyName(acronym);
@@ -53,14 +59,13 @@ public class ControllerStockListItem extends AnchorPane {
         this.parentController = parentController;
     }
 
+    /**
+     * Assigns relevant data to the {@link Label}s.
+     * @param acronym the MIC.
+     */
     private void initializeLabels(String acronym) {
         stockAcronym.setText(acronym);
         stockName.setText(name);
-        /*try{
-            stockValue.setText(DataHandler.getLatestDayData(acronym).values().toString());
-        } catch (IOException ioe) {
-            System.out.println(ioe.getMessage());
-        }*/
     }
 
     /**
@@ -77,6 +82,9 @@ public class ControllerStockListItem extends AnchorPane {
         }
     }
 
+    /**
+     * Toggles whether the {@link ControllerStockListItem} is set as active or not.
+     */
     public void togglePressed(){
         stockListItem.getStyleClass().clear();
         if (!active) {
@@ -87,6 +95,10 @@ public class ControllerStockListItem extends AnchorPane {
         active = !active;
     }
 
+    /**
+     * Sets an {@link ImageView} to the appropriate image depending on the {@link ControllerStockListItem} is set as
+     * favorite or not.
+     */
     private void initializeFavoriteButton(){
         String iconPath;
         if (favorite) {
@@ -97,6 +109,11 @@ public class ControllerStockListItem extends AnchorPane {
         Image imageToLoad = new Image(getClass().getResource(iconPath).toExternalForm());
         favoriteImage.setImage(imageToLoad);
     }
+
+    /**
+     * Updates the favorite status of the {@link ControllerStockListItem}.
+     * @param event the {@link Event} which triggered the method call.
+     */
     @FXML
     private void onFavoriteClick(Event event){
         String iconPath;
@@ -112,19 +129,35 @@ public class ControllerStockListItem extends AnchorPane {
         favorite = !favorite;
     }
 
+    /**
+     * Informs the parent controller that the {@link ControllerStockListItem} has been pressed.
+     * @param event the event which triggered the method call.
+     */
     @FXML
     private void onClick(Event event){
         parentController.stockListOnClick(this);
     }
 
+    /**
+     * Checks if the {@link ControllerStockListItem} is active.
+     * @return whether the {@link ControllerStockListItem} is active or not.
+     */
     public boolean isActive() {
         return active;
     }
 
+    /**
+     * Returns the MIC of the {@link ControllerStockListItem}.
+     * @return the MIC of the {@link ControllerStockListItem}.
+     */
     public String getMIC() {
         return acronym;
     }
 
+    /**
+     * Returns the name of the {@link ControllerStockListItem}.
+     * @return the name of the {@link ControllerStockListItem}.
+     */
     public String getName() {
         return name;
     }

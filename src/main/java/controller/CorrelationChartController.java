@@ -53,6 +53,9 @@ public class CorrelationChartController extends ChartController {
         }
     }
 
+    /**
+     * Initializes the algorithm selector {@link ComboBox}.
+     */
     private void initializeAlgorithmComboBox() {
         algorithmComboBox.getItems().addAll(GraphModel.getGraphAlgorithmNames());
         algorithmComboBox.getSelectionModel().select("Closing Price");
@@ -62,6 +65,10 @@ public class CorrelationChartController extends ChartController {
         });
     }
 
+    /**
+     * Removes a company from the chart and clears the relevant variables.
+     * @param item the {@link ControllerStockListItem} contains information of the stock to be removed.
+     */
     private void removeCompany(ControllerStockListItem item) {
         int index = chartModel.indexOf(item.getName());
         chartModel.remove(index);
@@ -74,6 +81,10 @@ public class CorrelationChartController extends ChartController {
         }
     }
 
+    /**
+     * Adds a company to the chart and updates the relevant variables.
+     * @param item the {@link ControllerStockListItem} which contains information of the stock to be added.
+     */
     private void addCompany(ControllerStockListItem item) {
         if (activeCompanies.size() >= 2) {
             return;
@@ -88,6 +99,11 @@ public class CorrelationChartController extends ChartController {
         }
     }
 
+    /**
+     * Handles what happens when a {@link ControllerStockListItem} is clicked upon, either adding it to the chart or
+     * removing it.
+     * @param item the {@link ControllerStockListItem} clicked upon.
+     */
     @Override
     public void stockListOnClick(ControllerStockListItem item) {
         if (item.isActive()) {
@@ -97,12 +113,18 @@ public class CorrelationChartController extends ChartController {
         }
     }
 
+    /**
+     * Redraws the chart.
+     */
     @Override
     public void refreshChart() {
         chart.refresh(chartModel.getGraphModels());
         populateKeyFigureContainer();
     }
 
+    /**
+     * Populates a container with relevant {@link KeyFigureListItem}s based on the currently displayed charts.
+     */
     private void populateKeyFigureContainer() {
         keyFigureContainer.getChildren().clear();
         for (String algorithm : BivariateComputer.getBivariateAlgorithmNames()) {

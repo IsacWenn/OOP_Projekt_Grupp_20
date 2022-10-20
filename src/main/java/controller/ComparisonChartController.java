@@ -42,6 +42,9 @@ public class ComparisonChartController extends ChartController {
         }
     }
 
+    /**
+     * Initializes and fills the algorithm selector {@link ComboBox}.
+     */
     private void initializeAlgorithmComboBox() {
         algorithmComboBox.getItems().addAll(GraphModel.getGraphAlgorithmNames());
         algorithmComboBox.getSelectionModel().select(GraphModel.getGraphAlgorithmNames().get(0));
@@ -51,6 +54,11 @@ public class ComparisonChartController extends ChartController {
         });
     }
 
+    /**
+     * Handles what happens when a {@link ControllerStockListItem} is clicked upon, either adding it to the chart or
+     * removing it.
+     * @param item the {@link ControllerStockListItem} clicked upon.
+     */
     @Override
     public void stockListOnClick(ControllerStockListItem item) {
         if (item.isActive()) {
@@ -64,6 +72,9 @@ public class ComparisonChartController extends ChartController {
         item.togglePressed();
     }
 
+    /**
+     * Redraws the chart.
+     */
     @Override
     public void refreshChart() {
         chart.refresh(chartModel.getGraphModels());

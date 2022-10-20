@@ -150,7 +150,7 @@ public abstract class ChartController extends AnchorPane {
     }
 
     /**
-     * Initializes and fills the ComboBox FXML element chartTypeComboBox.
+     * Initializes and fills the chart type selector {@link ComboBox}.
      */
     private void initializeChartTypeComboBox() {
         chartTypeComboBox.getItems().addAll("Area Chart", "Bar Chart", "Line Chart");
@@ -166,7 +166,7 @@ public abstract class ChartController extends AnchorPane {
     }
 
     /**
-     * Initializes and fills the ComboBox FXML element currencyComboBox.
+     * Initializes and fills the currency selector {@link ComboBox}.
      */
     private void initializeCurrencyComboBox() {
         currencyComboBox.getItems().addAll(GraphModel.getCurrencyNames());
