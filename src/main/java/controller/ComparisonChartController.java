@@ -18,13 +18,20 @@ public class ComparisonChartController extends ChartController {
     @FXML
     protected ComboBox<String> algorithmComboBox;
 
+    /**
+     * Generates a {@link ComparisonChartController}.
+     * @param parentController the Parent Controller.
+     */
     public ComparisonChartController(AppController parentController){
         super(parentController);
         initializeAlgorithmComboBox();
     }
 
+    /**
+     * Loads the FXML file.
+     */
     @Override
-    void loadFXML() {
+    protected void loadFXML() {
         FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../ComparisonChart.fxml")));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);

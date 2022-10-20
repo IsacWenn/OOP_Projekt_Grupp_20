@@ -27,6 +27,10 @@ public class CorrelationChartController extends ChartController {
     @FXML
     protected ComboBox<String> algorithmComboBox;
 
+    /**
+     * Generates a {@link CorrelationChartController}.
+     * @param parentController the Parent Controller.
+     */
     public CorrelationChartController(AppController parentController){
         super(parentController);
         initializeAlgorithmComboBox();
@@ -34,8 +38,11 @@ public class CorrelationChartController extends ChartController {
         graphModels = new ArrayList<>();
     }
 
+    /**
+     * Loads the FXML file.
+     */
     @Override
-    void loadFXML() {
+    protected void loadFXML() {
         FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../CorrelationChart.fxml")));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);

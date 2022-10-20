@@ -30,6 +30,10 @@ public class DetailedChartController extends ChartController{
     @FXML
     protected ComboBox<String> currencyComboBox;
 
+    /**
+     * Generates a {@link DetailedChartController}.
+     * @param parentController the Parent Controller.
+     */
     public DetailedChartController(AppController parentController) {
         super(parentController);
         activeCompany = null;
@@ -38,8 +42,11 @@ public class DetailedChartController extends ChartController{
         initializeAlgorithmComboBox();
     }
 
+    /**
+     * Loads the FXML file.
+     */
     @Override
-    void loadFXML() {
+    protected void loadFXML() {
         FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../DetailedChart.fxml")));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -50,6 +57,9 @@ public class DetailedChartController extends ChartController{
         }
     }
 
+    /**
+     * Initializes the Algorithm selector {@link ComboBox}.
+     */
     private void initializeAlgorithmComboBox() {
         ArrayList<CheckBox> checkBoxes = new ArrayList<>();
         for (String algorithm: GraphModel.getGraphAlgorithmNames()) {
@@ -67,6 +77,10 @@ public class DetailedChartController extends ChartController{
         }
     }
 
+    /**
+     * Toggles whether the given algorithm is active or not.
+     * @param algorithm the name of the algorithm to toggle.
+     */
     private void toggleAlgorithm(String algorithm) {
         if (activeAlgorithms.contains(algorithm)) {
             activeAlgorithms.remove(algorithm);
@@ -84,15 +98,22 @@ public class DetailedChartController extends ChartController{
         refreshChart();
     }
 
-    protected void removeFromChart() {
+    /**
+     * Clears the chart and relevant variables.
+     */
+    protected void clearChart() {
         activeCompany = null;
         keyFigGraphModel = null;
         chartModel.clearGraphModels();
         chart.clear();
     }
 
+    /**
+     * Adds the given stock to the chart.
+     * @param item the {@link ControllerStockListItem} which contains information of the stock to be added.
+     */
     protected void addToChart(ControllerStockListItem item) {
-        removeFromChart();
+        clearChart();
         activeCompany = item;
         keyFigGraphModel = new GraphModel(item.getMIC(), "", chartModel.getStartDate(), chartModel.getEndDate());
         for (String algorithm: activeAlgorithms) {
@@ -106,9 +127,15 @@ public class DetailedChartController extends ChartController{
         }
     }
 
+    /**
+     * Handles what happens when a {@link ControllerStockListItem} is clicked upon. Either adding it to the chart or
+     * removing it from the chart.
+     * @param item the {@link ControllerStockListItem} clicked upon.
+     */
+    @Override
     public void stockListOnClick(ControllerStockListItem item) {
         if (activeCompany != null && activeCompany == item) {
-            removeFromChart();
+            clearChart();
         } else {
             if (!item.isActive()) {
                 if (activeCompany != null) {
@@ -116,13 +143,16 @@ public class DetailedChartController extends ChartController{
                 }
                 addToChart(item);
             } else {
-                removeFromChart();
+                clearChart();
             }
         }
         item.togglePressed();
         refreshChart();
     }
 
+    /**
+     * Populates a container with relevant {@link KeyFigureListItem}s based on the currently displayed chart.
+     */
     private void populateKeyFigureContainer() {
         keyFigureContainer.getChildren().clear();
         for (String keyFig : GraphModel.getKeyFigureNames()) {
@@ -130,6 +160,9 @@ public class DetailedChartController extends ChartController{
         }
     }
 
+    /**
+     * Redraws the chart.
+     */
     @Override
     public void refreshChart() {
         chart.refresh(chartModel.getGraphModels());

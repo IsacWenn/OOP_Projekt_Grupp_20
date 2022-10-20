@@ -63,6 +63,9 @@ public class ControllerStockListItem extends AnchorPane {
         }*/
     }
 
+    /**
+     * Loads the FXML file.
+     */
     private void loadFXML() {
         FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../StockListitem.fxml")));
         fxmlLoader.setRoot(this);

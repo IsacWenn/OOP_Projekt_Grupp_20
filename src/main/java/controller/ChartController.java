@@ -79,7 +79,7 @@ public abstract class ChartController extends AnchorPane {
     /**
      * Loads the FXML for the {@link ChartController}.
      */
-    abstract void loadFXML();
+    protected abstract void loadFXML();
 
     /**
      * Initializes FXML elements.
