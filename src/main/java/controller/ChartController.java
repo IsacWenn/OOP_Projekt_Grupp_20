@@ -18,6 +18,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Abstract JavaFX-dependent class which acts as a user interface between the user and different charts and graphs.
+ *
+ * @author Johan
+ * @author Dennis
+ */
 public abstract class ChartController extends AnchorPane {
 
     protected final AppModel appModel = AppModel.getInstance();
@@ -48,6 +54,10 @@ public abstract class ChartController extends AnchorPane {
     @FXML
     protected AnchorPane chartPane;
 
+    /**
+     * Creates a new ChartController and initializes all variables.
+     * @param parentController the AppController which the {@link ChartController} is an element within.
+     */
     public ChartController(AppController parentController) {
         this.parentController = parentController;
         favouriteCompanies = new ArrayList<>();
@@ -63,8 +73,14 @@ public abstract class ChartController extends AnchorPane {
         updateStockList();
     }
 
+    /**
+     * Loads the FXML for the {@link ChartController}.
+     */
     abstract void loadFXML();
 
+    /**
+     * Initializes FXML elements.
+     */
     protected void initializeSettings() {
         initializeStockPane();
         initializeStartDatePicker();
@@ -74,6 +90,9 @@ public abstract class ChartController extends AnchorPane {
         openLineChart();
     }
 
+    /**
+     * Initializes the DatePicker FXML element for the startDatePicker.
+     */
     private void initializeStartDatePicker() {
         startDatePicker.setValue(LocalDate.now().minusYears(1));
 
@@ -99,6 +118,9 @@ public abstract class ChartController extends AnchorPane {
         });
     }
 
+    /**
+     * Initializes the DatePicker FXML element for the endDatePicker.
+     */
     private void initializeEndDatePicker() {
         endDatePicker.setValue(LocalDate.now());
 
@@ -124,6 +146,9 @@ public abstract class ChartController extends AnchorPane {
         });
     }
 
+    /**
+     * Initializes and fills the ComboBox FXML element chartTypeComboBox.
+     */
     private void initializeChartTypeComboBox() {
         chartTypeComboBox.getItems().addAll("Area Chart", "Bar Chart", "Line Chart");
         chartTypeComboBox.getSelectionModel().select("Line Chart");
@@ -137,6 +162,9 @@ public abstract class ChartController extends AnchorPane {
         });
     }
 
+    /**
+     * Initializes and fills the ComboBox FXML element currencyComboBox.
+     */
     private void initializeCurrencyComboBox() {
         currencyComboBox.getItems().addAll(GraphModel.getCurrencyNames());
         currencyComboBox.getSelectionModel().select(GraphModel.getCurrencyNames().get(0));
@@ -146,6 +174,9 @@ public abstract class ChartController extends AnchorPane {
         });
     }
 
+    /**
+     * Creates a {@link ControllerStockListItem} for each company and adds them to a FlowPane.
+     */
     protected void initializeStockPane() {
         stockPane.getChildren().clear();
         for (String MIC : DataHandler.getMICs()) {
@@ -154,6 +185,10 @@ public abstract class ChartController extends AnchorPane {
         }
     }
 
+    /**
+     * Refreshes the order of the FlowPane containing the {@link ControllerStockListItem} based on whether they are
+     * set as favorite or not.
+     */
     public void updateStockList() {
         stockPane.getChildren().clear();
         for (String MIC : DataHandler.getMICs()) {
@@ -168,6 +203,10 @@ public abstract class ChartController extends AnchorPane {
         }
     }
 
+    /**
+     * Adds an element to the list of favorite stocks or removes it if element already is set as favorite.
+     * @param acronym The MIC of the stock which is to be added to or removed from favorites.
+     */
     public void favoritize(String acronym){
         if (isCompanyFavorite(acronym)) {
             favouriteCompanies.remove(acronym);
@@ -177,12 +216,23 @@ public abstract class ChartController extends AnchorPane {
         updateStockList();
     }
 
+    /**
+     * Method which checks if a certain stock is a favorite.
+     * @param acronym MIC of the stock which is to be checked.
+     * @return whether the stock is a favorite or not.
+     */
     private boolean isCompanyFavorite(String acronym) {
         return favouriteCompanies.contains(acronym);
     }
 
+    /**
+     * Redraws the chart.
+     */
     protected abstract void refreshChart();
 
+    /**
+     * Sets the timeframe for which the chart is generated for to the past day.
+     */
     @FXML
     public void timeframeOneDay() {
         try {
@@ -193,6 +243,9 @@ public abstract class ChartController extends AnchorPane {
         refreshChart();
     }
 
+    /**
+     * Sets the timeframe for which the chart is generated for to the past week.
+     */
     @FXML
     public void timeframeOneWeek() {
         try {
@@ -203,6 +256,9 @@ public abstract class ChartController extends AnchorPane {
         refreshChart();
     }
 
+    /**
+     * Sets the timeframe for which the chart is generated for to the past month.
+     */
     @FXML
     public void timeframeOneMonth() {
         try {
@@ -213,6 +269,9 @@ public abstract class ChartController extends AnchorPane {
         refreshChart();
     }
 
+    /**
+     * Sets the timeframe for which the chart is generated for to the past year.
+     */
     @FXML
     public void timeframeOneYear() {
         try {
@@ -223,27 +282,43 @@ public abstract class ChartController extends AnchorPane {
         refreshChart();
     }
 
+    /**
+     * Changes the displayed chart to a line chart.
+     */
     private void openLineChart() {
         chart = new LineChart();
         chartPane.getChildren().clear();
         chartPane.getChildren().add(chart);
     }
 
+    /**
+     * Changes the displayed chart to a bar chart.
+     */
     private void openBarChart() {
         chart = new BarChart();
         chartPane.getChildren().clear();
         chartPane.getChildren().add(chart);
     }
 
+    /**
+     * Changes the displayed chart to an area chart.
+     */
     private void openAreaChart() {
         chart = new AreaChart();
         chartPane.getChildren().clear();
         chartPane.getChildren().add(chart);
     }
 
+    /**
+     * @return the current currency selected by the currencyComboBox.
+     */
     protected String getCurrency() {
         return currencyComboBox.getSelectionModel().getSelectedItem();
     }
 
+    /**
+     * Method which dictates what happens when a {@link ControllerStockListItem} is clicked.
+     * @param item the {@link ControllerStockListItem} clicked upon.
+     */
     public abstract void stockListOnClick(ControllerStockListItem item);
 }
