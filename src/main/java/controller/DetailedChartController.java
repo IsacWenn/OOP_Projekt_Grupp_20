@@ -126,7 +126,7 @@ public class DetailedChartController extends ChartController{
     private void populateKeyFigureContainer() {
         keyFigureContainer.getChildren().clear();
         for (String keyFig : GraphModel.getKeyFigureNames()) {
-            keyFigureContainer.getChildren().add(new KeyFigureListItem(this, keyFig, keyFigGraphModel));
+            keyFigureContainer.getChildren().add(new KeyFigureListItem(keyFig, keyFigGraphModel));
         }
     }
 

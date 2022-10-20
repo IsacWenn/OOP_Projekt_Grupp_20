@@ -99,8 +99,9 @@ public class CorrelationChartController extends ChartController {
     private void populateKeyFigureContainer() {
         keyFigureContainer.getChildren().clear();
         for (String algorithm : BivariateComputer.getBivariateAlgorithmNames()) {
-            keyFigureContainer.getChildren().add(new KeyFigureListItem(this, algorithm,
-                    BivariateComputer.calculateKeyFigures(algorithm, graphModels.get(0).getValues(), graphModels.get(1).getValues())));
+            keyFigureContainer.getChildren().add(new KeyFigureListItem(algorithm,
+                    BivariateComputer.calculateKeyFigures(algorithm, graphModels.get(0).getValues(),
+                            graphModels.get(1).getValues())));
         }
     }
 }

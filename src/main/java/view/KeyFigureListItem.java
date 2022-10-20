@@ -20,10 +20,14 @@ public class KeyFigureListItem extends AnchorPane {
     private Label keyFigLabel;
     @FXML
     private Label keyFigVal;
-    private final ChartController parentController;
 
-    public KeyFigureListItem(ChartController parentController, String name, GraphModel graphModel) {
-        this.parentController = parentController;
+    /**
+     * Generates a container for displaying key figures based on a given {@link String} and {@link GraphModel}.
+     *
+     * @param name the name of the field.
+     * @param graphModel the {@link GraphModel} which contains the key figures to be displayed.
+     */
+    public KeyFigureListItem(String name, GraphModel graphModel) {
         loadFXML();
         keyFigLabel.setText(name + ":");
         if (graphModel != null) {
@@ -34,14 +38,21 @@ public class KeyFigureListItem extends AnchorPane {
 
     }
 
-    public KeyFigureListItem(ChartController parentController, String name, double data) {
-        this.parentController = parentController;
+    /**
+     * Generates a container for displaying key figures based on a given {@link String} and {@link Double}.
+     * @param name the name of the field.
+     * @param data the data to be displayed.
+     */
+    public KeyFigureListItem(String name, double data) {
         loadFXML();
         keyFigLabel.setText(name + ":");
         keyFigVal.setText(String.format("%.4f", data));
         this.setPrefSize(250, 30);
     }
 
+    /**
+     * Loads the FXML file for the container.
+     */
     private void loadFXML() {
         FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../KeyFigureItem.fxml")));
         fxmlLoader.setRoot(this);
