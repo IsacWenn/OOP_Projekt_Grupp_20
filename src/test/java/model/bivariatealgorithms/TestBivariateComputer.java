@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -44,6 +45,12 @@ public class TestBivariateComputer {
         Map<String, Double> resultMap = new HashMap<>();
         double pearsonCoefficient = BivariateComputer.calculateKeyFigures("Pearson correlation", series1, series2);
         assertEquals(-1d, pearsonCoefficient);
+    }
+
+    @Test
+    public void collectionShouldContainMultipleBivaraiateAlgorithms() {
+        List<String> algoNames = BivariateComputer.getBivariateAlgorithmNames();
+        assertTrue(algoNames.size() > 1);
     }
 
 }

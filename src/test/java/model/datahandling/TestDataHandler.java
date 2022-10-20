@@ -16,7 +16,7 @@ public class TestDataHandler {
     private static DayData lastDateDayData;
     private static List<Date> dateList;
 
-    private static final String currencyFilePath = "SEK_USD.csv";
+    private static final String currencyFilePath = "USD_TO_SEK.csv";
 
     @BeforeEach
     public void resetStaticVariables() throws IOException {
@@ -76,9 +76,9 @@ public class TestDataHandler {
     @Test
     public void getCurrencyDataShouldReturnCorrectData() throws IOException {
         Map<Date, Double> data = DataHandler.getCurrencyData(currencyFilePath);
-        assertEquals(0.0938, data.get(new Date(2022, 8, 24)));
-        assertEquals(0.1245, data.get(new Date(1999, 1, 4)));
-        assertEquals(6054, data.size());
+        assertEquals(10.65633, data.get(new Date(2022, 8, 24)));
+        assertEquals(6.66128, data.get(new Date(2010, 11, 1)));
+        assertEquals(3268, data.size());
     }
 
     @Test
@@ -127,7 +127,7 @@ public class TestDataHandler {
     @Test
     public void getExpandedCurrencyDataShouldReturnMapWithCorrespondingEntriesForNonExistentDates() throws IOException {
         Map<Date, Double> map = DataHandler.getExpandedCurrencyData(currencyFilePath);
-        assertEquals(0.093, map.get(new Date(2022, 9, 4)));
+        assertEquals(10.81552, map.get(new Date(2022, 9, 5)));
     }
 
     @Test
@@ -145,7 +145,7 @@ public class TestDataHandler {
         }};
         Map<Date, Double> map = DataHandler.getCurrencyData(set, currencyFilePath);
         System.out.println(map);
-        assertEquals(0.0925, map.get(new Date(2022, 9, 15)));
+        assertEquals(10.69856, map.get(new Date(2022, 9, 15)));
         assertEquals(0d, map.get(new Date(1950, 1, 1)));
     }
 
@@ -160,7 +160,7 @@ public class TestDataHandler {
     public void getExpandedCurrencyDataWithListOfDatesShouldReturnValuesForThoseDates() throws IOException {
         List<Date> dateList = new Date(2022, 9, 1).listIntervalTo(new Date());
         Map<Date, Double> map = DataHandler.getExpandedCurrencyData(dateList, currencyFilePath);
-        assertEquals(0.0925, map.get(new Date()));
+        assertEquals(11.19329, map.get(new Date()));
         assertFalse(map.containsKey(new Date(2022, 8, 30)));
     }
 
@@ -168,7 +168,7 @@ public class TestDataHandler {
     public void getExpandedCurrencyDataWithSetShouldReturnValuesForThoseDates() throws IOException {
         Set<Date> dateSet = new HashSet<>(new Date(2022, 9, 1).listIntervalTo(new Date()));
         Map<Date, Double> map = DataHandler.getExpandedCurrencyData(dateSet, currencyFilePath);
-        assertEquals(0.0925, map.get(new Date()));
+        assertEquals(11.19329, map.get(new Date()));
         assertFalse(map.containsKey(new Date(2022, 8, 30)));
     }
 
