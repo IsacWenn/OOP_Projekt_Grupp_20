@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
@@ -23,7 +24,8 @@ public class AppController {
     /**
      * Generates a new {@link ComparisonChartController} as a tab in the AppController GUI.
      */
-    public void newComparisonChart() {
+    @FXML
+    private void newComparisonChart() {
         ChartController newChart = new ComparisonChartController(this);
         newTab(newChart, "Comparison Chart");
     }
@@ -31,7 +33,8 @@ public class AppController {
     /**
      * Generates a new {@link DetailedChartController} as a tab in the AppController GUI.
      */
-    public void newDetailedChart() {
+    @FXML
+    private void newDetailedChart() {
         ChartController newChart = new DetailedChartController(this);
         newTab(newChart, "Detailed Chart");
     }
@@ -39,7 +42,8 @@ public class AppController {
     /**
      * Generates a new {@link CorrelationChartController} as a tab in the AppController GUI.
      */
-    public void newCorrelationChart() {
+    @FXML
+    private void newCorrelationChart() {
         ChartController newChart = new CorrelationChartController(this);
         newTab(newChart, "Correlation Chart");
     }
@@ -55,18 +59,25 @@ public class AppController {
         tabsPane.getSelectionModel().select(newTab);
     }
 
-    public void mainView() {
+    @FXML
+    private void mainView() {
         mainView.toFront();
     }
 
-    public void loginView() {
+    @FXML
+    private void loginView() {
         loginView.toFront();
     }
 
-    public void registerView() {
+    @FXML
+    private void registerView() {
         registerView.toFront();
     }
 
+    @FXML
+    private void mouseTrap(Event event) {
+        event.consume();
+    }
 }
 
 
