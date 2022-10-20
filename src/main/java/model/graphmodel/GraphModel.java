@@ -55,7 +55,7 @@ public class GraphModel {
     public GraphModel(String mic, String graphName){
         init(mic, graphName);
         this.data = graphData.getCompanyData(mic);
-        updateAlgorithm("Daily closing price");
+        updateAlgorithm(GraphAlgorithmCollection.getDefaultGraphAlgorithmName());
         update();
     }
 
@@ -182,13 +182,12 @@ public class GraphModel {
     }
 
 
-    public String getKeyFigureValue(String keyFigure){
+    public double getKeyFigureValue(String keyFigure){
         if(currencyAdjustedData!=null) {
-            return String.format("%.2f", this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure)
-                    , currencyAdjustedData));
+            return this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure), currencyAdjustedData);
         }
         else{
-            return String.format("%.2f", this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure), data));
+            return this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure), data);
         }
     }
 

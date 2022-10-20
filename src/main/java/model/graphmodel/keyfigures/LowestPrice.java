@@ -6,7 +6,7 @@ import model.util.Date;
 import java.util.Map;
 
 /**
- * A class implementing {@link KeyFigureAlgorithm} for finding the lowest price of an asset.
+ * A class implementing {@link KeyFigureAlgorithm} for calculating the lowest price of an asset.
  */
 public class LowestPrice implements KeyFigureAlgorithm {
 

@@ -6,7 +6,7 @@ import model.util.Date;
 import java.util.Map;
 
 /**
- * A class implementing {@link KeyFigureAlgorithm} for finding the highest price of an asset.
+ * A class implementing {@link KeyFigureAlgorithm} for calculation the highest price of an asset.
  */
 public class HighestPrice implements KeyFigureAlgorithm {
 

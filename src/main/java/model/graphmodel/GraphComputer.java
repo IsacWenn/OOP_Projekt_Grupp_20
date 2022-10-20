@@ -84,17 +84,6 @@ public class GraphComputer {
      * @param data the {@link Map} of {@link Date} and {@link DayData} that represents the data it will calculate on
      * @return a {@link Double}
      */
-    Double calculateKeyFigure(KeyFigureAlgorithm keyFigure, Map<Date, DayData> data){return keyFigure.calculate(data);}
-
-/*
-Map<String, Double> calculateKeyFigure(Map<String, KeyFigureAlgorithm> keyFigures, Map<Date, DayData> data){
-        Map<String, Double> calculatedKeyFigures = new HashMap<>();
-        for (Map.Entry<String,KeyFigureAlgorithm> entry : keyFigures.entrySet()){
-            double calculatedData = entry.getValue().calculate(data);
-            calculatedKeyFigures.put(entry.getKey(), calculatedData);
-        }
-        return  calculatedKeyFigures;
-    }
- */
+    double calculateKeyFigure(KeyFigureAlgorithm keyFigure, Map<Date, DayData> data){return keyFigure.calculate(data);}
 
 }

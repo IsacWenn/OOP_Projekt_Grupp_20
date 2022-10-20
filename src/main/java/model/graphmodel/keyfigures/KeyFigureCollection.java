@@ -1,7 +1,5 @@
 package model.graphmodel.keyfigures;
 
-import model.graphmodel.keyfigures.*;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -12,7 +10,7 @@ public class KeyFigureCollection {
      * A static {@link Map} of {@link String} and {@link KeyFigureAlgorithm}.
      */
     private static final Map<String, KeyFigureAlgorithm> keyFigures = new HashMap<>() {{
-        put("Volatility", new Volatility());
+        put("Standard Deviation", new StandardDeviation());
         put("Average Price", new AveragePrice());
         put("Average Volume", new AverageVolume());
         put("Highest Price", new HighestPrice());
