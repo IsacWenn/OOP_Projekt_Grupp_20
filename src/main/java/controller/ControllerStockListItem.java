@@ -11,6 +11,12 @@ import model.datahandling.DataHandler;
 
 import java.io.IOException;
 
+/**
+ * Class which functions as an intractable object within the concrete implementations of {@link ChartController}.
+ *
+ * @author Johan
+ * @author Dennis
+ */
 public class ControllerStockListItem extends AnchorPane {
 
     private final ChartController parentController;

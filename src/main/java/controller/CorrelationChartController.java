@@ -6,10 +6,18 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.FlowPane;
 import model.bivariatealgorithms.BivariateComputer;
 import model.graphmodel.GraphModel;
+import view.KeyFigureListItem;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Class which allows two stocks to be compared and viewed as graphs as well as generating and displaying key figures
+ * for correlation between chosen stocks.
+ *
+ * @author Johan
+ * @author Dennis
+ */
 public class CorrelationChartController extends ChartController {
 
     private ArrayList<ControllerStockListItem> activeCompanies;

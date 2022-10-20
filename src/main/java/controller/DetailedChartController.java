@@ -5,11 +5,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import model.graphmodel.GraphModel;
+import view.KeyFigureListItem;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+/**
+ * Class which allows for a detailed view of a select stock as a graph and allowing for multiple different sets of
+ * data to be displayed any given stock.
+ *
+ * @author Johan
+ * @author Dennis
+ */
 public class DetailedChartController extends ChartController{
 
     protected ControllerStockListItem activeCompany;

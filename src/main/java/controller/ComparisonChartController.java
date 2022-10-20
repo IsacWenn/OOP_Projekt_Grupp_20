@@ -7,6 +7,12 @@ import model.graphmodel.GraphModel;
 
 import java.io.IOException;
 
+/**
+ * Class which allows several stocks at once to be viewed as graphs.
+ *
+ * @author Johan
+ * @author Dennis
+ */
 public class ComparisonChartController extends ChartController {
 
     @FXML

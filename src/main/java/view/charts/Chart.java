@@ -1,4 +1,4 @@
-package controller.charts;
+package view.charts;
 
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.AnchorPane;

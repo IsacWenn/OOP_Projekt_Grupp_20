@@ -1,5 +1,6 @@
-package controller;
+package view;
 
+import controller.ChartController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -8,6 +9,12 @@ import model.graphmodel.GraphModel;
 
 import java.io.IOException;
 
+/**
+ * Class which functions as a container which displays key figures.
+ *
+ * @author Johan
+ * @author Dennis
+ */
 public class KeyFigureListItem extends AnchorPane {
     @FXML
     private Label keyFigLabel;

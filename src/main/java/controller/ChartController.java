@@ -1,6 +1,5 @@
 package controller;
 
-import controller.charts.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -11,6 +10,10 @@ import model.AppModel;
 import model.chartmodel.ChartModel;
 import model.datahandling.DataHandler;
 import model.graphmodel.GraphModel;
+import view.charts.AreaChart;
+import view.charts.BarChart;
+import view.charts.Chart;
+import view.charts.LineChart;
 
 import java.io.IOException;
 import java.time.LocalDate;

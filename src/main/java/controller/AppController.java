@@ -8,6 +8,12 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import model.AppModel;
 
+/**
+ * Class which handles the and creates intractable charts.
+ *
+ * @author Johan
+ * @author Dennis
+ */
 public class AppController {
 
     private final AppModel appModel = AppModel.getInstance();
