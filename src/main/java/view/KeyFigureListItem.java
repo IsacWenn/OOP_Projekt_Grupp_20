@@ -18,8 +18,6 @@ import java.io.IOException;
 public class KeyFigureListItem extends AnchorPane {
     @FXML
     private Label keyFigLabel;
-    @FXML
-    private Label keyFigVal;
 
     /**
      * Generates a container for displaying key figures based on a given {@link String} and {@link GraphModel}.
@@ -29,13 +27,13 @@ public class KeyFigureListItem extends AnchorPane {
      */
     public KeyFigureListItem(String name, GraphModel graphModel) {
         loadFXML();
-        keyFigLabel.setText(name + ":");
+        String keyFigVal;
         if (graphModel != null) {
-            keyFigVal.setText(String.format("%.2f", graphModel.getKeyFigureValue(name)));
+             keyFigVal = String.format("%.2f", graphModel.getKeyFigureValue(name));
         } else {
-            keyFigVal.setText("-");
+            keyFigVal = "-";
         }
-
+        keyFigLabel.setText(name + ": " + keyFigVal);
     }
 
     /**
@@ -45,8 +43,13 @@ public class KeyFigureListItem extends AnchorPane {
      */
     public KeyFigureListItem(String name, double data) {
         loadFXML();
-        keyFigLabel.setText(name + ":");
-        keyFigVal.setText(String.format("%.4f", data));
+        String keyFigVal;
+        if (data != 0) {
+            keyFigVal = String.format("%.2f", data);
+        } else {
+            keyFigVal = "-";
+        }
+        keyFigLabel.setText(name + ": " + keyFigVal);
         this.setPrefSize(250, 30);
     }
 

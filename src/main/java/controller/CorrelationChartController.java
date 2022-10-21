@@ -37,6 +37,7 @@ public class CorrelationChartController extends ChartController {
         initializeAlgorithmComboBox();
         activeCompanies = new ArrayList<>();
         graphModels = new ArrayList<>();
+        populateKeyFigureContainer();
     }
 
     /**
@@ -80,6 +81,7 @@ public class CorrelationChartController extends ChartController {
             keyFigureContainer.getChildren().clear();
             graphModels.remove(index);
         }
+        populateKeyFigureContainer();
     }
 
     /**
@@ -95,9 +97,7 @@ public class CorrelationChartController extends ChartController {
         activeCompanies.add(item);
         graphModels.add(newGraph);
         item.togglePressed();
-        if (activeCompanies.size() == 2 ) {
-            populateKeyFigureContainer();
-        }
+        populateKeyFigureContainer();
     }
 
     /**
@@ -128,10 +128,16 @@ public class CorrelationChartController extends ChartController {
      */
     private void populateKeyFigureContainer() {
         keyFigureContainer.getChildren().clear();
-        for (String algorithm : BivariateComputer.getBivariateAlgorithmNames()) {
-            keyFigureContainer.getChildren().add(new KeyFigureListItem(algorithm,
-                    BivariateComputer.calculateKeyFigures(algorithm, graphModels.get(0).getValues(),
-                            graphModels.get(1).getValues())));
+        if (activeCompanies.size() == 2) {
+            for (String algorithm : BivariateComputer.getBivariateAlgorithmNames()) {
+                keyFigureContainer.getChildren().add(new KeyFigureListItem(algorithm,
+                        BivariateComputer.calculateKeyFigures(algorithm, graphModels.get(0).getValues(),
+                                graphModels.get(1).getValues())));
+            }
+        } else {
+            for (String algorithm : BivariateComputer.getBivariateAlgorithmNames()) {
+                keyFigureContainer.getChildren().add(new KeyFigureListItem(algorithm, 0));
+            }
         }
     }
 }

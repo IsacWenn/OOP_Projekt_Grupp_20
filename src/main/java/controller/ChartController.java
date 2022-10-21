@@ -9,7 +9,6 @@ import javafx.scene.layout.FlowPane;
 import model.chartmodel.ChartModel;
 import model.datahandling.DataHandler;
 import model.graphmodel.GraphModel;
-import model.user.User;
 import view.charts.AreaChart;
 import view.charts.BarChart;
 import view.charts.Chart;
@@ -17,7 +16,6 @@ import view.charts.LineChart;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
