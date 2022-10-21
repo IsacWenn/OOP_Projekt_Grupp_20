@@ -39,8 +39,8 @@ public class TestGraphRepresentation {
     }
 
     @Test
-    public void getIntervalShouldReturnInterval() {
-        List<Date> dateList = new ArrayList<>(){{ add(new Date()); }};
+    public void getIntervalShouldReturnInterval() throws IOException {
+        List<Date> dateList = new ArrayList<>(){{ add(new Date(2022, 10, 14)); }};
         assertEquals(dateList, testGraphRep1.getInterval());
     }
 
