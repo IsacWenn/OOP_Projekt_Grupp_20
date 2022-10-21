@@ -6,10 +6,7 @@ import model.datahandling.DataHandler;
 import model.datahandling.DayData;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * GraphData is a class that retrieves data from the {@link DataHandler} class
@@ -44,7 +41,7 @@ class GraphData {
     }
 
     /**
-     * A method that calls  the {@link DataHandler} class to retrieve company data from an interval of {@link Date}
+     * A method that calls the {@link DataHandler} class to retrieve company data from an interval of {@link Date}
      *
      * @param mic a {@link String} representing a company's mic
      * @param from a {@link Date} for the start of the interval
@@ -55,6 +52,12 @@ class GraphData {
         return DataHandler.getCompanyData(from, to, mic);
     }
 
+    /**
+     * A method that the {@link DataHandler} class to
+     *
+     * @param mic a {@link String} representing a company's mic
+     * @return a {@link Map} of companyData for the latest day
+     */
     Map<Date, DayData> getLatestDayData(String mic){
         try {
             return DataHandler.getLatestDayData(mic);
@@ -82,7 +85,7 @@ class GraphData {
      * @return a {@link Map} of the exchange rate
      */
     Map<Date, Double> getCurrencyData(String toCurrency, Set<Date> dates){
-        if(toCurrency== CurrencyCollection.getDefaultCurrencyName()){
+        if(Objects.equals(toCurrency, CurrencyCollection.getDefaultCurrencyName())){
             return putOnes(dates);
         }
         String path = "USD_TO_" + toCurrency + ".csv";
@@ -105,7 +108,7 @@ class GraphData {
     /**
      *
      * @param mic a {@link String} representing a company's mic
-     * @return a {@link CurrencyEnum} that represents the currency the Company stock has natively
+     * @return a {@link String} that represents the currency the Company stock has natively
      */
     String getCompanyCurrency(String mic){
         return DataHandler.getCompanyTradingCurrency(mic);

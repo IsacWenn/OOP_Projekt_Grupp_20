@@ -25,7 +25,7 @@ public class TestDailyHighMinusLow {
         date2 = new Date(2020, 1, 2);
         data.put(date1, dayData1);
         data.put(date2, dayData2);
-        GraphAlgorithm dailyHighMinusLow = GraphAlgorithmFactory.create(GraphAlgorithms.DAILYHIGHMINUSLOW);
+        GraphAlgorithm dailyHighMinusLow = GraphAlgorithmCollection.getGraphAlgorithm("Daily Deviation");
         calculatedData = dailyHighMinusLow.calculate(data);
     }
 

@@ -13,7 +13,7 @@ public class TestGraphAlgorithmCollection {
 
     @Test
     public void classForCalculatingPearsonCorrelationShouldBeRetrieved() {
-        GraphAlgorithm ba  = GraphAlgorithmCollection.getGraphAlgorithm("Linear regression");
+        GraphAlgorithm ba  = GraphAlgorithmCollection.getGraphAlgorithm("Linear Regression");
         assertTrue(ba instanceof LinearRegression);
     }
 

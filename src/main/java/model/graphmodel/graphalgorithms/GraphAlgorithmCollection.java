@@ -23,7 +23,7 @@ public class GraphAlgorithmCollection {
         put(defaultGraphAlgorithmName, new DailyClosingPrice());
         put("Daily Change", new DailyChange());
         put("Daily Deviation", new DailyHighMinusLow());
-        put("Linear regression", new LinearRegression());
+        put("Linear Regression", new LinearRegression());
     }};
 
     /**

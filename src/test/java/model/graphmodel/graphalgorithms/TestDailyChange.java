@@ -25,7 +25,7 @@ public class TestDailyChange {
         date2 = new Date(2020, 1, 2);
         data.put(date1, dayData1);
         data.put(date2, dayData2);
-        GraphAlgorithm dailyChange = GraphAlgorithmFactory.create(GraphAlgorithms.DAILYCHANGE);
+        GraphAlgorithm dailyChange = GraphAlgorithmCollection.getGraphAlgorithm("Daily Change");
         calculatedData = dailyChange.calculate(data);
     }
 

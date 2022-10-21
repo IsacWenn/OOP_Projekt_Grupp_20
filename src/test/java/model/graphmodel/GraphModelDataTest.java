@@ -6,9 +6,7 @@ import model.util.Date;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,7 +18,7 @@ public class GraphModelDataTest {
 
     private static List<Date> dateList;
 
-
+    Map<Date, DayData> data;
 
     static GraphData graphData;
 
@@ -38,37 +36,56 @@ public class GraphModelDataTest {
             add(date3);
         }};
 
-
+        data = new HashMap<>();
 
 
     }
 
     @Test
     public void getCompanyDataWithOnlyMicShouldReturnAllAvailableDataForThatCompany(){
-        Map<Date, DayData> data = graphData.getCompanyData("AAPL");
+        data = graphData.getCompanyData("AAPL");
         assertEquals(2515, data.size());
         assertNotNull(data.get(date1));
     }
 
     @Test
     public void getCompanyDataWithMicAndIntervalShouldReturnDataForThatInterval(){
-        Map<Date, DayData> data = graphData.getCompanyData("AAPL", date1, date2);
+        data = graphData.getCompanyData("AAPL", date1, date2);
         assertEquals(21, data.size());
     }
 
     @Test
     public void getCompanyDataWithMicAndListOfDatesShouldReturnDataForThoseDates(){
-        Map<Date, DayData> data = graphData.getCompanyData("AAPL", dateList);
+        data = graphData.getCompanyData("AAPL", dateList);
         assertEquals(3, data.size());
     }
 
     @Test
-    public void getCurrencyDataCalledWithACurrencyShouldReturnTheExchangeForThatCurrency(){
-      //  Map<Date, Double> currencyData = graphData.getCurrencyData(CurrencyEnum.SEK, )
+    public void getLatestDayDataShouldReturnCompanyDataForLatestAvailable(){
+        data = graphData.getLatestDayData("AAPL");
+      //  DayData dayData = (DayData) data.values(); TODO
+      //  assertEquals(200, dayData.getClosed()); TODO
+    }
+
+    @Test
+    public void getCurrencyDataCalledWithACurrencyShouldReturnTheExchangeRateForThatCurrency(){
+        data = graphData.getCompanyData("AAPL", date1, date2);
+        Map<Date, Double> currencyData = graphData.getCurrencyData("SEK", data.keySet());
+        assertEquals(21, currencyData.size());
+        assertEquals(10.1, currencyData.get(date1), 0.02);
     }
 
     @Test
     public void getCompanyCurrencyShouldReturnTheDefaultCurrencyForThatCompany(){
         assertEquals("USD", graphData.getCompanyCurrency("AAPL"));
     }
+
+    @Test
+    public void getNativeCurrencyShouldReturnTheExchangeRateForTheDefaultCurrencyForThatCompany(){
+        data = graphData.getCompanyData("AAPL", date1, date2);
+        Map<Date, Double> currencyData = graphData.getNativeCurrencyData("AAPL", data.keySet());
+        assertEquals(21, currencyData.size());
+
+    }
+
 }
