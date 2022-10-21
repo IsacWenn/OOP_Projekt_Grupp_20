@@ -45,7 +45,7 @@ public class TestUserFavorites {
                 "ISK"
         );
         assertEquals("UserFavorites{[GraphRepresentation{interval=[14/10/2022], algorithm=DAILYHIGHMINUSLOW," +
-                " companyMIC='MSFT', preferredCurrency=USD_TO_ISK}]}", testUserFavorites.toString());
+                " companyMIC='MSFT', preferredCurrency=ISK}]}", testUserFavorites.toString());
     }
 
     @Test
@@ -95,5 +95,12 @@ public class TestUserFavorites {
         UserFavorites testUserFavorites2 = userFavorites;
         assertNotEquals(testUserFavorites1.hashCode(), userFavorites.hashCode());
         assertEquals(testUserFavorites2.hashCode(), userFavorites.hashCode());
+    }
+
+    @Test
+    public void getCompanyMICsShouldReturnListOfStringsOfMICsInFavorites() {
+        List<String> mics = userFavorites.getFavoriteMICs();
+        assertEquals("AMZN", mics.get(0));
+        assertEquals(1, mics.size());
     }
 }

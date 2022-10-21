@@ -93,4 +93,16 @@ public class UserFavorites implements Serializable {
     public int hashCode() {
         return Objects.hash(favorites);
     }
+
+    /**
+     * A method that returns a {@link List} of {@link String}s of each MIC for the User favorites.
+     *
+     * @return a {@link List} of {@link String}s containing the company MICs.
+     */
+    public List<String> getFavoriteMICs() {
+        List<String> micList = new ArrayList<>();
+        for (GraphRepresentation gr : favorites)
+            micList.add(gr.getCompanyMIC());
+        return micList;
+    }
 }

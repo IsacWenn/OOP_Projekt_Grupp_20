@@ -1,11 +1,9 @@
 package model.user;
 
 import model.util.GraphRepresentation;
-import org.junit.jupiter.api.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestUser {
@@ -43,6 +41,7 @@ public class TestUser {
 
     @BeforeEach
     public void resetUserListToTestVariables() {
+        User.resetUserList();
         User.loadUsers();
         userList = User.getUsers();
         testUser = userList.get(0);
@@ -56,17 +55,6 @@ public class TestUser {
         assertEquals(dummyUser, userList.get(1));
     }
 
-    @Test
-    public void loadUsersShouldReturnListOfUsersSavedInFile() {
-        List<User> ogUserList = new ArrayList<>(User.getUsers());
-        User dummyUser = new User("", "", "", "", "", "");
-        List<User> newList = User.getUsers();
-        assertEquals(2, newList.size());
-        assertEquals(dummyUser, newList.get(1));
-        User.loadUsers();
-        assertEquals(1, User.getUsers().size());
-        assertEquals(ogUserList.get(0), testUser);
-    }
 
     @Test
     public void getUserInfoShouldReturnUserInfo() {

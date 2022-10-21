@@ -143,6 +143,13 @@ public class User implements Serializable {
     }
 
     /**
+     * A getter method for a list of the mics of the favorite companies.
+     *
+     * @return a {@link List} of {@link String}s containing the mics.
+     */
+    public List<String> getFavoriteCompanyMics() { return userFavorites.getFavoriteMICs(); }
+
+    /**
      * A method that sets the List {@link User#users} to an empty {@link ArrayList}.
      */
     static void resetUserList() {
@@ -153,12 +160,16 @@ public class User implements Serializable {
      * A method loading all the Users of the file in {@link User#filePath} to the {@link User#users}.
      */
     public static void loadUsers() {
+        List<User> savedUsers = new ArrayList<>();
         try (FileInputStream fis = new FileInputStream(filePath);
              ObjectInputStream ois = new ObjectInputStream(fis);) {
-            users = (List<User>) ois.readObject();
+            savedUsers = (List<User>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
+        for (User user : savedUsers)
+            if (!users.contains(user))
+                users.add(user);
     }
 
     /**
