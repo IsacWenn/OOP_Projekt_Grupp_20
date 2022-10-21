@@ -12,7 +12,7 @@ public class TestCompanyData {
     @Test
     public void getMICsShouldReturnListOfDifferentCompanyMICs() {
         List<String> mics = CompanyData.getMICs();
-        assertEquals(10, mics.size());
+        assertEquals(30, mics.size());
         assertTrue(mics.contains("AAPL"));
     }
 
@@ -24,7 +24,7 @@ public class TestCompanyData {
     @Test
     public void getCompanyNamesShouldReturnListOfCompanyNames() {
         List<String> names = CompanyData.getCompanyNames();
-        assertEquals(10, names.size());
+        assertEquals(30, names.size());
         assertTrue(names.contains("Amazon.com, Inc."));
     }
 
