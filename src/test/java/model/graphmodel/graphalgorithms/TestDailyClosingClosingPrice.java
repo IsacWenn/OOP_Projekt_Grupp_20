@@ -25,7 +25,7 @@ public class TestDailyClosingClosingPrice {
         date2 = new Date(2020, 1, 2);
         data.put(date1, dayData1);
         data.put(date2, dayData2);
-        GraphAlgorithm dailyClosingPrice = GraphAlgorithmFactory.create(GraphAlgorithms.DAILYCLOSINGPRICE);
+        GraphAlgorithm dailyClosingPrice = GraphAlgorithmCollection.getGraphAlgorithm("Closing Price");
         calculatedData = dailyClosingPrice.calculate(data);
     }
 

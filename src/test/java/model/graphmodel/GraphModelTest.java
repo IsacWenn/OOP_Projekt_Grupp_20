@@ -49,11 +49,7 @@ public class GraphModelTest {
         GraphModel graphModel = new GraphModel("AAPL", "Test", date1, date2);
         assertEquals(21, graphModel.data.size());
     }
-    @Test
-    public void graphModelCreatedWithAListOfDatesShouldContainDataForThoseDates(){
-        GraphModel graphModel = new GraphModel("AAPL", "Test", dateList);
-        assertEquals(3, graphModel.data.size());
-    }
+
     @Test
     public void updateMethodShouldUpdateTheValuesOfTheGraphModel(){
         GraphModel graphModel = new GraphModel("AAPL", "Test", date1, date2);

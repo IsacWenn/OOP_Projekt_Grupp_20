@@ -73,25 +73,11 @@ public class GraphModel {
      * @param from a {@link Date} for the start of the interval
      * @param to a {@link Date} for the end of the interval
      */
-
     public GraphModel(String mic, String graphName, Date from, Date to) {
         init(mic, graphName);
         this.data = graphData.getCompanyData(mic, from, to);
         updateAlgorithm(getGraphAlgorithmNames().get(0));
         update();
-    }
-
-
-    /**
-     * A constructor for the class GraphModel that retrieves data for a given list of Dates
-     *
-     * @param mic a {@link String} representing a company's mic
-     * @param dates a {@link List} of {@link Date}
-     */
-    @Deprecated
-    public GraphModel(String mic, String graphName, List<Date> dates){
-        init(mic, graphName);
-        this.data = graphData.getCompanyData(mic ,dates);
     }
 
     /**
@@ -121,13 +107,8 @@ public class GraphModel {
     /**
      *A method that updates the current graphAlgorithm function the GraphModel is using.
      *
-     * @param graphAlgorithms a {@link GraphAlgorithm} that the {@link GraphComputer} will use for its calculations.
+     * @param graphAlg a {@link String} that the {@link GraphComputer} will use for its calculations.
      */
-    @Deprecated
-    public void updateAlgorithm(GraphAlgorithms graphAlgorithms) {
-        this.graphComputer.setAlgorithm(graphAlgorithms);
-        update();
-    }
     public void updateAlgorithm(String graphAlg) {
         this.graphComputer.setAlgorithm(GraphAlgorithmCollection.getGraphAlgorithm(graphAlg));
         update();
