@@ -90,7 +90,7 @@ public class GraphModel {
     public GraphModel(String mic, String graphName, Date from, Date to) {
         init(mic, graphName);
         this.data = graphData.getCompanyData(mic, from, to);
-        updateAlgorithm(getGraphAlgorithmNames().get(0));
+        updateAlgorithm(getOrderedGraphAlgorithmNames().get(0));
         update();
     }
 
@@ -198,15 +198,32 @@ public class GraphModel {
         }
     }
 
-    static public List<String> getKeyFigureNames(){
+    /**
+     * A method for retrieving the names as {@link String} of from {@link KeyFigureCollection} in alphabetical order
+     *
+     * @return A {@link List} of the names
+     */
+    static public List<String> getOrderedKeyFigureNames(){
         return KeyFigureCollection.getKeyFigureNames();
     }
 
-    static public List<String> getGraphAlgorithmNames(){
+    /**
+     * A method for retrieving the names as {@link String} of from {@link GraphAlgorithmCollection} in alphabetical ordered except
+     * for the name of the default {@link model.graphmodel.keyfigures.KeyFigureAlgorithm} which is the first element in the list
+     *
+     * @return A {@link List} of the names
+     */
+    static public List<String> getOrderedGraphAlgorithmNames(){
         return GraphAlgorithmCollection.getGraphAlgorithmNames();
     }
 
-    static public List<String> getCurrencyNames(){
+    /**
+     * A method for retrieving the names as {@link String} of from {@link GraphAlgorithmCollection} in alphabetical order
+     * except for the name of the default currency, which is the first element in the list
+     *
+     * @return A {@link List} of the names
+     */
+    static public List<String> getOrderedCurrencyNames(){
         return CurrencyCollection.getCurrencyNames();
     }
 
@@ -217,17 +234,23 @@ public class GraphModel {
      * @return a {@link LinkedHashMap}  containing data that is reduced and sorted
      */
     public Map<Date, Number> getSortedAndReducedData(int numDataPoints) {
-        LinkedHashMap<Date, Number> orderedMap = new LinkedHashMap<>();
         List<Date> orderedDates = Date.sortDates(this.getValues().keySet());
-        reduceDataPoints(numDataPoints, orderedMap, orderedDates);
-        return orderedMap;
+        return reduceDataPoints(numDataPoints, orderedDates);
     }
 
-    private void reduceDataPoints(int numDataPoints, LinkedHashMap<Date, Number> orderedMap, List<Date> orderedDates) {
+    /**
+     * A method for retrieving data sorted after date. The data has a maximum of a given number of datapoint
+     *
+     * @param numDataPoints A {@link Integer} is the maximum number of data points
+     * @param orderedDates A {@link List} of {@link Date} in chronological order.
+     * @return A {@link Map} of the data points.
+     */
+    private Map<Date, Number> reduceDataPoints(int numDataPoints, List<Date> orderedDates) {
+        LinkedHashMap<Date, Number> orderedMap = new LinkedHashMap<>();
         double daysInterval = orderedDates.size(), stepAmount, dIndex = 0;
         int index;
 
-        stepAmount = Math.max(1, daysInterval/ numDataPoints);
+        stepAmount = Math.max(1, (daysInterval-1)/ (numDataPoints-1));
         while (orderedMap.size() < Math.min(numDataPoints, daysInterval)) {
             index = (int) Math.round(dIndex);
             Date currentDate = orderedDates.get(index);
@@ -235,6 +258,7 @@ public class GraphModel {
             orderedMap.put(currentDate, val);
             dIndex += stepAmount;
         }
+        return orderedMap;
     }
 
 }

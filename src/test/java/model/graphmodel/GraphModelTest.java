@@ -1,5 +1,6 @@
 package model.graphmodel;
 
+import model.datahandling.DayData;
 import model.graphmodel.graphalgorithms.GraphAlgorithmCollection;
 import model.util.CurrencyCollection;
 import model.util.Date;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class GraphModelTest {
 
@@ -118,13 +120,13 @@ public class GraphModelTest {
 
     @Test
     public void numberOfKeyFigureAlgorithmsShouldBeCorrect(){
-        List<String> keyFigAlgNames = GraphModel.getKeyFigureNames();
+        List<String> keyFigAlgNames = GraphModel.getOrderedKeyFigureNames();
         assertEquals(5, keyFigAlgNames.size());
     }
 
     @Test
     public void KeyFigureAlgorithmNamesShouldBeInOrder(){
-        List<String> algNames = GraphModel.getKeyFigureNames();
+        List<String> algNames = GraphModel.getOrderedKeyFigureNames();
         List<String> orderedNames = new ArrayList<>(List.copyOf(algNames));
         Collections.sort(orderedNames);
         for (int i = 1; i < algNames.size(); i++) {
@@ -134,7 +136,7 @@ public class GraphModelTest {
 
     @Test
     public void GraphAlgorithmNamesShouldBeInOrderExceptForTheFirst(){
-        List<String> graphAlgNames = GraphModel.getGraphAlgorithmNames();
+        List<String> graphAlgNames = GraphModel.getOrderedGraphAlgorithmNames();
         graphAlgNames.remove(0);
         List<String> orderedNames = new ArrayList<>(List.copyOf(graphAlgNames));
         Collections.sort(orderedNames);
@@ -145,20 +147,20 @@ public class GraphModelTest {
 
     @Test
     public void defaultGraphAlgorithmShouldBeFirst(){
-        List<String> graphAlgNames = GraphModel.getGraphAlgorithmNames();
+        List<String> graphAlgNames = GraphModel.getOrderedGraphAlgorithmNames();
         String defaultAlgo = GraphAlgorithmCollection.getDefaultGraphAlgorithmName();
         assertEquals(defaultAlgo, graphAlgNames.get(0));
     }
 
     @Test
     public void numberOfGraphAlgorithmsShouldBeCorrect(){
-        List<String> keyFigAlgNames = GraphModel.getGraphAlgorithmNames();
+        List<String> keyFigAlgNames = GraphModel.getOrderedGraphAlgorithmNames();
         assertEquals(4, keyFigAlgNames.size());
     }
 
     @Test
     public void CurrencyNamesShouldBeInOrderExceptForTheFirst(){
-        List<String> currencyNames = GraphModel.getCurrencyNames();
+        List<String> currencyNames = GraphModel.getOrderedCurrencyNames();
         currencyNames.remove(0);
         List<String> orderedNames = new ArrayList<>(List.copyOf(currencyNames));
         Collections.sort(orderedNames);
@@ -169,15 +171,26 @@ public class GraphModelTest {
 
     @Test
     public void defaultCurrencyShouldBeFirst(){
-        List<String> currencyNames = GraphModel.getCurrencyNames();
+        List<String> currencyNames = GraphModel.getOrderedCurrencyNames();
         String defaultAlgo = CurrencyCollection.getDefaultCurrencyName();
         assertEquals(defaultAlgo, currencyNames.get(0));
     }
 
     @Test
     public void numberOfCurrenciesShouldBeCorrect(){
-        List<String> currencyNames = GraphModel.getCurrencyNames();
+        List<String> currencyNames = GraphModel.getOrderedCurrencyNames();
         assertEquals(9, currencyNames.size());
+    }
+
+    @Test
+    public void shouldBeAbleToOnlyRetrieveAWantedNumberOfDataPoint(){
+        GraphModel graphModel = new GraphModel("AAPL", "Test name", date1, date2);
+        Map<Date, Number> data = graphModel.getSortedAndReducedData(3);
+        for (Date date : data.keySet()) {
+            assertTrue(date.equals(date1) || date.equals(date2) || (date.getYear() == 2022) &&
+                    (date.getMonth() == 7) && (date.getDay() == 6));
+        }
+        assertEquals(3, data.size());
     }
 
 }
