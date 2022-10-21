@@ -1,25 +1,41 @@
 package model.user;
 
+import model.util.Date;
 import model.util.GraphRepresentation;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.*;
+
+import javax.print.DocFlavor;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestUser {
 
     private static List<User> actualUserList;
+    private static GraphRepresentation graphRep;
 
     private List<User> userList;
     private User testUser;
-
     @BeforeAll
-    public static void initializeTestingConditions() {
+    public static void initializeTestingConditions() throws IOException {
         User.loadUsers();
         actualUserList = User.getUsers();
         User.resetUserList();
         User user = new User("IsacWenn", "Lösenord", "i@grupp20.se", "Isac",
                 "Ingvast Wennerström", "python <<<<<<");
+
+        graphRep = new GraphRepresentation(
+                new ArrayList<>(){{ add(new Date(2022, 10, 15)); }},
+                "Daily Closing",
+                "AMZN",
+                "USD"
+        );
+        user.addFavoriteGraph(graphRep);
+        user.addFavoriteCompany("AMZN");
         User.saveUsers();
     }
 
@@ -65,7 +81,7 @@ public class TestUser {
     @Test
     public void getUserFavoriteInstanceShouldReturnUserInfo() {
         UserFavorites favorites = testUser.getUserFavoriteInstance();
-        assertTrue(favorites.getFavoriteGraphs().isEmpty());
+        assertEquals(graphRep, favorites.getFavoriteGraphs().get(0));
     }
 
     @Test
@@ -102,14 +118,9 @@ public class TestUser {
     public void hashCodeShouldReturnUniqueHashForThatSetOfInstanceVariables() {
         User dummyUser1 = new User("IsacWenn", "Lösenord", "i@grupp20.se", "Isac",
                 "Ingvast Wennerström", "python <<<<<<");
+        dummyUser1.addFavoriteGraph(graphRep);
+        dummyUser1.addFavoriteCompany("AMZN");
         assertEquals(testUser.hashCode(), dummyUser1.hashCode());
-    }
-
-    @Test
-    public void toStringShouldReturnStringRepresentationOfUser() {
-        assertEquals("User{userInfo=UserInfo{username='IsacWenn', password='Lösenord', email='i@grupp20.se'," +
-                " name='Isac', lastname='Ingvast Wennerström', bio='python <<<<<<'}," +
-                " favorites=UserFavorites{[]}}", testUser.toString());
     }
 
     @Test
@@ -121,6 +132,8 @@ public class TestUser {
     public void equalsWithUserContainingSameValuesShouldReturnTrue() {
         User dummyUser1 = new User("IsacWenn", "Lösenord", "i@grupp20.se", "Isac",
                 "Ingvast Wennerström", "python <<<<<<");
+        dummyUser1.addFavoriteGraph(graphRep);
+        dummyUser1.addFavoriteCompany("AMZN");
         assertEquals(testUser, dummyUser1);
     }
 
@@ -129,5 +142,26 @@ public class TestUser {
         User dummyUser1 = new User("IsacWenn", "Password", "i@grupp20.se", "Isac",
                 "Ingvast Wennerström", "python <<<<<<");
         assertNotEquals(testUser, dummyUser1);
+    }
+
+    @Test
+    public void getUserFavoriteGraphsShouldReturnListOfGraphRepresentations() {
+        List<GraphRepresentation> graphRepList = testUser.getUserFavoriteGraphs();
+        assertEquals(graphRep, graphRepList.get(0));
+    }
+
+    @Test
+    public void getUserFavoriteCompaniesShouldReturnListOfStrings() {
+        List<String> companies = testUser.getUserFavoriteCompanies();
+        assertEquals("AMZN", companies.get(0));
+    }
+
+    @Test
+    public void addFavoriteGraphWithValuesShouldAddGraphRepToFavorites() {
+        List<Date> interval = new ArrayList<>(){{ add(new Date(2022, 1, 12)); }};
+        String alg = "Daily Change";
+        String mic = "T";
+        String preferredCurrency = "GBP";
+        testUser.addFavoriteGraph(interval, alg, mic, preferredCurrency);
     }
 }

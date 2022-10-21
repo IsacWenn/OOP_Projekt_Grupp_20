@@ -98,8 +98,8 @@ public class GraphRepresentation implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GraphRepresentation that = (GraphRepresentation) o;
-        return Objects.equals(interval, that.interval) && algorithm == that.algorithm
-                && Objects.equals(companyMIC, that.companyMIC) && preferredCurrency == that.preferredCurrency;
+        return Objects.equals(interval, that.interval) && Objects.equals(algorithm, that.algorithm)
+                && Objects.equals(companyMIC, that.companyMIC) && Objects.equals(preferredCurrency, that.preferredCurrency);
     }
 
     /**

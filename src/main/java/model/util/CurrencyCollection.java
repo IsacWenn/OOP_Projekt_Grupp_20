@@ -6,7 +6,7 @@ import java.util.*;
 
 public class CurrencyCollection {
     /**
-     * A static {@link String} containing the name of the currenct that should be selected as default.
+     * A static {@link String} containing the name of the currency that should be selected as default.
      */
     private static final String defaultCurrencyName = "USD";
 
