@@ -171,7 +171,7 @@ public class TestDataHandler {
 
     @Test
     public void getCompanyDataWithListAndInvalidMICShouldReturnHashMapWithCurrentDateAndZeroedDayData() {
-        Map<Date, DayData> map = DataHandler.getCompanyData(new ArrayList<>(), "T");
+        Map<Date, DayData> map = DataHandler.getCompanyData(new ArrayList<>(), "d");
         DayData zeroed = new DayData(0, 0, 0, 0, 0);
         assertEquals(zeroed.hashCode(), map.get(new Date()).hashCode());
     }
