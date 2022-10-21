@@ -1,11 +1,14 @@
 package model.graphmodel;
 
+import model.graphmodel.graphalgorithms.GraphAlgorithmCollection;
+import model.util.CurrencyCollection;
 import model.util.Date;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GraphModelTest {
@@ -34,14 +37,36 @@ public class GraphModelTest {
     public void getValuesShouldReturnTheCurrentlyCalculatedValuesInGraphModel(){
         GraphModel graphModel = new GraphModel("AAPL", "Test", date2, date3);
         assertEquals(2, graphModel.getValues().size());
-
     }
+
+    @Test
+    public void graphNameShouldBeCorrect(){
+        GraphModel graphModel = new GraphModel("AAPL", "Test", date2, date3);
+        assertNotEquals("Test", graphModel.getName());
+    }
+
+    @Test
+    public void theTimeIntervalShouldBeAbleToUpdateBeforeCurrencyIsSet(){
+        GraphModel graphModel = new GraphModel("AAPL", "Test", date2, date3);
+        graphModel.updateCurrency(CurrencyCollection.getDefaultCurrencyName());
+        graphModel.updateTimeInterval(date1, date2);
+        assertEquals(21, graphModel.getValues().size());
+    }
+
     @Test
     public void graphModelCreatedWithOnlyMicShouldContainAllAvailableCompanyData() {
         GraphModel graphModel = new GraphModel("AAPL", "Test");
 
         assertEquals(2515,graphModel.data.size(), 10);
         assertNotNull(graphModel.data.get(date1));
+    }
+
+    @Test
+    public void graphModelShouldBeAbleToBeInitializedWithCurrencyIntervalAlgorithm(){
+        String someGraphAlgorithm = GraphAlgorithmCollection.getDefaultGraphAlgorithmName();
+        String someCurrency = CurrencyCollection.getDefaultCurrencyName();
+        GraphModel graphModel = new GraphModel("AAPL", "test", date1, date2, someGraphAlgorithm, someCurrency);
+        assertEquals(21, graphModel.data.size());
     }
 
     @Test
@@ -90,4 +115,69 @@ public class GraphModelTest {
         double result = graphModel.getKeyFigureValue("Standard Deviation");
         assertEquals(70, result, 1);
     }
+
+    @Test
+    public void numberOfKeyFigureAlgorithmsShouldBeCorrect(){
+        List<String> keyFigAlgNames = GraphModel.getKeyFigureNames();
+        assertEquals(5, keyFigAlgNames.size());
+    }
+
+    @Test
+    public void KeyFigureAlgorithmNamesShouldBeInOrder(){
+        List<String> algNames = GraphModel.getKeyFigureNames();
+        List<String> orderedNames = new ArrayList<>(List.copyOf(algNames));
+        Collections.sort(orderedNames);
+        for (int i = 1; i < algNames.size(); i++) {
+            assertEquals(orderedNames.get(i), algNames.get(i));
+        }
+    }
+
+    @Test
+    public void GraphAlgorithmNamesShouldBeInOrderExceptForTheFirst(){
+        List<String> graphAlgNames = GraphModel.getGraphAlgorithmNames();
+        graphAlgNames.remove(0);
+        List<String> orderedNames = new ArrayList<>(List.copyOf(graphAlgNames));
+        Collections.sort(orderedNames);
+        for (int i = 1; i < graphAlgNames.size(); i++) {
+            assertEquals(orderedNames.get(i), graphAlgNames.get(i));
+        }
+    }
+
+    @Test
+    public void defaultGraphAlgorithmShouldBeFirst(){
+        List<String> graphAlgNames = GraphModel.getGraphAlgorithmNames();
+        String defaultAlgo = GraphAlgorithmCollection.getDefaultGraphAlgorithmName();
+        assertEquals(defaultAlgo, graphAlgNames.get(0));
+    }
+
+    @Test
+    public void numberOfGraphAlgorithmsShouldBeCorrect(){
+        List<String> keyFigAlgNames = GraphModel.getGraphAlgorithmNames();
+        assertEquals(4, keyFigAlgNames.size());
+    }
+
+    @Test
+    public void CurrencyNamesShouldBeInOrderExceptForTheFirst(){
+        List<String> currencyNames = GraphModel.getCurrencyNames();
+        currencyNames.remove(0);
+        List<String> orderedNames = new ArrayList<>(List.copyOf(currencyNames));
+        Collections.sort(orderedNames);
+        for (int i = 1; i < currencyNames.size(); i++) {
+            assertEquals(orderedNames.get(i), currencyNames.get(i));
+        }
+    }
+
+    @Test
+    public void defaultCurrencyShouldBeFirst(){
+        List<String> currencyNames = GraphModel.getCurrencyNames();
+        String defaultAlgo = CurrencyCollection.getDefaultCurrencyName();
+        assertEquals(defaultAlgo, currencyNames.get(0));
+    }
+
+    @Test
+    public void numberOfCurrenciesShouldBeCorrect(){
+        List<String> currencyNames = GraphModel.getCurrencyNames();
+        assertEquals(9, currencyNames.size());
+    }
+
 }
