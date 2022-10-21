@@ -20,19 +20,19 @@ public class TestGraphRepresentation {
     public void initializeTestingVariables() throws IOException {
         testGraphRep1 = new GraphRepresentation(
                 new ArrayList<>(){{ add(new Date(2022, 10, 14)); }},
-                GraphAlgorithms.DAILYCLOSINGPRICE,
+                "GraphAlgorithms.DAILYCLOSINGPRICE",
                 "MSFT",
                 "GBP"
         );
         testGraphRep2 = new GraphRepresentation(
                 new ArrayList<>(){{ add(new Date(2022, 10, 14)); }},
-                GraphAlgorithms.DAILYCLOSINGPRICE,
+                "GraphAlgorithms.DAILYCLOSINGPRICE",
                 "MSFT",
                 "GBP"
         );
         testGraphRep3 = new GraphRepresentation(
                 new ArrayList<>(){{ add(new Date()); }},
-                GraphAlgorithms.DAILYCHANGE,
+                "GraphAlgorithms.DAILYCHANGE",
                 "MSFT",
                 "GBP"
         );

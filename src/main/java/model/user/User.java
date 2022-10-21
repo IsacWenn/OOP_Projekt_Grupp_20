@@ -1,5 +1,8 @@
 package model.user;
 
+import com.google.common.graph.Graph;
+import model.graphmodel.graphalgorithms.GraphAlgorithms;
+import model.util.Date;
 import model.util.GraphRepresentation;
 
 import java.io.*;
@@ -18,6 +21,11 @@ public class User implements Serializable {
      * A static attribute {@link String} holding the file path for our user file.
      */
     private static String filePath = "src/main/resources/users.dat";
+
+    /**
+     * A static attribute of the active {@link User} in the application.
+     */
+    private static User activeUser = null;
 
     /**
      * A static {@link List} of User:s holding all initialized Users.
@@ -48,6 +56,7 @@ public class User implements Serializable {
         this.userInfo = new UserInfo(username, password, email, name, lastname, bio);
         this.userFavorites = new UserFavorites();
         users.add(this);
+        activeUser = this;
     }
 
     // Getters
@@ -134,20 +143,60 @@ public class User implements Serializable {
     }
 
     /**
-     * A getter method for a list of different favorites.
+     * A getter method for a list of different favorite graphs.
      *
      * @return a {@link List} of {@link GraphRepresentation}s of the favorite graphs.
      */
-    public List<GraphRepresentation> getUserFavorites() {
-        return userFavorites.getFavorites();
+    public List<GraphRepresentation> getUserFavoriteGraphs() {
+        return userFavorites.getFavoriteGraphs();
     }
 
     /**
-     * A getter method for a list of the mics of the favorite companies.
+     * A getter method for a list of different favorite companies.
      *
-     * @return a {@link List} of {@link String}s containing the mics.
+     * @return a {@link List} of {@link String}s containing the MICs.
      */
-    public List<String> getFavoriteCompanyMics() { return userFavorites.getFavoriteMICs(); }
+    public List<String> getUserFavoriteCompanies() { return userFavorites.getFavoriteCompanies(); }
+
+    /**
+     * A method for adding a new company mic to the list of favorites.
+     *
+     * @param mic a {@link String} of the new company mic.
+     */
+    public void addFavoriteCompany(String mic) { userFavorites.addFavoriteCompany(mic); }
+
+    /**
+     * A method for adding a new graph to the list of favorites.
+     *
+     * @param interval a {@link List} of {@link Date}s containing the interval selected.
+     * @param alg a {@link String} representing the chosen algorithm.
+     * @param mic a {@link String} containing the company MIC.
+     * @param prefCurrency a {@link String} containing the preferred currency.
+     */
+    public void addFavoriteGraph(List<Date> interval, String alg, String mic, String prefCurrency) {
+        userFavorites.addFavoriteGraph(interval, alg, mic, prefCurrency);
+    }
+
+    /**
+     * A method for adding a new graph to the list of favorites.
+     *
+     * @param graphRep the {@link GraphRepresentation} to be added.
+     */
+    public void addFavoriteGraph(GraphRepresentation graphRep) { userFavorites.addFavoriteGraph(graphRep); }
+
+    /**
+     * A method for removing a favorite company.
+     *
+     * @param mic the {@link String} of the mic to remove.
+     */
+    public void removeFavoriteCompany(String mic) { userFavorites.removeFavoriteCompany(mic); }
+
+    /**
+     * A method for removing a favorite graph.
+     *
+     * @param graphRep the {@link GraphRepresentation} to remove.
+     */
+    public void removeFavoriteGraph(GraphRepresentation graphRep) { userFavorites.removeFavoriteGraph(graphRep); }
 
     /**
      * A method that sets the List {@link User#users} to an empty {@link ArrayList}.
@@ -222,5 +271,36 @@ public class User implements Serializable {
         return Objects.hash(userInfo, userFavorites);
     }
 
+    /**
+     * The method for user login in our application.
+     *
+     * @param username a {@link String} of the username.
+     * @param password a {@link String} of the password.
+     * @return the {@link Boolean} true if login was a success, otherwise returns false.
+     */
+    public static boolean loginUser(String username, String password) {
+        User selected = null;
+        for (User user : users)
+            if (user.getUserName() == username)
+                selected = user;
+        if (selected != null && selected.getPassword() == password) {
+            activeUser = selected;
+            return true;
+        }
+        return false;
+    }
 
+    /**
+     * A method that checks if the application has a user logged in.
+     *
+     * @return a {@link Boolean} value of the question.
+     */
+    public static boolean isLoggedIn() { return activeUser != null; }
+
+    /**
+     * A getter method for the active user in the application.
+     *
+     * @return the active {@link User} in the application.
+     */
+    public static User getActiveUser() { return activeUser; }
 }

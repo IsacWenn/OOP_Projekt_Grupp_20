@@ -17,57 +17,92 @@ import java.util.Objects;
 public class UserFavorites implements Serializable {
 
     /**
-     * A {@link List} of {@link GraphRepresentation}s of the different favorites.
+     * A {@link List} of {@link GraphRepresentation}s of the favorite graphs.
      */
-    private List<GraphRepresentation> favorites;
+    private List<GraphRepresentation> favoriteGraphs;
+
+    /**
+     * A {@link List} of {@link String}s of the favorite company MICs.
+     */
+    private List<String> favoriteCompanies;
 
     /**
      * A constructor for UserFavorites.
      */
     UserFavorites() {
-        favorites = new ArrayList<>();
+        favoriteGraphs = new ArrayList<>();
+        favoriteCompanies = new ArrayList<>();
     }
 
     /**
-     * A getter method for the favorites attribute.
+     * A getter method for the favorite graphs.
      *
-     * @return A {@link List} of {@link GraphRepresentation} of the favorites.
+     * @return A {@link List} of {@link GraphRepresentation} of the favorite graphs.
      */
-    public List<GraphRepresentation> getFavorites() {
-        return favorites;
+    public List<GraphRepresentation> getFavoriteGraphs() {
+        return favoriteGraphs;
     }
+
+    /**
+     * A getter method for the favorite company MICs
+     *
+     * @return A {@link List} of {@link String}s of the MICs.
+     */
+    public List<String> getFavoriteCompanies() { return favoriteCompanies; }
 
     /**
      * A toString method for the UserFavorites class.
      *
-     * @return
+     * @return a {@link String} representation of the UserFavorite object.
      */
     @Override
     public String toString() {
         return "UserFavorites{" +
-                favorites +
+                "favoriteGraphs=" + favoriteGraphs +
+                ", favoriteCompanies=" + favoriteCompanies +
                 '}';
     }
 
     /**
-     * A method that adds a new favorite to {@link UserFavorites#favorites}.
+     * A method that adds a new favorite to {@link UserFavorites#favoriteGraphs}.
      *
      * @param interval a {@link List} of {@link Date}s of the specified interval.
-     * @param alg a {@link GraphRepresentation} for the algorithm.
+     * @param alg a {@link String} for the algorithm.
      * @param mic a {@link String} for the company mic.
      */
-    void addFavorite(List<Date> interval, GraphAlgorithms alg, String mic, String prefCurrency) {
-        favorites.add(new GraphRepresentation(interval, alg, mic, prefCurrency));
+    void addFavoriteGraph(List<Date> interval, String alg, String mic, String prefCurrency) {
+        favoriteGraphs.add(new GraphRepresentation(interval, alg, mic, prefCurrency));
     }
 
     /**
-     * A method that adds a new favorite to {@link UserFavorites#favorites}.
+     * A method that adds a new favorite to {@link UserFavorites#favoriteGraphs}.
      *
      * @param graphRep a {@link GraphRepresentation} to add to the list of favorites.
      */
-    void addFavorite(GraphRepresentation graphRep) {
-        favorites.add(graphRep);
+    void addFavoriteGraph(GraphRepresentation graphRep) {
+        favoriteGraphs.add(graphRep);
     }
+
+    /**
+     * A method that adds a new company to {@link UserFavorites#favoriteCompanies}.
+     *
+     * @param mic a {@link String} to add to the list.
+     */
+    void addFavoriteCompany(String mic) { favoriteCompanies.add(mic); }
+
+    /**
+     * A method that removes a favorite graph from {@link UserFavorites#favoriteGraphs}.
+     *
+     * @param graphRep a {@link GraphRepresentation} to remove from the list.
+     */
+    void removeFavoriteGraph(GraphRepresentation graphRep) { favoriteGraphs.remove(graphRep); }
+
+    /**
+     * A method that removes a company from {@link UserFavorites#favoriteCompanies}.
+     *
+     * @param mic a {@link String} to remove from the list.
+     */
+    void removeFavoriteCompany(String mic) { favoriteCompanies.remove(mic); }
 
     /**
      * An implementation of the .equals() method of Java.
@@ -79,8 +114,8 @@ public class UserFavorites implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserFavorites that = (UserFavorites) o;
-        return favorites.equals(that.favorites);
+        UserFavorites favorites = (UserFavorites) o;
+        return Objects.equals(favoriteGraphs, favorites.favoriteGraphs) && Objects.equals(favoriteCompanies, favorites.favoriteCompanies);
     }
 
     /**
@@ -91,18 +126,6 @@ public class UserFavorites implements Serializable {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(favorites);
-    }
-
-    /**
-     * A method that returns a {@link List} of {@link String}s of each MIC for the User favorites.
-     *
-     * @return a {@link List} of {@link String}s containing the company MICs.
-     */
-    public List<String> getFavoriteMICs() {
-        List<String> micList = new ArrayList<>();
-        for (GraphRepresentation gr : favorites)
-            micList.add(gr.getCompanyMIC());
-        return micList;
+        return Objects.hash(favoriteGraphs, favoriteCompanies);
     }
 }

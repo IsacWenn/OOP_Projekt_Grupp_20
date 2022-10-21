@@ -1,6 +1,6 @@
 package model.util;
 
-import model.graphmodel.graphalgorithms.GraphAlgorithms;
+import model.graphmodel.graphalgorithms.GraphAlgorithm;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,9 +19,9 @@ public class GraphRepresentation implements Serializable {
     private List<Date> interval;
 
     /**
-     * A {@link GraphAlgorithms} enum for the specific algorithm.
+     * A {@link String} for the specific algorithm.
      */
-    private GraphAlgorithms algorithm;
+    private String algorithm;
 
     /**
      * A {@link String} for the specified company MIC.
@@ -37,11 +37,11 @@ public class GraphRepresentation implements Serializable {
      * A constructor for the class.
      *
      * @param interval A {@link List} of {@link Date}s of a specified interval.
-     * @param alg A {@link GraphAlgorithms} of a specified algorithm.
+     * @param alg A {@link String} of a specified algorithm.
      * @param companyMIC A {@link String} of a specified company MIC.
      * @param preferredCurrency A {@link String} of the users preferred trading currency.
      */
-    public GraphRepresentation(List<Date> interval, GraphAlgorithms alg, String companyMIC,
+    public GraphRepresentation(List<Date> interval, String alg, String companyMIC,
                                String preferredCurrency) {
         this.interval = interval;
         this.algorithm = alg;
@@ -65,7 +65,7 @@ public class GraphRepresentation implements Serializable {
      *
      * @return A {@link GraphAlgorithms} of the algorithm.
      */
-    public GraphAlgorithms getAlgorithm() {
+    public String getAlgorithm() {
         return algorithm;
     }
 
