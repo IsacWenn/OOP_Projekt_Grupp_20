@@ -114,8 +114,7 @@ public class AppController {
 
     @FXML
     private void login() {
-        User.loginUser(loginUsernameField.getText(), loginPasswordField.getText());
-        if (User.isLoggedIn()) {
+        if (User.loginUser(loginUsernameField.getText(), loginPasswordField.getText())) {
             mainView();
             updateUserButtonGroups();
             usernameLabel.setText(User.getActiveUser().getUserName());
@@ -146,6 +145,7 @@ public class AppController {
             for(String company : favoriteCompanies) {
                 User.getActiveUser().addFavoriteCompany(company);
             }
+            User.saveUsers();
         } else {
             signupError.setText("Error registering your account");
         }
@@ -153,13 +153,14 @@ public class AppController {
 
     @FXML
     private void logout() {
-        User.logout();
+        User.logoutActiveUser();
         updateUserButtonGroups();
         usernameLabel.setText("");
         favoriteCompanies = new ArrayList<>();
         for(ChartController chart : charts) {
             chart.updateFavoritesList(favoriteCompanies);
         }
+        User.saveUsers();
     }
 }
 

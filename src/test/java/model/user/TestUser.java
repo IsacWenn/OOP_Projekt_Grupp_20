@@ -156,7 +156,7 @@ public class TestUser {
         assertEquals("AMZN", companies.get(0));
     }
 
-    @Test
+    /*@Test
     public void addFavoriteGraphWithValuesShouldAddGraphRepToFavorites() {
         List<Date> interval = new ArrayList<>(){{ add(new Date(2022, 1, 12)); }};
         String alg = "Daily Change";
@@ -164,4 +164,5 @@ public class TestUser {
         String preferredCurrency = "GBP";
         testUser.addFavoriteGraph(interval, alg, mic, preferredCurrency);
     }
+     */
 }
