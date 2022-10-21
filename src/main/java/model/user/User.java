@@ -281,9 +281,9 @@ public class User implements Serializable {
     public static boolean loginUser(String username, String password) {
         User selected = null;
         for (User user : users)
-            if (user.getUserName() == username)
+            if (Objects.equals(user.getUserName(), username))
                 selected = user;
-        if (selected != null && selected.getPassword() == password) {
+        if (selected != null && Objects.equals(selected.getPassword(), password)) {
             activeUser = selected;
             return true;
         }
