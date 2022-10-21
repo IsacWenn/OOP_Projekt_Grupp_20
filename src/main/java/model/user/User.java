@@ -143,6 +143,13 @@ public class User implements Serializable {
     }
 
     /**
+     * A getter method for a list of the mics of the favorite companies.
+     *
+     * @return a {@link List} of {@link String}s containing the mics.
+     */
+    public List<String> getFavoriteCompanyMics() { return userFavorites.getFavoriteMICs(); }
+
+    /**
      * A method that sets the List {@link User#users} to an empty {@link ArrayList}.
      */
     static void resetUserList() {
