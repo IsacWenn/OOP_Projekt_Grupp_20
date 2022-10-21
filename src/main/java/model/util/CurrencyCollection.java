@@ -28,13 +28,24 @@ public class CurrencyCollection {
     }
 
     /**
-     * A method for retrieving the {@link String} for all {@link GraphAlgorithm} in {@link CurrencyCollection#currencies}.
+     * A method for retrieving a {@link List} of names of {@link CurrencyCollection#currencies} in alphabetic order
+     * except the {@link CurrencyCollection#defaultCurrencyName} that should be the first element in the list.
      *
      * @return A {@link List} of {@link String} for each currency in {@link CurrencyCollection#currencies}.
      */
     public static List<String> getCurrencyNames() {
-        return List.copyOf(currencies);
+        List<String> returnList = new ArrayList<>();
+        List<String> namesInOrder = new ArrayList<>(Set.copyOf(currencies));
+        Collections.sort(namesInOrder);
+
+        returnList.add(defaultCurrencyName);
+        for (String algoName : namesInOrder) {
+            if (!Objects.equals(algoName, defaultCurrencyName))
+                returnList.add(algoName);
+        }
+        return returnList;
     }
+
 
     public static String getDefaultCurrencyName() {
         return defaultCurrencyName;

@@ -48,7 +48,7 @@ public class GraphModel {
     /**
      * A constructor for the class GraphModel that retrieves all available data for the given mic of a company
      *
-     * @param mic a {@link String} which represents a company on the stock market
+     * @param mic A {@link String} which represents a company on the stock market
      */
     public GraphModel(String mic, String graphName){
         init(mic, graphName);
@@ -57,6 +57,16 @@ public class GraphModel {
         update();
     }
 
+    /**
+     * A constructor for the class GraphModel that retrieves all available data for the given mic of a company
+     *
+     * @param mic A {@link String} which represents a company on the stock market
+     * @param graphName A {@link String} for the name of the {@link GraphModel}
+     * @param from A {@link Date} being the first date of the time interval of the {@link GraphModel}
+     * @param to A {@link Date} being the last date of the time interval of the {@link GraphModel}
+     * @param graphAlg A {@link String} representing a {@link GraphAlgorithm}
+     * @param currency A {@link String} representing a currency
+     */
     public GraphModel(String mic, String graphName, Date from, Date to, String graphAlg, String currency){
         init(mic, graphName);
         this.data = graphData.getCompanyData(mic, from, to);
@@ -80,6 +90,8 @@ public class GraphModel {
 
     /**
      * A method that initializes the private variables of this class, used by every constructor in this class
+     *
+     *
      */
     private void init(String mic, String graphName) {
         this.graphComputer = new GraphComputer();
@@ -147,6 +159,11 @@ public class GraphModel {
         update();
     }
 
+    /**
+     * A method for retrieving the {@link GraphModel#graphName}
+     *
+     * @return The name as a {@link String}
+     */
     public String getName() {
         return graphName;
     }
@@ -171,37 +188,15 @@ public class GraphModel {
     }
 
     static public List<String> getKeyFigureNames(){
-        List<String> returnList = new ArrayList<>(KeyFigureCollection.getKeySet());
-        Collections.sort(returnList);
-        return returnList;
+        return KeyFigureCollection.getKeyFigureNames();
     }
 
     static public List<String> getGraphAlgorithmNames(){
-        List<String> returnList = new ArrayList<>();
-        String defaultAlgoName = GraphAlgorithmCollection.getDefaultGraphAlgorithmName();
-        List<String> namesInOrder = new ArrayList<>(GraphAlgorithmCollection.getGraphAlgorithmNames());
-        Collections.sort(namesInOrder);
-
-        returnList.add(defaultAlgoName);
-        for (String algoName : namesInOrder) {
-            if (!Objects.equals(algoName, defaultAlgoName))
-                returnList.add(algoName);
-        }
-        return returnList;
+        return GraphAlgorithmCollection.getGraphAlgorithmNames();
     }
 
     static public List<String> getCurrencyNames(){
-        List<String> returnList = new ArrayList<>();
-        String defaultAlgoName = CurrencyCollection.getDefaultCurrencyName();
-        List<String> namesInOrder = new ArrayList<>(CurrencyCollection.getCurrencyNames());
-        Collections.sort(namesInOrder);
-
-        returnList.add(defaultAlgoName);
-        for (String algoName : namesInOrder) {
-            if (!Objects.equals(algoName, defaultAlgoName))
-                returnList.add(algoName);
-        }
-        return returnList;
+        return CurrencyCollection.getCurrencyNames();
     }
 
     /**

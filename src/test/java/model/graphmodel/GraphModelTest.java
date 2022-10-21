@@ -42,7 +42,7 @@ public class GraphModelTest {
     @Test
     public void graphNameShouldBeCorrect(){
         GraphModel graphModel = new GraphModel("AAPL", "Test", date2, date3);
-        assertNotEquals("Test", graphModel.getName());
+        assertEquals("Test", graphModel.getName());
     }
 
     @Test
