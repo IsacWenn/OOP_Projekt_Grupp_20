@@ -303,4 +303,9 @@ public class User implements Serializable {
      * @return the active {@link User} in the application.
      */
     public static User getActiveUser() { return activeUser; }
+
+    /**
+     * A method that logs the active user out.
+     */
+    public static void logoutActiveUser() { activeUser = null; }
 }

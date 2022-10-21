@@ -20,19 +20,19 @@ public class TestGraphRepresentation {
     public void initializeTestingVariables() throws IOException {
         testGraphRep1 = new GraphRepresentation(
                 new ArrayList<>(){{ add(new Date(2022, 10, 14)); }},
-                "GraphAlgorithms.DAILYCLOSINGPRICE",
+                "Closing Price",
                 "MSFT",
                 "GBP"
         );
         testGraphRep2 = new GraphRepresentation(
                 new ArrayList<>(){{ add(new Date(2022, 10, 14)); }},
-                "GraphAlgorithms.DAILYCLOSINGPRICE",
+                "Closing Price",
                 "MSFT",
                 "GBP"
         );
         testGraphRep3 = new GraphRepresentation(
                 new ArrayList<>(){{ add(new Date()); }},
-                "GraphAlgorithms.DAILYCHANGE",
+                "Daily Change",
                 "MSFT",
                 "GBP"
         );
@@ -42,11 +42,6 @@ public class TestGraphRepresentation {
     public void getIntervalShouldReturnInterval() throws IOException {
         List<Date> dateList = new ArrayList<>(){{ add(new Date(2022, 10, 14)); }};
         assertEquals(dateList, testGraphRep1.getInterval());
-    }
-
-    @Test
-    public void getAlgorithmShouldReturnCorrectAlgorithmEnum() {
-        assertEquals(GraphAlgorithms.DAILYCLOSINGPRICE, testGraphRep1.getAlgorithm());
     }
 
     @Test
@@ -83,8 +78,14 @@ public class TestGraphRepresentation {
     }
 
     @Test
-    public void toStringShouldReturnAStringRepresentationOfInstance() {
-        assertEquals("GraphRepresentation{interval=[14/10/2022], algorithm=DAILYCLOSINGPRICE," +
-                " companyMIC='MSFT', preferredCurrency=GBP}", testGraphRep1.toString());
+    public void getAlgorithmShouldReturnAlgorithm() {
+        assertEquals("Daily Change", testGraphRep3.getAlgorithm());
+        assertEquals("Closing Price", testGraphRep2.getAlgorithm());
+    }
+
+    @Test
+    public void toStringShouldReturnACorrectRepresentationOfTheObject() {
+        assertEquals("GraphRepresentation{interval=[14/10/2022]," +
+                " algorithm=Closing Price, companyMIC='MSFT', preferredCurrency=GBP}", testGraphRep1.toString());
     }
 }
