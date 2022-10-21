@@ -157,11 +157,53 @@ public class TestUser {
     }
 
     @Test
-    public void addFavoriteGraphWithValuesShouldAddGraphRepToFavorites() {
+    public void addFavoriteGraphWithValuesShouldAddGraphRepToFavorites() throws IOException {
+        assertEquals(1, testUser.getUserFavoriteGraphs().size());
         List<Date> interval = new ArrayList<>(){{ add(new Date(2022, 1, 12)); }};
         String alg = "Daily Change";
         String mic = "T";
         String preferredCurrency = "GBP";
         testUser.addFavoriteGraph(interval, alg, mic, preferredCurrency);
+        assertEquals(2, testUser.getUserFavoriteGraphs().size());
+        assertInstanceOf(GraphRepresentation.class, testUser.getUserFavoriteGraphs().get(1));
+    }
+
+    @Test
+    public void removeFavoriteCompanyShouldRemoveCompanyStringFromListOfFavorites() {
+        assertEquals(1, testUser.getUserFavoriteCompanies().size());
+        testUser.removeFavoriteCompany("AMZN");
+        assertTrue(testUser.getUserFavoriteCompanies().isEmpty());
+    }
+
+    @Test
+    public void removeFavoriteGraphShouldRemoveGraphRepFromListOfFavorites() {
+        assertEquals(1, testUser.getUserFavoriteGraphs().size());
+        testUser.removeFavoriteGraph(graphRep);
+        assertTrue(testUser.getUserFavoriteGraphs().isEmpty());
+    }
+
+    @Test
+    public void toStringShouldReturnStringRepresentationOfInstance() {
+        User dummy = new User("", "", "", "", "", "");
+        assertEquals("User{userInfo=UserInfo{username='', password='', email='', name='', lastname='', bio=''}," +
+                " favorites=UserFavorites{favoriteGraphs=[], favoriteCompanies=[]}}", dummy.toString());
+    }
+
+    @Test
+    public void creatingNewUserShouldLoginThatUser() {
+        User.logoutActiveUser();
+        assertNull(User.getActiveUser());
+        assertTrue(User.loginUser("IsacWenn", "Lösenord"));
+        assertEquals(testUser, User.getActiveUser());
+    }
+
+    @Test
+    public void isLoggedInShouldReturnTrueIfThereIsAnActiveUser() {
+        assertTrue(User.isLoggedIn());
+    }
+
+    @Test
+    public void loginShouldFailIfIncorrectParametersAreGiven() {
+        assertFalse(User.loginUser("Hej", "Lösenord"));
     }
 }
