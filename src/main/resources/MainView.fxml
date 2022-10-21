@@ -10,8 +10,26 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppController">
+<StackPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppController">
    <children>
+      <AnchorPane fx:id="signupView" onMousePressed="#mainView" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00000044;">
+         <children>
+            <AnchorPane layoutX="400.0" layoutY="200.0" onMousePressed="#mouseTrap" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: #eeeeee;">
+               <children>
+                  <Label fx:id="signupError" alignment="CENTER" layoutY="10.0" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <TextField fx:id="signupUsernameField" layoutX="20.0" layoutY="42.0" promptText="Username" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="40.0" />
+                  <TextField fx:id="signupPasswordField" layoutX="20.0" layoutY="75.0" promptText="Password" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="75.0" />
+                  <TextField fx:id="signupEmailField" layoutX="20.0" layoutY="111.0" promptText="Email" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="110.0" />
+                  <TextField fx:id="signupFNameField" layoutX="220.0" layoutY="75.0" promptText="First name" AnchorPane.rightAnchor="20.0" />
+                  <TextField fx:id="signupLNameField" layoutX="220.0" layoutY="110.0" promptText="Last name" AnchorPane.rightAnchor="20.0" />
+                  <TextField fx:id="signupBioField" layoutX="20.0" layoutY="147.0" prefHeight="88.0" prefWidth="349.0" promptText="Biography" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+                  <Button layoutX="69.0" layoutY="108.0" mnemonicParsing="false" onAction="#signup" text="Sign up" AnchorPane.bottomAnchor="67.0" AnchorPane.leftAnchor="69.0" AnchorPane.rightAnchor="69.0" />
+                  <Hyperlink alignment="CENTER" contentDisplay="CENTER" layoutX="85.0" layoutY="277.0" onAction="#loginView" text="Login here" textAlignment="CENTER" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="85.0" />
+                  <Label alignment="CENTER" layoutX="31.0" layoutY="259.0" text="Already have an account? " AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="30.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
       <AnchorPane fx:id="loginView" onMousePressed="#mainView" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00000044;">
          <children>
             <AnchorPane layoutX="494.0" layoutY="294.0" onMousePressed="#mouseTrap" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #eeeeee;">
@@ -22,20 +40,6 @@
                   <Hyperlink layoutX="61.0" layoutY="167.0" onAction="#signupView" text="Sign up here!" AnchorPane.leftAnchor="61.0" AnchorPane.rightAnchor="60.0" />
                   <Label layoutX="30.0" layoutY="150.0" text="Dont have an account yet?" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="29.0" />
                   <Label fx:id="loginError" alignment="CENTER" layoutY="10.0" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-               </children>
-            </AnchorPane>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="signupView" onMousePressed="#mainView" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00000044;">
-         <children>
-            <AnchorPane layoutX="494.0" layoutY="294.0" onMousePressed="#mouseTrap" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #eeeeee;">
-               <children>
-                  <Label fx:id="signupError" alignment="CENTER" layoutY="10.0" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                  <TextField fx:id="signupUsernameField" layoutX="20.0" layoutY="42.0" promptText="Username" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.5" AnchorPane.topAnchor="40.0" />
-                  <TextField fx:id="signupPasswordField" layoutX="20.0" layoutY="75.0" promptText="Password" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.5" />
-                  <Button layoutX="69.0" layoutY="108.0" mnemonicParsing="false" onAction="#signup" text="Sign up" AnchorPane.bottomAnchor="67.0" AnchorPane.leftAnchor="69.0" AnchorPane.rightAnchor="69.0" />
-                  <Hyperlink layoutX="67.0" layoutY="167.0" onAction="#loginView" text="Login here" AnchorPane.leftAnchor="67.0" AnchorPane.rightAnchor="68.0" />
-                  <Label layoutX="31.0" layoutY="150.0" text="Already have an account? " AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="30.0" />
                </children>
             </AnchorPane>
          </children>

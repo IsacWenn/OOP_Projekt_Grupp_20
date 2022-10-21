@@ -9,6 +9,7 @@ import view.KeyFigureListItem;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class which allows for a detailed view of a select stock as a graph and allowing for multiple different sets of
@@ -34,8 +35,8 @@ public class DetailedChartController extends ChartController{
      * Generates a {@link DetailedChartController}.
      * @param parentController the Parent Controller.
      */
-    public DetailedChartController(AppController parentController) {
-        super(parentController);
+    public DetailedChartController(AppController parentController, List<String> favouriteCompanies) {
+        super(parentController, favouriteCompanies);
         activeCompany = null;
         keyFigGraphModel = null;
         activeAlgorithms = new ArrayList<>();

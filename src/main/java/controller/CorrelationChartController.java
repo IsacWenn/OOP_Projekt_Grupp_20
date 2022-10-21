@@ -10,6 +10,7 @@ import view.KeyFigureListItem;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class which allows two stocks to be compared and viewed as graphs as well as generating and displaying key figures
@@ -31,8 +32,8 @@ public class CorrelationChartController extends ChartController {
      * Generates a {@link CorrelationChartController}.
      * @param parentController the Parent Controller.
      */
-    public CorrelationChartController(AppController parentController){
-        super(parentController);
+    public CorrelationChartController(AppController parentController, List<String> favouriteCompanies){
+        super(parentController, favouriteCompanies);
         initializeAlgorithmComboBox();
         activeCompanies = new ArrayList<>();
         graphModels = new ArrayList<>();

@@ -11,7 +11,6 @@ public class Main {
         view.startup();
         
         model.notifyObservers();
-        UsersCollection.saveUsers();
         System.out.println("Färdig");
     }
 

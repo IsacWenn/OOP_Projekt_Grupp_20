@@ -9,8 +9,10 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import model.AppModel;
 import model.user.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class which handles the and creates intractable charts.
@@ -20,7 +22,8 @@ import model.user.User;
  */
 public class AppController {
 
-    private final AppModel appModel = AppModel.getInstance();
+    private List<String> favoriteCompanies = new ArrayList<>();
+    private List<ChartController> charts = new ArrayList<>();
 
     @FXML private TabPane tabsPane;
     @FXML private AnchorPane mainView;
@@ -30,6 +33,10 @@ public class AppController {
     @FXML private TextField loginPasswordField;
     @FXML private TextField signupUsernameField;
     @FXML private TextField signupPasswordField;
+    @FXML private TextField signupEmailField;
+    @FXML private TextField signupFNameField;
+    @FXML private TextField signupLNameField;
+    @FXML private TextField signupBioField;
     @FXML private Group loginButtons;
     @FXML private Group logoutButtons;
     @FXML private Label usernameLabel;
@@ -47,7 +54,8 @@ public class AppController {
      */
     @FXML
     private void newComparisonChart() {
-        ChartController newChart = new ComparisonChartController(this);
+        ChartController newChart = new ComparisonChartController(this, favoriteCompanies);
+        charts.add(newChart);
         newTab(newChart, "Comparison Chart");
     }
 
@@ -56,7 +64,8 @@ public class AppController {
      */
     @FXML
     private void newDetailedChart() {
-        ChartController newChart = new DetailedChartController(this);
+        ChartController newChart = new DetailedChartController(this, favoriteCompanies);
+        charts.add(newChart);
         newTab(newChart, "Detailed Chart");
     }
 
@@ -65,7 +74,8 @@ public class AppController {
      */
     @FXML
     private void newCorrelationChart() {
-        ChartController newChart = new CorrelationChartController(this);
+        ChartController newChart = new CorrelationChartController(this, favoriteCompanies);
+        charts.add(newChart);
         newTab(newChart, "Correlation Chart");
     }
 
@@ -104,25 +114,40 @@ public class AppController {
 
     @FXML
     private void login() {
-        User.login(loginUsernameField.getText(), loginPasswordField.getText());
+        User.loginUser(loginUsernameField.getText(), loginPasswordField.getText());
         if (User.isLoggedIn()) {
             mainView();
             updateUserButtonGroups();
-            usernameLabel.setText(User.getCurrentUser().getUsername());
+            usernameLabel.setText(User.getActiveUser().getUserName());
+            favoriteCompanies = new ArrayList<>(User.getActiveUser().getUserFavoriteCompanies());
+            for(ChartController chart : charts) {
+                chart.updateFavoritesList(favoriteCompanies);
+            }
+            refreshFavorites();
         } else {
             loginError.setText("No account found");
         }
     }
 
+    public void refreshFavorites() {
+        for(ChartController chart : charts) {
+            chart.updateStockList();
+        }
+    }
+
     @FXML
     private void signup() {
-        User.signup(signupUsernameField.getText(), signupPasswordField.getText());
+        new User(signupUsernameField.getText(), signupPasswordField.getText(), signupEmailField.getText(),
+                signupFNameField.getText(), signupLNameField.getText(), signupBioField.getText());
         if (User.isLoggedIn()) {
             mainView();
             updateUserButtonGroups();
-            usernameLabel.setText(User.getCurrentUser().getUsername());
+            usernameLabel.setText(User.getActiveUser().getUserName());
+            for(String company : favoriteCompanies) {
+                User.getActiveUser().addFavoriteCompany(company);
+            }
         } else {
-            signupError.setText("Username taken");
+            signupError.setText("Error registering your account");
         }
     }
 
@@ -131,6 +156,10 @@ public class AppController {
         User.logout();
         updateUserButtonGroups();
         usernameLabel.setText("");
+        favoriteCompanies = new ArrayList<>();
+        for(ChartController chart : charts) {
+            chart.updateFavoritesList(favoriteCompanies);
+        }
     }
 }
 
