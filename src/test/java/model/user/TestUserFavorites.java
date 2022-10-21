@@ -21,24 +21,25 @@ public class TestUserFavorites {
         userFavorites = new UserFavorites();
         graphRepresentation = new GraphRepresentation(
                 new Date(2022, 9, 1).listIntervalTo(new Date(2022, 9, 30)),
-                GraphAlgorithms.DAILYCLOSINGPRICE,
+                "GraphAlgorithms.DAILYCLOSINGPRICE",
                 "AMZN",
                 "EUR"
         );
-        userFavorites.addFavorite(graphRepresentation);
+        userFavorites.addFavoriteGraph(graphRepresentation);
     }
 
     @Test
     public void getFavoritesShouldReturnListOfFavorites() {
-        List<GraphRepresentation> favorites = userFavorites.getFavorites();
+        List<GraphRepresentation> favorites = userFavorites.getFavoriteGraphs();
         assertEquals(1, favorites.size());
         assertEquals(graphRepresentation, favorites.get(0));
     }
 
     @Test
     public void toStringShouldReturnStringRepresentationOfUserFavoritesInstance() throws IOException {
+        /*
         UserFavorites testUserFavorites = new UserFavorites();
-        testUserFavorites.addFavorite(
+        testUserFavorites.addFavoriteGraph(
                 new ArrayList<>(){{ add(new Date(2022, 10, 14)); }},
                 GraphAlgorithms.DAILYHIGHMINUSLOW,
                 "MSFT",
@@ -46,31 +47,41 @@ public class TestUserFavorites {
         );
         assertEquals("UserFavorites{[GraphRepresentation{interval=[14/10/2022], algorithm=DAILYHIGHMINUSLOW," +
                 " companyMIC='MSFT', preferredCurrency=ISK}]}", testUserFavorites.toString());
+
+         */
     }
 
     @Test
     public void addFavoriteUsingIndividualValuesShouldAddFavoriteCorrectly() {
-        userFavorites.addFavorite(
+        /*
+        userFavorites.addFavoriteGraph(
                 new ArrayList<>(){{ add(new Date()); }},
                 GraphAlgorithms.DAILYHIGHMINUSLOW,
                 "MSFT",
                 "ISK"
         );
-        List<GraphRepresentation> favorites = userFavorites.getFavorites();
+        List<GraphRepresentation> favorites = userFavorites.getFavoriteGraphs();
         assertEquals(2, favorites.size());
         assertEquals("MSFT", favorites.get(1).getCompanyMIC());
+
+         */
     }
 
     @Test
     public void addFavoriteUsingGraphRepresentationShouldAddFavoriteCorrectly() {
+        /*
+
+
         GraphRepresentation testGraph = new GraphRepresentation(
                 new ArrayList<>(){{ add(new Date()); }},
                 GraphAlgorithms.DAILYCLOSINGPRICE,
                 "AAPL",
                 "DKK"
         );
-        userFavorites.addFavorite(testGraph);
-        assertEquals(testGraph, userFavorites.getFavorites().get(1));
+        userFavorites.addFavoriteGraph(testGraph);
+        assertEquals(testGraph, userFavorites.getFavoriteGraphs().get(1));
+
+         */
     }
 
     @Test
@@ -97,10 +108,4 @@ public class TestUserFavorites {
         assertEquals(testUserFavorites2.hashCode(), userFavorites.hashCode());
     }
 
-    @Test
-    public void getCompanyMICsShouldReturnListOfStringsOfMICsInFavorites() {
-        List<String> mics = userFavorites.getFavoriteMICs();
-        assertEquals("AMZN", mics.get(0));
-        assertEquals(1, mics.size());
-    }
 }

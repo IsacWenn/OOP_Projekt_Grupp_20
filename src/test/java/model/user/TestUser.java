@@ -65,7 +65,7 @@ public class TestUser {
     @Test
     public void getUserFavoriteInstanceShouldReturnUserInfo() {
         UserFavorites favorites = testUser.getUserFavoriteInstance();
-        assertTrue(favorites.getFavorites().isEmpty());
+        assertTrue(favorites.getFavoriteGraphs().isEmpty());
     }
 
     @Test
@@ -96,12 +96,6 @@ public class TestUser {
     @Test
     public void getBioShouldReturnBio() {
         assertEquals("python <<<<<<", testUser.getBio());
-    }
-
-    @Test
-    public void getUserFavoritesShouldReturnListOfFavorites() {
-        List<GraphRepresentation> favorites = testUser.getUserFavorites();
-        assertTrue(favorites.isEmpty());
     }
 
     @Test
