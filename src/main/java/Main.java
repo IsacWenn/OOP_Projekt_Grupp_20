@@ -1,5 +1,4 @@
 import model.AppModel;
-import model.user.UsersCollection;
 import view.AppView;
 
 public class Main {

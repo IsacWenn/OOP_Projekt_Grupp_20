@@ -1,154 +1,226 @@
 package model.user;
 
-import model.graphmodel.graphalgorithms.GraphAlgorithms;
-import model.util.Date;
 import model.util.GraphRepresentation;
 
-import java.io.Serializable;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * A serializable class for our users in our system
+ *
+ * @author Isac
+ */
 public class User implements Serializable {
 
     /**
-     * A {@link String} for the username of a user.
+     * A static attribute {@link String} holding the file path for our user file.
      */
-    private final String username;
-    /**
-     * A {@link String} for the password of a user.
-     */
-    private final String password;
-    /**
-     * A {@link List} of {@link GraphRepresentation}s of the different favorites.
-     */
-    private List<GraphRepresentation> favorites;
-
-    private static User curUser;
+    private static String filePath = "src/main/resources/users.dat";
 
     /**
-     * A constructor of the UserV2 class.
+     * A static {@link List} of User:s holding all initialized Users.
+     */
+    private static List<User> users = new ArrayList<>();
+
+    /**
+     * An attribute containing all the standard User information.
+     */
+    private UserInfo userInfo;
+
+    /**
+     * An attribute containing the different favorite graph representations.
+     */
+    private UserFavorites userFavorites;
+
+    /**
+     * A constructor for the class User.
      *
-     * @param username A {@link String} of the username.
-     * @param password A {@link String} of the password.
+     * @param username A {@link String} containing the Username of a user.
+     * @param password A {@link String} containing the password of a user.
+     * @param email    A {@link String} containing the email of a user.
+     * @param name     A {@link String} containing the firstname of a user.
+     * @param lastname A {@link String} containing the lastname of a user.
+     * @param bio      A {@link String} containing a biography of a user.
      */
-    private User(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public User(String username, String password, String email, String name, String lastname, String bio) {
+        this.userInfo = new UserInfo(username, password, email, name, lastname, bio);
+        this.userFavorites = new UserFavorites();
+        users.add(this);
+    }
+
+    // Getters
+
+    /**
+     * A getter for the userInfo attribute.
+     *
+     * @return the {@link UserInfo} attribute of the user instance.
+     */
+    UserInfo getUserInfo() {
+        return userInfo;
     }
 
     /**
-     * A getter method for the username
+     * A getter for the userFavorites attribute.
      *
-     * @return A {@link String} of the username.
+     * @return the {@link UserFavorites} attribute of the user instance.
      */
-    public String getUsername() {
-        return username;
+    UserFavorites getUserFavoriteInstance() {
+        return userFavorites;
+    }
+
+    /**
+     * A getter method for the Username.
+     *
+     * @return a {@link String} of the username.
+     */
+    public String getUserName() {
+        return userInfo.getUsername();
     }
 
     /**
      * A getter method for the password.
      *
-     * @return A {@link String} of the password.
+     * @return a {@link String} of the password.
      */
     public String getPassword() {
-        return password;
-    }
-
-    public static User getCurrentUser() {
-        return curUser;
-    }
-
-    private static void setCurrentUser(User user) {
-        curUser = user;
+        return userInfo.getPassword();
     }
 
     /**
-     * A getter method for the favorites attribute.
+     * A getter method for the email address.
      *
-     * @return A {@link List} of {@link GraphRepresentation} of the favorites.
+     * @return a {@link String} of the email.
      */
-    public List<GraphRepresentation> getFavorites() {
-        return favorites;
+    public String getEmail() {
+        return userInfo.getEmail();
     }
 
     /**
-     * A method that adds a new favorite to {@link User#favorites}.
+     * A getter method for the firstname of the user.
      *
-     * @param interval a {@link List} of {@link Date}s of the specified interval.
-     * @param alg a {@link GraphRepresentation} for the algorithm.
-     * @param mic a {@link String} for the company mic.
+     * @return a {@link String} of the firstname.
      */
-    void addFavorite(List<Date> interval, GraphAlgorithms alg, String mic, String prefCurrency) {
-        favorites.add(new GraphRepresentation(interval, alg, mic, prefCurrency));
+    public String getFirstName() {
+        return userInfo.getName();
     }
 
     /**
-     * A method that adds a new favorite to {@link User#favorites}.
+     * A getter method for the lastname of the user.
      *
-     * @param graphRep a {@link GraphRepresentation} to add to the list of favorites.
+     * @return a {@link String} of the lastname.
      */
-    void addFavorite(GraphRepresentation graphRep) {
-        favorites.add(graphRep);
+    public String getLastName() {
+        return userInfo.getLastname();
     }
 
-    public static void signup(String username, String password) {
-        if (UsersCollection.userExists(username)) {
-            return;
+    /**
+     * A getter method for the biography of the user.
+     *
+     * @return a {@link String} of the bio.
+     */
+    public String getBio() {
+        return userInfo.getBio();
+    }
+
+    /**
+     * A getter method for the list of users.
+     *
+     * @return a {@link List} of {@link User}s containing all the different users in the system.
+     */
+    public static List<User> getUsers() {
+        return users;
+    }
+
+    /**
+     * A getter method for a list of different favorites.
+     *
+     * @return a {@link List} of {@link GraphRepresentation}s of the favorite graphs.
+     */
+    public List<GraphRepresentation> getUserFavorites() {
+        return userFavorites.getFavorites();
+    }
+
+    /**
+     * A getter method for a list of the mics of the favorite companies.
+     *
+     * @return a {@link List} of {@link String}s containing the mics.
+     */
+    public List<String> getFavoriteCompanyMics() { return userFavorites.getFavoriteMICs(); }
+
+    /**
+     * A method that sets the List {@link User#users} to an empty {@link ArrayList}.
+     */
+    static void resetUserList() {
+        users = new ArrayList<>();
+    }
+
+    /**
+     * A method loading all the Users of the file in {@link User#filePath} to the {@link User#users}.
+     */
+    public static void loadUsers() {
+        List<User> savedUsers = new ArrayList<>();
+        try (FileInputStream fis = new FileInputStream(filePath);
+             ObjectInputStream ois = new ObjectInputStream(fis);) {
+            savedUsers = (List<User>) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println(e.getMessage());
         }
-        User user = new User(username, password);
-        UsersCollection.addUser(user);
-        setCurrentUser(user);
-    }
-
-    public static void login(String username, String password) {
-        User user = UsersCollection.getUser(username, password);
-        if (user != null) {
-            setCurrentUser(user);
-        }
-    }
-
-    public static void logout() {
-        setCurrentUser(null);
-    }
-
-    public static boolean isLoggedIn() {
-        return curUser != null;
+        for (User user : savedUsers)
+            if (!users.contains(user))
+                users.add(user);
     }
 
     /**
-     * A toString method implementation for the UserV2 class.
+     * A method saving all the current Users in the {@link User#users} list to the file given in {@link User#filePath}.
+     */
+    public static void saveUsers() {
+        try (FileOutputStream fos = new FileOutputStream(filePath);
+             ObjectOutputStream oos = new ObjectOutputStream(fos);) {
+            oos.writeObject(users);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+    /**
+     * A toString method for the User class.
      *
-     * @return A {@link String} representation of the class.
+     * @return a {@link String} representation of the User class.
      */
     @Override
     public String toString() {
-        return "UserInfo{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
+        return "User{" +
+                "userInfo=" + userInfo +
+                ", favorites=" + userFavorites +
                 '}';
     }
 
     /**
-     * An implementation of the .equals() method in Java.
+     * An implementation of .equals() of Java.
      *
-     * @param o An {@link Object} to compare with.
-     * @return A {@link Boolean} value of that comparison.
+     * @param o an {@link Object} to compare with.
+     * @return a {@link Boolean} value of the comparison.
      */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return username.equals(user.username) && password.equals(user.password);
+        return Objects.equals(userInfo, user.userInfo) && Objects.equals(userFavorites, user.userFavorites);
     }
 
     /**
-     * A method that uses the different instance attributes to create a unique hash.
+     * An implementation of hashCode that creates a unique hash based on the instance attributes.
      *
-     * @return An {@link Integer} of that hash.
+     * @return An {@link Integer} hash of the different instance values.
      */
     @Override
     public int hashCode() {
-        return Objects.hash(username, password);
+        return Objects.hash(userInfo, userFavorites);
     }
+
+
 }
