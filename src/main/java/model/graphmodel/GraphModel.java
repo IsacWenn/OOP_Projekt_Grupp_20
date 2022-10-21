@@ -1,6 +1,5 @@
 package model.graphmodel;
 
-import javafx.scene.chart.XYChart;
 import model.datahandling.DayData;
 import model.graphmodel.graphalgorithms.GraphAlgorithm;
 import model.graphmodel.graphalgorithms.GraphAlgorithmCollection;
@@ -26,11 +25,15 @@ public class GraphModel {
     private Map<Date, Number> values;
 
     /**
-     * The {@link Map} that holds the raw company data from the GraphData class, a {@link Date}
+     * The {@link Map} that holds the raw company data from the GraphData class
      */
     Map<Date, DayData> data;
 
+    /**
+     * The {@link Map} that holds the company data adjusted for currency
+     */
     private Map<Date, DayData> currencyAdjustedData;
+
     /**
      * The reference to the {@link GraphData} class
      */
@@ -41,6 +44,9 @@ public class GraphModel {
      */
     private GraphComputer graphComputer;
 
+    /**
+     * The {@link String} that represents
+     */
     private String companyMIC, graphName;
 
     private String currency;
@@ -105,7 +111,6 @@ public class GraphModel {
      * A method that sends a call to {@link GraphComputer} to calculate the data with its current {@link GraphAlgorithm}
      * and data
      */
-
     private void update() {
         if (this.currency == null) {
             this.values = this.graphComputer.calculateValues(data);
@@ -177,7 +182,13 @@ public class GraphModel {
         return Map.copyOf(this.values);
     }
 
-
+    /**
+     * A method that tells the {@link GraphComputer} to calculate the given key figure with the relevant data in
+     * GraphModel
+     *
+     * @param keyFigure a {@link String} that represents a {@link KeyFigureCollection}
+     * @return a {@link Double} which is the calculated value of that key figure
+     */
     public double getKeyFigureValue(String keyFigure){
         if(currencyAdjustedData!=null) {
             return this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure), currencyAdjustedData);
@@ -200,41 +211,23 @@ public class GraphModel {
     }
 
     /**
-     * A getter method that converts {@link GraphModel#values} to a {@link javafx.scene.chart.XYChart.Series}
+     * A method that sorts the {@link GraphModel#values} and returns it in a more manageable form
      *
-     * @param numDataPoints an {@link Integer} representing the amount of data points for the XYChart series
-     *
-     * @return the {@link javafx.scene.chart.XYChart.Series} containing the values
+     * @param numDataPoints an {@link Integer} representing the number of data point you want the graph
+     * @return a {@link LinkedHashMap}  containing data that is reduced and sorted
      */
-  /*  public XYChart.Series<String, Number> getChartSeries(int numDataPoints) {
-        XYChart.Series<String, Number> chartSeries = new XYChart.Series<>();
-
-        List<Date> orderedDates = Date.sortDates(values.keySet());
-
-        double daysInterval = orderedDates.size(), stepAmount, dIndex = 0;
-        int index, slot = 0;
-
-        stepAmount = Math.max(1, daysInterval/numDataPoints);
-
-        while (chartSeries.getData().size() < Math.min(numDataPoints, daysInterval)) {
-            index = (int) Math.round(dIndex);
-            Date currentDate = orderedDates.get(index);
-            Number val = values.get(currentDate);
-            chartSeries.getData().add(slot, new XYChart.Data<>(currentDate.toString(), val));
-            dIndex += stepAmount; slot++;
-        }
-        return chartSeries;
-    }
-
-   */
-
-    public Map<Date, Number> getOrderedData(int numDataPoints) {
+    public Map<Date, Number> getSortedAndReducedData(int numDataPoints) {
         LinkedHashMap<Date, Number> orderedMap = new LinkedHashMap<>();
         List<Date> orderedDates = Date.sortDates(this.getValues().keySet());
+        reduceDataPoints(numDataPoints, orderedMap, orderedDates);
+        return orderedMap;
+    }
+
+    private void reduceDataPoints(int numDataPoints, LinkedHashMap<Date, Number> orderedMap, List<Date> orderedDates) {
         double daysInterval = orderedDates.size(), stepAmount, dIndex = 0;
         int index;
 
-        stepAmount = Math.max(1, daysInterval/numDataPoints);
+        stepAmount = Math.max(1, daysInterval/ numDataPoints);
         while (orderedMap.size() < Math.min(numDataPoints, daysInterval)) {
             index = (int) Math.round(dIndex);
             Date currentDate = orderedDates.get(index);
@@ -242,7 +235,6 @@ public class GraphModel {
             orderedMap.put(currentDate, val);
             dIndex += stepAmount;
         }
-        return orderedMap;
     }
 
 }
