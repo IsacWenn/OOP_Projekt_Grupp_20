@@ -34,5 +34,11 @@
         </AnchorPane>
     </SplitPane>
    <ComboBox fx:id="chartTypeComboBox" layoutX="320.0" layoutY="21.0" prefWidth="150.0" />
-   <ComboBox fx:id="algorithmComboBox" layoutX="523.0" layoutY="21.0" prefWidth="150.0" />
+   <ComboBox fx:id="algorithmComboBox" layoutX="500.0" layoutY="21.0" prefWidth="150.0" />
+   <ComboBox fx:id="currencyComboBox" layoutX="1025.0" layoutY="21.0" prefWidth="150.0" />
+   <AnchorPane layoutX="306.0" layoutY="608.0" prefHeight="62.0" prefWidth="890.0" AnchorPane.topAnchor="610.0">
+      <children>
+         <FlowPane fx:id="keyFigureContainer" prefHeight="62.0" prefWidth="893.0" prefWrapLength="460.0" />
+      </children>
+   </AnchorPane>
 </fx:root>

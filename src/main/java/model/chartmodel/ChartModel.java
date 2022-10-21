@@ -1,6 +1,7 @@
 package model.chartmodel;
 
 import model.graphmodel.GraphModel;
+import model.util.CurrencyCollection;
 import model.util.Date;
 
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ChartModel {
+    protected String currency;
     protected Date startDate;
     protected Date endDate;
     protected ArrayList<GraphModel> graphModels;
@@ -15,18 +17,20 @@ public class ChartModel {
     public ChartModel() {
         initializeVariables();
     }
+
     protected void initializeVariables() {
         try {
             startDate = new Date(2021, 9, 26);
             endDate = new Date();
             graphModels = new ArrayList<>();
+            currency = CurrencyCollection.getDefaultCurrencyName();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
 
     public GraphModel add(String acronym, String name, String algorithm) {
-        GraphModel graphModel = new GraphModel(acronym, name, startDate, endDate, algorithm);
+        GraphModel graphModel = new GraphModel(acronym, name, startDate, endDate, algorithm, currency);
         graphModels.add(graphModel);
         return graphModel;
     }
@@ -56,6 +60,13 @@ public class ChartModel {
     public void updateAlgorithms(String algorithm) {
         for (GraphModel graphModel: graphModels) {
             graphModel.updateAlgorithm(algorithm);
+        }
+    }
+
+    public void updateCurrency(String newCurrency) {
+        currency = newCurrency;
+        for (GraphModel graphModel: graphModels) {
+            graphModel.updateCurrency(currency);
         }
     }
 
@@ -97,5 +108,13 @@ public class ChartModel {
 
     public ArrayList<GraphModel> getGraphModels() {
         return graphModels;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
     }
 }

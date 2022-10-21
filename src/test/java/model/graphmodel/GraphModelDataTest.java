@@ -2,7 +2,6 @@ package model.graphmodel;
 
 
 import model.datahandling.DayData;
-import model.util.CurrencyEnum;
 import model.util.Date;
 import org.junit.jupiter.api.*;
 
@@ -70,6 +69,6 @@ public class GraphModelDataTest {
 
     @Test
     public void getCompanyCurrencyShouldReturnTheDefaultCurrencyForThatCompany(){
-        assertEquals(CurrencyEnum.USD, graphData.getCompanyCurrency("AAPL"));
+        assertEquals("USD", graphData.getCompanyCurrency("AAPL"));
     }
 }

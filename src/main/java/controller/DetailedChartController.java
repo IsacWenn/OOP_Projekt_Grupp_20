@@ -1,65 +1,52 @@
 package controller;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.CheckBox;
+import javafx.scene.control.*;
+import javafx.scene.layout.FlowPane;
+import model.graphmodel.GraphModel;
+import view.KeyFigureListItem;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+/**
+ * Class which allows for a detailed view of a select stock as a graph and allowing for multiple different sets of
+ * data to be displayed any given stock.
+ *
+ * @author Johan
+ * @author Dennis
+ */
 public class DetailedChartController extends ChartController{
 
     protected ControllerStockListItem activeCompany;
     protected ArrayList<String> activeAlgorithms;
+    private GraphModel keyFigGraphModel;
 
     @FXML
-    private CheckBox closingPriceBox;
+    private MenuButton algorithmMenuButton;
     @FXML
-    private CheckBox dailyChangeBox;
+    private FlowPane keyFigureContainer;
     @FXML
-    private CheckBox dailyDeviationBox;
-    @FXML
-    private CheckBox linearRegressionBox;
+    protected ComboBox<String> currencyComboBox;
 
+    /**
+     * Generates a {@link DetailedChartController}.
+     * @param parentController the Parent Controller.
+     */
     public DetailedChartController(AppController parentController) {
         super(parentController);
         activeCompany = null;
+        keyFigGraphModel = null;
         activeAlgorithms = new ArrayList<>();
-        initializeCheckBoxes();
+        initializeAlgorithmComboBox();
     }
 
-    private void initializeCheckBoxes() {
-        closingPriceBox.selectedProperty().addListener(new ChangeListener<>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                closingPriceBoxPressed();
-            }
-        });
-        dailyChangeBox.selectedProperty().addListener(new ChangeListener<>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                dailyChangeBoxPressed();
-            }
-        });
-        dailyDeviationBox.selectedProperty().addListener(new ChangeListener<>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                dailyDeviationBoxPressed();
-            }
-        });
-        linearRegressionBox.selectedProperty().addListener(new ChangeListener<>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                linearRegressionBoxPressed();
-            }
-        });
-        closingPriceBox.selectedProperty().set(true);
-    }
-
+    /**
+     * Loads the FXML file.
+     */
     @Override
-    void loadFXML() {
+    protected void loadFXML() {
         FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../DetailedChart.fxml")));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -70,23 +57,31 @@ public class DetailedChartController extends ChartController{
         }
     }
 
-    private void closingPriceBoxPressed() {
-        toggleAlgorithm(closingPriceBox, "Closing Price");
+    /**
+     * Initializes the Algorithm selector {@link ComboBox}.
+     */
+    private void initializeAlgorithmComboBox() {
+        ArrayList<CheckBox> checkBoxes = new ArrayList<>();
+        for (String algorithm: GraphModel.getGraphAlgorithmNames()) {
+            CheckBox checkBox = new CheckBox(algorithm);
+            checkBox.selectedProperty().addListener((options, oldVal, newVal) -> {
+                toggleAlgorithm(checkBox.getText());
+            });
+            checkBoxes.add(checkBox);
+        }
+        checkBoxes.get(0).setSelected(true);
+        for (CheckBox checkBox: checkBoxes) {
+            CustomMenuItem menuItem = new CustomMenuItem(checkBox);
+            menuItem.setHideOnClick(false);
+            algorithmMenuButton.getItems().add(menuItem);
+        }
     }
 
-    private void dailyChangeBoxPressed() {
-        toggleAlgorithm(dailyChangeBox, "Daily Change");
-    }
-
-    private void dailyDeviationBoxPressed() {
-        toggleAlgorithm(dailyDeviationBox, "Daily Deviation");
-    }
-
-    private void linearRegressionBoxPressed() {
-        toggleAlgorithm(linearRegressionBox, "Linear Regression");
-    }
-
-    private void toggleAlgorithm(CheckBox checkBox, String algorithm) {
+    /**
+     * Toggles whether the given algorithm is active or not.
+     * @param algorithm the name of the algorithm to toggle.
+     */
+    private void toggleAlgorithm(String algorithm) {
         if (activeAlgorithms.contains(algorithm)) {
             activeAlgorithms.remove(algorithm);
         } else {
@@ -97,21 +92,30 @@ public class DetailedChartController extends ChartController{
             int index = chartModel.indexOf(algorithm);
             chartModel.remove(index);
             chart.remove(index);
-        } else if (activeCompany != null && checkBox.isSelected()) {
+        } else if (activeCompany != null) {
             chartModel.add(activeCompany.getMIC(), algorithm, algorithm);
         }
-        chart.refresh(chartModel.getGraphModels());
+        refreshChart();
     }
 
-    protected void removeFromChart() {
+    /**
+     * Clears the chart and relevant variables.
+     */
+    protected void clearChart() {
         activeCompany = null;
+        keyFigGraphModel = null;
         chartModel.clearGraphModels();
         chart.clear();
     }
 
+    /**
+     * Adds the given stock to the chart.
+     * @param item the {@link ControllerStockListItem} which contains information of the stock to be added.
+     */
     protected void addToChart(ControllerStockListItem item) {
-        removeFromChart();
+        clearChart();
         activeCompany = item;
+        keyFigGraphModel = new GraphModel(item.getMIC(), "", chartModel.getStartDate(), chartModel.getEndDate());
         for (String algorithm: activeAlgorithms) {
             chart.add(
                 chartModel.add(
@@ -123,9 +127,15 @@ public class DetailedChartController extends ChartController{
         }
     }
 
+    /**
+     * Handles what happens when a {@link ControllerStockListItem} is clicked upon. Either adding it to the chart or
+     * removing it from the chart.
+     * @param item the {@link ControllerStockListItem} clicked upon.
+     */
+    @Override
     public void stockListOnClick(ControllerStockListItem item) {
         if (activeCompany != null && activeCompany == item) {
-            removeFromChart();
+            clearChart();
         } else {
             if (!item.isActive()) {
                 if (activeCompany != null) {
@@ -133,10 +143,33 @@ public class DetailedChartController extends ChartController{
                 }
                 addToChart(item);
             } else {
-                removeFromChart();
+                clearChart();
             }
         }
         item.togglePressed();
+        refreshChart();
+    }
+
+    /**
+     * Populates a container with relevant {@link KeyFigureListItem}s based on the currently displayed chart.
+     */
+    private void populateKeyFigureContainer() {
+        keyFigureContainer.getChildren().clear();
+        for (String keyFig : GraphModel.getKeyFigureNames()) {
+            keyFigureContainer.getChildren().add(new KeyFigureListItem(keyFig, keyFigGraphModel));
+        }
+    }
+
+    /**
+     * Redraws the chart.
+     */
+    @Override
+    public void refreshChart() {
         chart.refresh(chartModel.getGraphModels());
+        if (keyFigGraphModel != null) {
+            keyFigGraphModel.updateTimeInterval(chartModel.getStartDate(), chartModel.getEndDate());
+            keyFigGraphModel.updateCurrency(getCurrency());
+        }
+        populateKeyFigureContainer();
     }
 }

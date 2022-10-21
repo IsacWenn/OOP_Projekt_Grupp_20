@@ -22,19 +22,19 @@ public class TestGraphRepresentation {
                 new ArrayList<>(){{ add(new Date(2022, 10, 14)); }},
                 GraphAlgorithms.DAILYCLOSINGPRICE,
                 "MSFT",
-                CurrencyConversionEnum.USD_TO_GBP
+                "GBP"
         );
         testGraphRep2 = new GraphRepresentation(
                 new ArrayList<>(){{ add(new Date(2022, 10, 14)); }},
                 GraphAlgorithms.DAILYCLOSINGPRICE,
                 "MSFT",
-                CurrencyConversionEnum.USD_TO_GBP
+                "GBP"
         );
         testGraphRep3 = new GraphRepresentation(
                 new ArrayList<>(){{ add(new Date()); }},
                 GraphAlgorithms.DAILYCHANGE,
                 "MSFT",
-                CurrencyConversionEnum.USD_TO_GBP
+                "GBP"
         );
     }
 
@@ -56,7 +56,7 @@ public class TestGraphRepresentation {
 
     @Test
     public void getConversionCurrencyShouldReturnCorrectCurrencyConversionEnum() {
-        assertEquals(CurrencyConversionEnum.USD_TO_GBP, testGraphRep1.getConversionCurrency());
+        assertEquals("GBP", testGraphRep1.getConversionCurrency());
     }
 
     @Test
@@ -85,6 +85,6 @@ public class TestGraphRepresentation {
     @Test
     public void toStringShouldReturnAStringRepresentationOfInstance() {
         assertEquals("GraphRepresentation{interval=[14/10/2022], algorithm=DAILYCLOSINGPRICE," +
-                " companyMIC='MSFT', preferredCurrency=USD_TO_GBP}", testGraphRep1.toString());
+                " companyMIC='MSFT', preferredCurrency=GBP}", testGraphRep1.toString());
     }
 }

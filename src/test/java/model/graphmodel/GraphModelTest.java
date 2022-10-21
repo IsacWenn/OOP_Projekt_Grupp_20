@@ -1,8 +1,5 @@
 package model.graphmodel;
 
-import model.graphmodel.graphalgorithms.GraphAlgorithms;
-import model.graphmodel.keyfigures.KeyFigureCollection;
-import model.util.CurrencyEnum;
 import model.util.Date;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,6 +27,7 @@ public class GraphModelTest {
             add(date2);
             add(date3);
         }};
+
     }
 
     @Test
@@ -41,7 +39,8 @@ public class GraphModelTest {
     @Test
     public void graphModelCreatedWithOnlyMicShouldContainAllAvailableCompanyData() {
         GraphModel graphModel = new GraphModel("AAPL", "Test");
-        assertEquals(2515, graphModel.data.size());
+
+        assertEquals(2515,graphModel.data.size(), 10);
         assertNotNull(graphModel.data.get(date1));
     }
 
@@ -64,14 +63,14 @@ public class GraphModelTest {
     @Test
     public void updateAlgorithmShouldUpdateTheCurrentAlgorithm(){
         GraphModel graphModel = new GraphModel("AAPL", "Test", date2, date3);
-        graphModel.updateAlgorithm("Daily change");
+        graphModel.updateAlgorithm("Daily Change");
         assertEquals(1.27, (double) graphModel.getValues().get(date2), 0.01);
     }
 
     @Test
     public void changeCurrencyShouldUpdateWhatCurrencyTheGraphValuesIsShownIn(){
         GraphModel graphModel = new GraphModel("AAPL", "Test", date2, date3);
-        graphModel.updateCurrency(CurrencyEnum.SEK);
+        graphModel.updateCurrency("SEK");
         assertEquals(1569.65, (double)graphModel.getValues().get(date2), 0.1);
     }
 
@@ -85,14 +84,14 @@ public class GraphModelTest {
     @Test
     public void getKeyFigureValueShouldReturnTheValueOfThatKeyFigureForTheCurrentData(){
         GraphModel graphModel = new GraphModel("AAPL", "Test", date1, date2);
-        double result = graphModel.getKeyFigureValue("Volatility");
-        assertEquals(5.1, result, 0.05);
+        double result = graphModel.getKeyFigureValue("Standard Deviation");
+        assertEquals(5.10, result, 0.5);
     }
     @Test
     public void getKeyFigureValueShouldReturnTheValueOfThatKeyFigureEvenIfCurrencyBeenChanged(){
         GraphModel graphModel = new GraphModel("AAPL", "Test", date1, date2);
-        graphModel.updateCurrency(CurrencyEnum.SEK);
-        double result = graphModel.getKeyFigureValue("Volatility");
-        //assertEquals(5.1, result, 0.05);
+        graphModel.updateCurrency("SEK");
+        double result = graphModel.getKeyFigureValue("Standard Deviation");
+        assertEquals(70, result, 1);
     }
 }

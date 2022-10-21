@@ -1,7 +1,6 @@
 package model.datahandling;
 
 
-import model.util.CurrencyEnum;
 import org.junit.jupiter.api.*;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public class TestCompanyData {
 
     @Test
     public void getCurrencyShouldReturnCorrectCurrencyEnum() {
-        assertEquals(CurrencyEnum.USD, CompanyData.getCurrency("AAPL"));
+        assertEquals("USD", CompanyData.getCurrency("AAPL"));
     }
 
     @Test

@@ -1,6 +1,6 @@
 package model.graphmodel;
 
-import model.util.CurrencyEnum;
+import model.util.CurrencyCollection;
 import model.util.Date;
 import model.datahandling.DataHandler;
 import model.datahandling.DayData;
@@ -71,7 +71,7 @@ class GraphData {
      * @return a {@link Map} of the native currency's exchange rate for the company
      */
     Map<Date, Double> getNativeCurrencyData(String companyMIC, Set<Date> dates){
-        CurrencyEnum nativeCurrency = getCompanyCurrency(companyMIC);
+        String nativeCurrency = getCompanyCurrency(companyMIC);
         return getCurrencyData(nativeCurrency, dates);
     }
 
@@ -81,11 +81,11 @@ class GraphData {
      * @param dates the {@link Set} of {@link Date} that the data in GraphModel currently contains
      * @return a {@link Map} of the exchange rate
      */
-    Map<Date, Double> getCurrencyData(CurrencyEnum toCurrency, Set<Date> dates){
-        if(toCurrency==CurrencyEnum.USD){
+    Map<Date, Double> getCurrencyData(String toCurrency, Set<Date> dates){
+        if(toCurrency== CurrencyCollection.getDefaultCurrencyName()){
             return putOnes(dates);
         }
-        String path = "USD_TO_" + toCurrency.toString() + ".csv";
+        String path = "USD_TO_" + toCurrency + ".csv";
         return DataHandler.getExpandedCurrencyData(dates, path);
     }
 
@@ -107,7 +107,7 @@ class GraphData {
      * @param mic a {@link String} representing a company's mic
      * @return a {@link CurrencyEnum} that represents the currency the Company stock has natively
      */
-    CurrencyEnum getCompanyCurrency(String mic){
+    String getCompanyCurrency(String mic){
         return DataHandler.getCompanyTradingCurrency(mic);
     }
 }

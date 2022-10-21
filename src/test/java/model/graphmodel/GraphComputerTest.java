@@ -3,7 +3,6 @@ package model.graphmodel;
 import model.datahandling.DayData;
 import model.graphmodel.graphalgorithms.GraphAlgorithmCollection;
 import model.graphmodel.keyfigures.KeyFigureCollection;
-import model.graphmodel.keyfigures.Volatility;
 import model.util.Date;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -46,7 +45,7 @@ public class GraphComputerTest {
         toCurrency.put(date1, currency1); toCurrency.put(date2, currency1); toCurrency.put(date3, currency1);
 
         graphComputer = new GraphComputer();
-        graphComputer.setAlgorithm(GraphAlgorithmCollection.getGraphAlgorithm("Daily closing price"));
+        graphComputer.setAlgorithm(GraphAlgorithmCollection.getGraphAlgorithm(GraphAlgorithmCollection.getDefaultGraphAlgorithmName()));
     }
 
     @Test
@@ -68,7 +67,7 @@ public class GraphComputerTest {
 
     @Test
     public void calculateKeyFigureShouldReturnTheValueForThatKeyFigureWithTheDataReceived(){
-        double result = graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure("Volatility"), data);
+        double result = graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure("Standard Deviation"), data);
         assertEquals(0.8, result, 0.05);
     }
 

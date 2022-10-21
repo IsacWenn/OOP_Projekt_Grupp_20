@@ -17,11 +17,10 @@ public class BivariateComputer {
      * @param series2 a {@link Map} containing {@link Date} connected to a {@link Number}.
      */
     public static double calculateKeyFigures(String bivariateAlgorithmName, Map<Date, Number> series1, Map<Date, Number> series2) {
-
         Set<Date> commonDates = series1.keySet();
         commonDates.retainAll(series2.keySet());
 
-        BivariateAlgorithms algo = BivariateAlgorithmCollection.getGraphAlgorithms(bivariateAlgorithmName);
+        BivariateAlgorithms algo = BivariateAlgorithmCollection.getBivariateAlgorithm(bivariateAlgorithmName);
         double keyFigure = algo.calculateKeyFigure(series1, series2, commonDates);
 
         return keyFigure;

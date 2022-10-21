@@ -10,7 +10,7 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public class TestVolatility {
+public class TestStandardDeviation {
     @Test
     public void volumeShouldBeZero() throws IOException {
         HashMap<Date, DayData> data = new HashMap<>();
@@ -19,8 +19,8 @@ public class TestVolatility {
         data.put(new Date(2020,1,3), new DayData(1,1,100,1,1));
         data.put(new Date(2020,1,4), new DayData(1,1,100,1,1));
         data.put(new Date(2020,1,5), new DayData(1,1,100,1,1));
-        Volatility volatility = new Volatility();
-        assertEquals(0, volatility.calculate(data));
+        StandardDeviation standardDeviation = new StandardDeviation();
+        assertEquals(0, standardDeviation.calculate(data));
     }
 
     @Test
@@ -31,7 +31,7 @@ public class TestVolatility {
         data.put(new Date(2020,1,3), new DayData(1,1,1,1,1));
         data.put(new Date(2020,1,4), new DayData(1,1,100,1,1));
         data.put(new Date(2020,1,5), new DayData(1,1,100,1,1));
-        Volatility volatility = new Volatility();
-        assertNotEquals(0, volatility.calculate(data));
+        StandardDeviation standardDeviation = new StandardDeviation();
+        assertNotEquals(0, standardDeviation.calculate(data));
     }
 }

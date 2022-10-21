@@ -1,7 +1,5 @@
 package model.bivariatealgorithms;
 
-import model.util.CurrencyEnum;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -25,7 +23,7 @@ public class BivariateAlgorithmCollection {
      * @param algo is a {@link String} used to get a specific {@link BivariateAlgorithms} from {@link BivariateAlgorithmCollection#algorithms}.
      * @return A {@link BivariateAlgorithms}.
      */
-    public static BivariateAlgorithms getGraphAlgorithms(String algo) {
+    public static BivariateAlgorithms getBivariateAlgorithm(String algo) {
         return algorithms.get(algo);
     }
 
@@ -39,3 +37,4 @@ public class BivariateAlgorithmCollection {
     }
 
 }
+

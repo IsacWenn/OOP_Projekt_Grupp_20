@@ -5,8 +5,17 @@ import model.util.Date;
 
 import java.util.Map;
 
-public class Volatility implements KeyFigureAlgorithm {
+/**
+ * A class implementing {@link KeyFigureAlgorithm} calculation the standard deviation of an asset´s price.
+ */
+public class StandardDeviation implements KeyFigureAlgorithm {
 
+    /**
+     * A method that calculation the standard deviation.
+     *
+     * @param data is a {@link Map} containing information about the asset as a {@link DayData} for each {@link Date}.
+     * @return a {@link Double} representing the standard deviation of an asset´s price.
+     */
     @Override
     public Double calculate(Map<Date, DayData> data) {
         double mean = 0;

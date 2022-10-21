@@ -1,4 +1,4 @@
-package controller.charts;
+package view.charts;
 
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;

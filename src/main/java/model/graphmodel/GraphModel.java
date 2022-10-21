@@ -6,7 +6,7 @@ import model.graphmodel.graphalgorithms.GraphAlgorithm;
 import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import model.graphmodel.graphalgorithms.GraphAlgorithmCollection;
 import model.graphmodel.keyfigures.KeyFigureCollection;
-import model.util.CurrencyEnum;
+import model.util.CurrencyCollection;
 import model.util.Date;
 
 import java.io.IOException;
@@ -45,7 +45,7 @@ public class GraphModel {
 
     private String companyMIC, graphName;
 
-    private CurrencyEnum currency;
+    private String currency;
 
     /**
      * A constructor for the class GraphModel that retrieves all available data for the given mic of a company
@@ -55,20 +55,15 @@ public class GraphModel {
     public GraphModel(String mic, String graphName){
         init(mic, graphName);
         this.data = graphData.getCompanyData(mic);
-        updateAlgorithm("Daily closing price");
+        updateAlgorithm(GraphAlgorithmCollection.getDefaultGraphAlgorithmName());
         update();
     }
 
-    public GraphModel(String mic, String graphName, GraphAlgorithms graphAlgorithms){
-        init(mic, graphName);
-        this.data = graphData.getCompanyData(mic);
-        updateAlgorithm(graphAlgorithms);
-    }
-
-    public GraphModel(String mic, String graphName, Date from, Date to, String graphAlg){
+    public GraphModel(String mic, String graphName, Date from, Date to, String graphAlg, String currency){
         init(mic, graphName);
         this.data = graphData.getCompanyData(mic, from, to);
         updateAlgorithm(graphAlg);
+        updateCurrency(currency);
     }
 
     /**
@@ -82,7 +77,7 @@ public class GraphModel {
     public GraphModel(String mic, String graphName, Date from, Date to) {
         init(mic, graphName);
         this.data = graphData.getCompanyData(mic, from, to);
-        updateAlgorithm("Daily closing price");
+        updateAlgorithm(getGraphAlgorithmNames().get(0));
         update();
     }
 
@@ -146,18 +141,29 @@ public class GraphModel {
      */
     public void updateTimeInterval(Date from, Date to) {
         this.data = graphData.getCompanyData(companyMIC, from, to);
-        update();
+        if (currency != null)
+            updateCurrencyAdjustedData();
+        else
+            update();
+    }
+
+    /**
+     * A method for updating the {@link GraphModel#currency} to the provided {@link String}.
+     *
+     * @param toCurrency is a {@link String} representing the currency the method should adjust for.
+     */
+    public void updateCurrency(String toCurrency) {
+        this.currency = toCurrency;
+        updateCurrencyAdjustedData();
     }
 
     /**
      * A method for updating the {@link GraphModel#currencyAdjustedData} to the latest {@link GraphModel#data} adjusted
-     * for the provided currency.
-     * @param toCurrency is a {@link CurrencyEnum} representing the currency the method should adjust for.
+     * for the currency in {@link GraphModel#currency}.
      */
-    public void updateCurrency(CurrencyEnum toCurrency) {
-        this.currency = toCurrency;
+    private void updateCurrencyAdjustedData() {
         Map<Date,Double> from = graphData.getNativeCurrencyData(companyMIC, data.keySet());
-        Map<Date,Double> to = graphData.getCurrencyData(toCurrency, data.keySet());
+        Map<Date,Double> to = graphData.getCurrencyData(this.currency, data.keySet());
         this.currencyAdjustedData = graphComputer.calculateCurrency(from, to, data);
         update();
     }
@@ -176,10 +182,9 @@ public class GraphModel {
     }
 
 
-    public Double getKeyFigureValue(String keyFigure){
+    public double getKeyFigureValue(String keyFigure){
         if(currencyAdjustedData!=null) {
-            return this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure)
-                    , currencyAdjustedData);
+            return this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure), currencyAdjustedData);
         }
         else{
             return this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure), data);
@@ -203,7 +208,21 @@ public class GraphModel {
             if (!Objects.equals(algoName, defaultAlgoName))
                 returnList.add(algoName);
         }
-        return  returnList;
+        return returnList;
+    }
+
+    static public List<String> getCurrencyNames(){
+        List<String> returnList = new ArrayList<>();
+        String defaultAlgoName = CurrencyCollection.getDefaultCurrencyName();
+        List<String> namesInOrder = new ArrayList<>(CurrencyCollection.getCurrencyNames());
+        Collections.sort(namesInOrder);
+
+        returnList.add(defaultAlgoName);
+        for (String algoName : namesInOrder) {
+            if (!Objects.equals(algoName, defaultAlgoName))
+                returnList.add(algoName);
+        }
+        return returnList;
     }
 
     /**
@@ -232,31 +251,6 @@ public class GraphModel {
             dIndex += stepAmount; slot++;
         }
         return chartSeries;
-    }
-
-    public static void main(String[] args) {
-
-        try {
-            Date date1 = new Date(2022,7,1);
-            Date date2 = new Date(2022,8,1);
-            GraphModel graphModel = new GraphModel("AAPL", "Test");
-            graphModel.updateCurrency(CurrencyEnum.SEK);
-            graphModel.updateTimeInterval(date1, date2);
-            graphModel.updateAlgorithm("Daily change");
-            System.out.println(graphModel.getValues());
-
-            /*
-            Map<String, Double> keyFigures = graphModel.getKeyFigures();
-            System.out.println(keyFigures.get("Volatility"));
-            Map<Date, DayData> data = graphModel.data;
-
-            Map<Date, DayData> filteredDates = data.entrySet().stream().filter(x->x.getKey()
-                            .isAfterOrEqual(from) && x.getKey().isBeforeOrEqual(to))
-                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-            */
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
 

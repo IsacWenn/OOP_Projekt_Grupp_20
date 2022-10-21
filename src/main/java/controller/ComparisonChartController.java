@@ -7,19 +7,32 @@ import model.graphmodel.GraphModel;
 
 import java.io.IOException;
 
+/**
+ * Class which allows several stocks at once to be viewed as graphs.
+ *
+ * @author Johan
+ * @author Dennis
+ */
 public class ComparisonChartController extends ChartController {
 
     @FXML
     protected ComboBox<String> algorithmComboBox;
 
+    /**
+     * Generates a {@link ComparisonChartController}.
+     * @param parentController the Parent Controller.
+     */
     public ComparisonChartController(AppController parentController){
         super(parentController);
         initializeAlgorithmComboBox();
     }
 
+    /**
+     * Loads the FXML file.
+     */
     @Override
-    void loadFXML() {
-        FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../LineChart.fxml")));
+    protected void loadFXML() {
+        FXMLLoader fxmlLoader = new FXMLLoader((getClass().getResource("../ComparisonChart.fxml")));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
@@ -29,15 +42,23 @@ public class ComparisonChartController extends ChartController {
         }
     }
 
+    /**
+     * Initializes and fills the algorithm selector {@link ComboBox}.
+     */
     private void initializeAlgorithmComboBox() {
         algorithmComboBox.getItems().addAll(GraphModel.getGraphAlgorithmNames());
         algorithmComboBox.getSelectionModel().select(GraphModel.getGraphAlgorithmNames().get(0));
         algorithmComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
             chartModel.updateAlgorithms(newVal);
-            chart.refresh(chartModel.getGraphModels());
+            refreshChart();
         });
     }
 
+    /**
+     * Handles what happens when a {@link ControllerStockListItem} is clicked upon, either adding it to the chart or
+     * removing it.
+     * @param item the {@link ControllerStockListItem} clicked upon.
+     */
     @Override
     public void stockListOnClick(ControllerStockListItem item) {
         if (item.isActive()) {
@@ -49,5 +70,13 @@ public class ComparisonChartController extends ChartController {
             chart.add(newGraph);
         }
         item.togglePressed();
+    }
+
+    /**
+     * Redraws the chart.
+     */
+    @Override
+    public void refreshChart() {
+        chart.refresh(chartModel.getGraphModels());
     }
 }

@@ -1,6 +1,5 @@
 package controller;
 
-import controller.charts.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -10,6 +9,11 @@ import javafx.scene.layout.FlowPane;
 import model.AppModel;
 import model.chartmodel.ChartModel;
 import model.datahandling.DataHandler;
+import model.graphmodel.GraphModel;
+import view.charts.AreaChart;
+import view.charts.BarChart;
+import view.charts.Chart;
+import view.charts.LineChart;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -17,6 +21,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Abstract JavaFX-dependent class which acts as a user interface between the user and different charts and graphs.
+ *
+ * @author Johan
+ * @author Dennis
+ */
 public abstract class ChartController extends AnchorPane {
 
     protected final AppModel appModel = AppModel.getInstance();
@@ -43,8 +53,14 @@ public abstract class ChartController extends AnchorPane {
     @FXML
     protected ComboBox<String> chartTypeComboBox;
     @FXML
+    protected ComboBox<String> currencyComboBox;
+    @FXML
     protected AnchorPane chartPane;
 
+    /**
+     * Creates a new ChartController and initializes all variables.
+     * @param parentController the AppController which the {@link ChartController} is an element within.
+     */
     public ChartController(AppController parentController) {
         this.parentController = parentController;
         favouriteCompanies = new ArrayList<>();
@@ -60,23 +76,33 @@ public abstract class ChartController extends AnchorPane {
         updateStockList();
     }
 
-    abstract void loadFXML();
+    /**
+     * Loads the FXML for the {@link ChartController}.
+     */
+    protected abstract void loadFXML();
 
+    /**
+     * Initializes FXML elements.
+     */
     protected void initializeSettings() {
         initializeStockPane();
         initializeStartDatePicker();
         initializeEndDatePicker();
         initializeChartTypeComboBox();
+        initializeCurrencyComboBox();
         openLineChart();
     }
 
+    /**
+     * Initializes the DatePicker FXML element for the startDatePicker.
+     */
     private void initializeStartDatePicker() {
         startDatePicker.setValue(LocalDate.now().minusYears(1));
 
         startDatePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             try {
                 chartModel.updateStartDate(newValue);
-                chart.refresh(chartModel.getGraphModels());
+                refreshChart();
             } catch (IOException e) {
                 startDatePicker.setValue(oldValue);
                 e.printStackTrace();
@@ -87,7 +113,7 @@ public abstract class ChartController extends AnchorPane {
             if (!newValue) {
                 try {
                     chartModel.updateStartDate(startDatePicker.getValue());
-                    chart.refresh(chartModel.getGraphModels());
+                    refreshChart();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -95,13 +121,16 @@ public abstract class ChartController extends AnchorPane {
         });
     }
 
+    /**
+     * Initializes the DatePicker FXML element for the endDatePicker.
+     */
     private void initializeEndDatePicker() {
         endDatePicker.setValue(LocalDate.now());
 
         endDatePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             try {
                 chartModel.updateEndDate(newValue);
-                chart.refresh(chartModel.getGraphModels());
+                refreshChart();
             } catch (IOException e) {
                 endDatePicker.setValue(oldValue);
                 e.printStackTrace();
@@ -112,7 +141,7 @@ public abstract class ChartController extends AnchorPane {
             if (!newValue) {
                 try {
                     chartModel.updateEndDate(endDatePicker.getValue());
-                    chart.refresh(chartModel.getGraphModels());
+                    refreshChart();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -120,6 +149,9 @@ public abstract class ChartController extends AnchorPane {
         });
     }
 
+    /**
+     * Initializes and fills the chart type selector {@link ComboBox}.
+     */
     private void initializeChartTypeComboBox() {
         chartTypeComboBox.getItems().addAll("Area Chart", "Bar Chart", "Line Chart");
         chartTypeComboBox.getSelectionModel().select("Line Chart");
@@ -129,10 +161,25 @@ public abstract class ChartController extends AnchorPane {
                 case ("Bar Chart") -> openBarChart();
                 case ("Line Chart") -> openLineChart();
             }
-            chart.refresh(chartModel.getGraphModels());
+            refreshChart();
         });
     }
 
+    /**
+     * Initializes and fills the currency selector {@link ComboBox}.
+     */
+    private void initializeCurrencyComboBox() {
+        currencyComboBox.getItems().addAll(GraphModel.getCurrencyNames());
+        currencyComboBox.getSelectionModel().select(GraphModel.getCurrencyNames().get(0));
+        currencyComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
+            chartModel.updateCurrency(newVal);
+            refreshChart();
+        });
+    }
+
+    /**
+     * Creates a {@link ControllerStockListItem} for each company and adds them to a FlowPane.
+     */
     protected void initializeStockPane() {
         stockPane.getChildren().clear();
         for (String MIC : DataHandler.getMICs()) {
@@ -141,6 +188,10 @@ public abstract class ChartController extends AnchorPane {
         }
     }
 
+    /**
+     * Refreshes the order of the FlowPane containing the {@link ControllerStockListItem} based on whether they are
+     * set as favorite or not.
+     */
     public void updateStockList() {
         stockPane.getChildren().clear();
         for (String MIC : DataHandler.getMICs()) {
@@ -155,6 +206,10 @@ public abstract class ChartController extends AnchorPane {
         }
     }
 
+    /**
+     * Adds an element to the list of favorite stocks or removes it if element already is set as favorite.
+     * @param acronym The MIC of the stock which is to be added to or removed from favorites.
+     */
     public void favoritize(String acronym){
         if (isCompanyFavorite(acronym)) {
             favouriteCompanies.remove(acronym);
@@ -164,10 +219,23 @@ public abstract class ChartController extends AnchorPane {
         updateStockList();
     }
 
+    /**
+     * Method which checks if a certain stock is a favorite.
+     * @param acronym MIC of the stock which is to be checked.
+     * @return whether the stock is a favorite or not.
+     */
     private boolean isCompanyFavorite(String acronym) {
         return favouriteCompanies.contains(acronym);
     }
 
+    /**
+     * Redraws the chart.
+     */
+    protected abstract void refreshChart();
+
+    /**
+     * Sets the timeframe for which the chart is generated for to the past day.
+     */
     @FXML
     public void timeframeOneDay() {
         try {
@@ -175,9 +243,12 @@ public abstract class ChartController extends AnchorPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        chart.refresh(chartModel.getGraphModels());
+        refreshChart();
     }
 
+    /**
+     * Sets the timeframe for which the chart is generated for to the past week.
+     */
     @FXML
     public void timeframeOneWeek() {
         try {
@@ -185,9 +256,12 @@ public abstract class ChartController extends AnchorPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        chart.refresh(chartModel.getGraphModels());
+        refreshChart();
     }
 
+    /**
+     * Sets the timeframe for which the chart is generated for to the past month.
+     */
     @FXML
     public void timeframeOneMonth() {
         try {
@@ -195,9 +269,12 @@ public abstract class ChartController extends AnchorPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        chart.refresh(chartModel.getGraphModels());
+        refreshChart();
     }
 
+    /**
+     * Sets the timeframe for which the chart is generated for to the past year.
+     */
     @FXML
     public void timeframeOneYear() {
         try {
@@ -205,26 +282,46 @@ public abstract class ChartController extends AnchorPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        chart.refresh(chartModel.getGraphModels());
+        refreshChart();
     }
 
+    /**
+     * Changes the displayed chart to a line chart.
+     */
     private void openLineChart() {
         chart = new LineChart();
         chartPane.getChildren().clear();
         chartPane.getChildren().add(chart);
     }
 
+    /**
+     * Changes the displayed chart to a bar chart.
+     */
     private void openBarChart() {
         chart = new BarChart();
         chartPane.getChildren().clear();
         chartPane.getChildren().add(chart);
     }
 
+    /**
+     * Changes the displayed chart to an area chart.
+     */
     private void openAreaChart() {
         chart = new AreaChart();
         chartPane.getChildren().clear();
         chartPane.getChildren().add(chart);
     }
 
+    /**
+     * @return the current currency selected by the currencyComboBox.
+     */
+    protected String getCurrency() {
+        return currencyComboBox.getSelectionModel().getSelectedItem();
+    }
+
+    /**
+     * Method which dictates what happens when a {@link ControllerStockListItem} is clicked.
+     * @param item the {@link ControllerStockListItem} clicked upon.
+     */
     public abstract void stockListOnClick(ControllerStockListItem item);
 }
