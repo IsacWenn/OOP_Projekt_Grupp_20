@@ -1,6 +1,5 @@
 package model.util;
 
-import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
@@ -21,19 +20,19 @@ public class TestGraphRepresentation {
         testGraphRep1 = new GraphRepresentation(
                 new ArrayList<>(){{ add(new Date(2022, 10, 14)); }},
                 "Closing Price",
-                "MSFT",
+                new ArrayList<>(){{ add("MSFT"); }},
                 "GBP"
         );
         testGraphRep2 = new GraphRepresentation(
                 new ArrayList<>(){{ add(new Date(2022, 10, 14)); }},
                 "Closing Price",
-                "MSFT",
+                new ArrayList<>(){{ add("MSFT"); }},
                 "GBP"
         );
         testGraphRep3 = new GraphRepresentation(
                 new ArrayList<>(){{ add(new Date()); }},
                 "Daily Change",
-                "MSFT",
+                new ArrayList<>(){{ add("MSFT"); }},
                 "GBP"
         );
     }
@@ -46,7 +45,7 @@ public class TestGraphRepresentation {
 
     @Test
     public void getCompanyMICShouldReturnCompanyMIC() {
-        assertEquals("MSFT", testGraphRep1.getCompanyMIC());
+        assertEquals("MSFT", testGraphRep1.getCompanyMICs().get(0));
     }
 
     @Test
@@ -86,6 +85,6 @@ public class TestGraphRepresentation {
     @Test
     public void toStringShouldReturnACorrectRepresentationOfTheObject() {
         assertEquals("GraphRepresentation{interval=[14/10/2022]," +
-                " algorithm=Closing Price, companyMIC='MSFT', preferredCurrency=GBP}", testGraphRep1.toString());
+                " algorithm=Closing Price, companyMIC='[MSFT], preferredCurrency=GBP}", testGraphRep1.toString());
     }
 }

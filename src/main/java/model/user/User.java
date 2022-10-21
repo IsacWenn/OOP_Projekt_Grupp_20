@@ -170,11 +170,11 @@ public class User implements Serializable {
      *
      * @param interval a {@link List} of {@link Date}s containing the interval selected.
      * @param alg a {@link String} representing the chosen algorithm.
-     * @param mic a {@link String} containing the company MIC.
+     * @param mics a {@link List} of {@link String} containing the company MICs.
      * @param prefCurrency a {@link String} containing the preferred currency.
      */
-    public void addFavoriteGraph(List<Date> interval, String alg, String mic, String prefCurrency) {
-        userFavorites.addFavoriteGraph(interval, alg, mic, prefCurrency);
+    public void addFavoriteGraph(List<Date> interval, String alg, List<String> mics, String prefCurrency) {
+        userFavorites.addFavoriteGraph(interval, alg, mics, prefCurrency);
     }
 
     /**

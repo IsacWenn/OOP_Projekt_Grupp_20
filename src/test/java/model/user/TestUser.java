@@ -31,7 +31,7 @@ public class TestUser {
         graphRep = new GraphRepresentation(
                 new ArrayList<>(){{ add(new Date(2022, 10, 15)); }},
                 "Daily Closing",
-                "AMZN",
+                new ArrayList<>(){{ add("AMZN"); }},
                 "USD"
         );
         user.addFavoriteGraph(graphRep);
@@ -161,9 +161,9 @@ public class TestUser {
         assertEquals(1, testUser.getUserFavoriteGraphs().size());
         List<Date> interval = new ArrayList<>(){{ add(new Date(2022, 1, 12)); }};
         String alg = "Daily Change";
-        String mic = "T";
+        List<String> mics = new ArrayList<>(){{ add("T"); }};
         String preferredCurrency = "GBP";
-        testUser.addFavoriteGraph(interval, alg, mic, preferredCurrency);
+        testUser.addFavoriteGraph(interval, alg, mics, preferredCurrency);
         assertEquals(2, testUser.getUserFavoriteGraphs().size());
         assertInstanceOf(GraphRepresentation.class, testUser.getUserFavoriteGraphs().get(1));
     }

@@ -68,10 +68,11 @@ public class UserFavorites implements Serializable {
      *
      * @param interval a {@link List} of {@link Date}s of the specified interval.
      * @param alg a {@link String} for the algorithm.
-     * @param mic a {@link String} for the company mic.
+     * @param mics a {@link List} of {@link String} of the company mics.
+     * @param prefCurrency a {@link String} of the preferred currency.
      */
-    void addFavoriteGraph(List<Date> interval, String alg, String mic, String prefCurrency) {
-        favoriteGraphs.add(new GraphRepresentation(interval, alg, mic, prefCurrency));
+    void addFavoriteGraph(List<Date> interval, String alg, List<String> mics, String prefCurrency) {
+        favoriteGraphs.add(new GraphRepresentation(interval, alg, mics, prefCurrency));
     }
 
     /**

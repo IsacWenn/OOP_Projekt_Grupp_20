@@ -1,7 +1,5 @@
 package model.util;
 
-import model.graphmodel.graphalgorithms.GraphAlgorithm;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -24,9 +22,9 @@ public class GraphRepresentation implements Serializable {
     private String algorithm;
 
     /**
-     * A {@link String} for the specified company MIC.
+     * A {@link List} of {@link String} of the specified company MICs.
      */
-    private String companyMIC;
+    private List<String> companyMICs;
 
     /**
      * A {@link String} for the specified company trading currency.
@@ -38,14 +36,14 @@ public class GraphRepresentation implements Serializable {
      *
      * @param interval A {@link List} of {@link Date}s of a specified interval.
      * @param alg A {@link String} of a specified algorithm.
-     * @param companyMIC A {@link String} of a specified company MIC.
+     * @param companyMICs A {@link List} of {@link String}s containing the specified company MICs.
      * @param preferredCurrency A {@link String} of the users preferred trading currency.
      */
-    public GraphRepresentation(List<Date> interval, String alg, String companyMIC,
+    public GraphRepresentation(List<Date> interval, String alg, List<String> companyMICs,
                                String preferredCurrency) {
         this.interval = interval;
         this.algorithm = alg;
-        this.companyMIC = companyMIC;
+        this.companyMICs = companyMICs;
         this.preferredCurrency = preferredCurrency;
     }
 
@@ -70,12 +68,12 @@ public class GraphRepresentation implements Serializable {
     }
 
     /**
-     * A getter method for the company MIC.
+     * A getter method for the company MICs.
      *
-     * @return A {@link String} of the company MIC.
+     * @return A {@link List} of {@link String}s of the company MICs.
      */
-    public String getCompanyMIC() {
-        return companyMIC;
+    public List<String> getCompanyMICs() {
+        return companyMICs;
     }
 
     /**
@@ -99,7 +97,7 @@ public class GraphRepresentation implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         GraphRepresentation that = (GraphRepresentation) o;
         return Objects.equals(interval, that.interval) && Objects.equals(algorithm, that.algorithm)
-                && Objects.equals(companyMIC, that.companyMIC) && Objects.equals(preferredCurrency, that.preferredCurrency);
+                && Objects.equals(companyMICs, that.companyMICs) && Objects.equals(preferredCurrency, that.preferredCurrency);
     }
 
     /**
@@ -109,7 +107,7 @@ public class GraphRepresentation implements Serializable {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(interval, algorithm, companyMIC, preferredCurrency);
+        return Objects.hash(interval, algorithm, companyMICs, preferredCurrency);
     }
 
     /**
@@ -122,7 +120,7 @@ public class GraphRepresentation implements Serializable {
         return "GraphRepresentation{" +
                 "interval=" + interval +
                 ", algorithm=" + algorithm +
-                ", companyMIC='" + companyMIC + '\'' +
+                ", companyMIC='" + companyMICs +
                 ", preferredCurrency=" + preferredCurrency +
                 '}';
     }
