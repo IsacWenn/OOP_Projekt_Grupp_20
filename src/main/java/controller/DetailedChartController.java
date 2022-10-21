@@ -63,7 +63,7 @@ public class DetailedChartController extends ChartController{
      */
     private void initializeAlgorithmComboBox() {
         ArrayList<CheckBox> checkBoxes = new ArrayList<>();
-        for (String algorithm: GraphModel.getGraphAlgorithmNames()) {
+        for (String algorithm: GraphModel.getOrderedGraphAlgorithmNames()) {
             CheckBox checkBox = new CheckBox(algorithm);
             checkBox.selectedProperty().addListener((options, oldVal, newVal) -> {
                 toggleAlgorithm(checkBox.getText());
@@ -156,7 +156,7 @@ public class DetailedChartController extends ChartController{
      */
     private void populateKeyFigureContainer() {
         keyFigureContainer.getChildren().clear();
-        for (String keyFig : GraphModel.getKeyFigureNames()) {
+        for (String keyFig : GraphModel.getOrderedKeyFigureNames()) {
             keyFigureContainer.getChildren().add(new KeyFigureListItem(keyFig, keyFigGraphModel));
         }
     }

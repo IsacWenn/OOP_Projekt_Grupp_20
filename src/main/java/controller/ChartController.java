@@ -174,8 +174,8 @@ public abstract class ChartController extends AnchorPane {
      * Initializes and fills the currency selector {@link ComboBox}.
      */
     private void initializeCurrencyComboBox() {
-        currencyComboBox.getItems().addAll(GraphModel.getCurrencyNames());
-        currencyComboBox.getSelectionModel().select(GraphModel.getCurrencyNames().get(0));
+        currencyComboBox.getItems().addAll(GraphModel.getOrderedCurrencyNames());
+        currencyComboBox.getSelectionModel().select(GraphModel.getOrderedCurrencyNames().get(0));
         currencyComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
             chartModel.updateCurrency(newVal);
             refreshChart();

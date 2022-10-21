@@ -1,8 +1,6 @@
 package model.graphmodel.keyfigures;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class KeyFigureCollection {
 
@@ -36,7 +34,11 @@ public class KeyFigureCollection {
     /**
      * A method for returning the names of all implementations of {@link KeyFigureAlgorithm}.
      *
-     * @return A {@link Set} of names represented as {@link String}.
+     * @return A {@link List} of names represented as {@link String}.
      */
-    public static Set<String> getKeySet(){return Set.copyOf(keyFigures.keySet());}
+    public static List<String> getKeyFigureNames() {
+        List<String> returnList = new ArrayList<>(Set.copyOf(keyFigures.keySet()));
+        Collections.sort(returnList);
+        return returnList;
+    }
 }

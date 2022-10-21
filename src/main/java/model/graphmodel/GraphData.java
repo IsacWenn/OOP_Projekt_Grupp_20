@@ -53,21 +53,6 @@ class GraphData {
     }
 
     /**
-     * A method that the {@link DataHandler} class to
-     *
-     * @param mic a {@link String} representing a company's mic
-     * @return a {@link Map} of companyData for the latest day
-     */
-    Map<Date, DayData> getLatestDayData(String mic){
-        try {
-            return DataHandler.getLatestDayData(mic);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-        return new HashMap<>(){{ put(new Date(), new DayData(0,0, 0, 0, 0)); }};
-    }
-
-    /**
      *
      * @param companyMIC a {@link String} representing a company's mic
      * @param dates the {@link Set} of {@link Date} that the data in GraphModel currently contains
