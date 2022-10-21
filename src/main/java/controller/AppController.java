@@ -44,6 +44,9 @@ public class AppController {
     @FXML private Label signupError;
 
 
+    /**
+     * Sets visibility of buttons depending on whether the user is logged in or not.
+     */
     private void updateUserButtonGroups() {
         loginButtons.setVisible(!User.isLoggedIn());
         logoutButtons.setVisible(User.isLoggedIn());
@@ -90,17 +93,26 @@ public class AppController {
         tabsPane.getSelectionModel().select(newTab);
     }
 
+    /**
+     * Moves the main view to front.
+     */
     @FXML
     private void mainView() {
         mainView.toFront();
     }
 
+    /**
+     * Moves the log in view to front.
+     */
     @FXML
     private void loginView() {
         mainView.toFront();
         loginView.toFront();
     }
 
+    /**
+     * Moves the sign-up view to front.
+     */
     @FXML
     private void signupView() {
         mainView.toFront();
@@ -112,6 +124,9 @@ public class AppController {
         event.consume();
     }
 
+    /**
+     * Attempt a log-in attempt.
+     */
     @FXML
     private void login() {
         if (User.loginUser(loginUsernameField.getText(), loginPasswordField.getText())) {
@@ -128,12 +143,18 @@ public class AppController {
         }
     }
 
+    /**
+     * Updates the list of {@link ControllerStockListItem}s across all active tabs.
+     */
     public void refreshFavorites() {
         for(ChartController chart : charts) {
             chart.updateStockList();
         }
     }
 
+    /**
+     * Attempts a sign-up attempt.
+     */
     @FXML
     private void signup() {
         new User(signupUsernameField.getText(), signupPasswordField.getText(), signupEmailField.getText(),
@@ -151,6 +172,9 @@ public class AppController {
         }
     }
 
+    /**
+     * Logs out and saves information.
+     */
     @FXML
     private void logout() {
         User.logoutActiveUser();
