@@ -46,6 +46,7 @@ public class DataHandler {
     public static Map<Date, DayData> getCompanyData(List<Date> dates, String mic) {
         try {
             String path = CompanyData.getFileName(mic);
+            System.out.println(path);
             return filterDataByDates(StockExchangeReader.convertCSVFileToHandledData(path), dates);
         } catch (NullPointerException | IOException e) {
             return new HashMap<>(){{ put(new Date(), new DayData(0, 0, 0, 0, 0)); }};
