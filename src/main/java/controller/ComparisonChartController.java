@@ -4,8 +4,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
 import model.graphmodel.GraphModel;
+import model.user.User;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Class which allows several stocks at once to be viewed as graphs.
@@ -22,8 +24,8 @@ public class ComparisonChartController extends ChartController {
      * Generates a {@link ComparisonChartController}.
      * @param parentController the Parent Controller.
      */
-    public ComparisonChartController(AppController parentController){
-        super(parentController);
+    public ComparisonChartController(AppController parentController, List<String> favouriteCompanies){
+        super(parentController, favouriteCompanies);
         initializeAlgorithmComboBox();
     }
 

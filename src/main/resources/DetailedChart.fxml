@@ -24,7 +24,7 @@
          <Button fx:id="timeframOneYearButton" layoutX="225.0" layoutY="65.0" mnemonicParsing="false" onAction="#timeframeOneYear" text="1 År" />
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="180.0" prefHeight="100.0" prefWidth="160.0">
-            <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="280.0">
+            <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="280.0" AnchorPane.bottomAnchor="-0.0" AnchorPane.topAnchor="0.0">
                 <FlowPane fx:id="stockPane" maxWidth="-Infinity" minWidth="-Infinity" rowValignment="TOP">
                     <opaqueInsets>
                         <Insets />
