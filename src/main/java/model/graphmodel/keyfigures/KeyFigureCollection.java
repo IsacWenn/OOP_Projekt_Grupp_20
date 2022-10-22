@@ -2,7 +2,7 @@ package model.graphmodel.keyfigures;
 
 import java.util.*;
 
-public class KeyFigureCollection {
+public final class KeyFigureCollection {
 
     /**
      * A static {@link Map} of {@link String} and {@link KeyFigureAlgorithm}.

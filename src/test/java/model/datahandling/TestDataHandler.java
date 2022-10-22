@@ -11,16 +11,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestDataHandler {
 
-    private static Map<Date, DayData> AAPL_Map;
     private static Date lastDate;
     private static DayData lastDateDayData;
-    private static List<Date> dateList;
 
     private static final String currencyFilePath = "USD_TO_SEK.csv";
 
     @BeforeEach
     public void resetStaticVariables() throws IOException {
-        AAPL_Map = DataHandler.getCompanyData("AAPL");
         lastDate = new Date(2022, 9, 13);
         lastDateDayData = new DayData(
                 122656600, 159.9,
