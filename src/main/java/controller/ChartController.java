@@ -230,7 +230,7 @@ public abstract class ChartController extends AnchorPane {
         }
         for (String MIC : DataHandler.getMICs()) {
             if (!favoriteCompanies.contains(MIC)) {
-                stockListItemMap.get(MIC).setUnfavorite();
+                stockListItemMap.get(MIC).removeFavorite();
                 stockPane.getChildren().add(stockListItemMap.get(MIC));
             }
         }
