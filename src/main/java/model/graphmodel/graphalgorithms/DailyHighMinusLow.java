@@ -17,7 +17,7 @@ class DailyHighMinusLow implements GraphAlgorithm {
 
     /**
      * A method that calculates the difference between the highest and lowest price of a given asset expressed in percentages.
-     * @return {@link Map}
+     * @return {@link Map} containing the calculated data as a {@link Number} for each {@link Date}.
      */
     @Override
     public Map<Date, Number> calculate(Map<Date, DayData> data) {
