@@ -26,7 +26,7 @@ public class ComparisonChartController extends ChartController {
     protected ComboBox<String> algorithmComboBox;
 
     /**
-     * Generates a {@link ComparisonChartController}.
+     * Constructor for an empty Comparison Chart Controller.
      *
      * @param parentController the Parent Controller.
      */
@@ -37,6 +37,12 @@ public class ComparisonChartController extends ChartController {
         activeCompanies = new ArrayList<>();
     }
 
+    /**
+     * Constructor for a filled Comparison Chart Controller.
+     * @param parentController the Parent Controller.
+     * @param favoriteCompanies list of favorite companies.
+     * @param graphsToLoad list of graphs to load.
+     */
     public ComparisonChartController(AppController parentController, List<String> favoriteCompanies, List<GraphRepresentation> graphsToLoad) {
         super(parentController, favoriteCompanies);
         updateStockList();

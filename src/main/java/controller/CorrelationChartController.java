@@ -25,15 +25,15 @@ import java.util.List;
 public class CorrelationChartController extends ChartController {
 
     private ArrayList<String> activeCompanies;
-    private ArrayList<GraphModel> graphModels;
     @FXML
     private FlowPane keyFigureContainer;
     @FXML
     protected ComboBox<String> algorithmComboBox;
 
     /**
-     * Generates a {@link CorrelationChartController}.
+     * Constructor for an empty Correlation Chart Controller.
      * @param parentController the Parent Controller.
+     * @param favoriteCompanies list of favorite companies.
      */
     public CorrelationChartController(AppController parentController, List<String> favoriteCompanies){
         super(parentController, favoriteCompanies);
@@ -43,6 +43,12 @@ public class CorrelationChartController extends ChartController {
         refreshChart();
     }
 
+    /**
+     * Constructor for a filled Correlation Chart Controller.
+     * @param parentController the Parent Controller.
+     * @param favoriteCompanies list of favorite companies.
+     * @param graphsToLoad list of graphs to load.
+     */
     public CorrelationChartController(AppController parentController, List<String> favoriteCompanies,
                                       List<GraphRepresentation> graphsToLoad){
         super(parentController, favoriteCompanies);
@@ -51,6 +57,8 @@ public class CorrelationChartController extends ChartController {
         initializeAlgorithmComboBox();
         algorithmComboBox.setValue(graphsToLoad.get(0).getAlgorithm());
         currencyComboBox.setValue(graphsToLoad.get(0).getConversionCurrency());
+        startDate = graphsToLoad.get(0).getStartingDate();
+        endDate = graphsToLoad.get(0).getEndDate();
         for (GraphRepresentation graph : graphsToLoad) {
             activeCompanies.add(graph.getCompanyMIC());
             stockListItemMap.get(graph.getCompanyMIC()).togglePressed();

@@ -36,7 +36,7 @@ public class DetailedChartController extends ChartController{
     protected ComboBox<String> currencyComboBox;
 
     /**
-     * Generates a {@link DetailedChartController}.
+     * Constructor for a Detailed Chart Controller.
      * @param parentController the Parent Controller.
      */
     public DetailedChartController(AppController parentController, List<String> favoriteCompanies) {
@@ -49,12 +49,20 @@ public class DetailedChartController extends ChartController{
         toggleAlgorithm("Closing Price");
     }
 
+    /**
+     * Constructor for a filled Detailed Chart Controller.
+     * @param parentController the Parent Controller.
+     * @param favoriteCompanies list of favorite companies.
+     * @param graphsToLoad list of graphs to load.
+     */
     public DetailedChartController(AppController parentController, List<String> favoriteCompanies, List<GraphRepresentation> graphsToLoad) {
         super(parentController, favoriteCompanies);
         keyFigGraphModel = new GraphModel(graphsToLoad.get(0));
         activeAlgorithms = new ArrayList<>();
         stockListItemMap.get(graphsToLoad.get(0).getCompanyMIC()).togglePressed();
         currencyComboBox.setValue(graphsToLoad.get(0).getConversionCurrency());
+        startDate = graphsToLoad.get(0).getStartingDate();
+        endDate = graphsToLoad.get(0).getEndDate();
         for (GraphRepresentation graph : graphsToLoad) {
             activeAlgorithms.add(graph.getAlgorithm());
         }
