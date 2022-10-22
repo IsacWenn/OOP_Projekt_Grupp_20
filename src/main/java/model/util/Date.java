@@ -9,7 +9,7 @@ import java.util.*;
 
 /**
  * Date is a class used for representing a certain day of a year. It is used in our program primarily as a key in
- * {@link HashMap} class in our data representations.
+ * {@link Map} class in our data representations.
  *
  * @author Isac
  */
@@ -31,7 +31,7 @@ public class Date implements Comparable<Date>, Serializable {
      * A private static {@link HashMap} using {@link Integer} as a parameterized key and mapped value.
      * Used for representing the number of days in a given month.
      */
-    private static HashMap<Integer, Integer> daysInMonth = new HashMap<>() {{
+    private static Map<Integer, Integer> daysInMonth = new HashMap<>() {{
         put(1, 31);
         put(2, 29);
         put(3, 31);

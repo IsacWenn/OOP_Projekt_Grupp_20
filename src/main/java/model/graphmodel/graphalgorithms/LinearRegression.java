@@ -33,7 +33,7 @@ class LinearRegression implements GraphAlgorithm {
      * @param k A {@link Double} is the slope of the function.
      * @param m A {@link Double} is the y-intercept of the function.
      * @param sortedDates A {@link List} containing {@link Date} in chronological order.
-     * @return A {@link Map} containing values of the linear equation over timeframe {@link ??????????}.
+     * @return A {@link Map} containing values of the linear equation over timeframe as {@link Number} for each {@link Date}.
      */
     private Map<Date, Number> getLinearValues(double k, double m, List<Date> sortedDates) {
         Map<Date, Number> returnData = new HashMap<>();

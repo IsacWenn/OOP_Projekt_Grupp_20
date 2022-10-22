@@ -10,6 +10,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 
+<!--
+   This is the base fxml document that our scene is built upon.
+-->
 <StackPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppController">
    <children>
       <AnchorPane fx:id="signupView" onMousePressed="#mainView" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00000044;">

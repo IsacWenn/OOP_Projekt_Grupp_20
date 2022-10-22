@@ -34,7 +34,8 @@ class CurrencyExchangeReader {
         Map<Date, Double> data = new HashMap<>();
         String line;
         path = defaultPath + path;
-        BufferedReader br = new BufferedReader(new FileReader(path));
+        FileReader fr = new FileReader(path);
+        BufferedReader br = new BufferedReader(fr);
 
         while ((line = br.readLine()) != null) {
             String[] values = line.split("[,/]");
@@ -42,7 +43,8 @@ class CurrencyExchangeReader {
             double rate = Double.parseDouble(values[3]);
             data.put(date, rate);
         }
-
+        fr.close();
+        br.close();
         return data;
     }
 

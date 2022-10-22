@@ -1,9 +1,5 @@
 package model.graphmodel.graphalgorithms;
 
-
-
-import model.util.CurrencyCollection;
-
 import java.util.*;
 
 /**
@@ -55,6 +51,11 @@ public class GraphAlgorithmCollection {
         return returnList;
     }
 
+    /**
+     * A method for retrieving the name of the algorithm that should be selected as default.
+     *
+     * @return A {@link String} representing a {@link GraphAlgorithm}.
+     */
     public static String getDefaultGraphAlgorithmName() {
         return defaultGraphAlgorithmName;
     }

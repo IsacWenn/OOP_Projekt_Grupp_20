@@ -171,7 +171,7 @@ public class ControllerStockListItem extends AnchorPane {
         favoriteImage.setImage(imageToLoad);
         favorite = true;
     }
-    public void setUnfavorite() {
+    public void removeFavorite() {
         String iconPath;
         iconPath = "../Images/starInactive.png";
         Image imageToLoad = new Image(getClass().getResource(iconPath).toExternalForm());

@@ -16,12 +16,6 @@ public class KeyFigureCollection {
     }};
 
     /**
-     * A class for retrieving all available implementations of {@link KeyFigureAlgorithm}.
-     */
-    private KeyFigureCollection(){
-    }
-
-    /**
      * A method for retrieving a specific implementation of {@link KeyFigureAlgorithm} given the corresponding {@link String}.
      *
      * @param keyFigure A {@link String} symbolizing the different implementation of {@link KeyFigureAlgorithm}.

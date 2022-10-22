@@ -1,6 +1,6 @@
 package model.datahandling;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -56,9 +56,9 @@ public class DayData {
     /**
      * A constructor that takes the values of its attributes as a HashMap parameter.
      *
-     * @param data A {@link HashMap} containing the different values of a {@link DayData}s attributes.
+     * @param data A {@link Map} containing the different values of a {@link DayData}s attributes.
      */
-    DayData(HashMap<String, Object> data) {
+    DayData(Map<String, Object> data) {
         this.volume = (int) data.get("volume");
         this.open = (double) data.get("open");
         this.closed = (double) data.get("closed");

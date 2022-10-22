@@ -2,7 +2,6 @@ package model.user;
 
 import model.util.Date;
 import model.util.GraphRepresentation;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;

@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class ComparisonChartController extends ChartController {
 
-    List<String> activeCompanies;
+    private List<String> activeCompanies;
 
     @FXML
     protected ComboBox<String> algorithmComboBox;

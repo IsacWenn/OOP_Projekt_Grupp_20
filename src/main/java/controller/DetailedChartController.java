@@ -24,8 +24,8 @@ import java.util.List;
  */
 public class DetailedChartController extends ChartController{
 
-    protected String activeCompany;
-    protected ArrayList<String> activeAlgorithms;
+    private String activeCompany;
+    protected List<String> activeAlgorithms;
     private GraphModel keyFigGraphModel;
 
     @FXML
