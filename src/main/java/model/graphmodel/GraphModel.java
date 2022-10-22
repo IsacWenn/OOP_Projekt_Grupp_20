@@ -175,6 +175,10 @@ public class GraphModel {
         return graphName;
     }
 
+    public String getAlgorithm(){
+        return graphComputer.getGraphAlgorithm();
+    }
+
     /**
      * A getter method for the {@link Map} with {@link Date} and {@link Number} values in GraphModel
      *

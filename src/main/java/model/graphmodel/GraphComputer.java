@@ -42,6 +42,10 @@ public class GraphComputer {
         this.graphAlgorithm = graphAlg;
     }
 
+    String getGraphAlgorithm(){
+        return graphAlgorithm.toString();
+    }
+
     /**
      * A method that converts the asset prices in a {@link Map} and replaces the old prices with the new currencies price.
      * @param from A {@link Map} containing the currency rates for the currency we want to change from
