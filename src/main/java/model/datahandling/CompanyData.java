@@ -10,7 +10,7 @@ import java.util.Map;
  *
  * @author Isac
  */
-public class CompanyData {
+class CompanyData {
 
     /**
      * A {@link HashMap} that contains the essential data for the different companies in our Database.

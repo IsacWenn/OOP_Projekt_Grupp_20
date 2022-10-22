@@ -3,6 +3,7 @@ package model.util;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -74,6 +75,35 @@ public class TestDate {
         assertEquals(localDate.getYear(), testDate.getYear());
         assertEquals(localDate.getMonthValue(), testDate.getMonth());
         assertEquals(localDate.getDayOfMonth(), testDate.getDay());
+    }
+
+    @Test
+    public void constructingADateFromLocalDateShouldNotThrowExceptionIfValid() {
+        assertDoesNotThrow(() -> {
+            Date testDate = new Date(LocalDate.of(1999, 10, 3));
+        });
+    }
+
+    @Test
+    public void constructingADateFromLocalDateShouldThrowExceptionIfInvalid() {
+        assertThrows(IOException.class, () -> {
+           Date testDate = new Date(LocalDate.MAX);
+        });
+        assertThrows(IOException.class, () -> {
+            Date testDate = new Date(LocalDate.MIN);
+        });
+        assertThrows(IOException.class, () -> {
+            Date testDate = new Date(LocalDate.of(1900, 1, 1));
+        });
+        assertThrows(IOException.class, () -> {
+            Date testDate = new Date(LocalDate.of(2030, 1, 1));
+        });
+        assertThrows(DateTimeException.class, () -> {
+            Date testDate = new Date(LocalDate.of(2020, 1, 32));
+        });
+        assertThrows(DateTimeException.class, () -> {
+            Date testDate = new Date(LocalDate.of(2020, 13, 1));
+        });
     }
 
     @Test

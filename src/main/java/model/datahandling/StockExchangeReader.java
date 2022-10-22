@@ -12,7 +12,7 @@ import java.util.*;
  * @author Isac
  * @author Dennis
  */
-public class StockExchangeReader {
+class StockExchangeReader {
 
     /**
      * A static final{@link String} containing the default path to the folder containing the CSV-files of stock

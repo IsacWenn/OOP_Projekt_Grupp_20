@@ -15,7 +15,7 @@ import java.util.Map;
  * @author Carl
  * @author Isac
  */
-public class CurrencyExchangeReader {
+class CurrencyExchangeReader {
     /**
      * A static final{@link String} containing the default path to the folder containing the CSV-files of currency
      * exchange rates.

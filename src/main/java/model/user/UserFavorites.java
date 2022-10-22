@@ -14,7 +14,7 @@ import java.util.Objects;
  *
  * @author Isac
  */
-public class UserFavorites implements Serializable {
+class UserFavorites implements Serializable {
 
 
     /**
@@ -40,16 +40,14 @@ public class UserFavorites implements Serializable {
      *
      * @return A {@link List} of {@link GraphRepresentation} of the favorite graphs.
      */
-    public List<GraphRepresentation> getFavoriteGraphs() {
-        return favoriteGraphs;
-    }
+    List<GraphRepresentation> getFavoriteGraphs() { return favoriteGraphs; }
 
     /**
      * A getter method for the favorite company MICs
      *
      * @return A {@link List} of {@link String}s of the MICs.
      */
-    public List<String> getFavoriteCompanies() { return favoriteCompanies; }
+    List<String> getFavoriteCompanies() { return favoriteCompanies; }
 
     /**
      * A toString method for the UserFavorites class.

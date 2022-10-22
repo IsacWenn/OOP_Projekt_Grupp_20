@@ -8,7 +8,7 @@ import java.util.Objects;
  *
  * @author Isac
  */
-public class UserInfo implements Serializable {
+class UserInfo implements Serializable {
 
     /**
      * A {@link String} for the username of a user.
