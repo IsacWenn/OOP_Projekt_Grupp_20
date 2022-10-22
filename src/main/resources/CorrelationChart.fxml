@@ -41,4 +41,5 @@
          <FlowPane fx:id="keyFigureContainer" prefHeight="62.0" prefWidth="893.0" prefWrapLength="460.0" />
       </children>
    </AnchorPane>
+   <Button layoutX="1110.0" layoutY="670.0" mnemonicParsing="false" onAction="#saveGraph" text="Save Chart" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="20.0" />
 </fx:root>

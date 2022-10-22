@@ -27,25 +27,32 @@ public class ComparisonChartController extends ChartController {
 
     /**
      * Generates a {@link ComparisonChartController}.
+     *
      * @param parentController the Parent Controller.
      */
-    public ComparisonChartController(AppController parentController, List<String> favoriteCompanies){
+    public ComparisonChartController(AppController parentController, List<String> favoriteCompanies) {
         super(parentController, favoriteCompanies);
+        updateStockList();
         initializeAlgorithmComboBox();
         activeCompanies = new ArrayList<>();
     }
 
-    public ComparisonChartController(AppController parentController, List<String> favoriteCompanies, List<GraphRepresentation> graphsToLoad){
+    public ComparisonChartController(AppController parentController, List<String> favoriteCompanies, List<GraphRepresentation> graphsToLoad) {
         super(parentController, favoriteCompanies);
+        updateStockList();
         initializeAlgorithmComboBox();
         activeCompanies = new ArrayList<>();
+        algorithmComboBox.setValue(graphsToLoad.get(0).getAlgorithm());
+        startDate = graphsToLoad.get(0).getStartingDate();
+        endDate = graphsToLoad.get(0).getEndDate();
         for (GraphRepresentation graph : graphsToLoad) {
-            String graphName = DataHandler.getCompanyName(graph.getCompanyMIC());
-            activeCompanies.add(graphName);
-            GraphModel graphToAdd = new GraphModel(graph.getCompanyMIC(), graphName, graph.getStartingDate(),
-                    graph.getEndDate(), graph.getAlgorithm(), graph.getConversionCurrency());
+            stockListItemMap.get(graph.getCompanyMIC()).togglePressed();
+            String name = stockListItemMap.get(graph.getCompanyMIC()).getName();
+            GraphModel graphToAdd = new GraphModel(graph.getCompanyMIC(), name, startDate, endDate,
+                    algorithmComboBox.getValue(), graph.getConversionCurrency());
             graphModels.add(graphToAdd);
         }
+        refreshChart();
     }
 
     /**
@@ -80,18 +87,19 @@ public class ComparisonChartController extends ChartController {
     /**
      * Handles what happens when a {@link ControllerStockListItem} is clicked upon, either adding it to the chart or
      * removing it.
+     *
      * @param item the {@link ControllerStockListItem} clicked upon.
      */
     @Override
     public void stockListOnClick(ControllerStockListItem item) {
         if (item.isActive()) {
-            int index = activeCompanies.indexOf(item.getName());
+            int index = activeCompanies.indexOf(item.getMIC());
             activeCompanies.remove(index);
             graphModels.remove(index);
             chart.remove(index);
         } else {
             GraphModel newGraph = new GraphModel(item.getMIC(), item.getName(), startDate, endDate, algorithmComboBox.getValue(), getCurrency());
-            activeCompanies.add(item.getName());
+            activeCompanies.add(item.getMIC());
             graphModels.add(newGraph);
             chart.add(newGraph);
         }
@@ -104,5 +112,15 @@ public class ComparisonChartController extends ChartController {
     @Override
     public void refreshChart() {
         chart.refresh(graphModels);
+    }
+
+    @Override
+    public void saveGraph() {
+        User.getActiveUser().clearFavoriteGraphs();
+        User.getActiveUser().setFavoriteChartType("Comparison Chart");
+        for (String company : activeCompanies) {
+            User.getActiveUser().addFavoriteGraph(new GraphRepresentation(startDate, endDate,
+                    algorithmComboBox.getValue(), company, getCurrency()));
+        }
     }
 }

@@ -7,6 +7,7 @@ import javafx.scene.layout.FlowPane;
 import model.bivariatealgorithms.BivariateComputer;
 import model.datahandling.DataHandler;
 import model.graphmodel.GraphModel;
+import model.user.User;
 import model.util.GraphRepresentation;
 import view.KeyFigureListItem;
 
@@ -158,6 +159,16 @@ public class CorrelationChartController extends ChartController {
             for (String algorithm : BivariateComputer.getBivariateAlgorithmNames()) {
                 keyFigureContainer.getChildren().add(new KeyFigureListItem(algorithm, 0));
             }
+        }
+    }
+
+    @Override
+    public void saveGraph() {
+        User.getActiveUser().clearFavoriteGraphs();
+        User.getActiveUser().setFavoriteChartType("Correlation Chart");
+        for (String company : activeCompanies) {
+            User.getActiveUser().addFavoriteGraph(new GraphRepresentation(startDate, endDate,
+                    algorithmComboBox.getValue(), company, getCurrency()));
         }
     }
 }

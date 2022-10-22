@@ -373,13 +373,5 @@ public abstract class ChartController extends AnchorPane {
     public abstract void stockListOnClick(ControllerStockListItem item);
 
     @FXML
-    public void saveGraph() {
-        for (GraphRepresentation graphToClear : User.getActiveUser().getUserFavoriteGraphs()) {
-            User.getActiveUser().removeFavoriteGraph(graphToClear);
-        }
-        for (GraphModel graphModel : graphModels) {
-            User.getActiveUser().addFavoriteGraph(new GraphRepresentation(startDate, endDate,
-                    graphModel.getAlgorithm, getCurrency()));
-        }
-    }
+    abstract protected void saveGraph();
 }

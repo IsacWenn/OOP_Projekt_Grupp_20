@@ -5,6 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import model.graphmodel.GraphModel;
+import model.graphmodel.graphalgorithms.GraphAlgorithm;
+import model.graphmodel.graphalgorithms.GraphAlgorithmCollection;
+import model.user.User;
 import model.util.GraphRepresentation;
 import view.KeyFigureListItem;
 
@@ -21,7 +24,7 @@ import java.util.List;
  */
 public class DetailedChartController extends ChartController{
 
-    protected ControllerStockListItem activeCompany;
+    protected String activeCompany;
     protected ArrayList<String> activeAlgorithms;
     private GraphModel keyFigGraphModel;
 
@@ -41,23 +44,24 @@ public class DetailedChartController extends ChartController{
         activeCompany = null;
         keyFigGraphModel = null;
         activeAlgorithms = new ArrayList<>();
+        activeAlgorithms.add("Closing Price");
         initializeAlgorithmMenu();
         toggleAlgorithm("Closing Price");
     }
 
     public DetailedChartController(AppController parentController, List<String> favoriteCompanies, List<GraphRepresentation> graphsToLoad) {
         super(parentController, favoriteCompanies);
-        activeCompany = null;
+        activeCompany = graphsToLoad.get(0).getCompanyMIC();
         keyFigGraphModel = null;
         activeAlgorithms = new ArrayList<>();
-        initializeAlgorithmMenu();
         for (GraphRepresentation graph : graphsToLoad) {
-            toggleAlgorithm(graph.getAlgorithm());
             activeAlgorithms.add(graph.getAlgorithm());
             GraphModel graphToAdd = new GraphModel(graph.getCompanyMIC(), graph.getAlgorithm(), graph.getStartingDate(),
                     graph.getEndDate(), graph.getAlgorithm(), graph.getConversionCurrency());
             graphModels.add(graphToAdd);
         }
+        initializeAlgorithmMenu();
+        stockListItemMap.get(activeCompany).togglePressed();
     }
 
     /**
@@ -85,6 +89,9 @@ public class DetailedChartController extends ChartController{
             checkBox.selectedProperty().addListener((options, oldVal, newVal) -> {
                 toggleAlgorithm(checkBox.getText());
             });
+            if (activeAlgorithms.contains(checkBox.getText())) {
+                checkBox.setSelected(true);
+            }
             checkBoxes.add(checkBox);
         }
         for (CheckBox checkBox: checkBoxes) {
@@ -104,7 +111,7 @@ public class DetailedChartController extends ChartController{
             graphModels.remove(index);
             chart.remove(index);
         } else if (activeCompany != null) {
-            graphModels.add(new GraphModel(activeCompany.getMIC(), algorithm, startDate, endDate, algorithm, getCurrency()));
+            graphModels.add(new GraphModel(activeCompany, algorithm, startDate, endDate, algorithm, getCurrency()));
         }
         if (activeAlgorithms.contains(algorithm)) {
             activeAlgorithms.remove(algorithm);
@@ -130,10 +137,10 @@ public class DetailedChartController extends ChartController{
      */
     protected void addToChart(ControllerStockListItem item) {
         clearChart();
-        activeCompany = item;
+        activeCompany = item.getMIC();
         keyFigGraphModel = new GraphModel(item.getMIC(), "", startDate, endDate);
         for (String algorithm: activeAlgorithms) {
-            graphModels.add(new GraphModel(activeCompany.getMIC(), algorithm, startDate, endDate, algorithm, getCurrency()));
+            graphModels.add(new GraphModel(activeCompany, algorithm, startDate, endDate, algorithm, getCurrency()));
             chart.add(graphModels.get(activeAlgorithms.indexOf(algorithm)));
         }
     }
@@ -145,12 +152,12 @@ public class DetailedChartController extends ChartController{
      */
     @Override
     public void stockListOnClick(ControllerStockListItem item) {
-        if (activeCompany != null && activeCompany == item) {
+        if (activeCompany != null && activeCompany.equals(item.getMIC())) {
             clearChart();
         } else {
             if (!item.isActive()) {
                 if (activeCompany != null) {
-                    activeCompany.togglePressed();
+                    stockListItemMap.get(activeCompany).togglePressed();
                 }
                 addToChart(item);
             } else {
@@ -182,5 +189,15 @@ public class DetailedChartController extends ChartController{
             keyFigGraphModel.updateCurrency(getCurrency());
         }
         populateKeyFigureContainer();
+    }
+
+    @Override
+    public void saveGraph() {
+        User.getActiveUser().clearFavoriteGraphs();
+        User.getActiveUser().setFavoriteChartType("Detailed Chart");
+        for (String algorithm : activeAlgorithms) {
+            User.getActiveUser().addFavoriteGraph(new GraphRepresentation(startDate, endDate,
+                    algorithm, activeCompany, getCurrency()));
+        }
     }
 }

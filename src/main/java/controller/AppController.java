@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import model.user.User;
 import model.util.GraphRepresentation;
+import view.charts.Chart;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,23 +27,40 @@ public class AppController {
     private List<String> favoriteCompanies = new ArrayList<>();
     private List<ChartController> charts = new ArrayList<>();
 
-    @FXML private TabPane tabsPane;
-    @FXML private AnchorPane mainView;
-    @FXML private AnchorPane signupView;
-    @FXML private AnchorPane loginView;
-    @FXML private TextField loginUsernameField;
-    @FXML private TextField loginPasswordField;
-    @FXML private TextField signupUsernameField;
-    @FXML private TextField signupPasswordField;
-    @FXML private TextField signupEmailField;
-    @FXML private TextField signupFNameField;
-    @FXML private TextField signupLNameField;
-    @FXML private TextField signupBioField;
-    @FXML private Group loginButtons;
-    @FXML private Group logoutButtons;
-    @FXML private Label usernameLabel;
-    @FXML private Label loginError;
-    @FXML private Label signupError;
+    @FXML
+    private TabPane tabsPane;
+    @FXML
+    private AnchorPane mainView;
+    @FXML
+    private AnchorPane signupView;
+    @FXML
+    private AnchorPane loginView;
+    @FXML
+    private TextField loginUsernameField;
+    @FXML
+    private TextField loginPasswordField;
+    @FXML
+    private TextField signupUsernameField;
+    @FXML
+    private TextField signupPasswordField;
+    @FXML
+    private TextField signupEmailField;
+    @FXML
+    private TextField signupFNameField;
+    @FXML
+    private TextField signupLNameField;
+    @FXML
+    private TextField signupBioField;
+    @FXML
+    private Group loginButtons;
+    @FXML
+    private Group logoutButtons;
+    @FXML
+    private Label usernameLabel;
+    @FXML
+    private Label loginError;
+    @FXML
+    private Label signupError;
 
 
     /**
@@ -85,8 +103,9 @@ public class AppController {
 
     /**
      * Creates a new tab in the AppController GUI.
+     *
      * @param content the node which is added as a tab.
-     * @param name the name of the tab.
+     * @param name    the name of the tab.
      */
     private void newTab(Node content, String name) {
         Tab newTab = new Tab(name, content);
@@ -135,7 +154,7 @@ public class AppController {
             updateUserButtonGroups();
             usernameLabel.setText(User.getActiveUser().getUserName());
             favoriteCompanies = new ArrayList<>(User.getActiveUser().getUserFavoriteCompanies());
-            for(ChartController chart : charts) {
+            for (ChartController chart : charts) {
                 chart.updateFavoritesList(favoriteCompanies);
             }
             refreshFavorites();
@@ -148,7 +167,7 @@ public class AppController {
      * Updates the list of {@link ControllerStockListItem}s across all active tabs.
      */
     public void refreshFavorites() {
-        for(ChartController chart : charts) {
+        for (ChartController chart : charts) {
             chart.updateStockList();
         }
     }
@@ -164,7 +183,7 @@ public class AppController {
             mainView();
             updateUserButtonGroups();
             usernameLabel.setText(User.getActiveUser().getUserName());
-            for(String company : favoriteCompanies) {
+            for (String company : favoriteCompanies) {
                 User.getActiveUser().addFavoriteCompany(company);
             }
             User.saveUsers();
@@ -182,7 +201,7 @@ public class AppController {
         updateUserButtonGroups();
         usernameLabel.setText("");
         favoriteCompanies = new ArrayList<>();
-        for(ChartController chart : charts) {
+        for (ChartController chart : charts) {
             chart.updateFavoritesList(favoriteCompanies);
         }
         User.saveUsers();
@@ -191,20 +210,22 @@ public class AppController {
     @FXML
     private void loadSavedGraph() {
         List<GraphRepresentation> graphsToLoad = User.getActiveUser().getUserFavoriteGraphs();
-        boolean chartIdentified = false;
-        String lastMIC = "";
-        ChartController chartType = new ComparisonChartController(this, favoriteCompanies, graphsToLoad);
-        for (GraphRepresentation graph : graphsToLoad) {
-            if (lastMIC.equals(graph.getCompanyMIC())) {
-                chartType = new DetailedChartController(this, favoriteCompanies, graphsToLoad);
-                chartIdentified = true;
-                break;
+        String chartType = User.getActiveUser().getFavoriteChartType();
+        ChartController chartToAdd;
+        switch (chartType) {
+            case "Correlation Chart" -> {
+                chartToAdd = new CorrelationChartController(this, favoriteCompanies, graphsToLoad);
+                newTab(chartToAdd, chartType);
             }
-            lastMIC = graph.getCompanyMIC();
-        } if (!chartIdentified && graphsToLoad.size() == 2) {
-                chartType = new CorrelationChartController(this, favoriteCompanies, graphsToLoad);
+            case "Detailed Chart" -> {
+                chartToAdd = new DetailedChartController(this, favoriteCompanies, graphsToLoad);
+                newTab(chartToAdd, chartType);
+            }
+            case "Comparison Chart" -> {
+                chartToAdd = new ComparisonChartController(this, favoriteCompanies, graphsToLoad);
+                newTab(chartToAdd, chartType);
+            }
         }
-        newTab(chartType, "Favorite Chart");
     }
 }
 

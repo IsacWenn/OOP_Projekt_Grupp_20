@@ -1,6 +1,5 @@
 package model.user;
 
-import com.google.common.graph.Graph;
 import model.util.Date;
 import model.util.GraphRepresentation;
 
@@ -40,6 +39,11 @@ public class User implements Serializable {
      * An attribute containing the different favorite graph representations.
      */
     private UserFavorites userFavorites;
+
+    /**
+     * An attribute which defines which type of chart the favorite graph represents.
+     */
+    private String favoriteChartType;
 
     /**
      * A constructor for the class User.
@@ -178,6 +182,21 @@ public class User implements Serializable {
     }
 
     /**
+     * Sets the chart type for the saved graph.
+     * @param chartType the name of the saved chart type.
+     */
+    public void setFavoriteChartType(String chartType) {
+        this.favoriteChartType = chartType;
+    }
+
+    /**
+     * Clears the favorite graphs.
+     */
+    public void clearFavoriteGraphs(){
+        userFavorites.clearFavoriteGraphs();
+    }
+
+    /**
      * A method for adding a new graph to the list of favorites.
      *
      * @param graphRep the {@link GraphRepresentation} to be added.
@@ -308,4 +327,12 @@ public class User implements Serializable {
      * A method that logs the active user out.
      */
     public static void logoutActiveUser() { activeUser = null; }
+
+    /**
+     * Fetches the favorite chart type.
+     * @return {@link String} for favorite chart type.
+     */
+    public String getFavoriteChartType() {
+        return favoriteChartType;
+    }
 }

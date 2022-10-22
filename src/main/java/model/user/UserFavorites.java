@@ -1,6 +1,5 @@
 package model.user;
 
-import model.graphmodel.GraphModel;
 import model.util.Date;
 import model.util.GraphRepresentation;
 
@@ -129,5 +128,12 @@ class UserFavorites implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(favoriteGraphs, favoriteCompanies);
+    }
+
+    /**
+     * Clears the favorite graphs.
+     */
+    public void clearFavoriteGraphs() {
+        favoriteGraphs.clear();
     }
 }

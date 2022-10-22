@@ -36,4 +36,5 @@
    <ComboBox fx:id="chartTypeComboBox" layoutX="320.0" layoutY="21.0" prefWidth="150.0" />
    <ComboBox fx:id="algorithmComboBox" layoutX="500.0" layoutY="21.0" prefWidth="150.0" />
    <ComboBox fx:id="currencyComboBox" layoutX="1025.0" layoutY="21.0" prefWidth="150.0" />
+   <Button layoutX="1100.0" layoutY="660.0" mnemonicParsing="false" onAction="#saveGraph" text="Save Chart" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="20.0" />
 </fx:root>
