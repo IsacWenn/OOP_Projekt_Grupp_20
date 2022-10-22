@@ -51,17 +51,22 @@ public class DetailedChartController extends ChartController{
 
     public DetailedChartController(AppController parentController, List<String> favoriteCompanies, List<GraphRepresentation> graphsToLoad) {
         super(parentController, favoriteCompanies);
-        activeCompany = graphsToLoad.get(0).getCompanyMIC();
-        keyFigGraphModel = null;
+        keyFigGraphModel = new GraphModel(graphsToLoad.get(0));
         activeAlgorithms = new ArrayList<>();
+        stockListItemMap.get(graphsToLoad.get(0).getCompanyMIC()).togglePressed();
+        currencyComboBox.setValue(graphsToLoad.get(0).getConversionCurrency());
         for (GraphRepresentation graph : graphsToLoad) {
             activeAlgorithms.add(graph.getAlgorithm());
-            GraphModel graphToAdd = new GraphModel(graph.getCompanyMIC(), graph.getAlgorithm(), graph.getStartingDate(),
-                    graph.getEndDate(), graph.getAlgorithm(), graph.getConversionCurrency());
-            graphModels.add(graphToAdd);
         }
         initializeAlgorithmMenu();
-        stockListItemMap.get(activeCompany).togglePressed();
+        for (GraphRepresentation graph : graphsToLoad) {
+            toggleAlgorithm(graph.getAlgorithm());
+            GraphModel graphToAdd = new GraphModel(graph.getCompanyMIC(), graph.getAlgorithm(), startDate, endDate,
+                    graph.getAlgorithm(), graph.getConversionCurrency());
+            graphModels.add(graphToAdd);
+        }
+        activeCompany = graphsToLoad.get(0).getCompanyMIC();
+        refreshChart();
     }
 
     /**

@@ -45,7 +45,9 @@ public class ComparisonChartController extends ChartController {
         algorithmComboBox.setValue(graphsToLoad.get(0).getAlgorithm());
         startDate = graphsToLoad.get(0).getStartingDate();
         endDate = graphsToLoad.get(0).getEndDate();
+        currencyComboBox.setValue(graphsToLoad.get(0).getConversionCurrency());
         for (GraphRepresentation graph : graphsToLoad) {
+            activeCompanies.add(graph.getCompanyMIC());
             stockListItemMap.get(graph.getCompanyMIC()).togglePressed();
             String name = stockListItemMap.get(graph.getCompanyMIC()).getName();
             GraphModel graphToAdd = new GraphModel(graph.getCompanyMIC(), name, startDate, endDate,

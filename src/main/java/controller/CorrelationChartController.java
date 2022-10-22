@@ -37,24 +37,26 @@ public class CorrelationChartController extends ChartController {
      */
     public CorrelationChartController(AppController parentController, List<String> favoriteCompanies){
         super(parentController, favoriteCompanies);
-        initializeAlgorithmComboBox();
         activeCompanies = new ArrayList<>();
         graphModels = new ArrayList<>();
+        initializeAlgorithmComboBox();
         refreshChart();
     }
 
     public CorrelationChartController(AppController parentController, List<String> favoriteCompanies,
                                       List<GraphRepresentation> graphsToLoad){
         super(parentController, favoriteCompanies);
-        initializeAlgorithmComboBox();
-        algorithmComboBox.setValue(graphsToLoad.get(0).getAlgorithm());
         activeCompanies = new ArrayList<>();
         graphModels = new ArrayList<>();
+        initializeAlgorithmComboBox();
+        algorithmComboBox.setValue(graphsToLoad.get(0).getAlgorithm());
+        currencyComboBox.setValue(graphsToLoad.get(0).getConversionCurrency());
         for (GraphRepresentation graph : graphsToLoad) {
-            String graphName = DataHandler.getCompanyName(graph.getCompanyMIC());
-            activeCompanies.add(graphName);
-            GraphModel graphToAdd = new GraphModel(graph.getCompanyMIC(), graphName, graph.getStartingDate(),
-                    graph.getEndDate(), graph.getAlgorithm(), graph.getConversionCurrency());
+            activeCompanies.add(graph.getCompanyMIC());
+            stockListItemMap.get(graph.getCompanyMIC()).togglePressed();
+            String name = stockListItemMap.get(graph.getCompanyMIC()).getName();
+            GraphModel graphToAdd = new GraphModel(graph.getCompanyMIC(), name, startDate, endDate,
+                    algorithmComboBox.getValue(), graph.getConversionCurrency());
             graphModels.add(graphToAdd);
         }
         refreshChart();
@@ -94,7 +96,7 @@ public class CorrelationChartController extends ChartController {
      * @param item the {@link ControllerStockListItem} contains information of the stock to be removed.
      */
     private void removeCompany(ControllerStockListItem item) {
-        int index = activeCompanies.indexOf(item.getName());
+        int index = activeCompanies.indexOf(item.getMIC());
         graphModels.remove(index);
         chart.remove(index);
         activeCompanies.remove(index);
@@ -115,7 +117,7 @@ public class CorrelationChartController extends ChartController {
         }
         GraphModel newGraph = new GraphModel(item.getMIC(), item.getName(), startDate, endDate,algorithmComboBox.getValue(), getCurrency());
         chart.add(newGraph);
-        activeCompanies.add(item.getName());
+        activeCompanies.add(item.getMIC());
         graphModels.add(newGraph);
         item.togglePressed();
         populateKeyFigureContainer();
