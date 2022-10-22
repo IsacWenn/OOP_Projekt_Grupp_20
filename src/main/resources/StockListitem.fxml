@@ -4,6 +4,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<!--
+   This is the fxml document for each element in the list of available stocks.
+-->
 <fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <javafx.scene.layout.AnchorPane fx:id="stockListItem" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="280.0" styleClass="pane_normal" stylesheets="@ListItem.css">
