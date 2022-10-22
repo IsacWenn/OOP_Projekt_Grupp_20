@@ -1,7 +1,6 @@
 package model.user;
 
 import model.graphmodel.GraphModel;
-import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import model.util.Date;
 import model.util.GraphRepresentation;
 
