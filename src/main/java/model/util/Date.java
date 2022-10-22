@@ -93,10 +93,11 @@ public class Date implements Comparable<Date>, Serializable {
      * A constructor for a class Date which creates a new date using a {@link LocalDate} as an input.
      * @param date input {@link LocalDate}.
      */
-    public Date(LocalDate date) {
+    public Date(LocalDate date) throws IOException {
         this.year = date.getYear();
         this.month = date.getMonth().getValue();
         this.day = date.getDayOfMonth();
+        this.validateDate();
     }
 
     /**
