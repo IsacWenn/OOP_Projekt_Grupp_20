@@ -168,13 +168,14 @@ public class User implements Serializable {
     /**
      * A method for adding a new graph to the list of favorites.
      *
-     * @param interval a {@link List} of {@link Date}s containing the interval selected.
+     * @param from the starting {@link Date} of the graph.
+     * @param to the end {@link Date} of the graph.
      * @param alg a {@link String} representing the chosen algorithm.
-     * @param mics a {@link List} of {@link String} containing the company MICs.
+     * @param mic a {@link String} containing the company MIC.
      * @param prefCurrency a {@link String} containing the preferred currency.
      */
-    public void addFavoriteGraph(List<Date> interval, String alg, List<String> mics, String prefCurrency) {
-        userFavorites.addFavoriteGraph(interval, alg, mics, prefCurrency);
+    public void addFavoriteGraph(Date from, Date to, String alg, String mic, String prefCurrency) {
+        userFavorites.addFavoriteGraph(from, to, alg, mic, prefCurrency);
     }
 
     /**

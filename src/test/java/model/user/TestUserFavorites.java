@@ -19,9 +19,10 @@ public class TestUserFavorites {
     public void initializeTestingVariables() throws IOException {
         userFavorites = new UserFavorites();
         graphRepresentation = new GraphRepresentation(
-                new Date(2022, 9, 1).listIntervalTo(new Date(2022, 9, 30)),
+                new Date(2022, 9, 1),
+                new Date(2022, 9, 30),
                 "Closing Price",
-                new ArrayList<>(){{ add("AMZN"); }},
+                "AMZN",
                 "EUR"
         );
         userFavorites.addFavoriteGraph(graphRepresentation);
@@ -77,13 +78,14 @@ public class TestUserFavorites {
     @Test
     public void addFavoriteGraphWithVariablesShouldAddGraphRepToListOfGraphs() throws IOException {
         assertEquals(1, userFavorites.getFavoriteGraphs().size());
-        List<Date> interval = new ArrayList<>(){{ add(new Date(2022, 1, 12)); }};
+        Date from = new Date(2022, 1, 12);
+        Date to = new Date(2022, 1, 13);
         String alg = "Daily Change";
-        List<String> mics = new ArrayList<>(){{ add("T"); }};
+        String mic =  "T";
         String preferredCurrency = "GBP";
-        userFavorites.addFavoriteGraph(interval, alg, mics, preferredCurrency);
+        userFavorites.addFavoriteGraph(from, to, alg, mic, preferredCurrency);
         assertEquals(2, userFavorites.getFavoriteGraphs().size());
-        assertEquals(mics, userFavorites.getFavoriteGraphs().get(1).getCompanyMICs());
+        assertEquals(mic, userFavorites.getFavoriteGraphs().get(1).getCompanyMIC());
     }
 
     @Test
