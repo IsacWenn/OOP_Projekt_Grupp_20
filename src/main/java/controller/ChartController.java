@@ -372,6 +372,9 @@ public abstract class ChartController extends AnchorPane {
      */
     public abstract void stockListOnClick(ControllerStockListItem item);
 
+    /**
+     * Saves the Graph.
+     */
     @FXML
     abstract protected void saveGraph();
 }
