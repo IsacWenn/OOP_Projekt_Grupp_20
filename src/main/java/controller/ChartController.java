@@ -264,7 +264,7 @@ public abstract class ChartController extends AnchorPane {
      * Sets the timeframe for which the chart is generated for to the past day.
      */
     @FXML
-    public void timeframeOneDay() {
+    public void timeframeOneDay() throws IOException {
         startDate = new Date(LocalDate.now().minusDays(1));
         endDate = new Date(LocalDate.now());
         for (GraphModel graphModel : graphModels) {
@@ -277,7 +277,7 @@ public abstract class ChartController extends AnchorPane {
      * Sets the timeframe for which the chart is generated for to the past week.
      */
     @FXML
-    public void timeframeOneWeek() {
+    public void timeframeOneWeek() throws IOException {
         startDate = new Date(LocalDate.now().minusWeeks(1));
         endDate = new Date(LocalDate.now());
         for (GraphModel graphModel : graphModels) {
@@ -290,7 +290,7 @@ public abstract class ChartController extends AnchorPane {
      * Sets the timeframe for which the chart is generated for to the past month.
      */
     @FXML
-    public void timeframeOneMonth() {
+    public void timeframeOneMonth() throws IOException {
         startDate = new Date(LocalDate.now().minusMonths(1));
         endDate = new Date(LocalDate.now());
         for (GraphModel graphModel : graphModels) {
@@ -303,7 +303,7 @@ public abstract class ChartController extends AnchorPane {
      * Sets the timeframe for which the chart is generated for to the past year.
      */
     @FXML
-    public void timeframeOneYear() {
+    public void timeframeOneYear() throws IOException {
         for (GraphModel graphModel : graphModels) {
             startDate = new Date(LocalDate.now().minusYears(1));
             endDate = new Date(LocalDate.now());
