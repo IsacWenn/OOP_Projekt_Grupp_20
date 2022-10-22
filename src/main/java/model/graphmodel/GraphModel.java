@@ -1,15 +1,14 @@
 package model.graphmodel;
 
-import javafx.scene.chart.XYChart;
+import model.datahandling.DataHandler;
 import model.datahandling.DayData;
 import model.graphmodel.graphalgorithms.GraphAlgorithm;
-import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import model.graphmodel.graphalgorithms.GraphAlgorithmCollection;
 import model.graphmodel.keyfigures.KeyFigureCollection;
 import model.util.CurrencyCollection;
 import model.util.Date;
+import model.util.GraphRepresentation;
 
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -28,11 +27,15 @@ public class GraphModel {
     private Map<Date, Number> values;
 
     /**
-     * The {@link Map} that holds the raw company data from the GraphData class, a {@link Date}
+     * The {@link Map} that holds the raw company data from the GraphData class
      */
     Map<Date, DayData> data;
 
+    /**
+     * The {@link Map} that holds the company data adjusted for currency
+     */
     private Map<Date, DayData> currencyAdjustedData;
+
     /**
      * The reference to the {@link GraphData} class
      */
@@ -43,6 +46,9 @@ public class GraphModel {
      */
     private GraphComputer graphComputer;
 
+    /**
+     * The {@link String} that represents
+     */
     private String companyMIC, graphName;
 
     private String currency;
@@ -50,7 +56,7 @@ public class GraphModel {
     /**
      * A constructor for the class GraphModel that retrieves all available data for the given mic of a company
      *
-     * @param mic a {@link String} which represents a company on the stock market
+     * @param mic A {@link String} which represents a company on the stock market
      */
     public GraphModel(String mic, String graphName){
         init(mic, graphName);
@@ -59,6 +65,16 @@ public class GraphModel {
         update();
     }
 
+    /**
+     * A constructor for the class GraphModel that retrieves all available data for the given mic of a company
+     *
+     * @param mic A {@link String} which represents a company on the stock market
+     * @param graphName A {@link String} for the name of the {@link GraphModel}
+     * @param from A {@link Date} being the first date of the time interval of the {@link GraphModel}
+     * @param to A {@link Date} being the last date of the time interval of the {@link GraphModel}
+     * @param graphAlg A {@link String} representing a {@link GraphAlgorithm}
+     * @param currency A {@link String} representing a currency
+     */
     public GraphModel(String mic, String graphName, Date from, Date to, String graphAlg, String currency){
         init(mic, graphName);
         this.data = graphData.getCompanyData(mic, from, to);
@@ -76,12 +92,28 @@ public class GraphModel {
     public GraphModel(String mic, String graphName, Date from, Date to) {
         init(mic, graphName);
         this.data = graphData.getCompanyData(mic, from, to);
-        updateAlgorithm(getGraphAlgorithmNames().get(0));
+        updateAlgorithm(getOrderedGraphAlgorithmNames().get(0));
+        update();
+    }
+
+    /**
+     * A constructor for the class GraphModel that retrieves data from a {@link GraphRepresentation}.
+     *
+     * @param graphRep the {@link GraphRepresentation} containing the initializer data.
+     */
+    public GraphModel(GraphRepresentation graphRep) {
+        String mic = graphRep.getCompanyMIC();
+        init(mic, DataHandler.getCompanyName(mic));
+        this.data = graphData.getCompanyData(mic, graphRep.getStartingDate(), graphRep.getEndDate());
+        updateAlgorithm(graphRep.getAlgorithm());
         update();
     }
 
     /**
      * A method that initializes the private variables of this class, used by every constructor in this class
+     *
+     * @param mic a {@link String} of a company mic.
+     * @param graphName a {@link String} containing the name of the graph.
      */
     private void init(String mic, String graphName) {
         this.graphComputer = new GraphComputer();
@@ -95,7 +127,6 @@ public class GraphModel {
      * A method that sends a call to {@link GraphComputer} to calculate the data with its current {@link GraphAlgorithm}
      * and data
      */
-
     private void update() {
         if (this.currency == null) {
             this.values = this.graphComputer.calculateValues(data);
@@ -149,6 +180,11 @@ public class GraphModel {
         update();
     }
 
+    /**
+     * A method for retrieving the {@link GraphModel#graphName}
+     *
+     * @return The name as a {@link String}
+     */
     public String getName() {
         return graphName;
     }
@@ -162,7 +198,13 @@ public class GraphModel {
         return Map.copyOf(this.values);
     }
 
-
+    /**
+     * A method that tells the {@link GraphComputer} to calculate the given key figure with the relevant data in
+     * GraphModel
+     *
+     * @param keyFigure a {@link String} that represents a {@link KeyFigureCollection}
+     * @return a {@link Double} which is the calculated value of that key figure
+     */
     public double getKeyFigureValue(String keyFigure){
         if(currencyAdjustedData!=null) {
             return this.graphComputer.calculateKeyFigure(KeyFigureCollection.getKeyFigure(keyFigure), currencyAdjustedData);
@@ -172,66 +214,68 @@ public class GraphModel {
         }
     }
 
-    static public List<String> getKeyFigureNames(){
-        List<String> returnList = new ArrayList<>(KeyFigureCollection.getKeySet());
-        Collections.sort(returnList);
-        return returnList;
-    }
-
-    static public List<String> getGraphAlgorithmNames(){
-        List<String> returnList = new ArrayList<>();
-        String defaultAlgoName = GraphAlgorithmCollection.getDefaultGraphAlgorithmName();
-        List<String> namesInOrder = new ArrayList<>(GraphAlgorithmCollection.getGraphAlgorithmNames());
-        Collections.sort(namesInOrder);
-
-        returnList.add(defaultAlgoName);
-        for (String algoName : namesInOrder) {
-            if (!Objects.equals(algoName, defaultAlgoName))
-                returnList.add(algoName);
-        }
-        return returnList;
-    }
-
-    static public List<String> getCurrencyNames(){
-        List<String> returnList = new ArrayList<>();
-        String defaultAlgoName = CurrencyCollection.getDefaultCurrencyName();
-        List<String> namesInOrder = new ArrayList<>(CurrencyCollection.getCurrencyNames());
-        Collections.sort(namesInOrder);
-
-        returnList.add(defaultAlgoName);
-        for (String algoName : namesInOrder) {
-            if (!Objects.equals(algoName, defaultAlgoName))
-                returnList.add(algoName);
-        }
-        return returnList;
+    /**
+     * A method for retrieving the names as {@link String} of from {@link KeyFigureCollection} in alphabetical order
+     *
+     * @return A {@link List} of the names
+     */
+    static public List<String> getOrderedKeyFigureNames(){
+        return KeyFigureCollection.getKeyFigureNames();
     }
 
     /**
-     * A getter method that converts {@link GraphModel#values} to a {@link javafx.scene.chart.XYChart.Series}
+     * A method for retrieving the names as {@link String} of from {@link GraphAlgorithmCollection} in alphabetical ordered except
+     * for the name of the default {@link model.graphmodel.keyfigures.KeyFigureAlgorithm} which is the first element in the list
      *
-     * @param numDataPoints an {@link Integer} representing the amount of data points for the XYChart series
-     *
-     * @return the {@link javafx.scene.chart.XYChart.Series} containing the values
+     * @return A {@link List} of the names
      */
-    public XYChart.Series<String, Number> getChartSeries(int numDataPoints) {
-        XYChart.Series<String, Number> chartSeries = new XYChart.Series<>();
+    static public List<String> getOrderedGraphAlgorithmNames(){
+        return GraphAlgorithmCollection.getGraphAlgorithmNames();
+    }
 
-        chartSeries.setName(this.getName());
-        List<Date> orderedDates = Date.sortDates(values.keySet());
+    /**
+     * A method for retrieving the names as {@link String} of from {@link GraphAlgorithmCollection} in alphabetical order
+     * except for the name of the default currency, which is the first element in the list
+     *
+     * @return A {@link List} of the names
+     */
+    static public List<String> getOrderedCurrencyNames(){
+        return CurrencyCollection.getCurrencyNames();
+    }
 
+    /**
+     * A method that sorts the {@link GraphModel#values} and returns it in a more manageable form
+     *
+     * @param numDataPoints an {@link Integer} representing the number of data point you want the graph
+     * @return a {@link LinkedHashMap}  containing data that is reduced and sorted
+     */
+    public Map<Date, Number> getSortedAndReducedData(int numDataPoints) {
+        List<Date> orderedDates = Date.sortDates(this.getValues().keySet());
+        return reduceDataPoints(numDataPoints, orderedDates);
+    }
+
+    /**
+     * A method for retrieving data sorted after date. The data has a maximum of a given number of datapoint
+     *
+     * @param numDataPoints A {@link Integer} is the maximum number of data points
+     * @param orderedDates A {@link List} of {@link Date} in chronological order.
+     * @return A {@link Map} of the data points.
+     */
+    private Map<Date, Number> reduceDataPoints(int numDataPoints, List<Date> orderedDates) {
+        LinkedHashMap<Date, Number> orderedMap = new LinkedHashMap<>();
         double daysInterval = orderedDates.size(), stepAmount, dIndex = 0;
-        int index, slot = 0;
+        int index;
 
-        stepAmount = Math.max(1, daysInterval/numDataPoints);
-
-        while (chartSeries.getData().size() < Math.min(numDataPoints, daysInterval)) {
+        stepAmount = Math.max(1, (daysInterval-1)/ (numDataPoints-1));
+        while (orderedMap.size() < Math.min(numDataPoints, daysInterval)) {
             index = (int) Math.round(dIndex);
             Date currentDate = orderedDates.get(index);
-            Number val = values.get(currentDate);
-            chartSeries.getData().add(slot, new XYChart.Data<>(currentDate.toString(), val));
-            dIndex += stepAmount; slot++;
+            Number val = this.getValues().get(currentDate);
+            orderedMap.put(currentDate, val);
+            dIndex += stepAmount;
         }
-        return chartSeries;
+        return orderedMap;
     }
+
 }
 

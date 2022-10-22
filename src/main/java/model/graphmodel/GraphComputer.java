@@ -2,7 +2,6 @@ package model.graphmodel;
 
 import model.datahandling.DayData;
 import model.graphmodel.graphalgorithms.GraphAlgorithm;
-import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import model.graphmodel.keyfigures.KeyFigureAlgorithm;
 import model.graphmodel.keyfigures.KeyFigureCollection;
 import model.util.Date;
@@ -35,7 +34,7 @@ public class GraphComputer {
     /**
      * A method that sets the current graphAlgorithm to the one called with the method
      *
-     * @param graphAlg A {@link GraphAlgorithms} that will be assigned to {@link GraphComputer#graphAlgorithm}.
+     * @param graphAlg A {@link GraphAlgorithm} that will be assigned to {@link GraphComputer#graphAlgorithm}.
      */
     void setAlgorithm(GraphAlgorithm graphAlg){
         this.graphAlgorithm = graphAlg;

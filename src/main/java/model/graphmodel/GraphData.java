@@ -53,21 +53,7 @@ class GraphData {
     }
 
     /**
-     * A method that the {@link DataHandler} class to
-     *
-     * @param mic a {@link String} representing a company's mic
-     * @return a {@link Map} of companyData for the latest day
-     */
-    Map<Date, DayData> getLatestDayData(String mic){
-        try {
-            return DataHandler.getLatestDayData(mic);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-        return new HashMap<>(){{ put(new Date(), new DayData(0,0, 0, 0, 0)); }};
-    }
-
-    /**
+     * A Method for retrieving the currency rate for the currency that the stock is traded in at the stock exchange
      *
      * @param companyMIC a {@link String} representing a company's mic
      * @param dates the {@link Set} of {@link Date} that the data in GraphModel currently contains
@@ -79,6 +65,7 @@ class GraphData {
     }
 
     /**
+     * A method for retrieving currency exchange rates for a given currency
      *
      * @param toCurrency an {@link Enum} representing the currency that you want convert to
      * @param dates the {@link Set} of {@link Date} that the data in GraphModel currently contains
@@ -93,6 +80,7 @@ class GraphData {
     }
 
     /**
+     * A method for producing a {@link Map} containing an exchange rate of one for all {@link Date}
      *
      * @param dates the {@link Set} of {@link Date} that the data in GraphModel currently contains
      * @return a {@link Map} that effectively keeps the native exchange rate
@@ -106,6 +94,7 @@ class GraphData {
     }
     
     /**
+     * A method for getting the name of the currency the stock is traded in
      *
      * @param mic a {@link String} representing a company's mic
      * @return a {@link String} that represents the currency the Company stock has natively

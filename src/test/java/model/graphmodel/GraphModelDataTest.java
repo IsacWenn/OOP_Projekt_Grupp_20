@@ -61,13 +61,6 @@ public class GraphModelDataTest {
     }
 
     @Test
-    public void getLatestDayDataShouldReturnCompanyDataForLatestAvailable(){
-        data = graphData.getLatestDayData("AAPL");
-      //  DayData dayData = (DayData) data.values(); TODO
-      //  assertEquals(200, dayData.getClosed()); TODO
-    }
-
-    @Test
     public void getCurrencyDataCalledWithACurrencyShouldReturnTheExchangeRateForThatCurrency(){
         data = graphData.getCompanyData("AAPL", date1, date2);
         Map<Date, Double> currencyData = graphData.getCurrencyData("SEK", data.keySet());
