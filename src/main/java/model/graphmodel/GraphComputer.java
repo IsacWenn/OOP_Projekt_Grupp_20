@@ -3,7 +3,6 @@ package model.graphmodel;
 import model.datahandling.DayData;
 import model.graphmodel.graphalgorithms.GraphAlgorithm;
 import model.graphmodel.keyfigures.KeyFigureAlgorithm;
-import model.graphmodel.keyfigures.KeyFigureCollection;
 import model.util.Date;
 
 import java.util.HashMap;

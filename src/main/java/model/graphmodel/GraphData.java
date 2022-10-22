@@ -5,7 +5,6 @@ import model.util.Date;
 import model.datahandling.DataHandler;
 import model.datahandling.DayData;
 
-import java.io.IOException;
 import java.util.*;
 
 /**
