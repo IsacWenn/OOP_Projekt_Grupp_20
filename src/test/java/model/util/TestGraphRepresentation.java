@@ -1,6 +1,5 @@
 package model.util;
 
-import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
@@ -19,19 +18,22 @@ public class TestGraphRepresentation {
     @BeforeEach
     public void initializeTestingVariables() throws IOException {
         testGraphRep1 = new GraphRepresentation(
-                new ArrayList<>(){{ add(new Date(2022, 10, 14)); }},
+                new Date(2022, 10, 14),
+                new Date(2022, 10, 15),
                 "Closing Price",
                 "MSFT",
                 "GBP"
         );
         testGraphRep2 = new GraphRepresentation(
-                new ArrayList<>(){{ add(new Date(2022, 10, 14)); }},
+                new Date(2022, 10, 14),
+                new Date(2022, 10, 15),
                 "Closing Price",
                 "MSFT",
                 "GBP"
         );
         testGraphRep3 = new GraphRepresentation(
-                new ArrayList<>(){{ add(new Date()); }},
+                new Date().previousDate(),
+                new Date(),
                 "Daily Change",
                 "MSFT",
                 "GBP"
@@ -39,9 +41,15 @@ public class TestGraphRepresentation {
     }
 
     @Test
-    public void getIntervalShouldReturnInterval() throws IOException {
-        List<Date> dateList = new ArrayList<>(){{ add(new Date(2022, 10, 14)); }};
-        assertEquals(dateList, testGraphRep1.getInterval());
+    public void getStartingDateShouldReturnStartingDate() throws IOException {
+        Date start = new Date(2022, 10, 14);
+        assertEquals(start, testGraphRep1.getStartingDate());
+    }
+
+    @Test
+    public void getEndDateShouldReturnEndDate() throws IOException {
+        Date end = new Date(2022, 10, 15);
+        assertEquals(end, testGraphRep1.getEndDate());
     }
 
     @Test
@@ -85,7 +93,7 @@ public class TestGraphRepresentation {
 
     @Test
     public void toStringShouldReturnACorrectRepresentationOfTheObject() {
-        assertEquals("GraphRepresentation{interval=[14/10/2022]," +
-                " algorithm=Closing Price, companyMIC='MSFT', preferredCurrency=GBP}", testGraphRep1.toString());
+        assertEquals("GraphRepresentation{from=14/10/2022, to=15/10/2022," +
+                " algorithm=Closing Price, companyMIC=MSFT, preferredCurrency=GBP}", testGraphRep1.toString());
     }
 }

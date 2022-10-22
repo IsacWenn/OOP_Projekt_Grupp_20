@@ -1,11 +1,9 @@
 package model.user;
 
-import model.graphmodel.graphalgorithms.GraphAlgorithms;
 import model.util.Date;
 import model.util.GraphRepresentation;
 import org.junit.jupiter.api.*;
 
-import javax.print.DocFlavor;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +19,8 @@ public class TestUserFavorites {
     public void initializeTestingVariables() throws IOException {
         userFavorites = new UserFavorites();
         graphRepresentation = new GraphRepresentation(
-                new Date(2022, 9, 1).listIntervalTo(new Date(2022, 9, 30)),
+                new Date(2022, 9, 1),
+                new Date(2022, 9, 30),
                 "Closing Price",
                 "AMZN",
                 "EUR"
@@ -79,11 +78,12 @@ public class TestUserFavorites {
     @Test
     public void addFavoriteGraphWithVariablesShouldAddGraphRepToListOfGraphs() throws IOException {
         assertEquals(1, userFavorites.getFavoriteGraphs().size());
-        List<Date> interval = new ArrayList<>(){{ add(new Date(2022, 1, 12)); }};
+        Date from = new Date(2022, 1, 12);
+        Date to = new Date(2022, 1, 13);
         String alg = "Daily Change";
-        String mic = "T";
+        String mic =  "T";
         String preferredCurrency = "GBP";
-        userFavorites.addFavoriteGraph(interval, alg, mic, preferredCurrency);
+        userFavorites.addFavoriteGraph(from, to, alg, mic, preferredCurrency);
         assertEquals(2, userFavorites.getFavoriteGraphs().size());
         assertEquals(mic, userFavorites.getFavoriteGraphs().get(1).getCompanyMIC());
     }

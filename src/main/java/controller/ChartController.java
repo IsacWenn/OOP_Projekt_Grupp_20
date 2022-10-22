@@ -30,8 +30,8 @@ import java.util.Map;
 public abstract class ChartController extends AnchorPane {
 
     protected AppController parentController;
-    protected List<GraphModel> graphModels;
     protected Map<String, ControllerStockListItem> stockListItemMap = new HashMap<>();
+    protected List<GraphModel> graphModels;
     protected List<String> favouriteCompanies;
     protected Chart chart;
 
@@ -192,8 +192,8 @@ public abstract class ChartController extends AnchorPane {
      * Initializes and fills the currency selector {@link ComboBox}.
      */
     private void initializeCurrencyComboBox() {
-        currencyComboBox.getItems().addAll(GraphModel.getCurrencyNames());
-        currencyComboBox.getSelectionModel().select(GraphModel.getCurrencyNames().get(0));
+        currencyComboBox.getItems().addAll(GraphModel.getOrderedCurrencyNames());
+        currencyComboBox.getSelectionModel().select(GraphModel.getOrderedCurrencyNames().get(0));
         currencyComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
             for (GraphModel graphModel : graphModels) {
                 graphModel.updateCurrency(newVal);
@@ -265,14 +265,10 @@ public abstract class ChartController extends AnchorPane {
      */
     @FXML
     public void timeframeOneDay() {
-        try {
-            for (GraphModel graphModel : graphModels) {
-                startDate = new Date(LocalDate.now().minusDays(1).toString());
-                endDate = new Date(LocalDate.now().toString());
-                graphModel.updateTimeInterval(endDate, startDate);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        startDate = new Date(LocalDate.now().minusDays(1));
+        endDate = new Date(LocalDate.now());
+        for (GraphModel graphModel : graphModels) {
+            graphModel.updateTimeInterval(endDate, startDate);
         }
         refreshChart();
     }
@@ -282,14 +278,10 @@ public abstract class ChartController extends AnchorPane {
      */
     @FXML
     public void timeframeOneWeek() {
-        try {
-            for (GraphModel graphModel : graphModels) {
-                startDate = new Date(LocalDate.now().minusWeeks(1).toString());
-                endDate = new Date(LocalDate.now().toString());
-                graphModel.updateTimeInterval(endDate, startDate);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        startDate = new Date(LocalDate.now().minusWeeks(1));
+        endDate = new Date(LocalDate.now());
+        for (GraphModel graphModel : graphModels) {
+            graphModel.updateTimeInterval(endDate, startDate);
         }
         refreshChart();
     }
@@ -299,14 +291,10 @@ public abstract class ChartController extends AnchorPane {
      */
     @FXML
     public void timeframeOneMonth() {
-        try {
-            for (GraphModel graphModel : graphModels) {
-                startDate = new Date(LocalDate.now().minusMonths(1).toString());
-                endDate = new Date(LocalDate.now().toString());
-                graphModel.updateTimeInterval(endDate, startDate);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        startDate = new Date(LocalDate.now().minusMonths(1));
+        endDate = new Date(LocalDate.now());
+        for (GraphModel graphModel : graphModels) {
+            graphModel.updateTimeInterval(endDate, startDate);
         }
         refreshChart();
     }
@@ -316,14 +304,10 @@ public abstract class ChartController extends AnchorPane {
      */
     @FXML
     public void timeframeOneYear() {
-        try {
-            for (GraphModel graphModel : graphModels) {
-                startDate = new Date(LocalDate.now().minusYears(1).toString());
-                endDate = new Date(LocalDate.now().toString());
-                graphModel.updateTimeInterval(endDate, startDate);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        for (GraphModel graphModel : graphModels) {
+            startDate = new Date(LocalDate.now().minusYears(1));
+            endDate = new Date(LocalDate.now());
+            graphModel.updateTimeInterval(endDate, startDate);
         }
         refreshChart();
     }

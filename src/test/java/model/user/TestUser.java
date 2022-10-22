@@ -29,7 +29,8 @@ public class TestUser {
                 "Ingvast Wennerström", "python <<<<<<");
 
         graphRep = new GraphRepresentation(
-                new ArrayList<>(){{ add(new Date(2022, 10, 15)); }},
+                new Date(2022, 10, 15),
+                new Date(2022, 10, 16),
                 "Daily Closing",
                 "AMZN",
                 "USD"
@@ -159,11 +160,12 @@ public class TestUser {
     @Test
     public void addFavoriteGraphWithValuesShouldAddGraphRepToFavorites() throws IOException {
         assertEquals(1, testUser.getUserFavoriteGraphs().size());
-        List<Date> interval = new ArrayList<>(){{ add(new Date(2022, 1, 12)); }};
+        Date from = new Date(2022, 1, 12);
+        Date to = new Date(2022, 1, 13);
         String alg = "Daily Change";
         String mic = "T";
         String preferredCurrency = "GBP";
-        testUser.addFavoriteGraph(interval, alg, mic, preferredCurrency);
+        testUser.addFavoriteGraph(from, to, alg, mic, preferredCurrency);
         assertEquals(2, testUser.getUserFavoriteGraphs().size());
         assertInstanceOf(GraphRepresentation.class, testUser.getUserFavoriteGraphs().get(1));
     }

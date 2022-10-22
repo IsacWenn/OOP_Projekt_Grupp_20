@@ -1,6 +1,6 @@
 package model.user;
 
-import model.graphmodel.graphalgorithms.GraphAlgorithms;
+import model.graphmodel.GraphModel;
 import model.util.Date;
 import model.util.GraphRepresentation;
 
@@ -15,6 +15,7 @@ import java.util.Objects;
  * @author Isac
  */
 public class UserFavorites implements Serializable {
+
 
     /**
      * A {@link List} of {@link GraphRepresentation}s of the favorite graphs.
@@ -66,12 +67,14 @@ public class UserFavorites implements Serializable {
     /**
      * A method that adds a new favorite to {@link UserFavorites#favoriteGraphs}.
      *
-     * @param interval a {@link List} of {@link Date}s of the specified interval.
+     * @param from the starting {@link Date} for the graph.
+     * @param to the end {@link Date} for the graph.
      * @param alg a {@link String} for the algorithm.
-     * @param mic a {@link String} for the company mic.
+     * @param mic a {@link String} of the company mic.
+     * @param prefCurrency a {@link String} of the preferred currency.
      */
-    void addFavoriteGraph(List<Date> interval, String alg, String mic, String prefCurrency) {
-        favoriteGraphs.add(new GraphRepresentation(interval, alg, mic, prefCurrency));
+    void addFavoriteGraph(Date from, Date to, String alg, String mic, String prefCurrency) {
+        favoriteGraphs.add(new GraphRepresentation(from, to, alg, mic, prefCurrency));
     }
 
     /**
@@ -115,7 +118,8 @@ public class UserFavorites implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserFavorites favorites = (UserFavorites) o;
-        return Objects.equals(favoriteGraphs, favorites.favoriteGraphs) && Objects.equals(favoriteCompanies, favorites.favoriteCompanies);
+        return Objects.equals(favoriteGraphs, favorites.favoriteGraphs)
+                && Objects.equals(favoriteCompanies, favorites.favoriteCompanies);
     }
 
     /**

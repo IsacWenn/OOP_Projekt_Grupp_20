@@ -2,9 +2,9 @@ package model.graphmodel.graphalgorithms;
 
 
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import model.util.CurrencyCollection;
+
+import java.util.*;
 
 /**
  * A class used for retrieving different {@link GraphAlgorithm}.
@@ -37,12 +37,22 @@ public class GraphAlgorithmCollection {
     }
 
     /**
-     * A method for retrieving the {@link String} key set for all {@link GraphAlgorithm} in {@link GraphAlgorithmCollection#algorithms}.
+     * A method for retrieving a {@link List} of names of {@link GraphAlgorithmCollection#algorithms} in alphabetic order
+     * except the {@link GraphAlgorithmCollection#defaultGraphAlgorithmName} that should be the first element in the list.
      *
-     * @return A {@link Set} of {@link String} for each {@link GraphAlgorithm} in {@link GraphAlgorithmCollection#algorithms}.
+     * @return A {@link List} of names as {@link String} for each {@link GraphAlgorithm} in {@link GraphAlgorithmCollection#algorithms}.
      */
-    public static Set<String> getGraphAlgorithmNames() {
-        return Set.copyOf(algorithms.keySet());
+    public static List<String> getGraphAlgorithmNames() {
+        List<String> returnList = new ArrayList<>();
+        List<String> namesInOrder = new ArrayList<>(Set.copyOf(algorithms.keySet()));
+        Collections.sort(namesInOrder);
+
+        returnList.add(defaultGraphAlgorithmName);
+        for (String algoName : namesInOrder) {
+            if (!Objects.equals(algoName, defaultGraphAlgorithmName))
+                returnList.add(algoName);
+        }
+        return returnList;
     }
 
     public static String getDefaultGraphAlgorithmName() {

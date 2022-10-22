@@ -5,13 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import model.graphmodel.GraphModel;
-import model.graphmodel.graphalgorithms.GraphAlgorithm;
-import model.graphmodel.graphalgorithms.GraphAlgorithms;
-import model.util.Date;
 import view.KeyFigureListItem;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,7 +63,7 @@ public class DetailedChartController extends ChartController{
      */
     private void initializeAlgorithmComboBox() {
         ArrayList<CheckBox> checkBoxes = new ArrayList<>();
-        for (String algorithm: GraphModel.getGraphAlgorithmNames()) {
+        for (String algorithm: GraphModel.getOrderedGraphAlgorithmNames()) {
             CheckBox checkBox = new CheckBox(algorithm);
             checkBox.selectedProperty().addListener((options, oldVal, newVal) -> {
                 toggleAlgorithm(checkBox.getText());
@@ -154,7 +150,7 @@ public class DetailedChartController extends ChartController{
      */
     private void populateKeyFigureContainer() {
         keyFigureContainer.getChildren().clear();
-        for (String keyFig : GraphModel.getKeyFigureNames()) {
+        for (String keyFig : GraphModel.getOrderedKeyFigureNames()) {
             keyFigureContainer.getChildren().add(new KeyFigureListItem(keyFig, keyFigGraphModel));
         }
     }

@@ -1,10 +1,15 @@
 # OOP_Projekt_Grupp_20
 
-For IDE users (like IntelliJ):\
-Run the Main Class in the src/java package
+#Requirements
+Java 17
 
-For Command line users:\
-Command to compile: mvn compiler:compile\
-Command to run tests: mvn test\
-Command to run tests with a surefire report: mvn surefire:test\
-Command to run the application: mvn javafx:run
+#Instructions
+Download the zip and extract to any folder
+
+For IDE users (like IntelliJ):\
+-Open the project in IntelliJ\
+-Run the Main Class in the src/java package
+
+From the Command line:\
+-Command to run the application: mvn clean javafx:run\
+-Command to run tests: mvn test

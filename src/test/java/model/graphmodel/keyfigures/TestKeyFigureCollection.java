@@ -7,7 +7,7 @@ public class TestKeyFigureCollection {
 
     @Test
     public void keyFigureAlgorithmsShouldHaveBeenAdded() {
-        assertNotEquals(0, KeyFigureCollection.getKeySet().size());
+        assertNotEquals(0, KeyFigureCollection.getKeyFigureNames().size());
     }
 
 }

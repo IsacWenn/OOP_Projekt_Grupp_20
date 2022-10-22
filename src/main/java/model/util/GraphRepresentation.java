@@ -1,7 +1,5 @@
 package model.util;
 
-import model.graphmodel.graphalgorithms.GraphAlgorithm;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -14,9 +12,14 @@ import java.util.Objects;
 public class GraphRepresentation implements Serializable {
 
     /**
-     * A {@link List} of A {@link Date}s representing a desired interval. If empty represents the entire data span.
+     * The starting {@link Date} for a graph.
      */
-    private List<Date> interval;
+    private Date from;
+
+    /**
+     * The end {@link Date} for a graph.
+     */
+    private Date to;
 
     /**
      * A {@link String} for the specific algorithm.
@@ -24,7 +27,7 @@ public class GraphRepresentation implements Serializable {
     private String algorithm;
 
     /**
-     * A {@link String} for the specified company MIC.
+     * A {@link String} of the specified company MICs.
      */
     private String companyMIC;
 
@@ -38,12 +41,13 @@ public class GraphRepresentation implements Serializable {
      *
      * @param interval A {@link List} of {@link Date}s of a specified interval.
      * @param alg A {@link String} of a specified algorithm.
-     * @param companyMIC A {@link String} of a specified company MIC.
+     * @param companyMICs A {@link List} of {@link String}s containing the specified company MICs.
      * @param preferredCurrency A {@link String} of the users preferred trading currency.
      */
-    public GraphRepresentation(List<Date> interval, String alg, String companyMIC,
+    public GraphRepresentation(Date from, Date to, String alg, String companyMIC,
                                String preferredCurrency) {
-        this.interval = interval;
+        this.from = from;
+        this.to = to;
         this.algorithm = alg;
         this.companyMIC = companyMIC;
         this.preferredCurrency = preferredCurrency;
@@ -52,13 +56,18 @@ public class GraphRepresentation implements Serializable {
     // Getters
 
     /**
-     * A getter method for the interval.
+     * A getter method for the starting date
      *
-     * @return A {@link List} of A {@link Date}s of the interval.
+     * @return the starting {@link Date} of the graph.
      */
-    public List<Date> getInterval() {
-        return interval;
-    }
+    public Date getStartingDate() { return from; }
+
+    /**
+     * A getter method for the end date.
+     *
+     * @return the end {@link Date} of the graph.
+     */
+    public Date getEndDate() { return to; }
 
     /**
      * A getter method for the algorithm.
@@ -72,7 +81,7 @@ public class GraphRepresentation implements Serializable {
     /**
      * A getter method for the company MIC.
      *
-     * @return A {@link String} of the company MIC.
+     * @return A {@link String}s of the company MIC.
      */
     public String getCompanyMIC() {
         return companyMIC;
@@ -98,8 +107,8 @@ public class GraphRepresentation implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GraphRepresentation that = (GraphRepresentation) o;
-        return Objects.equals(interval, that.interval) && Objects.equals(algorithm, that.algorithm)
-                && Objects.equals(companyMIC, that.companyMIC) && Objects.equals(preferredCurrency, that.preferredCurrency);
+        return from.equals(that.from) && to.equals(that.to) && algorithm.equals(that.algorithm)
+                && companyMIC.equals(that.companyMIC) && preferredCurrency.equals(that.preferredCurrency);
     }
 
     /**
@@ -109,7 +118,7 @@ public class GraphRepresentation implements Serializable {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(interval, algorithm, companyMIC, preferredCurrency);
+        return Objects.hash(from, to, algorithm, companyMIC, preferredCurrency);
     }
 
     /**
@@ -120,9 +129,10 @@ public class GraphRepresentation implements Serializable {
     @Override
     public String toString() {
         return "GraphRepresentation{" +
-                "interval=" + interval +
+                "from=" + from +
+                ", to=" + to +
                 ", algorithm=" + algorithm +
-                ", companyMIC='" + companyMIC + '\'' +
+                ", companyMIC=" + companyMIC +
                 ", preferredCurrency=" + preferredCurrency +
                 '}';
     }

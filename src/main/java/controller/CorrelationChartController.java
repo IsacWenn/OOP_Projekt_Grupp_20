@@ -59,7 +59,7 @@ public class CorrelationChartController extends ChartController {
      * Initializes and fills the algorithm selector {@link ComboBox}.
      */
     private void initializeAlgorithmComboBox() {
-        algorithmComboBox.getItems().addAll(GraphModel.getGraphAlgorithmNames());
+        algorithmComboBox.getItems().addAll(GraphModel.getOrderedGraphAlgorithmNames());
         algorithmComboBox.getSelectionModel().select("Closing Price");
         algorithmComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
             for (GraphModel graphModel : graphModels) {
