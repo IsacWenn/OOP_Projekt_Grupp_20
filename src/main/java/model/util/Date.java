@@ -1,6 +1,7 @@
 package model.util;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,7 +13,7 @@ import java.util.*;
  *
  * @author Isac
  */
-public class Date implements Comparable<Date> {
+public class Date implements Comparable<Date>, Serializable {
 
     /**
      * The private {@link Integer} that holds the year of a {@link Date}.

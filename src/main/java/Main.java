@@ -1,4 +1,5 @@
 import model.AppModel;
+import model.user.User;
 import view.AppView;
 
 public class Main {
@@ -8,10 +9,9 @@ public class Main {
         AppModel model = AppModel.getInstance();
         AppView view = new AppView();
         model.addObserver(view);
+        User.loadUsers();
         view.startup();
-        
         model.notifyObservers();
-        System.out.println("Färdig");
     }
 
 }

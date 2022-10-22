@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import model.datahandling.DataHandler;
+import model.user.User;
 
 import java.io.IOException;
 
@@ -20,6 +21,7 @@ import java.io.IOException;
 public class ControllerStockListItem extends AnchorPane {
 
     private final ChartController parentController;
+    private final AppController appController;
     private final String acronym, name;
     private boolean active;
     private boolean favorite;
@@ -44,7 +46,8 @@ public class ControllerStockListItem extends AnchorPane {
      * @param parentController the parent controller.
      * @param favorite whether the stock is marked as favorite or not upon creation.
      */
-    ControllerStockListItem (String acronym, ChartController parentController, boolean favorite){
+    ControllerStockListItem (String acronym, ChartController parentController,
+                             AppController appController, boolean favorite){
         this.acronym = acronym;
         this.name = DataHandler.getCompanyName(acronym);
 
@@ -57,6 +60,7 @@ public class ControllerStockListItem extends AnchorPane {
         favoriteButton.setOnMouseClicked(this::onFavoriteClick);
 
         this.parentController = parentController;
+        this.appController = appController;
     }
 
     /**
@@ -66,6 +70,8 @@ public class ControllerStockListItem extends AnchorPane {
     private void initializeLabels(String acronym) {
         stockAcronym.setText(acronym);
         stockName.setText(name);
+        stockValue.setText("");
+        //TODO stockValue.settext(VALUEEEE);
     }
 
     /**
@@ -116,17 +122,13 @@ public class ControllerStockListItem extends AnchorPane {
      */
     @FXML
     private void onFavoriteClick(Event event){
-        String iconPath;
-
-        if (favorite) {
-            iconPath = "../Images/starInactive.png";
-        } else {
-            iconPath = "../Images/starActive.png";
-        }
-        Image imageToLoad = new Image(getClass().getResource(iconPath).toExternalForm());
-        favoriteImage.setImage(imageToLoad);
         parentController.favoritize(acronym);
-        favorite = !favorite;
+        appController.refreshFavorites();
+        if (User.isLoggedIn()) {
+            if (favorite) {
+                User.getActiveUser().addFavoriteCompany(acronym);
+            } else User.getActiveUser().removeFavoriteCompany(acronym);
+        }
     }
 
     /**
@@ -160,5 +162,20 @@ public class ControllerStockListItem extends AnchorPane {
      */
     public String getName() {
         return name;
+    }
+
+    public void setFavorite() {
+        String iconPath;
+        iconPath = "../Images/starActive.png";
+        Image imageToLoad = new Image(getClass().getResource(iconPath).toExternalForm());
+        favoriteImage.setImage(imageToLoad);
+        favorite = true;
+    }
+    public void setUnfavorite() {
+        String iconPath;
+        iconPath = "../Images/starInactive.png";
+        Image imageToLoad = new Image(getClass().getResource(iconPath).toExternalForm());
+        favoriteImage.setImage(imageToLoad);
+        favorite = false;
     }
 }

@@ -3,6 +3,9 @@ package view.charts;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 
+/**
+ * Class which represents an area chart.
+ */
 public class AreaChart extends Chart {
     public AreaChart() {
         javafx.scene.chart.AreaChart<String, Number> areaChart = new javafx.scene.chart.AreaChart<>(new CategoryAxis(), new NumberAxis());
