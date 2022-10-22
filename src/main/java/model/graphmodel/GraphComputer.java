@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  * GraphComputer is the class that uses the strategy pattern to change what class that implements {@link GraphAlgorithm}
- * it should use
+ * it should use.
  *
  * @author Pontus
  * @author Carl
@@ -33,7 +33,7 @@ class GraphComputer {
     }
 
     /**
-     * A method that sets the current graphAlgorithm to the one called with the method
+     * A method that sets the current graphAlgorithm to the one called with the method.
      *
      * @param graphAlg A {@link GraphAlgorithm} that will be assigned to {@link GraphComputer#graphAlgorithm}.
      */
@@ -43,8 +43,8 @@ class GraphComputer {
 
     /**
      * A method that converts the asset prices in a {@link Map} and replaces the old prices with the new currencies price.
-     * @param from A {@link Map} containing the currency rates for the currency we want to change from
-     * @param to A {@link Map} containing the currency rates for the currency we want to change to
+     * @param from A {@link Map} containing the currency rates for the currency we want to change from.
+     * @param to A {@link Map} containing the currency rates for the currency we want to change to.
      * @param data A {@link Map} containing the asset prices for each {@link Date} in a {@link DayData}.
      */
     Map<Date, DayData> calculateCurrency(Map<Date, Double> from, Map<Date, Double> to, Map<Date, DayData> data) {
@@ -74,15 +74,15 @@ class GraphComputer {
     }
 
     /**
-     * A method that calculates and returns a value for the given key figure
-     * @param keyFigure the {@link KeyFigureAlgorithm} that the method should calculate with
-     * @param data the {@link Map} of {@link Date} and {@link DayData} that represents the data it will calculate on
-     * @return a {@link Double}
+     * A method that calculates and returns a value for the given key figure.
+     * @param keyFigure the {@link KeyFigureAlgorithm} that the method should calculate with.
+     * @param data the {@link Map} of {@link Date} and {@link DayData} that represents the data it will calculate on.
+     * @return The calculated key figures as a {@link Double}.
      */
     double calculateKeyFigure(KeyFigureAlgorithm keyFigure, Map<Date, DayData> data){return keyFigure.calculate(data);}
 
     /**
-     * A method for retrieving data sorted after date. The data has a maximum of a given number of datapoint
+     * A method for retrieving data sorted after date. The data has a maximum of a given number of datapoint.
      *
      * @param numDataPoints A {@link Integer} is the maximum number of data points
      * @param orderedDates A {@link List} of {@link Date} in chronological order.
