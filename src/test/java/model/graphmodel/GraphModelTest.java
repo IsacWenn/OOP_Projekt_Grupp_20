@@ -4,6 +4,7 @@ import model.datahandling.DayData;
 import model.graphmodel.graphalgorithms.GraphAlgorithmCollection;
 import model.util.CurrencyCollection;
 import model.util.Date;
+import model.util.GraphRepresentation;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -61,6 +62,20 @@ public class GraphModelTest {
 
         assertEquals(2515,graphModel.data.size(), 10);
         assertNotNull(graphModel.data.get(date1));
+    }
+
+    @Test
+    public void graphModelCreatedWithGraphRepresentationsShouldBeCreatedCorrectly() throws IOException {
+        GraphRepresentation graphRep = new GraphRepresentation(
+                new Date(2022, 10, 12),
+                new Date(2022, 10, 14),
+                "Daily Change",
+                "AMZN",
+                "GBP"
+        );
+        GraphModel model = new GraphModel(graphRep);
+        assertEquals(3, model.data.size());
+        assertEquals("Amazon.com, Inc.", model.getName());
     }
 
     @Test
@@ -192,5 +207,6 @@ public class GraphModelTest {
         }
         assertEquals(3, data.size());
     }
+
 
 }
