@@ -5,13 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import model.graphmodel.GraphModel;
-import model.graphmodel.graphalgorithms.GraphAlgorithm;
-import model.graphmodel.graphalgorithms.GraphAlgorithms;
-import model.util.Date;
 import view.KeyFigureListItem;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -30,8 +30,8 @@ import java.util.Map;
 public abstract class ChartController extends AnchorPane {
 
     protected AppController parentController;
-    protected List<GraphModel> graphModels;
     protected Map<String, ControllerStockListItem> stockListItemMap = new HashMap<>();
+    protected List<GraphModel> graphModels;
     protected List<String> favouriteCompanies;
     protected Chart chart;
 
