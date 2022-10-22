@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class CorrelationChartController extends ChartController {
 
-    private ArrayList<String> activeCompanies;
+    private List<String> activeCompanies;
     @FXML
     private FlowPane keyFigureContainer;
     @FXML

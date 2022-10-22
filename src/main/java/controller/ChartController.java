@@ -8,9 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import model.datahandling.DataHandler;
 import model.graphmodel.GraphModel;
-import model.user.User;
 import model.util.Date;
-import model.util.GraphRepresentation;
 import view.charts.AreaChart;
 import view.charts.BarChart;
 import view.charts.Chart;
@@ -143,7 +141,6 @@ public abstract class ChartController extends AnchorPane {
      */
     private void initializeEndDatePicker() {
         endDatePicker.setValue(LocalDate.now());
-
         endDatePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             try {
                 endDate = new Date(newValue);
@@ -232,7 +229,7 @@ public abstract class ChartController extends AnchorPane {
         }
         for (String MIC : DataHandler.getMICs()) {
             if (!favouriteCompanies.contains(MIC)) {
-                stockListItemMap.get(MIC).setUnfavorite();
+                stockListItemMap.get(MIC).removeFavorite();
                 stockPane.getChildren().add(stockListItemMap.get(MIC));
             }
         }
