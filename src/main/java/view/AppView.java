@@ -8,21 +8,17 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
-public class AppView extends Application implements Observable{
+/**
+ * A class that represents the view in the application. Loads the main FXML-file and displays it.
+ */
+public class AppView extends Application{
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    @Override
-    public void updateView() {
-        update();
-    }
-
-    private void update() {
-        System.out.println("Notify fungerar");
-    }
-
+    /**
+     * An implementation of the start from javaFX.Application method for our project.
+     *
+     * @param stage a {@link Stage} to display our FXML upon.
+     * @throws Exception any unhandled exceptions arising from the method.
+     */
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../MainView.fxml")));
@@ -32,7 +28,13 @@ public class AppView extends Application implements Observable{
         stage.show();
     }
 
-    public void startup() {
-        launch();
+    /**
+     * A method used by our Main class in the project in order to launch the application. Simply passes the method call
+     * to {@link Application#launch}.
+     *
+     * @param args a {@link String[]} containing the optional start alternatives from the command-line.
+     */
+    public void startup(String[] args) {
+        launch(args);
     }
 }

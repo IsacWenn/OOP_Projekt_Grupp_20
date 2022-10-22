@@ -1,17 +1,20 @@
-import model.AppModel;
 import model.user.User;
 import view.AppView;
 
+/**
+ * A class responsible for setup and startup of the entire application.
+ */
 public class Main {
 
-
+    /**
+     * static main method that starts the application
+     *
+     * @param args a {@link String[]} containing optional arguments from the command-line.
+     */
     public static void main(String[] args) {
-        AppModel model = AppModel.getInstance();
         AppView view = new AppView();
-        model.addObserver(view);
         User.loadUsers();
-        view.startup();
-        model.notifyObservers();
+        view.startup(args);
     }
 
 }
