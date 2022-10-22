@@ -47,10 +47,18 @@ public class GraphModel {
     private GraphComputer graphComputer;
 
     /**
-     * The {@link String} that represents.
+     * The {@link String} that represents a company's mic
      */
-    private String companyMIC, graphName;
+    private String companyMIC;
 
+    /**
+     * The {@link String} that represents the graph's name
+     */
+    private String graphName;
+
+    /**
+     * The {@link String} that represents the currency the data is displayed in
+     */
     private String currency;
 
     /**
@@ -174,11 +182,6 @@ public class GraphModel {
     public String getName() {
         return graphName;
     }
-
-    public String getAlgorithm(){
-        return graphComputer.getGraphAlgorithm();
-    }
-
     /**
      * A getter method for the {@link Map} with {@link Date} and {@link Number} values in GraphModel.
      *

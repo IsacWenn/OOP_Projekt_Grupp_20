@@ -15,6 +15,7 @@ public class Main {
         AppView view = new AppView();
         User.loadUsers();
         view.startup(args);
+        User.saveUsers();
     }
 
 }
