@@ -2,7 +2,6 @@ package model.datahandling;
 
 import org.junit.jupiter.api.*;
 
-import java.util.Date;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -17,7 +17,7 @@ class DailyChange implements GraphAlgorithm {
 
     /**
      * A method that calculates the daily change of a given asset expressed in percentages.
-     * @return {@link Map}
+     * @return {@link Map}.
     */
     @Override
     public Map<Date, Number> calculate(Map<Date, DayData> data) {

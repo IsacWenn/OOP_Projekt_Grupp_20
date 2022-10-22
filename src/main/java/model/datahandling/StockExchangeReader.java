@@ -33,7 +33,8 @@ class StockExchangeReader {
         Map<Date, DayData> data = new HashMap<>();
         String line;
         path = defaultPath + path;
-        BufferedReader br = new BufferedReader(new FileReader(path));
+        FileReader fr = new FileReader(path);
+        BufferedReader br = new BufferedReader(fr);
         br.readLine();
         while ((line = br.readLine()) != null) {
             String[] values = line.split(",");
@@ -49,6 +50,8 @@ class StockExchangeReader {
             DayData dayData = new DayData(volume, open, close, high, low);
             data.put(date, dayData);
         }
+        fr.close();
+        br.close();
         return data;
     }
 }

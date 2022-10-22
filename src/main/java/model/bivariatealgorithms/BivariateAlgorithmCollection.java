@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * {@link BivariateAlgorithmCollection} is a class used to retrieve different {@link BivariateAlgorithms}
+ * {@link BivariateAlgorithmCollection} is a class used to retrieve different {@link BivariateAlgorithms}.
  */
 public class BivariateAlgorithmCollection {
 

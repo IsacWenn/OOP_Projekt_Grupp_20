@@ -1,6 +1,5 @@
 package model.graphmodel;
 
-import model.datahandling.DayData;
 import model.graphmodel.graphalgorithms.GraphAlgorithmCollection;
 import model.util.CurrencyCollection;
 import model.util.Date;
