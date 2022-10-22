@@ -3,8 +3,10 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
+import model.datahandling.DataHandler;
 import model.graphmodel.GraphModel;
 import model.user.User;
+import model.util.GraphRepresentation;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,6 +33,19 @@ public class ComparisonChartController extends ChartController {
         super(parentController, favoriteCompanies);
         initializeAlgorithmComboBox();
         activeCompanies = new ArrayList<>();
+    }
+
+    public ComparisonChartController(AppController parentController, List<String> favoriteCompanies, List<GraphRepresentation> graphsToLoad){
+        super(parentController, favoriteCompanies);
+        initializeAlgorithmComboBox();
+        activeCompanies = new ArrayList<>();
+        for (GraphRepresentation graph : graphsToLoad) {
+            String graphName = DataHandler.getCompanyName(graph.getCompanyMIC());
+            activeCompanies.add(graphName);
+            GraphModel graphToAdd = new GraphModel(graph.getCompanyMIC(), graphName, graph.getStartingDate(),
+                    graph.getEndDate(), graph.getAlgorithm(), graph.getConversionCurrency());
+            graphModels.add(graphToAdd);
+        }
     }
 
     /**

@@ -8,7 +8,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import model.datahandling.DataHandler;
 import model.graphmodel.GraphModel;
+import model.user.User;
 import model.util.Date;
+import model.util.GraphRepresentation;
 import view.charts.AreaChart;
 import view.charts.BarChart;
 import view.charts.Chart;
@@ -63,13 +65,17 @@ public abstract class ChartController extends AnchorPane {
      * Creates a new ChartController and initializes all variables.
      * @param parentController the AppController which the {@link ChartController} is an element within.
      */
-    public ChartController(AppController parentController, List<String> favouriteCompanies) {
+    public ChartController(AppController parentController, List<String> favoriteCompanies) {
+        initialize(parentController, favoriteCompanies);
+        updateStockList();
+    }
+
+    private void initialize(AppController parentController, List<String> favoriteCompanies) {
         this.parentController = parentController;
-        this.favouriteCompanies = favouriteCompanies;
+        this.favouriteCompanies = favoriteCompanies;
         graphModels = new ArrayList<>();
         loadFXML();
         initializeSettings();
-        updateStockList();
     }
 
     public void updateFavoritesList(List<String> favouriteCompanies){
@@ -103,7 +109,7 @@ public abstract class ChartController extends AnchorPane {
         startDatePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             startDate = new Date(newValue);
             for (GraphModel graphModel : graphModels) {
-                graphModel.updateTimeInterval(startDate, endDate );
+                graphModel.updateTimeInterval(startDate, endDate);
             }
             refreshChart();
         });
@@ -138,7 +144,7 @@ public abstract class ChartController extends AnchorPane {
             if (!newValue) {
                 endDate = new Date(endDatePicker.getValue());
                 for (GraphModel graphModel : graphModels) {
-                    graphModel.updateTimeInterval(startDate, endDate );
+                    graphModel.updateTimeInterval(startDate, endDate);
                 }
                 refreshChart();
             }
@@ -278,9 +284,9 @@ public abstract class ChartController extends AnchorPane {
      */
     @FXML
     public void timeframeOneYear() {
+        startDate = new Date(LocalDate.now().minusYears(1));
+        endDate = new Date(LocalDate.now());
         for (GraphModel graphModel : graphModels) {
-            startDate = new Date(LocalDate.now().minusYears(1));
-            endDate = new Date(LocalDate.now());
             graphModel.updateTimeInterval(endDate, startDate);
         }
         refreshChart();
@@ -325,4 +331,15 @@ public abstract class ChartController extends AnchorPane {
      * @param item the {@link ControllerStockListItem} clicked upon.
      */
     public abstract void stockListOnClick(ControllerStockListItem item);
+
+    @FXML
+    public void saveGraph() {
+        for (GraphRepresentation graphToClear : User.getActiveUser().getUserFavoriteGraphs()) {
+            User.getActiveUser().removeFavoriteGraph(graphToClear);
+        }
+        for (GraphModel graphModel : graphModels) {
+            User.getActiveUser().addFavoriteGraph(new GraphRepresentation(startDate, endDate,
+                    graphModel.getAlgorithm, getCurrency()));
+        }
+    }
 }

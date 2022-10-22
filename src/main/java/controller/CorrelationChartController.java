@@ -5,7 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.FlowPane;
 import model.bivariatealgorithms.BivariateComputer;
+import model.datahandling.DataHandler;
 import model.graphmodel.GraphModel;
+import model.util.GraphRepresentation;
 import view.KeyFigureListItem;
 
 import java.io.IOException;
@@ -32,12 +34,29 @@ public class CorrelationChartController extends ChartController {
      * Generates a {@link CorrelationChartController}.
      * @param parentController the Parent Controller.
      */
-    public CorrelationChartController(AppController parentController, List<String> favouriteCompanies){
-        super(parentController, favouriteCompanies);
+    public CorrelationChartController(AppController parentController, List<String> favoriteCompanies){
+        super(parentController, favoriteCompanies);
         initializeAlgorithmComboBox();
         activeCompanies = new ArrayList<>();
         graphModels = new ArrayList<>();
-        populateKeyFigureContainer();
+        refreshChart();
+    }
+
+    public CorrelationChartController(AppController parentController, List<String> favoriteCompanies,
+                                      List<GraphRepresentation> graphsToLoad){
+        super(parentController, favoriteCompanies);
+        initializeAlgorithmComboBox();
+        algorithmComboBox.setValue(graphsToLoad.get(0).getAlgorithm());
+        activeCompanies = new ArrayList<>();
+        graphModels = new ArrayList<>();
+        for (GraphRepresentation graph : graphsToLoad) {
+            String graphName = DataHandler.getCompanyName(graph.getCompanyMIC());
+            activeCompanies.add(graphName);
+            GraphModel graphToAdd = new GraphModel(graph.getCompanyMIC(), graphName, graph.getStartingDate(),
+                    graph.getEndDate(), graph.getAlgorithm(), graph.getConversionCurrency());
+            graphModels.add(graphToAdd);
+        }
+        refreshChart();
     }
 
     /**

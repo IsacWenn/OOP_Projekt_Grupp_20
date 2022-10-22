@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import model.graphmodel.GraphModel;
+import model.util.GraphRepresentation;
 import view.KeyFigureListItem;
 
 import java.io.IOException;
@@ -35,12 +36,28 @@ public class DetailedChartController extends ChartController{
      * Generates a {@link DetailedChartController}.
      * @param parentController the Parent Controller.
      */
-    public DetailedChartController(AppController parentController, List<String> favouriteCompanies) {
-        super(parentController, favouriteCompanies);
+    public DetailedChartController(AppController parentController, List<String> favoriteCompanies) {
+        super(parentController, favoriteCompanies);
         activeCompany = null;
         keyFigGraphModel = null;
         activeAlgorithms = new ArrayList<>();
-        initializeAlgorithmComboBox();
+        initializeAlgorithmMenu();
+        toggleAlgorithm("Closing Price");
+    }
+
+    public DetailedChartController(AppController parentController, List<String> favoriteCompanies, List<GraphRepresentation> graphsToLoad) {
+        super(parentController, favoriteCompanies);
+        activeCompany = null;
+        keyFigGraphModel = null;
+        activeAlgorithms = new ArrayList<>();
+        initializeAlgorithmMenu();
+        for (GraphRepresentation graph : graphsToLoad) {
+            toggleAlgorithm(graph.getAlgorithm());
+            activeAlgorithms.add(graph.getAlgorithm());
+            GraphModel graphToAdd = new GraphModel(graph.getCompanyMIC(), graph.getAlgorithm(), graph.getStartingDate(),
+                    graph.getEndDate(), graph.getAlgorithm(), graph.getConversionCurrency());
+            graphModels.add(graphToAdd);
+        }
     }
 
     /**
@@ -59,9 +76,9 @@ public class DetailedChartController extends ChartController{
     }
 
     /**
-     * Initializes the Algorithm selector {@link ComboBox}.
+     * Initializes the Algorithm selector {@link MenuButton}s.
      */
-    private void initializeAlgorithmComboBox() {
+    private void initializeAlgorithmMenu() {
         ArrayList<CheckBox> checkBoxes = new ArrayList<>();
         for (String algorithm: GraphModel.getOrderedGraphAlgorithmNames()) {
             CheckBox checkBox = new CheckBox(algorithm);
@@ -70,7 +87,6 @@ public class DetailedChartController extends ChartController{
             });
             checkBoxes.add(checkBox);
         }
-        checkBoxes.get(0).setSelected(true);
         for (CheckBox checkBox: checkBoxes) {
             CustomMenuItem menuItem = new CustomMenuItem(checkBox);
             menuItem.setHideOnClick(false);

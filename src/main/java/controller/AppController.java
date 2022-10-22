@@ -10,6 +10,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import model.user.User;
+import model.util.GraphRepresentation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -185,6 +186,25 @@ public class AppController {
             chart.updateFavoritesList(favoriteCompanies);
         }
         User.saveUsers();
+    }
+
+    @FXML
+    private void loadSavedGraph() {
+        List<GraphRepresentation> graphsToLoad = User.getActiveUser().getUserFavoriteGraphs();
+        boolean chartIdentified = false;
+        String lastMIC = "";
+        ChartController chartType = new ComparisonChartController(this, favoriteCompanies, graphsToLoad);
+        for (GraphRepresentation graph : graphsToLoad) {
+            if (lastMIC.equals(graph.getCompanyMIC())) {
+                chartType = new DetailedChartController(this, favoriteCompanies, graphsToLoad);
+                chartIdentified = true;
+                break;
+            }
+            lastMIC = graph.getCompanyMIC();
+        } if (!chartIdentified && graphsToLoad.size() == 2) {
+                chartType = new CorrelationChartController(this, favoriteCompanies, graphsToLoad);
+        }
+        newTab(chartType, "Favorite Chart");
     }
 }
 
