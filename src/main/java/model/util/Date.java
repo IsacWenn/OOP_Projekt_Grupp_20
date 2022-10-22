@@ -115,18 +115,21 @@ public class Date implements Comparable<Date>, Serializable {
 
     /**
      * A getter method for the day parameter.
+     *
      * @return the day parameter of the Date.
      */
     public int getDay() { return day; }
 
     /**
      * A getter method for the month parameter.
+     *
      * @return the month parameter of the Date.
      */
     public int getMonth() { return month; }
 
     /**
      * A getter method for the year parameter.
+     *
      * @return the year parameter of the Date.
      */
     public int getYear() { return year; }
@@ -135,6 +138,7 @@ public class Date implements Comparable<Date>, Serializable {
 
     /**
      * A method that returns a {@link String} representation of a Date.
+     *
      * @return A {@link String} representation of a {@link Date}.
      */
     @Override
@@ -165,6 +169,7 @@ public class Date implements Comparable<Date>, Serializable {
 
     /**
      * A method that checks if the year attribute is after 1900 and before or equal to the current year.
+     *
      * @return the {@link Boolean} value of the conditions.
      */
     private Boolean validYear() {
@@ -183,6 +188,7 @@ public class Date implements Comparable<Date>, Serializable {
 
     /**
      * A method that checks if the month attribute is more than 0 and less or equal to 12.
+     *
      * @return the {@link Boolean} value of the conditions.
      */
     private Boolean validMonth() {
