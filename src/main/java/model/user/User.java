@@ -1,9 +1,7 @@
 package model.user;
 
-import com.google.common.graph.Graph;
 import model.util.Date;
 import model.util.GraphRepresentation;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
