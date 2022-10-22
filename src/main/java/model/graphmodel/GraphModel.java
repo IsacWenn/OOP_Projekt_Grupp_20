@@ -1,11 +1,13 @@
 package model.graphmodel;
 
+import model.datahandling.DataHandler;
 import model.datahandling.DayData;
 import model.graphmodel.graphalgorithms.GraphAlgorithm;
 import model.graphmodel.graphalgorithms.GraphAlgorithmCollection;
 import model.graphmodel.keyfigures.KeyFigureCollection;
 import model.util.CurrencyCollection;
 import model.util.Date;
+import model.util.GraphRepresentation;
 
 import java.util.*;
 
@@ -95,9 +97,23 @@ public class GraphModel {
     }
 
     /**
+     * A constructor for the class GraphModel that retrieves data from a {@link GraphRepresentation}.
+     *
+     * @param graphRep the {@link GraphRepresentation} containing the initializer data.
+     */
+    public GraphModel(GraphRepresentation graphRep) {
+        String mic = graphRep.getCompanyMIC();
+        init(mic, DataHandler.getCompanyName(mic));
+        this.data = graphData.getCompanyData(mic, graphRep.getStartingDate(), graphRep.getEndDate());
+        updateAlgorithm(graphRep.getAlgorithm());
+        update();
+    }
+
+    /**
      * A method that initializes the private variables of this class, used by every constructor in this class
      *
-     *
+     * @param mic a {@link String} of a company mic.
+     * @param graphName a {@link String} containing the name of the graph.
      */
     private void init(String mic, String graphName) {
         this.graphComputer = new GraphComputer();
