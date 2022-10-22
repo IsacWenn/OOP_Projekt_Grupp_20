@@ -6,9 +6,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import model.chartmodel.ChartModel;
 import model.datahandling.DataHandler;
 import model.graphmodel.GraphModel;
+import model.util.Date;
 import view.charts.AreaChart;
 import view.charts.BarChart;
 import view.charts.Chart;
@@ -16,6 +16,7 @@ import view.charts.LineChart;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,10 +30,13 @@ import java.util.Map;
 public abstract class ChartController extends AnchorPane {
 
     protected AppController parentController;
-    protected ChartModel chartModel;
+    protected List<GraphModel> graphModels;
     protected Map<String, ControllerStockListItem> stockListItemMap = new HashMap<>();
     protected List<String> favouriteCompanies;
     protected Chart chart;
+
+    protected Date startDate;
+    protected Date endDate;
 
     @FXML
     protected DatePicker startDatePicker;
@@ -62,15 +66,9 @@ public abstract class ChartController extends AnchorPane {
     public ChartController(AppController parentController, List<String> favouriteCompanies) {
         this.parentController = parentController;
         this.favouriteCompanies = favouriteCompanies;
-        chartModel = new ChartModel();
+        graphModels = new ArrayList<>();
         loadFXML();
         initializeSettings();
-        try {
-            chartModel.updateStartDate(startDatePicker.getValue());
-            chartModel.updateEndDate(endDatePicker.getValue());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         updateStockList();
     }
 
@@ -103,25 +101,23 @@ public abstract class ChartController extends AnchorPane {
         startDatePicker.setValue(LocalDate.now().minusYears(1));
 
         startDatePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-            try {
-                chartModel.updateStartDate(newValue);
-                refreshChart();
-            } catch (IOException e) {
-                startDatePicker.setValue(oldValue);
-                e.printStackTrace();
+            startDate = new Date(newValue);
+            for (GraphModel graphModel : graphModels) {
+                graphModel.updateTimeInterval(startDate, endDate );
             }
+            refreshChart();
         });
 
         startDatePicker.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
-                try {
-                    chartModel.updateStartDate(startDatePicker.getValue());
-                    refreshChart();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                startDate = new Date(startDatePicker.getValue());
+                for (GraphModel graphModel : graphModels) {
+                    graphModel.updateTimeInterval(startDate, endDate );
                 }
+                refreshChart();
             }
         });
+        startDate = new Date(startDatePicker.getValue());
     }
 
     /**
@@ -131,25 +127,23 @@ public abstract class ChartController extends AnchorPane {
         endDatePicker.setValue(LocalDate.now());
 
         endDatePicker.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-            try {
-                chartModel.updateEndDate(newValue);
-                refreshChart();
-            } catch (IOException e) {
-                endDatePicker.setValue(oldValue);
-                e.printStackTrace();
+            endDate = new Date(newValue);
+            for (GraphModel graphModel : graphModels) {
+                graphModel.updateTimeInterval(startDate, endDate );
             }
+            refreshChart();
         });
 
         endDatePicker.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue) {
-                try {
-                    chartModel.updateEndDate(endDatePicker.getValue());
-                    refreshChart();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                endDate = new Date(endDatePicker.getValue());
+                for (GraphModel graphModel : graphModels) {
+                    graphModel.updateTimeInterval(startDate, endDate );
                 }
+                refreshChart();
             }
         });
+        endDate = new Date(endDatePicker.getValue());
     }
 
     /**
@@ -175,7 +169,9 @@ public abstract class ChartController extends AnchorPane {
         currencyComboBox.getItems().addAll(GraphModel.getCurrencyNames());
         currencyComboBox.getSelectionModel().select(GraphModel.getCurrencyNames().get(0));
         currencyComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
-            chartModel.updateCurrency(newVal);
+            for (GraphModel graphModel : graphModels) {
+                graphModel.updateCurrency(newVal);
+            }
             refreshChart();
         });
     }
@@ -244,7 +240,11 @@ public abstract class ChartController extends AnchorPane {
     @FXML
     public void timeframeOneDay() {
         try {
-            chartModel.updateTimeInterval(LocalDate.now().minusDays(1), LocalDate.now());
+            for (GraphModel graphModel : graphModels) {
+                startDate = new Date(LocalDate.now().minusDays(1).toString());
+                endDate = new Date(LocalDate.now().toString());
+                graphModel.updateTimeInterval(endDate, startDate);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -257,7 +257,11 @@ public abstract class ChartController extends AnchorPane {
     @FXML
     public void timeframeOneWeek() {
         try {
-            chartModel.updateTimeInterval(LocalDate.now().minusWeeks(1), LocalDate.now());
+            for (GraphModel graphModel : graphModels) {
+                startDate = new Date(LocalDate.now().minusWeeks(1).toString());
+                endDate = new Date(LocalDate.now().toString());
+                graphModel.updateTimeInterval(endDate, startDate);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -270,7 +274,11 @@ public abstract class ChartController extends AnchorPane {
     @FXML
     public void timeframeOneMonth() {
         try {
-            chartModel.updateTimeInterval(LocalDate.now().minusMonths(1), LocalDate.now());
+            for (GraphModel graphModel : graphModels) {
+                startDate = new Date(LocalDate.now().minusMonths(1).toString());
+                endDate = new Date(LocalDate.now().toString());
+                graphModel.updateTimeInterval(endDate, startDate);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -283,7 +291,11 @@ public abstract class ChartController extends AnchorPane {
     @FXML
     public void timeframeOneYear() {
         try {
-            chartModel.updateTimeInterval(LocalDate.now().minusYears(1), LocalDate.now());
+            for (GraphModel graphModel : graphModels) {
+                startDate = new Date(LocalDate.now().minusYears(1).toString());
+                endDate = new Date(LocalDate.now().toString());
+                graphModel.updateTimeInterval(endDate, startDate);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -5,9 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import model.graphmodel.GraphModel;
+import model.graphmodel.graphalgorithms.GraphAlgorithm;
+import model.graphmodel.graphalgorithms.GraphAlgorithms;
+import model.util.Date;
 import view.KeyFigureListItem;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,18 +87,17 @@ public class DetailedChartController extends ChartController{
      * @param algorithm the name of the algorithm to toggle.
      */
     private void toggleAlgorithm(String algorithm) {
+        if (activeAlgorithms.contains(algorithm) && graphModels.size() > 0) {
+            int index = activeAlgorithms.indexOf(algorithm);
+            graphModels.remove(index);
+            chart.remove(index);
+        } else if (activeCompany != null) {
+            graphModels.add(new GraphModel(activeCompany.getMIC(), algorithm, startDate, endDate, algorithm, getCurrency()));
+        }
         if (activeAlgorithms.contains(algorithm)) {
             activeAlgorithms.remove(algorithm);
         } else {
             activeAlgorithms.add(algorithm);
-        }
-
-        if (chartModel.contains(algorithm)) {
-            int index = chartModel.indexOf(algorithm);
-            chartModel.remove(index);
-            chart.remove(index);
-        } else if (activeCompany != null) {
-            chartModel.add(activeCompany.getMIC(), algorithm, algorithm);
         }
         refreshChart();
     }
@@ -105,7 +108,7 @@ public class DetailedChartController extends ChartController{
     protected void clearChart() {
         activeCompany = null;
         keyFigGraphModel = null;
-        chartModel.clearGraphModels();
+        graphModels.clear();
         chart.clear();
     }
 
@@ -116,15 +119,10 @@ public class DetailedChartController extends ChartController{
     protected void addToChart(ControllerStockListItem item) {
         clearChart();
         activeCompany = item;
-        keyFigGraphModel = new GraphModel(item.getMIC(), "", chartModel.getStartDate(), chartModel.getEndDate());
+        keyFigGraphModel = new GraphModel(item.getMIC(), "", startDate, endDate);
         for (String algorithm: activeAlgorithms) {
-            chart.add(
-                chartModel.add(
-                    item.getMIC(),
-                    algorithm,
-                    algorithm
-                )
-            );
+            graphModels.add(new GraphModel(activeCompany.getMIC(), algorithm, startDate, endDate, algorithm, getCurrency()));
+            chart.add(graphModels.get(activeAlgorithms.indexOf(algorithm)));
         }
     }
 
@@ -166,9 +164,9 @@ public class DetailedChartController extends ChartController{
      */
     @Override
     public void refreshChart() {
-        chart.refresh(chartModel.getGraphModels());
+        chart.refresh(graphModels);
         if (keyFigGraphModel != null) {
-            keyFigGraphModel.updateTimeInterval(chartModel.getStartDate(), chartModel.getEndDate());
+            keyFigGraphModel.updateTimeInterval(startDate, endDate);
             keyFigGraphModel.updateCurrency(getCurrency());
         }
         populateKeyFigureContainer();

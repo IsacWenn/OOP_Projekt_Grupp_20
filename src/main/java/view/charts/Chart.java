@@ -5,6 +5,7 @@ import javafx.scene.layout.AnchorPane;
 import model.graphmodel.GraphModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class which represents a chart.
@@ -18,7 +19,7 @@ public abstract class Chart extends AnchorPane {
      * @param graphModels the {@link ArrayList} of {@link GraphModel}s to be drawn upon the chart.
      *
      */
-    public void refresh(ArrayList<GraphModel> graphModels) {
+    public void refresh(List<GraphModel> graphModels) {
         this.clear();
         for (GraphModel graphModel: graphModels) {
             add(graphModel);

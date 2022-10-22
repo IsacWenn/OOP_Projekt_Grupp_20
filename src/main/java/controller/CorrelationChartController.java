@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class CorrelationChartController extends ChartController {
 
-    private ArrayList<ControllerStockListItem> activeCompanies;
+    private ArrayList<String> activeCompanies;
     private ArrayList<GraphModel> graphModels;
     @FXML
     private FlowPane keyFigureContainer;
@@ -56,13 +56,15 @@ public class CorrelationChartController extends ChartController {
     }
 
     /**
-     * Initializes the algorithm selector {@link ComboBox}.
+     * Initializes and fills the algorithm selector {@link ComboBox}.
      */
     private void initializeAlgorithmComboBox() {
         algorithmComboBox.getItems().addAll(GraphModel.getGraphAlgorithmNames());
         algorithmComboBox.getSelectionModel().select("Closing Price");
         algorithmComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
-            chartModel.updateAlgorithms(newVal);
+            for (GraphModel graphModel : graphModels) {
+                graphModel.updateAlgorithm(newVal);
+            }
             refreshChart();
         });
     }
@@ -72,14 +74,13 @@ public class CorrelationChartController extends ChartController {
      * @param item the {@link ControllerStockListItem} contains information of the stock to be removed.
      */
     private void removeCompany(ControllerStockListItem item) {
-        int index = chartModel.indexOf(item.getName());
-        chartModel.remove(index);
+        int index = activeCompanies.indexOf(item.getName());
+        graphModels.remove(index);
         chart.remove(index);
-        activeCompanies.remove(item);
+        activeCompanies.remove(index);
         item.togglePressed();
         if (activeCompanies.size() < 2) {
             keyFigureContainer.getChildren().clear();
-            graphModels.remove(index);
         }
         populateKeyFigureContainer();
     }
@@ -92,9 +93,9 @@ public class CorrelationChartController extends ChartController {
         if (activeCompanies.size() >= 2) {
             return;
         }
-        GraphModel newGraph = chartModel.add(item.getMIC(), item.getName(), algorithmComboBox.getValue());
+        GraphModel newGraph = new GraphModel(item.getMIC(), item.getName(), startDate, endDate,algorithmComboBox.getValue(), getCurrency());
         chart.add(newGraph);
-        activeCompanies.add(item);
+        activeCompanies.add(item.getName());
         graphModels.add(newGraph);
         item.togglePressed();
         populateKeyFigureContainer();
@@ -119,7 +120,7 @@ public class CorrelationChartController extends ChartController {
      */
     @Override
     public void refreshChart() {
-        chart.refresh(chartModel.getGraphModels());
+        chart.refresh(graphModels);
         populateKeyFigureContainer();
     }
 

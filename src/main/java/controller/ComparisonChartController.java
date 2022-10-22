@@ -7,6 +7,7 @@ import model.graphmodel.GraphModel;
 import model.user.User;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,6 +18,8 @@ import java.util.List;
  */
 public class ComparisonChartController extends ChartController {
 
+    List<String> activeCompanies;
+
     @FXML
     protected ComboBox<String> algorithmComboBox;
 
@@ -24,9 +27,10 @@ public class ComparisonChartController extends ChartController {
      * Generates a {@link ComparisonChartController}.
      * @param parentController the Parent Controller.
      */
-    public ComparisonChartController(AppController parentController, List<String> favouriteCompanies){
-        super(parentController, favouriteCompanies);
+    public ComparisonChartController(AppController parentController, List<String> favoriteCompanies){
+        super(parentController, favoriteCompanies);
         initializeAlgorithmComboBox();
+        activeCompanies = new ArrayList<>();
     }
 
     /**
@@ -49,9 +53,11 @@ public class ComparisonChartController extends ChartController {
      */
     private void initializeAlgorithmComboBox() {
         algorithmComboBox.getItems().addAll(GraphModel.getGraphAlgorithmNames());
-        algorithmComboBox.getSelectionModel().select(GraphModel.getGraphAlgorithmNames().get(0));
+        algorithmComboBox.getSelectionModel().select("Closing Price");
         algorithmComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldVal, newVal) -> {
-            chartModel.updateAlgorithms(newVal);
+            for (GraphModel graphModel : graphModels) {
+                graphModel.updateAlgorithm(newVal);
+            }
             refreshChart();
         });
     }
@@ -64,11 +70,14 @@ public class ComparisonChartController extends ChartController {
     @Override
     public void stockListOnClick(ControllerStockListItem item) {
         if (item.isActive()) {
-            int index = chartModel.indexOf(item.getName());
-            chartModel.remove(index);
+            int index = activeCompanies.indexOf(item.getName());
+            activeCompanies.remove(index);
+            graphModels.remove(index);
             chart.remove(index);
         } else {
-            GraphModel newGraph = chartModel.add(item.getMIC(), item.getName(), algorithmComboBox.getValue());
+            GraphModel newGraph = new GraphModel(item.getMIC(), item.getName(), startDate, endDate, algorithmComboBox.getValue(), getCurrency());
+            activeCompanies.add(item.getName());
+            graphModels.add(newGraph);
             chart.add(newGraph);
         }
         item.togglePressed();
@@ -79,6 +88,6 @@ public class ComparisonChartController extends ChartController {
      */
     @Override
     public void refreshChart() {
-        chart.refresh(chartModel.getGraphModels());
+        chart.refresh(graphModels);
     }
 }

@@ -90,6 +90,16 @@ public class Date implements Comparable<Date>, Serializable {
     }
 
     /**
+     * A constructor for a class Date which creates a new date using a {@link LocalDate} as an input.
+     * @param date input {@link LocalDate}.
+     */
+    public Date(LocalDate date) {
+        this.year = date.getYear();
+        this.month = date.getMonth().getValue();
+        this.day = date.getDayOfMonth();
+    }
+
+    /**
      * A constructor for class Date that creates a copy of a given {@link Date}.
      *
      * @param date
