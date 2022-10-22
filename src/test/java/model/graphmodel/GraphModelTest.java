@@ -57,14 +57,6 @@ public class GraphModelTest {
     }
 
     @Test
-    public void graphModelCreatedWithOnlyMicShouldContainAllAvailableCompanyData() {
-        GraphModel graphModel = new GraphModel("AAPL", "Test");
-
-        assertEquals(2515,graphModel.data.size(), 10);
-        assertNotNull(graphModel.data.get(date1));
-    }
-
-    @Test
     public void graphModelCreatedWithGraphRepresentationsShouldBeCreatedCorrectly() throws IOException {
         GraphRepresentation graphRep = new GraphRepresentation(
                 new Date(2022, 10, 12),

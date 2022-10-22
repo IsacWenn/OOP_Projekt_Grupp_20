@@ -7,6 +7,8 @@ import model.graphmodel.keyfigures.KeyFigureCollection;
 import model.util.Date;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -79,5 +81,28 @@ public class GraphComputer {
      * @return a {@link Double}
      */
     double calculateKeyFigure(KeyFigureAlgorithm keyFigure, Map<Date, DayData> data){return keyFigure.calculate(data);}
+
+    /**
+     * A method for retrieving data sorted after date. The data has a maximum of a given number of datapoint
+     *
+     * @param numDataPoints A {@link Integer} is the maximum number of data points
+     * @param orderedDates A {@link List} of {@link Date} in chronological order.
+     * @return A {@link Map} of the data points.
+     */
+    Map<Date, Number> reduceDataPoints(int numDataPoints, List<Date> orderedDates, Map<Date, Number> map) {
+        LinkedHashMap<Date, Number> orderedMap = new LinkedHashMap<>();
+        double daysInterval = orderedDates.size(), stepAmount, dIndex = 0;
+        int index;
+
+        stepAmount = Math.max(1, (daysInterval-1)/ (numDataPoints-1));
+        while (orderedMap.size() < Math.min(numDataPoints, daysInterval)) {
+            index = (int) Math.round(dIndex);
+            Date currentDate = orderedDates.get(index);
+            Number val = map.get(currentDate);
+            orderedMap.put(currentDate, val);
+            dIndex += stepAmount;
+        }
+        return orderedMap;
+    }
 
 }

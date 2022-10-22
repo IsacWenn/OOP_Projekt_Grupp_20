@@ -57,18 +57,6 @@ public class GraphModel {
      * A constructor for the class GraphModel that retrieves all available data for the given mic of a company
      *
      * @param mic A {@link String} which represents a company on the stock market
-     */
-    public GraphModel(String mic, String graphName){
-        init(mic, graphName);
-        this.data = graphData.getCompanyData(mic);
-        updateAlgorithm(GraphAlgorithmCollection.getDefaultGraphAlgorithmName());
-        update();
-    }
-
-    /**
-     * A constructor for the class GraphModel that retrieves all available data for the given mic of a company
-     *
-     * @param mic A {@link String} which represents a company on the stock market
      * @param graphName A {@link String} for the name of the {@link GraphModel}
      * @param from A {@link Date} being the first date of the time interval of the {@link GraphModel}
      * @param to A {@link Date} being the last date of the time interval of the {@link GraphModel}
@@ -93,7 +81,6 @@ public class GraphModel {
         init(mic, graphName);
         this.data = graphData.getCompanyData(mic, from, to);
         updateAlgorithm(getOrderedGraphAlgorithmNames().get(0));
-        update();
     }
 
     /**
@@ -106,7 +93,6 @@ public class GraphModel {
         init(mic, DataHandler.getCompanyName(mic));
         this.data = graphData.getCompanyData(mic, graphRep.getStartingDate(), graphRep.getEndDate());
         updateAlgorithm(graphRep.getAlgorithm());
-        update();
     }
 
     /**
@@ -250,32 +236,8 @@ public class GraphModel {
      * @return a {@link LinkedHashMap}  containing data that is reduced and sorted
      */
     public Map<Date, Number> getSortedAndReducedData(int numDataPoints) {
-        List<Date> orderedDates = Date.sortDates(this.getValues().keySet());
-        return reduceDataPoints(numDataPoints, orderedDates);
+        List<Date> orderedDates = Date.sortDates(this.values.keySet());
+        return graphComputer.reduceDataPoints(numDataPoints, orderedDates, this.getValues());
     }
-
-    /**
-     * A method for retrieving data sorted after date. The data has a maximum of a given number of datapoint
-     *
-     * @param numDataPoints A {@link Integer} is the maximum number of data points
-     * @param orderedDates A {@link List} of {@link Date} in chronological order.
-     * @return A {@link Map} of the data points.
-     */
-    private Map<Date, Number> reduceDataPoints(int numDataPoints, List<Date> orderedDates) {
-        LinkedHashMap<Date, Number> orderedMap = new LinkedHashMap<>();
-        double daysInterval = orderedDates.size(), stepAmount, dIndex = 0;
-        int index;
-
-        stepAmount = Math.max(1, (daysInterval-1)/ (numDataPoints-1));
-        while (orderedMap.size() < Math.min(numDataPoints, daysInterval)) {
-            index = (int) Math.round(dIndex);
-            Date currentDate = orderedDates.get(index);
-            Number val = this.getValues().get(currentDate);
-            orderedMap.put(currentDate, val);
-            dIndex += stepAmount;
-        }
-        return orderedMap;
-    }
-
 }
 
