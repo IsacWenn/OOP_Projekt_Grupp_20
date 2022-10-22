@@ -8,9 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import model.datahandling.DataHandler;
 import model.graphmodel.GraphModel;
-import model.user.User;
 import model.util.Date;
-import model.util.GraphRepresentation;
 import view.charts.AreaChart;
 import view.charts.BarChart;
 import view.charts.Chart;
@@ -34,7 +32,7 @@ public abstract class ChartController extends AnchorPane {
     protected AppController parentController;
     protected Map<String, ControllerStockListItem> stockListItemMap = new HashMap<>();
     protected List<GraphModel> graphModels;
-    protected List<String> favouriteCompanies;
+    protected List<String> favoriteCompanies;
     protected Chart chart;
 
     protected Date startDate;
@@ -72,14 +70,14 @@ public abstract class ChartController extends AnchorPane {
 
     private void initialize(AppController parentController, List<String> favoriteCompanies) {
         this.parentController = parentController;
-        this.favouriteCompanies = favoriteCompanies;
+        this.favoriteCompanies = favoriteCompanies;
         graphModels = new ArrayList<>();
         loadFXML();
         initializeSettings();
     }
 
     public void updateFavoritesList(List<String> favouriteCompanies){
-        this.favouriteCompanies = favouriteCompanies;
+        this.favoriteCompanies = favouriteCompanies;
         updateStockList();
     }
 
@@ -213,7 +211,7 @@ public abstract class ChartController extends AnchorPane {
         stockPane.getChildren().clear();
         for (String MIC : DataHandler.getMICs()) {
             ControllerStockListItem listItem = new ControllerStockListItem(MIC, this,
-                    parentController, favouriteCompanies.contains(MIC));
+                    parentController, favoriteCompanies.contains(MIC));
             stockListItemMap.put(MIC, listItem);
         }
     }
@@ -225,13 +223,13 @@ public abstract class ChartController extends AnchorPane {
     public void updateStockList() {
         stockPane.getChildren().clear();
         for (String MIC : DataHandler.getMICs()) {
-            if (favouriteCompanies.contains(MIC)) {
+            if (favoriteCompanies.contains(MIC)) {
                 stockListItemMap.get(MIC).setFavorite();
                 stockPane.getChildren().add(stockListItemMap.get(MIC));
             }
         }
         for (String MIC : DataHandler.getMICs()) {
-            if (!favouriteCompanies.contains(MIC)) {
+            if (!favoriteCompanies.contains(MIC)) {
                 stockListItemMap.get(MIC).setUnfavorite();
                 stockPane.getChildren().add(stockListItemMap.get(MIC));
             }
@@ -244,9 +242,9 @@ public abstract class ChartController extends AnchorPane {
      */
     public void favoritize(String acronym){
         if (isCompanyFavorite(acronym)) {
-            favouriteCompanies.remove(acronym);
+            favoriteCompanies.remove(acronym);
         } else {
-            favouriteCompanies.add(acronym);
+            favoriteCompanies.add(acronym);
         }
     }
 
@@ -256,7 +254,7 @@ public abstract class ChartController extends AnchorPane {
      * @return whether the stock is a favorite or not.
      */
     private boolean isCompanyFavorite(String acronym) {
-        return favouriteCompanies.contains(acronym);
+        return favoriteCompanies.contains(acronym);
     }
 
     /**
