@@ -14,7 +14,7 @@ import java.util.Objects;
  *
  * @author Isac
  */
-public class UserFavorites implements Serializable {
+class UserFavorites implements Serializable {
 
 
     /**
