@@ -15,7 +15,10 @@ import java.util.*;
  */
 class GraphData {
 
-    public GraphData() {
+    /**
+     * A constructor for the GraphData class to
+     */
+    GraphData() {
     }
 
     /**
