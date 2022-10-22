@@ -2,7 +2,7 @@ package model.graphmodel.keyfigures;
 
 import java.util.*;
 
-public final class KeyFigureCollection {
+public class KeyFigureCollection {
 
     /**
      * A static {@link Map} of {@link String} and {@link KeyFigureAlgorithm}.
@@ -14,12 +14,6 @@ public final class KeyFigureCollection {
         put("Highest Price", new HighestPrice());
         put("Lowest Price", new LowestPrice());
     }};
-
-    /**
-     * A class for retrieving all available implementations of {@link KeyFigureAlgorithm}.
-     */
-    private KeyFigureCollection(){
-    }
 
     /**
      * A method for retrieving a specific implementation of {@link KeyFigureAlgorithm} given the corresponding {@link String}.

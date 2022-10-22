@@ -24,7 +24,6 @@ public class TestDataHandler {
                 153.84, 160.54,
                 153.37
         );
-        dateList = new Date(2022, 6, 1).listIntervalTo(new Date());
     }
 
     @Test
