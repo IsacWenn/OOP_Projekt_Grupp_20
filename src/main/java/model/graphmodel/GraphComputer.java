@@ -18,7 +18,7 @@ import java.util.Map;
  * @author Carl
  * @author Isac
  */
-public class GraphComputer {
+class GraphComputer {
 
     /**
      * A private {@link GraphAlgorithm} variable
@@ -27,7 +27,7 @@ public class GraphComputer {
 
 
     /**
-     * A constructor for the GraphComputer class that sets {@link GraphComputer#graphAlgorithm} to the default graphAlgorithm.
+     * A constructor for the GraphComputer class
      */
     GraphComputer(){
     }
@@ -39,10 +39,6 @@ public class GraphComputer {
      */
     void setAlgorithm(GraphAlgorithm graphAlg){
         this.graphAlgorithm = graphAlg;
-    }
-
-    String getGraphAlgorithm(){
-        return graphAlgorithm.toString();
     }
 
     /**
