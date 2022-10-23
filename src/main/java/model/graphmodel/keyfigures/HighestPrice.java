@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * A class implementing {@link KeyFigureAlgorithm} for calculation the highest price of an asset.
  */
-public class HighestPrice implements KeyFigureAlgorithm {
+class HighestPrice implements KeyFigureAlgorithm {
 
     /**
      * A method that finds the highest price during.

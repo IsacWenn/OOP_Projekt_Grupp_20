@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * A class implementing {@link KeyFigureAlgorithm} for computing the average trading volume for an asset.
  */
-public class AverageVolume implements KeyFigureAlgorithm {
+class AverageVolume implements KeyFigureAlgorithm {
 
     /**
      * A method doing the calculation for the average trading volume.

@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * A class implementing {@link KeyFigureAlgorithm} for calculating the lowest price of an asset.
  */
-public class LowestPrice implements KeyFigureAlgorithm {
+class LowestPrice implements KeyFigureAlgorithm {
 
     /**
      * A method that finds the lowest price during.
