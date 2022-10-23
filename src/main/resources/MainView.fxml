@@ -13,6 +13,7 @@
 <!--
    This is the base fxml document that our scene is built upon.
 -->
+
 <StackPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppController">
    <children>
       <AnchorPane fx:id="signupView" onMousePressed="#mainView" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00000044;">
@@ -67,8 +68,8 @@
                   <Group fx:id="logoutButtons" layoutX="1075.0" layoutY="24.0" visible="false">
                      <children>
                         <Label fx:id="usernameLabel" alignment="CENTER" prefWidth="100.0" text="Username" />
-                        <Button layoutX="55.0" layoutY="28.0" mnemonicParsing="false" onAction="#logout" prefWidth="60.0" text="Logout and save" />
-                        <Button layoutX="-10.0" layoutY="28.0" mnemonicParsing="false" onAction="#loadSavedGraph" prefWidth="60.0" text="Load saved graph" />
+                        <Button layoutX="-40.0" layoutY="28.0" mnemonicParsing="false" onAction="#logout" prefWidth="150.0" text="Logout and save" />
+                        <Button layoutX="-200.0" layoutY="28.0" mnemonicParsing="false" onAction="#loadSavedGraph" prefHeight="25.0" prefWidth="150.0" text="Load saved graph" />
                      </children>
                   </Group>
                </children>
