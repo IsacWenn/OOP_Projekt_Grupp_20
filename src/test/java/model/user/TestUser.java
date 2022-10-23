@@ -206,4 +206,17 @@ public class TestUser {
     public void loginShouldFailIfIncorrectParametersAreGiven() {
         assertFalse(User.loginUser("Hej", "Lösenord"));
     }
+
+    @Test
+    public void favoriteChartTypeGettersSettersWork() {
+        testUser.setFavoriteChartType("Detailed Chart");
+        assertEquals("Detailed Chart", testUser.getFavoriteChartType());
+    }
+
+    @Test
+    public void clearingFavoriteGraphWorks() {
+        assertEquals(1, testUser.getUserFavoriteGraphs().size());
+        testUser.clearFavoriteGraphs();
+        assertEquals(0, testUser.getUserFavoriteGraphs().size());
+    }
 }
