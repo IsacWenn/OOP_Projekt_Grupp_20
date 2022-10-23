@@ -4,7 +4,7 @@ import model.util.Date;
 
 import java.util.*;
 
-public class SpearmanCorrelation implements BivariateAlgorithms {
+class SpearmanCorrelation implements BivariateAlgorithms {
 
     /**
      * A method for calculating the Pearson correlation coefficient between two data sets.

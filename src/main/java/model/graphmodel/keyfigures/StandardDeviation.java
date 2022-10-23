@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * A class implementing {@link KeyFigureAlgorithm} calculation the standard deviation of an asset´s price.
  */
-public class StandardDeviation implements KeyFigureAlgorithm {
+class StandardDeviation implements KeyFigureAlgorithm {
 
     /**
      * A method that calculation the standard deviation.

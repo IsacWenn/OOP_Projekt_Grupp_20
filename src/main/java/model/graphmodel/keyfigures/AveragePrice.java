@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * A class implementing {@link KeyFigureAlgorithm} for computing the average price of an asset traded during the period of the provided data.
  */
-public class AveragePrice implements KeyFigureAlgorithm {
+class AveragePrice implements KeyFigureAlgorithm {
 
     /**
      * A method doing the calculation for the average price of a stock.
