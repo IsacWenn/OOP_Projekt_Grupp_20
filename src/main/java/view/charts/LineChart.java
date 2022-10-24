@@ -7,6 +7,10 @@ import javafx.scene.chart.NumberAxis;
  * Class which represents a line chart.
  */
 public class LineChart extends Chart {
+
+    /**
+     * Creates a new line chart.
+     */
     public LineChart() {
         javafx.scene.chart.LineChart<String, Number> lineChart = new javafx.scene.chart.LineChart<>(new CategoryAxis(), new NumberAxis());
         lineChart.setPrefSize(872, 544);

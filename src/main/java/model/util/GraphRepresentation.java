@@ -39,10 +39,11 @@ public class GraphRepresentation implements Serializable {
     /**
      * A constructor for the class.
      *
-     * @param interval A {@link List} of {@link Date}s of a specified interval.
-     * @param alg A {@link String} of a specified algorithm.
-     * @param companyMICs A {@link List} of {@link String}s containing the specified company MICs.
-     * @param preferredCurrency A {@link String} of the users preferred trading currency.
+     * @param from The first {@link Date} in the time interval.
+     * @param to The last {@link Date} in the time interval.
+     * @param alg A {@link String} representing an algorithm.
+     * @param companyMIC The company´s identifier code as a {@link String}.
+     * @param preferredCurrency A {@link String} representing a currency.
      */
     public GraphRepresentation(Date from, Date to, String alg, String companyMIC,
                                String preferredCurrency) {
@@ -72,7 +73,7 @@ public class GraphRepresentation implements Serializable {
     /**
      * A getter method for the algorithm.
      *
-     * @return A {@link GraphAlgorithms} of the algorithm.
+     * @return The name of an algorithm as a {@link String}.
      */
     public String getAlgorithm() {
         return algorithm;

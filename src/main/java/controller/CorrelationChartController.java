@@ -172,7 +172,7 @@ public class CorrelationChartController extends ChartController {
     }
 
     @Override
-    public void saveGraph() {
+    protected void saveGraph() {
         if (User.isLoggedIn()) {
             User.getActiveUser().clearFavoriteGraphs();
             User.getActiveUser().setFavoriteChartType("Correlation Chart");

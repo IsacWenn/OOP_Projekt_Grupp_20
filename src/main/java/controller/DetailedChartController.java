@@ -203,7 +203,7 @@ public class DetailedChartController extends ChartController{
     }
 
     @Override
-    public void saveGraph() {
+    protected void saveGraph() {
         if ( User.isLoggedIn()) {
             User.getActiveUser().clearFavoriteGraphs();
             User.getActiveUser().setFavoriteChartType("Detailed Chart");
