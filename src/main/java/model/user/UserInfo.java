@@ -15,28 +15,28 @@ class UserInfo implements Serializable {
     /**
      * A {@link String} for the username of a user.
      */
-    private String username;
+    private final String username;
     /**
      * A {@link String} for the password of a user.
      */
-    private String password;
+    private final String password;
     /**
      * A {@link String} for the email address of a user.
      */
-    private String email;
+    private final String email;
 
     /**
      * A {@link String} for the firstname of the user.
      */
-    private String name;
+    private final String name;
     /**
      * A {@link String} for the lastname of the user.
      */
-    private String lastname;
+    private final String lastname;
     /**
      * A {@link String} for a biography of the user.
      */
-    private String bio;
+    private final String bio;
 
     /**
      * A constructor of the UserInfo class.

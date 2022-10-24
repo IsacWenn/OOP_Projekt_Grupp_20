@@ -11,7 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import model.user.User;
 import model.util.GraphRepresentation;
-import view.charts.Chart;
 
 import java.util.ArrayList;
 import java.util.List;
