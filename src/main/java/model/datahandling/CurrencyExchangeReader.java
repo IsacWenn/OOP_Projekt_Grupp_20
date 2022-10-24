@@ -14,6 +14,8 @@ import java.util.Map;
  *
  * @author Carl
  * @author Isac
+ * Uses: Date.
+ * Used By: DataHandler.
  */
 class CurrencyExchangeReader implements CurrencyDataRetriever {
     /**

@@ -16,6 +16,8 @@ import java.util.*;
  * kinds of data.
  *
  * @author Isac
+ * Uses: CompanyData, CurrencyDataRetriever, CurrencyExchangeReader, DayData, StockDataRetriever, StockExchangeReader.
+ * Used By: ChartController, ControllerStockListItem, GraphData, GraphModel.
  */
 public class DataHandler {
 

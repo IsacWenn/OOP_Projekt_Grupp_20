@@ -9,6 +9,8 @@ import java.util.Map;
  * A class that holds a {@link Map} containing the essential data for each of the companies in our Database.
  *
  * @author Isac
+ * Uses: -
+ * Used By: DataHandler, StockExchangeReader.
  */
 class CompanyData {
 

@@ -8,6 +8,8 @@ import java.util.Objects;
  *
  * @author Isac
  * @author Carl
+ * Uses: -
+ * Used By: DataHandler, StockExchangeReader, GraphComputer, GraphData, GraphModel, GraphAlgorithm, KeyFigureAlgoritm.
  */
 public class DayData {
 
