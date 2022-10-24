@@ -20,7 +20,7 @@ public class User implements Serializable {
     /**
      * A static attribute {@link String} holding the file path for our user file.
      */
-    private static String filePath = "src/main/resources/users.dat";
+    private static final String filePath = "src/main/resources/users.dat";
 
     /**
      * A static attribute of the active {@link User} in the application.
@@ -35,12 +35,12 @@ public class User implements Serializable {
     /**
      * An attribute containing all the standard User information.
      */
-    private UserInfo userInfo;
+    private final UserInfo userInfo;
 
     /**
      * An attribute containing the different favorite graph representations.
      */
-    private UserFavorites userFavorites;
+    private final UserFavorites userFavorites;
 
     /**
      * An attribute which defines which type of chart the favorite graph represents.
@@ -232,7 +232,7 @@ public class User implements Serializable {
     public static void loadUsers() {
         List<User> savedUsers = new ArrayList<>();
         try (FileInputStream fis = new FileInputStream(filePath);
-             ObjectInputStream ois = new ObjectInputStream(fis);) {
+             ObjectInputStream ois = new ObjectInputStream(fis)) {
             savedUsers = (List<User>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
@@ -247,7 +247,7 @@ public class User implements Serializable {
      */
     public static void saveUsers() {
         try (FileOutputStream fos = new FileOutputStream(filePath);
-             ObjectOutputStream oos = new ObjectOutputStream(fos);) {
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             oos.writeObject(users);
         } catch (IOException e) {
             System.out.println(e.getMessage());

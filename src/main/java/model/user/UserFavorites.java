@@ -21,12 +21,12 @@ class UserFavorites implements Serializable {
     /**
      * A {@link List} of {@link GraphRepresentation}s of the favorite graphs.
      */
-    private List<GraphRepresentation> favoriteGraphs;
+    private final List<GraphRepresentation> favoriteGraphs;
 
     /**
      * A {@link List} of {@link String}s of the favorite company MICs.
      */
-    private List<String> favoriteCompanies;
+    private final List<String> favoriteCompanies;
 
     /**
      * A constructor for UserFavorites.

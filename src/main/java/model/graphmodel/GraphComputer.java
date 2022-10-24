@@ -17,6 +17,8 @@ import java.util.Map;
  * @author Pontus
  * @author Carl
  * @author Isac
+ * Uses:  DayData, Date, GraphAlgorithm, KeyFigureAlgorithm
+ * Used by: GraphModel
  */
 class GraphComputer {
 

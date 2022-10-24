@@ -17,6 +17,8 @@ import java.util.*;
  * @author Pontus
  * @author Isac
  * @author Carl
+ *  * Uses: Date, DayData, GraphData, GraphComputer, GraphAlgorithmCollection, KeyFigureCollection
+ *  * Used by: Chart, ChartController, Comparison-, Correlation- and DetailedChartController
  */
 
 public class GraphModel {

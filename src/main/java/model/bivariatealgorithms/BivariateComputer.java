@@ -7,6 +7,9 @@ import java.util.*;
 
 /**
  * A class for computing the key figures from all {@link BivariateAlgorithms} retrieved from {@link BivariateAlgorithmCollection}.
+ * @author Carl
+ * Uses Date.
+ * Used by CorrelationChartController.
  */
 
 public class BivariateComputer {

@@ -12,11 +12,13 @@ import java.util.*;
  *
  * @author Pontus
  * @author Isac
+ *  * Uses: DataHandler, DayData, Date, CurrencyCollection
+ *  * Used by: GraphModel
  */
 class GraphData {
 
     /**
-     * A constructor for the GraphData class to
+     * A constructor for the GraphData class
      */
     GraphData() {
     }

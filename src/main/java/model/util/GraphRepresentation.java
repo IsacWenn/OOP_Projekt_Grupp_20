@@ -1,7 +1,6 @@
 package model.util;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -17,27 +16,27 @@ public class GraphRepresentation implements Serializable {
     /**
      * The starting {@link Date} for a graph.
      */
-    private Date from;
+    private final Date from;
 
     /**
      * The end {@link Date} for a graph.
      */
-    private Date to;
+    private final Date to;
 
     /**
      * A {@link String} for the specific algorithm.
      */
-    private String algorithm;
+    private final String algorithm;
 
     /**
      * A {@link String} of the specified company MICs.
      */
-    private String companyMIC;
+    private final String companyMIC;
 
     /**
      * A {@link String} for the specified company trading currency.
      */
-    private String preferredCurrency;
+    private final String preferredCurrency;
 
     /**
      * A constructor for the class.

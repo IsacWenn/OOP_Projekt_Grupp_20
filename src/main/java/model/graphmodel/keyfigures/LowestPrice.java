@@ -7,6 +7,9 @@ import java.util.Map;
 
 /**
  * A class implementing {@link KeyFigureAlgorithm} for calculating the lowest price of an asset.
+ * @author Carl
+ * Uses DayData, Date, and Map.
+ * Used by KeyFigureCollection
  */
 class LowestPrice implements KeyFigureAlgorithm {
 
