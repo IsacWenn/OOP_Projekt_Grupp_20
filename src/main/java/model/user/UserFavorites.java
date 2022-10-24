@@ -12,6 +12,8 @@ import java.util.Objects;
  * A serializable class containing the different user selected favorites.
  *
  * @author Isac
+ * Uses: GraphRepresentation.
+ * User By: User.
  */
 class UserFavorites implements Serializable {
 

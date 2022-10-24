@@ -11,6 +11,9 @@ import java.util.Objects;
  * A serializable class for our users in our system
  *
  * @author Isac
+ * Uses: Date, GraphRepresentation, UserInfo, UserFavorites
+ * Used By: Main, AppController, ComparisonChartController, CorrelationChartController, DetailedChartController,
+ *          ControllerStockListItem.
  */
 public class User implements Serializable {
 

@@ -7,6 +7,8 @@ import java.util.Objects;
  * A serializable class containing the basic user data of a user.
  *
  * @author Isac
+ * Uses: -
+ * Used By: User.
  */
 class UserInfo implements Serializable {
 
