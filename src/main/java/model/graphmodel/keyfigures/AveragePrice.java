@@ -7,6 +7,9 @@ import java.util.Map;
 
 /**
  * A class implementing {@link KeyFigureAlgorithm} for computing the average price of an asset traded during the period of the provided data.
+ * @author Carl
+ * Uses DayData, Date, and Map.
+ * Used by KeyFigureCollection
  */
 class AveragePrice implements KeyFigureAlgorithm {
 

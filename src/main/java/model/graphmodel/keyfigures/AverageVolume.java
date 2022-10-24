@@ -7,6 +7,9 @@ import java.util.Map;
 
 /**
  * A class implementing {@link KeyFigureAlgorithm} for computing the average trading volume for an asset.
+ * @author Carl
+ * Uses DayData, Date, and Map.
+ * Used by KeyFigureCollection
  */
 class AverageVolume implements KeyFigureAlgorithm {
 

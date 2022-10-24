@@ -10,6 +10,8 @@ import java.util.Map;
  * DailyClosingPrice is class implementing the GraphAlgorithm interface that is used by GraphComputer to retrieve the
  * closing price for each date from an {@link Map} holding the information in a {@link DayData}.
  * @author Carl
+ * Uses Date, DayData, Hashmap, Map.
+ * Used by GraphAlgorithmCollection.
  */
 
 class DailyClosingPrice implements GraphAlgorithm {

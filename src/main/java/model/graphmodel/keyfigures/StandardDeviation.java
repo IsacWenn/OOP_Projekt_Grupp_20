@@ -7,6 +7,9 @@ import java.util.Map;
 
 /**
  * A class implementing {@link KeyFigureAlgorithm} calculation the standard deviation of an asset´s price.
+ * @author Pontus
+ * Uses DayData, Date, and Map.
+ * Used by KeyFigureCollection
  */
 class StandardDeviation implements KeyFigureAlgorithm {
 

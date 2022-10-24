@@ -6,6 +6,9 @@ import java.util.Set;
 
 /**
  * {@link BivariateAlgorithmCollection} is a class used to retrieve different {@link BivariateAlgorithms}.
+ * @author Carl
+ * Uses Hashmap, Map, and Set.
+ * Used by Bivariate Computer, PearsonCorrelation, SpearmanCorrelation, BivariateAlgorithm.
  */
 class BivariateAlgorithmCollection {
 
