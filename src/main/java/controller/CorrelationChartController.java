@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.FlowPane;
 import model.bivariatealgorithms.BivariateComputer;
-import model.datahandling.DataHandler;
 import model.graphmodel.GraphModel;
 import model.user.User;
 import model.util.GraphRepresentation;

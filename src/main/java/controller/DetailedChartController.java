@@ -5,8 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import model.graphmodel.GraphModel;
-import model.graphmodel.graphalgorithms.GraphAlgorithm;
-import model.graphmodel.graphalgorithms.GraphAlgorithmCollection;
 import model.user.User;
 import model.util.GraphRepresentation;
 import view.KeyFigureListItem;

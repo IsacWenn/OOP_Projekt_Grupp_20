@@ -3,7 +3,6 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
-import model.datahandling.DataHandler;
 import model.graphmodel.GraphModel;
 import model.user.User;
 import model.util.GraphRepresentation;
