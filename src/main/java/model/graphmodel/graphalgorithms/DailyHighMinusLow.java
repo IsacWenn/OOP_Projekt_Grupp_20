@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * DailyHighMinusLow is class implementing the GraphAlgorithm interface that is used by {@link model.graphmodel.GraphComputer} to
+ * DailyHighMinusLow is class implementing the {@link GraphAlgorithm} interface that is used by GraphComputer to
  * perform calculations of the daily difference between the highest and lowest price of an asset.
  *
  * @author Isac
@@ -17,6 +17,8 @@ class DailyHighMinusLow implements GraphAlgorithm {
 
     /**
      * A method that calculates the difference between the highest and lowest price of a given asset expressed in percentages.
+     *
+     * @param data Is a {@link Map} representing the data for each {@link Date} as a {@link DayData}.
      * @return {@link Map} containing the calculated data as a {@link Number} for each {@link Date}.
      */
     @Override

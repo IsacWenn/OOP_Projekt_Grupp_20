@@ -12,8 +12,9 @@ class AveragePrice implements KeyFigureAlgorithm {
 
     /**
      * A method doing the calculation for the average price of a stock.
-     * @param data is a {@link Map} containing information about the asset as a {@link DayData} for each {@link Date}.
-     * @return a {@link Double} representing the average price of the asset.
+     *
+     * @param data Is a {@link Map} representing the data for each {@link Date} as a {@link DayData}.
+     * @return A {@link Double} representing the average price of the asset.
      */
     @Override
     public Double calculate(Map<Date, DayData> data) {

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * LinearRegression is class implementing the GraphAlgorithm interface that is used by {@link model.graphmodel.GraphComputer} to
+ * LinearRegression is class implementing the {@link GraphAlgorithm} interface that is used by GraphComputer to
  * calculate the linear regression of a dataset.
  * @author Carl
  */
@@ -17,7 +17,8 @@ class LinearRegression implements GraphAlgorithm {
 
     /**
      * A method that calculates the values of a linear equation constructed by linear regression of a {@link Map}.
-     * @param data {@link Map} containing {@link Date} and {@link DayData}
+     *
+     * @param data Is a {@link Map} representing the data for each {@link Date} as a {@link DayData}.
      * @return the {@link Boolean} values of the linear equation corresponding to the provided data.
      */
 

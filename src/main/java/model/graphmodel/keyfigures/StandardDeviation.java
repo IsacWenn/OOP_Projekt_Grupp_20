@@ -13,7 +13,7 @@ class StandardDeviation implements KeyFigureAlgorithm {
     /**
      * A method that calculation the standard deviation.
      *
-     * @param data is a {@link Map} containing information about the asset as a {@link DayData} for each {@link Date}.
+     * @param data Is a {@link Map} representing the data for each {@link Date} as a {@link DayData}.
      * @return a {@link Double} representing the standard deviation of an asset´s price.
      */
     @Override

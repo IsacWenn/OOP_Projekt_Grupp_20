@@ -12,7 +12,8 @@ class HighestPrice implements KeyFigureAlgorithm {
 
     /**
      * A method that finds the highest price during.
-     * @param data is a {@link Map} containing information about the asset as a {@link DayData} for each {@link Date}.
+     *
+     * @param data Is a {@link Map} representing the data for each {@link Date} as a {@link DayData}.
      * @return a {@link Double} representing the highest price of the asset.
      */
     @Override

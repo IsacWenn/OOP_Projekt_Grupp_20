@@ -86,6 +86,7 @@ class GraphComputer {
      *
      * @param numDataPoints A {@link Integer} is the maximum number of data points
      * @param orderedDates A {@link List} of {@link Date} in chronological order.
+     * @param map A {@link Map} representing the data for each {@link Date} as a {@link Number}.
      * @return A {@link Map} of the data points.
      */
     Map<Date, Number> reduceDataPoints(int numDataPoints, List<Date> orderedDates, Map<Date, Number> map) {

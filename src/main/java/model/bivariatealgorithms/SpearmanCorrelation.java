@@ -11,6 +11,7 @@ class SpearmanCorrelation implements BivariateAlgorithms {
      *
      * @param series1 a {@link Map} containing a {@link Date} and a {@link Number} representing one data set.
      * @param series2 a {@link Map} containing a {@link Date} and a {@link Number} representing one data set.
+     * @param commonDates a {@link Set} of {@link Date} containing all dates series1 and series2 have in common.
      * @return a {@link Double} that is the calculated correlation coefficient.
      */
     @Override
