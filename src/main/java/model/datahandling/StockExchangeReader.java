@@ -11,6 +11,8 @@ import java.util.*;
  *
  * @author Isac
  * @author Dennis
+ * Uses: Date.
+ * Used By: DataHandler.
  */
 class StockExchangeReader implements StockDataRetriever {
 
