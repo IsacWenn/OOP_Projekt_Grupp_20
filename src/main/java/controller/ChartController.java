@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import model.datahandling.DataHandler;
@@ -38,6 +39,8 @@ public abstract class ChartController extends AnchorPane {
     protected Date startDate;
     protected Date endDate;
 
+    @FXML
+    protected Label saveLabel;
     @FXML
     protected DatePicker startDatePicker;
     @FXML
@@ -268,12 +271,8 @@ public abstract class ChartController extends AnchorPane {
     @FXML
     public void timeframeOneDay() {
         try {
-            startDate = new Date(LocalDate.now().minusDays(1));
-            endDate = new Date(LocalDate.now());
-            for (GraphModel graphModel : graphModels) {
-                graphModel.updateTimeInterval(endDate, startDate);
-            }
-            refreshChart();
+            LocalDate start = LocalDate.now().minusDays(1);
+            updateDatePickers(start);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -285,12 +284,8 @@ public abstract class ChartController extends AnchorPane {
     @FXML
     public void timeframeOneWeek() {
         try {
-            startDate = new Date(LocalDate.now().minusWeeks(1));
-            endDate = new Date(LocalDate.now());
-            for (GraphModel graphModel : graphModels) {
-                graphModel.updateTimeInterval(endDate, startDate);
-            }
-            refreshChart();
+            LocalDate start = LocalDate.now().minusWeeks(1);
+            updateDatePickers(start);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -302,12 +297,8 @@ public abstract class ChartController extends AnchorPane {
     @FXML
     public void timeframeOneMonth() {
         try {
-            startDate = new Date(LocalDate.now().minusMonths(1));
-            endDate = new Date(LocalDate.now());
-            for (GraphModel graphModel : graphModels) {
-                graphModel.updateTimeInterval(endDate, startDate);
-            }
-            refreshChart();
+            LocalDate start = LocalDate.now().minusMonths(1);
+            updateDatePickers(start);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -319,15 +310,23 @@ public abstract class ChartController extends AnchorPane {
     @FXML
     public void timeframeOneYear() {
         try {
-            startDate = new Date(LocalDate.now().minusYears(1));
-            endDate = new Date(LocalDate.now());
-            for (GraphModel graphModel : graphModels) {
-                graphModel.updateTimeInterval(endDate, startDate);
-            }
-            refreshChart();
+            LocalDate start = LocalDate.now().minusYears(1);
+            updateDatePickers(start);
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    private void updateDatePickers(LocalDate start) throws IOException {
+        startDatePicker.setValue(start);
+        startDate = new Date(start);
+        LocalDate end = LocalDate.now();
+        endDatePicker.setValue(end);
+        endDate = new Date(end);
+        for (GraphModel graphModel : graphModels) {
+            graphModel.updateTimeInterval(startDate, endDate);
+        }
+        refreshChart();
     }
 
     /**

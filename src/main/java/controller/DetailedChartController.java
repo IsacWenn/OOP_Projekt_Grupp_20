@@ -206,11 +206,16 @@ public class DetailedChartController extends ChartController{
 
     @Override
     public void saveGraph() {
-        User.getActiveUser().clearFavoriteGraphs();
-        User.getActiveUser().setFavoriteChartType("Detailed Chart");
-        for (String algorithm : activeAlgorithms) {
-            User.getActiveUser().addFavoriteGraph(new GraphRepresentation(startDate, endDate,
-                    algorithm, activeCompany, getCurrency()));
+        if ( User.isLoggedIn()) {
+            User.getActiveUser().clearFavoriteGraphs();
+            User.getActiveUser().setFavoriteChartType("Detailed Chart");
+            for (String algorithm : activeAlgorithms) {
+                User.getActiveUser().addFavoriteGraph(new GraphRepresentation(startDate, endDate,
+                        algorithm, activeCompany, getCurrency()));
+            }
+            saveLabel.setText("Chart saved successfully!");
+        }  else {
+            saveLabel.setText("You must be logged in to save.");
         }
     }
 }

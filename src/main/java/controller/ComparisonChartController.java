@@ -124,11 +124,16 @@ public class ComparisonChartController extends ChartController {
 
     @Override
     public void saveGraph() {
-        User.getActiveUser().clearFavoriteGraphs();
-        User.getActiveUser().setFavoriteChartType("Comparison Chart");
-        for (String company : activeCompanies) {
-            User.getActiveUser().addFavoriteGraph(new GraphRepresentation(startDate, endDate,
-                    algorithmComboBox.getValue(), company, getCurrency()));
+        if ( User.isLoggedIn()) {
+            User.getActiveUser().clearFavoriteGraphs();
+            User.getActiveUser().setFavoriteChartType("Comparison Chart");
+            for (String company : activeCompanies) {
+                User.getActiveUser().addFavoriteGraph(new GraphRepresentation(startDate, endDate,
+                        algorithmComboBox.getValue(), company, getCurrency()));
+            }
+            saveLabel.setText("Chart saved successfully!");
+        }  else {
+            saveLabel.setText("You must be logged in to save.");
         }
     }
 }

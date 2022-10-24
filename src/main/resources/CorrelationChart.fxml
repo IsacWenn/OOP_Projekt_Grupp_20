@@ -13,6 +13,7 @@
 <!--
     FXML-file for a type of chart called CorrelationChart. Displays correlation coefficients in between stocks.
 -->
+
 <fx:root prefHeight="700.0" prefWidth="1200.0" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <AnchorPane fx:id="chartPane" layoutX="287.0" layoutY="57.0" prefHeight="544.0" prefWidth="872.0" />
     <SplitPane dividerPositions="0.15" orientation="VERTICAL" prefHeight="700.0" prefWidth="280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -21,10 +22,10 @@
          <DatePicker fx:id="startDatePicker" layoutX="14.0" layoutY="33.0" prefHeight="26.0" prefWidth="110.0" />
          <Label layoutX="221.0" layoutY="9.0" text="To date" />
          <DatePicker fx:id="endDatePicker" layoutX="153.0" layoutY="33.0" prefHeight="26.0" prefWidth="110.0" />
-         <Button fx:id="timeframeOneDayButton" layoutX="14.0" layoutY="65.0" mnemonicParsing="false" onAction="#timeframeOneDay" text="1 Dag" />
-         <Button fx:id="timeframeOneWeekButton" layoutX="75.0" layoutY="65.0" mnemonicParsing="false" onAction="#timeframeOneWeek" text="1 Vecka" />
-         <Button fx:id="timeframeOneMonthButton" layoutX="148.0" layoutY="65.0" mnemonicParsing="false" onAction="#timeframeOneMonth" text="1 Månad" />
-         <Button fx:id="timeframOneYearButton" layoutX="225.0" layoutY="65.0" mnemonicParsing="false" onAction="#timeframeOneYear" text="1 År" />
+         <Button fx:id="timeframeOneDayButton" layoutX="14.0" layoutY="65.0" mnemonicParsing="false" onAction="#timeframeOneDay" text="1 Day" AnchorPane.leftAnchor="10.0" />
+         <Button fx:id="timeframeOneWeekButton" layoutX="75.0" layoutY="65.0" mnemonicParsing="false" onAction="#timeframeOneWeek" text="1 Week" AnchorPane.leftAnchor="70.0" />
+         <Button fx:id="timeframeOneMonthButton" layoutX="148.0" layoutY="65.0" mnemonicParsing="false" onAction="#timeframeOneMonth" text="1 Month" AnchorPane.rightAnchor="70.0" />
+         <Button fx:id="timeframOneYearButton" layoutX="225.0" layoutY="65.0" mnemonicParsing="false" onAction="#timeframeOneYear" text="1 Year" AnchorPane.rightAnchor="10.0" />
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="180.0" prefHeight="100.0" prefWidth="160.0">
             <ScrollPane hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="280.0" AnchorPane.bottomAnchor="-0.0" AnchorPane.topAnchor="0.0">
@@ -45,4 +46,5 @@
       </children>
    </AnchorPane>
    <Button layoutX="1110.0" layoutY="670.0" mnemonicParsing="false" onAction="#saveGraph" text="Save Chart" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="20.0" />
+   <Label fx:id="saveLabel" alignment="BOTTOM_CENTER" layoutX="1101.0" layoutY="646.0" prefHeight="50.0" prefWidth="104.0" wrapText="true" AnchorPane.bottomAnchor="45.0" AnchorPane.rightAnchor="5.0" />
 </fx:root>
