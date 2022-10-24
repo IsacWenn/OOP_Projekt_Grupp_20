@@ -58,7 +58,7 @@ class StockExchangeReader implements StockDataRetriever {
     }
 
     /**
-     * A implementation of {@link StockDataRetriever#retrieveData(String)} for .csv files.
+     * An implementation of {@link StockDataRetriever#retrieveData(String)} for .csv files.
      *
      * @param mic the MIC of the company.
      * @return a {@link Map} of {@link Date} and {@link DayData} containing the stock data of a company.

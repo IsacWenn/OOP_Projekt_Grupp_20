@@ -2,6 +2,12 @@ package model.util;
 
 import java.util.*;
 
+/**
+ * A collection of the different currencies currently available to the application.
+ *
+ * Uses: -
+ * Used By: GraphData, GraphModel.
+ */
 public class CurrencyCollection {
     /**
      * A static {@link String} containing the name of the currency that should be selected as default.

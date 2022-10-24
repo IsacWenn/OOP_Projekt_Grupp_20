@@ -8,6 +8,9 @@ import java.util.Objects;
  * A serializable class representing a specific graph.
  *
  * @author Isac
+ * Uses: Date
+ * Used By: AppController, ComparisonChartController, CorrelationChartController, DetailedChartController, GraphModel,
+ *          User, UserFavorites.
  */
 public class GraphRepresentation implements Serializable {
 

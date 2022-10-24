@@ -12,6 +12,12 @@ import java.util.*;
  * {@link Map} class in our data representations.
  *
  * @author Isac
+ * Uses: -
+ * Used By: DataHandler, GraphModel, LinearRegression, ChartController, GraphRepresentation, PearsonCorrelation,
+ *          SpearmanCorrelation, CurrencyExchangeReader, StockExchangeReader, GraphComputer, GraphData, DailyChange,
+ *          DailyClosingPrice, DailyHighMinusLow, AveragePrive, AverageVolume, HighestPrice, LowestPrice,
+ *          StandardDeviation, BivariateAlgorithms, BivariateComputer, CurrencyDataRetriever, StockDataRetriever,
+ *          KeyFigureAlgorithm, Chart.
  */
 public class Date implements Comparable<Date>, Serializable {
 
@@ -31,7 +37,7 @@ public class Date implements Comparable<Date>, Serializable {
      * A private static {@link HashMap} using {@link Integer} as a parameterized key and mapped value.
      * Used for representing the number of days in a given month.
      */
-    private static Map<Integer, Integer> daysInMonth = new HashMap<>() {{
+    private static final Map<Integer, Integer> daysInMonth = new HashMap<>() {{
         put(1, 31);
         put(2, 29);
         put(3, 31);
@@ -103,7 +109,7 @@ public class Date implements Comparable<Date>, Serializable {
     /**
      * A constructor for class Date that creates a copy of a given {@link Date}.
      *
-     * @param date
+     * @param date the date to copy.
      */
     public Date(Date date) {
         this.year = date.getYear();
@@ -151,9 +157,6 @@ public class Date implements Comparable<Date>, Serializable {
     /**
      * A method that throws an {@link IOException} if a date is considered invalid.
      *
-     * @param year an {@link Integer} that represents the year of a Date.
-     * @param month an {@link Integer} that represents the month of a Date.
-     * @param day an {@link Integer} that represents the day of a Date.
      * @throws IOException is thrown if one or more of the parameters are not valid.
      */
     private void validateDate() throws IOException {
@@ -234,14 +237,14 @@ public class Date implements Comparable<Date>, Serializable {
      * An implementation of the method compareTo used in the java interface {@link Comparable}. Used in the Collections
      * library.
      *
-     * @param o the object to be compared.
+     * @param date the object to be compared.
      * @return an Integer value representing the Object relations.
      */
     @Override
-    public int compareTo(Date o) {
-        if (this.isBefore((Date) o))
+    public int compareTo(Date date) {
+        if (this.isBefore(date))
             return -1;
-        else if (this.isAfter((Date) o))
+        else if (this.isAfter(date))
             return 1;
         else
             return 0;
