@@ -2,6 +2,12 @@ package model.graphmodel.keyfigures;
 
 import java.util.*;
 
+/**
+ * A class containing all available implementations of {@link KeyFigureAlgorithm} and is used to access them.
+ * @author Carl
+ * Uses StandardDeviation, AveragePrice, AverageVolume, HighestPrice, LowestPrice, KeyFigureAlgorithm.
+ * Used by GraphModel
+ */
 public class KeyFigureCollection {
 
     /**

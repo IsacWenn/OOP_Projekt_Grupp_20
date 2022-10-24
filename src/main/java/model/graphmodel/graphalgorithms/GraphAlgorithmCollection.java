@@ -4,6 +4,9 @@ import java.util.*;
 
 /**
  * A class used for retrieving different {@link GraphAlgorithm}.
+ * @author Carl
+ * Uses DailyClosingPrice, DailyChange, DailyHighMinusLow, LinearRegression, GraphAlgorithm.
+ * Used by GraphModel.
  */
 public class GraphAlgorithmCollection {
 

@@ -9,8 +9,9 @@ import java.util.Map;
 /**
  * DailyChange is class implementing the GraphAlgorithm interface that is used by the GraphComputer to perform calculations
  * of the daily change of a given asset expressed in percentages.
- *
  * @author Carl
+ * Uses Date, DayData, Hashmap, Map.
+ * Used by GraphAlgorithmCollection.
  */
 
 class DailyChange implements GraphAlgorithm {

@@ -7,8 +7,10 @@ import java.util.Set;
 
 /**
  * A class used for calculating the Pearson correlation.
+ * @author Carl
+ * Uses Date, Map, and Set.
+ * Used by BivariateAlgorithmCollection.
  */
-
 class PearsonCorrelation implements BivariateAlgorithms {
 
     /**
