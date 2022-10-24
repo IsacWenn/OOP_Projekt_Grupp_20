@@ -4,6 +4,12 @@ import model.util.Date;
 
 import java.util.*;
 
+/**
+ * A class used for calculating the Spearman correlation.
+ * @author Carl
+ * Uses Date, Map, and Set.
+ * Used by BivariateAlgorithmCollection.
+ */
 class SpearmanCorrelation implements BivariateAlgorithms {
 
     /**

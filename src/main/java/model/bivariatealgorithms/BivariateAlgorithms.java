@@ -8,6 +8,8 @@ import java.util.Set;
 /**
  * AN interface for functions that calculates a key figure based on two {@link Map<>} containing series of {@link Number}
  * for each {@link Date}.
+ * @author Carl
+ * Used by BivariateAlgorithmCollection, BivariateComputer, PearsonCorrelation, and SpearmanCorrelation.
  */
 
 interface BivariateAlgorithms {

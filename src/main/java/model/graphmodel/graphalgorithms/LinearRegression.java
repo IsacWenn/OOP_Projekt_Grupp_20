@@ -11,6 +11,8 @@ import java.util.Map;
  * LinearRegression is class implementing the {@link GraphAlgorithm} interface that is used by GraphComputer to
  * calculate the linear regression of a dataset.
  * @author Carl
+ * Uses Date, DayData, Hashmap, Map.
+ * Used by GraphAlgorithmCollection.
  */
 
 class LinearRegression implements GraphAlgorithm {
