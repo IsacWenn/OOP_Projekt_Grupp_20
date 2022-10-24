@@ -12,7 +12,7 @@ import java.util.*;
  * @author Isac
  * @author Dennis
  */
-class StockExchangeReader {
+class StockExchangeReader implements StockDataRetriever {
 
     /**
      * A static final{@link String} containing the default path to the folder containing the CSV-files of stock
@@ -53,6 +53,18 @@ class StockExchangeReader {
         fr.close();
         br.close();
         return data;
+    }
+
+    /**
+     * A implementation of {@link StockDataRetriever#retrieveData(String)} for .csv files.
+     *
+     * @param mic the MIC of the company.
+     * @return a {@link Map} of {@link Date} and {@link DayData} containing the stock data of a company.
+     * @throws IOException if the file for a given mic does not exist.
+     */
+    @Override
+    public Map<Date, DayData> retrieveData(String mic) throws IOException {
+        return convertCSVFileToHandledData(CompanyData.getFileName(mic));
     }
 }
 

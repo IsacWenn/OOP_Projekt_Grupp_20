@@ -77,8 +77,8 @@ class GraphData {
         if(Objects.equals(toCurrency, CurrencyCollection.getDefaultCurrencyName())){
             return putOnes(dates);
         }
-        String path = "USD_TO_" + toCurrency + ".csv";
-        return DataHandler.getExpandedCurrencyData(dates, path);
+        String currencyConversionName = "USD_TO_" + toCurrency;
+        return DataHandler.getExpandedCurrencyData(dates, currencyConversionName);
     }
 
     /**

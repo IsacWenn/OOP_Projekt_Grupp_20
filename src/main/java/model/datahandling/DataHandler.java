@@ -19,6 +19,9 @@ import java.util.*;
  */
 public class DataHandler {
 
+    private static final CurrencyDataRetriever currencyDataRetriever = new CurrencyExchangeReader();
+    private static final StockDataRetriever stockDataRetriever = new StockExchangeReader();
+
     /**
      * A method for retrieving a {@link Map} of {@link Date}s and {@link DayData} for a company.
      *
@@ -27,8 +30,7 @@ public class DataHandler {
      */
     public static Map<Date, DayData> getCompanyData(String mic) {
         try {
-            String path = CompanyData.getFileName(mic);
-            return StockExchangeReader.convertCSVFileToHandledData(path);
+            return stockDataRetriever.retrieveData(mic);
         } catch (NullPointerException | IOException e) {
             System.out.println(e.getMessage());
         }
@@ -46,7 +48,7 @@ public class DataHandler {
     public static Map<Date, DayData> getCompanyData(List<Date> dates, String mic) {
         try {
             String path = CompanyData.getFileName(mic);
-            return filterDataByDates(StockExchangeReader.convertCSVFileToHandledData(path), dates);
+            return filterDataByDates(stockDataRetriever.retrieveData(mic), dates);
         } catch (NullPointerException | IOException e) {
             return new HashMap<>(){{ put(new Date(), new DayData(0, 0, 0, 0, 0)); }};
         }
@@ -91,7 +93,7 @@ public class DataHandler {
      */
     public static Map<Date, Double> getCurrencyData(String path) {
         try {
-            return CurrencyExchangeReader.convertCSVFileToHandledData(path);
+            return currencyDataRetriever.retrieveData(path);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -120,7 +122,7 @@ public class DataHandler {
      */
     public static Map<Date, Double> getCurrencyData(List<Date> dates, String path) {
         try {
-            return filterCurrencyData(CurrencyExchangeReader.convertCSVFileToHandledData(path), dates);
+            return filterCurrencyData(currencyDataRetriever.retrieveData(path), dates);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -137,7 +139,7 @@ public class DataHandler {
     public static Map<Date, Double> getExpandedCurrencyData(String path) {
         Map<Date, Double> map;
         try {
-            map = CurrencyExchangeReader.convertCSVFileToHandledData(path);
+            map = currencyDataRetriever.retrieveData(path);
         } catch (IOException e) {
             System.out.println(e.getMessage());
             return new HashMap<>(){{ put(new Date(), 0d); }};
@@ -248,7 +250,7 @@ public class DataHandler {
     public static String getCompanyTradingCurrency(String mic) { return CompanyData.getCurrency(mic); }
 
     /**
-     * A method that returns the closest exhange rate for a given date. If there is not an exchange rate for the given
+     * A method that returns the closest exchange rate for a given date. If there is not an exchange rate for the given
      * date it starts to search through the past.
      *
      * @param date The specified {@link Date}.

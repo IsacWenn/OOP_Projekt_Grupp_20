@@ -15,7 +15,7 @@ import java.util.Map;
  * @author Carl
  * @author Isac
  */
-class CurrencyExchangeReader {
+class CurrencyExchangeReader implements CurrencyDataRetriever {
     /**
      * A static final{@link String} containing the default path to the folder containing the CSV-files of currency
      * exchange rates.
@@ -48,4 +48,15 @@ class CurrencyExchangeReader {
         return data;
     }
 
+    /**
+     * An implementation of {@link CurrencyDataRetriever#retrieveData(String)} for .csv files.
+     *
+     * @param currencyExchangeName the name of the exchange rate.
+     * @return a {@link Map} of {@link Double}s containing the exchange rate.
+     * @throws IOException if the exchange rate can not be found.
+     */
+    @Override
+    public Map<Date, Double> retrieveData(String currencyExchangeName) throws IOException {
+        return convertCSVFileToHandledData(currencyExchangeName + ".csv");
+    }
 }
