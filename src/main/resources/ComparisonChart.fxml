@@ -41,5 +41,5 @@
    <ComboBox fx:id="algorithmComboBox" layoutX="500.0" layoutY="21.0" prefWidth="150.0" />
    <ComboBox fx:id="currencyComboBox" layoutX="1025.0" layoutY="21.0" prefWidth="150.0" />
    <Button layoutX="1100.0" layoutY="660.0" mnemonicParsing="false" onAction="#saveGraph" text="Save Chart" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="20.0" />
-   <Label fx:id="saveLabel" alignment="BOTTOM_CENTER" layoutX="1091.0" layoutY="636.0" prefHeight="50.0" prefWidth="104.0" wrapText="true" AnchorPane.bottomAnchor="45.0" AnchorPane.rightAnchor="5.0" />
+   <Label fx:id="saveLabel" alignment="CENTER_RIGHT" layoutX="937.0" layoutY="669.0" prefHeight="26.0" prefWidth="180.0" wrapText="true" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="100.0" />
 </fx:root>

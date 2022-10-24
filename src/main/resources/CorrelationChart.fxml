@@ -46,5 +46,5 @@
       </children>
    </AnchorPane>
    <Button layoutX="1110.0" layoutY="670.0" mnemonicParsing="false" onAction="#saveGraph" text="Save Chart" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="20.0" />
-   <Label fx:id="saveLabel" alignment="BOTTOM_CENTER" layoutX="1101.0" layoutY="646.0" prefHeight="50.0" prefWidth="104.0" wrapText="true" AnchorPane.bottomAnchor="45.0" AnchorPane.rightAnchor="5.0" />
+   <Label fx:id="saveLabel" alignment="CENTER_RIGHT" layoutX="937.0" layoutY="669.0" prefHeight="26.0" prefWidth="180.0" wrapText="true" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="100.0" />
 </fx:root>
