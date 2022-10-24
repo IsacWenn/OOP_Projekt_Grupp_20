@@ -11,6 +11,10 @@ import java.io.IOException;
 /**
  * Class which functions as a container which displays key figures.
  *
+ * Uses:    GraphModel
+ *
+ * Used by: CorrelationChartController, DetailedChartController
+ * 
  * @author Johan
  * @author Dennis
  */
