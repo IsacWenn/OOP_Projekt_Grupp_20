@@ -18,6 +18,11 @@ import java.util.List;
  * Class which allows two stocks to be compared and viewed as graphs as well as generating and displaying key figures
  * for correlation between chosen stocks.
  *
+ * Uses:    Chart, User, GraphModel, GraphRepresentation, KeyFigureListItem,
+ *          ControllerStockListItem, BivariateComputer
+ *
+ * Used by: AppController
+ *
  * @author Johan
  * @author Dennis
  */

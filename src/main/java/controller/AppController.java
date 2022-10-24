@@ -11,13 +11,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import model.user.User;
 import model.util.GraphRepresentation;
-import view.charts.Chart;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Class which handles the and creates intractable charts.
+ *  Uses:       GraphRepresentation, User, ChartController, ComparisonChartController,
+ *              CorrelationChartController, DetailedChartController
+ *
+ *  Used by:    ChartController, ChartController, ComparisonChartController,
+ *              CorrelationChartController, DetailedChartController, AppView
  *
  * @author Johan
  * @author Dennis

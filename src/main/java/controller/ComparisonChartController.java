@@ -14,6 +14,11 @@ import java.util.List;
 /**
  * Class which allows several stocks at once to be viewed as graphs.
  *
+ * Uses:    Chart, User, GraphModel, GraphRepresentation,
+ *          ControllerStockListItem
+ *
+ * Used by: AppController
+ *
  * @author Johan
  * @author Dennis
  */

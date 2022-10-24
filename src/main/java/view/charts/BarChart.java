@@ -5,6 +5,12 @@ import javafx.scene.chart.NumberAxis;
 
 /**
  * Class which represents a bar chart.
+ *
+ * Uses:        -
+ *
+ * Used by:     ChartController, ComparisonChartController,
+ *              CorrelationChartController, DetailedChartController
+ *
  */
 public class BarChart extends Chart {
     /**

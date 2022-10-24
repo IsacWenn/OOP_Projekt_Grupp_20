@@ -11,6 +11,11 @@ import java.util.Map;
 
 /**
  * Class which represents a chart.
+ *
+ * Uses:        Date, GraphModel
+ *
+ * Used by:     ChartController, ComparisonChartController,
+ *              CorrelationChartController, DetailedChartController
  */
 public abstract class Chart extends AnchorPane {
 

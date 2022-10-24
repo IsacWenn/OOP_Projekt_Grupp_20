@@ -25,6 +25,11 @@ import java.util.Map;
 /**
  * Abstract JavaFX-dependent class which acts as a user interface between the user and different charts and graphs.
  *
+ * Uses:    Chart, AreaChart, BarChart, LineChart, Date, GraphModel, DataHandler,
+ *          ControllerStockListItem
+ *
+ * Used by: AppController, ComparisonChartController, CorrelationChartController
+ *
  * @author Johan
  * @author Dennis
  */

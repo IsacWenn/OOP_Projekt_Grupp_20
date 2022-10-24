@@ -5,6 +5,11 @@ import javafx.scene.chart.NumberAxis;
 
 /**
  * Class which represents an area chart.
+ *
+ * Uses:        -
+ *
+ * Used by:     ChartController, ComparisonChartController,
+ *              CorrelationChartController, DetailedChartController
  */
 public class AreaChart extends Chart {
     /**

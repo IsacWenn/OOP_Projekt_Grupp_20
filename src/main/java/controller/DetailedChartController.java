@@ -17,6 +17,11 @@ import java.util.List;
  * Class which allows for a detailed view of a select stock as a graph and allowing for multiple different sets of
  * data to be displayed any given stock.
  *
+ * Uses:    Chart, User, GraphModel, GraphRepresentation, KeyFigureListItem,
+ *          ControllerStockListItem
+ *
+ * Used by: AppController
+ *
  * @author Johan
  * @author Dennis
  */

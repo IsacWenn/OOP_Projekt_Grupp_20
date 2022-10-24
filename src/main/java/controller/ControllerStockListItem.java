@@ -15,6 +15,11 @@ import java.io.IOException;
 /**
  * Class which functions as an intractable object within the concrete implementations of {@link ChartController}.
  *
+ * Uses:    User
+ *
+ * Used by: ChartController, ComparisonChartController, CorrelationChartController
+ *          DetailedChartController
+ *
  * @author Johan
  * @author Dennis
  */
@@ -35,8 +40,6 @@ public class ControllerStockListItem extends AnchorPane {
     private Label stockAcronym;
     @FXML
     private Label stockName;
-    @FXML
-    private Label stockValue;
     @FXML
     private AnchorPane stockListItem;
 
@@ -70,8 +73,6 @@ public class ControllerStockListItem extends AnchorPane {
     private void initializeLabels(String acronym) {
         stockAcronym.setText(acronym);
         stockName.setText(name);
-        stockValue.setText("");
-        //TODO stockValue.settext(VALUEEEE);
     }
 
     /**
