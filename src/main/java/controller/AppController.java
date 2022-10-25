@@ -219,14 +219,17 @@ public class AppController {
         switch (chartType) {
             case "Correlation Chart" -> {
                 chartToAdd = new CorrelationChartController(this, favoriteCompanies, graphsToLoad);
+                charts.add(chartToAdd);
                 newTab(chartToAdd, chartType);
             }
             case "Detailed Chart" -> {
                 chartToAdd = new DetailedChartController(this, favoriteCompanies, graphsToLoad);
+                charts.add(chartToAdd);
                 newTab(chartToAdd, chartType);
             }
             case "Comparison Chart" -> {
                 chartToAdd = new ComparisonChartController(this, favoriteCompanies, graphsToLoad);
+                charts.add(chartToAdd);
                 newTab(chartToAdd, chartType);
             }
         }
